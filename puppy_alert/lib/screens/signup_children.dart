@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/textformfield_widget.dart';
+
+import '../widgets/text_widget.dart';
 
 class SignupChildren extends StatelessWidget {
 
@@ -77,7 +78,7 @@ class SignupChildren extends StatelessWidget {
 
 
 Widget _signupChildrenBuildId() {
-  return TextFormFieldWidget(
+  return UserTextFormFieldWidget(
     hintText: "아이디를 입력하세요",
     labelText: "아이디",
     textInputType: TextInputType.text,
@@ -93,7 +94,7 @@ Widget _signupChildrenBuildId() {
 
 
 Widget _signupChildrenBuildPassword() {
-  return TextFormFieldWidget(
+  return UserTextFormFieldWidget(
     hintText: "비밀번호를 입력하세요",
     labelText: "비밀번호",
     obscureText: true,
@@ -110,7 +111,7 @@ Widget _signupChildrenBuildPassword() {
 
 
 Widget _signupChildrenBuildPasswordConfirmation() {
-  return TextFormFieldWidget(
+  return UserTextFormFieldWidget(
     hintText: "비밀번호를 한번 더 입력하세요",
     labelText: "비밀번호 재확인",
     obscureText: true,
@@ -126,7 +127,7 @@ Widget _signupChildrenBuildPasswordConfirmation() {
 }
 
 Widget _signupChildrenBuildName() {
-  return TextFormFieldWidget(
+  return UserTextFormFieldWidget(
     hintText: "이름을 입력하세요",
     labelText: "이름",
     textInputType: TextInputType.text,
@@ -142,7 +143,7 @@ Widget _signupChildrenBuildName() {
 
 
 Widget _signupChildrenBuildAddress() {
-  return TextFormFieldWidget(
+  return UserTextFormFieldWidget(
     hintText: "주소를 입력하세요",
     labelText: "주소",
     textInputType: TextInputType.text,
@@ -157,7 +158,7 @@ Widget _signupChildrenBuildAddress() {
 }
 
 Widget _signupChildrenBuildPhoneNumber() {
-  return TextFormFieldWidget(
+  return UserTextFormFieldWidget(
     hintText: "전화번호를 입력하세요",
     labelText: "전화번호",
     textInputType: TextInputType.text,
@@ -173,7 +174,7 @@ Widget _signupChildrenBuildPhoneNumber() {
 
 
 Widget _signupChildrenBuildPhoneNumberConfirmation() {
-  return TextFormFieldWidget(
+  return UserTextFormFieldWidget(
     hintText: "인증번호를 입력하세요",
     labelText: "인증번호",
     textInputType: TextInputType.text,
@@ -187,5 +188,4 @@ Widget _signupChildrenBuildPhoneNumberConfirmation() {
   );
 }
 
-
-
+//=-=====================

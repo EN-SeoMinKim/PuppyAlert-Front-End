@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-class TextFormFieldWidget extends StatefulWidget {
-  TextInputType textInputType;
+class UserTextFormFieldWidget extends StatefulWidget {
+  final TextInputType textInputType;
   final String hintText;
   final Widget? prefixIcon;
   final String labelText;
@@ -11,9 +11,9 @@ class TextFormFieldWidget extends StatefulWidget {
   final TextInputAction actionKeyboard;
   final Function onSubmitField;
 
-  TextFormFieldWidget({
-    required this.hintText,
+  UserTextFormFieldWidget({
     required this.textInputType,
+    required this.hintText,
     required this.labelText,
     this.obscureText = false,
     this.actionKeyboard = TextInputAction.next,
@@ -22,10 +22,10 @@ class TextFormFieldWidget extends StatefulWidget {
   });
 
   @override
-  _TextFormFieldWidgetState createState() => _TextFormFieldWidgetState();
+  _UserTextFormFieldWidgetState createState() => _UserTextFormFieldWidgetState();
 }
 
-class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
+class _UserTextFormFieldWidgetState extends State<UserTextFormFieldWidget> {
   double bottomPaddingToError = 12;
 
   @override
@@ -80,3 +80,15 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
     );
   }
 }
+
+
+class CustomUserTextStyle {
+  static const TextStyle signUpTextStyle = TextStyle(
+    fontSize: 16,
+    color: Color(0xffFF7700),
+    fontWeight: FontWeight.w500,
+    height: 0,
+    letterSpacing: -0.40,
+  );
+}
+

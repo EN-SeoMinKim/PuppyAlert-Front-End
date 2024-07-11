@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/signup_children.dart';
+import '../widgets/text_widget.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -54,22 +55,8 @@ class _LogInState extends State<LogIn> {
                         child: Builder(builder: (context) {
                           return Column(
                             children: [
-                              TextField(
-                                controller: loginIdController,
-                                autofocus: true,
-                                decoration: InputDecoration(labelText: '아이디'),
-                                keyboardType: TextInputType.text,
-                              ),
-                              SizedBox(
-                                height: 30.0,
-                              ),
-                              TextField(
-                                controller: loginPasswordController,
-                                decoration:
-                                InputDecoration(labelText: '비밀번호'),
-                                keyboardType: TextInputType.text,
-                                obscureText: true, // 비밀번호 안보이도록 하는 것
-                              ),
+                              _loginBuildId(),
+                              _loginBuildPassword(),
                               SizedBox(
                                 height: 50.0,
                               ),
@@ -77,32 +64,14 @@ class _LogInState extends State<LogIn> {
                                   minWidth: 100.0,
                                   height: 50.0,
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      if (loginIdController.text == 'mei@hello.com' &&
-                                          loginPasswordController.text == '1234') {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    LoginNextPage()));
-                                      }
-                                      else if (loginIdController.text == 'mei@hello.com' && loginPasswordController.text != '1234') {
-                                        loginShowSnackBar(context, Text('Wrong password'));
-                                      }
-                                      else if (loginIdController.text != 'mei@hello.com' && loginPasswordController.text == '1234') {
-                                        loginShowSnackBar(context, Text('Wrong id'));
-                                      }
-                                      else {
-                                        loginShowSnackBar(context, Text('Check your info again'));
-                                      }
-                                    },
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xffFF7700)),
                                     child: Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,
                                       size: 35.0,
                                     ),
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xffFF7700)),
                                   )),
                               SizedBox(
                                 height: 50.0,
@@ -113,13 +82,7 @@ class _LogInState extends State<LogIn> {
                                 },
                                 child: Text(
                                   "비밀번호를 잊어버리셨나요?",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xffFF7700),
-                                    fontWeight: FontWeight.w500,
-                                    height: 0,
-                                    letterSpacing: -0.40,
-                                  ),
+                                  style: CustomUserTextStyle.signUpTextStyle,
                                 ),
                               ),
                               SizedBox(
@@ -136,15 +99,9 @@ class _LogInState extends State<LogIn> {
                                     },
                                     child: Text(
                                       "가입하기",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xffFF7700),
-                                        fontWeight: FontWeight.w500,
-                                        height: 0,
-                                        letterSpacing: -0.40,
-                                      ),
+                                      style: CustomUserTextStyle.signUpTextStyle,
                                     ),
-                                  ),
+                                    ),
                                 ],
                               )
                             ],
@@ -175,5 +132,38 @@ class LoginNextPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container();
   }
+}
+
+
+Widget _loginBuildId() {
+  return UserTextFormFieldWidget(
+    hintText: "아이디를 입력하세요",
+    labelText: "아이디",
+    textInputType: TextInputType.text,
+    actionKeyboard: TextInputAction.done,
+    // functionValidate: commonValidation,
+    // controller: _passwordController,
+    // focusNode: _passwordControllerFocus,
+    onSubmitField: () {},
+    // parametersValidate: "Please enter password.",
+    prefixIcon: Icon(Icons.badge_outlined),
+  );
+}
+
+
+Widget _loginBuildPassword() {
+  return UserTextFormFieldWidget(
+    hintText: "비밀번호를 입력하세요",
+    labelText: "비밀번호",
+    obscureText: true,
+    textInputType: TextInputType.visiblePassword,
+    actionKeyboard: TextInputAction.done,
+    // functionValidate: commonValidation,
+    // controller: _passwordController,
+    // focusNode: _passwordControllerFocus,
+    onSubmitField: () {},
+    // parametersValidate: "Please enter password.",
+    prefixIcon: Icon(Icons.enhanced_encryption),
+  );
 }
 
