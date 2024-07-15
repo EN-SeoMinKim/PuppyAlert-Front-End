@@ -1,8 +1,8 @@
 // widgets/signup_children_text_form_field_widget.dart
-
 import 'package:flutter/material.dart';
 
 class UserTextFormFieldWidget extends StatefulWidget {
+  final TextEditingController controller;
   final TextInputType textInputType;
   final String hintText;
   final Widget? prefixIcon;
@@ -11,7 +11,9 @@ class UserTextFormFieldWidget extends StatefulWidget {
   final TextInputAction actionKeyboard;
   final Function onSubmitField;
 
-  UserTextFormFieldWidget({
+  UserTextFormFieldWidget(
+      {super.key,
+    required this.controller,
     required this.textInputType,
     required this.hintText,
     required this.labelText,
@@ -24,6 +26,8 @@ class UserTextFormFieldWidget extends StatefulWidget {
   @override
   _UserTextFormFieldWidgetState createState() => _UserTextFormFieldWidgetState();
 }
+
+
 
 class _UserTextFormFieldWidgetState extends State<UserTextFormFieldWidget> {
   double bottomPaddingToError = 12;
@@ -41,6 +45,7 @@ class _UserTextFormFieldWidgetState extends State<UserTextFormFieldWidget> {
         margin: EdgeInsets.only(top: 50),
         width: 300,
         child: TextFormField(
+          controller: widget.controller,
           obscureText: widget.obscureText,
           keyboardType: widget.textInputType,
           textInputAction: widget.actionKeyboard,
@@ -74,6 +79,8 @@ class _UserTextFormFieldWidgetState extends State<UserTextFormFieldWidget> {
               fontStyle: FontStyle.normal,
               letterSpacing: 1.2,
             ),
+            // validator: (value) => CheckValidate().validateEmail(_emailFocus, value ?? ''),
+            // onSaved: (value) {},
           ),
         ),
       ),
@@ -82,13 +89,4 @@ class _UserTextFormFieldWidgetState extends State<UserTextFormFieldWidget> {
 }
 
 
-class CustomUserTextStyle {
-  static const TextStyle signUpTextStyle = TextStyle(
-    fontSize: 16,
-    color: Color(0xffFF7700),
-    fontWeight: FontWeight.w500,
-    height: 0,
-    letterSpacing: -0.40,
-  );
-}
 
