@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/common_widgets/custom_user_text_style.dart';
-import '../../widgets/common_widgets/user_form.dart';
+import '../../widgets/common_widgets/user_textformfield_widget.dart';
 import '../child_screens/signup_child_screen.dart';
 
 class LoginScreen extends StatefulWidget {

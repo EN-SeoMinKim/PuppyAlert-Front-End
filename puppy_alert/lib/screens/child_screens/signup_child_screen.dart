@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../widgets/common_widgets/user_form.dart';
+import 'package:puppy_alert/widgets/common_widgets/custom_button.dart';
+import '../../widgets/common_widgets/user_datepicker_widget.dart';
+import '../../widgets/common_widgets/user_textformfield_widget.dart';
 
 class SignupChildScreen extends StatefulWidget {
   @override
@@ -32,7 +34,9 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+
+        ),
         body: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
@@ -65,6 +69,10 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         nameInputWidget((controller) {
                           _nameController = controller;
                         }),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        DatePicker(),
                         addressInputWidget((controller) {
                           _addressController = controller;
                         }),
@@ -74,14 +82,10 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         phonenumberConfirmationInputWidget((controller) {
                           _phonenumberconfirmationController = controller;
                         }),
-                        ElevatedButton(
-                          onPressed: () {
-                            _submitSignUpForm();
-                          },
-                          child: Text('회원가입'),
-                        ),
-                      ],
-                    ),
+                        CustomButton(
+                            onPressed: _submitSignUpForm,
+                            text:   "회원가입"),
+                    ]),
                   ),
                 ],
               ),
@@ -108,3 +112,5 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
     print('PhonenumberConfirmation: $phonenumberConfirmation');
   }
 }
+
+

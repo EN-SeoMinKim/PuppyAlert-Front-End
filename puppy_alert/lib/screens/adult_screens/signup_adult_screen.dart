@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../widgets/common_widgets/user_form.dart';
+import '../../widgets/common_widgets/custom_button.dart';
+import '../../widgets/common_widgets/user_textformfield_widget.dart';
 
 class SignupAdultScreen extends StatefulWidget {
   @override
@@ -79,12 +80,9 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                         phonenumberConfirmationInputWidget((controller) {
                           _phonenumberconfirmationController = controller;
                         }),
-                        ElevatedButton(
-                          onPressed: () {
-                            _submitSignUpForm();
-                          },
-                          child: Text('회원가입'),
-                        ),
+                        CustomButton(
+                            onPressed: _submitSignUpForm,
+                            text:   "회원가입"),
                       ],
                     ),
                   ),
