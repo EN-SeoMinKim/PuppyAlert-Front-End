@@ -56,9 +56,19 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        idInputWidget((controller) {
-                          _idController = controller;
-                        }),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              idInputWidget((controller) {
+                                _idController = controller;
+                              }),
+                              CustomButton(
+                                  onPressed: _submitSignUpForm,
+                                  text:   "중복확인"),
+                            ],
+                          ),
+                        ),
                         passwordInputWidget((controller) {
                           _passwordController = controller;
                         }),
@@ -77,9 +87,22 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                         phonenumberInputWidget((controller) {
                           _phonenumberController = controller;
                         }),
-                        phonenumberConfirmationInputWidget((controller) {
-                          _phonenumberconfirmationController = controller;
-                        }),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              phonenumberConfirmationInputWidget((controller) {
+                                _phonenumberconfirmationController = controller;
+                              }),
+                              CustomButton(
+                                  onPressed: _submitSignUpForm,
+                                  text:   "인증번호확인"),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         CustomButton(
                             onPressed: _submitSignUpForm,
                             text:   "회원가입"),

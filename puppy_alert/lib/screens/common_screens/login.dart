@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
 import '../../widgets/common_widgets/custom_user_text_style.dart';
 import '../../widgets/common_widgets/user_textformfield_widget.dart';
 import '../child_screens/signup_child_screen.dart';
@@ -55,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _submitLoginForm();
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignupChildScreen()));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignupAdultScreen()));
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xffFF7700)),
