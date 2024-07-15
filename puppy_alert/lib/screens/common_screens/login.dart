@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/adult_screens/home_adult_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
 import '../../widgets/common_widgets/custom_user_text_style.dart';
 import '../../widgets/common_widgets/user_textformfield_widget.dart';
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _submitLoginForm();
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignupAdultScreen()));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeAdultScreen()));
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xffFF7700)),
@@ -87,8 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Text('계정이 없으신가요?'),
                             TextButton(
                               onPressed: () {
-                                // Navigator.push(context, MaterialPageRoute(builder: (
-                                //     context) => SignupChildren()))   ;
+                                // Navigator.push(context, MaterialPageRoute(builder: (context) => SignupChildren()))   ;
                               },
                               child: Text(
                                 "가입하기",

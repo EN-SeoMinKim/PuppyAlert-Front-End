@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/widgets/common_widgets/custom_button.dart';
+import 'package:puppy_alert/widgets/common_widgets/white_background_button.dart';
+import '../../widgets/common_widgets/custom_user_text_style.dart';
+import '../../widgets/common_widgets/orange_background_button.dart';
 import '../../widgets/common_widgets/user_datepicker_widget.dart';
 import '../../widgets/common_widgets/user_textformfield_widget.dart';
 
@@ -62,7 +64,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                               idInputWidget((controller) {
                                 _idController = controller;
                               }),
-                              CustomButton(
+                              WhiteBackgroundButton(
                                   onPressed: _submitSignUpForm,
                                   text:   "중복확인"),
                             ],
@@ -94,7 +96,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                               phonenumberConfirmationInputWidget((controller) {
                                 _phonenumberconfirmationController = controller;
                               }),
-                              CustomButton(
+                              WhiteBackgroundButton(
                                   onPressed: _submitSignUpForm,
                                   text:   "인증번호확인"),
                             ],
@@ -103,11 +105,26 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        CustomButton(
+                        OrangeBackgroundButton(
                             onPressed: _submitSignUpForm,
                             text:   "회원가입"),
                     ]),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('계정이 없으신가요?'),
+                      TextButton(
+                        onPressed: () {
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) => SignupChildren()))   ;
+                        },
+                        child: Text(
+                          "가입하기",
+                          style: CustomUserTextStyle.signUpTextStyle,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             )));
@@ -133,5 +150,3 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
     print('PhonenumberConfirmation: $phonenumberConfirmation');
   }
 }
-
-

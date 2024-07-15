@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/adult_screens/home_adult_screen.dart';
 import 'package:puppy_alert/screens/child_screens/signup_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
 import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
@@ -20,8 +21,8 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xffFF7700),
         )
       ),
-      home: LoginScreen(),
-      // home: Test1(),
+      // home: LoginScreen(),
+      home: HomeAdultScreen(),
       routes:
       {
         '/login': (context) => LoginScreen(),

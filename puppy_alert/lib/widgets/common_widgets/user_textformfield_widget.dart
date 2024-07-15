@@ -29,7 +29,7 @@ class UserTextFormFieldWidget extends StatefulWidget {
 
 
 class _UserTextFormFieldWidgetState extends State<UserTextFormFieldWidget> {
-  double bottomPaddingToError = 12;
+  // double bottomPaddingToError = 12;
 
   @override
   Widget build(BuildContext context) {
