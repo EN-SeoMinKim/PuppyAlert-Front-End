@@ -29,7 +29,7 @@ class GreyBackgroundButton extends StatelessWidget {
           text,
           style: TextStyle(
             color: Colors.black,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             fontSize: 35,
           ),
         ),

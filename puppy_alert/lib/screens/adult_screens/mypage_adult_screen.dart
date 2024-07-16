@@ -3,14 +3,14 @@ import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart
 import 'package:puppy_alert/widgets/adult_widgets/grey_background_button.dart';
 import 'package:puppy_alert/widgets/common_widgets/orange_background_button.dart';
 
-class HomeAdultScreen extends StatefulWidget {
-  const HomeAdultScreen({super.key});
+class MypageAdultScreen extends StatefulWidget {
+  const MypageAdultScreen({super.key});
 
   @override
-  _HomeAdultScreenState createState() => _HomeAdultScreenState();
+  _MypageAdultScreenState createState() => _MypageAdultScreenState();
 }
 
-class _HomeAdultScreenState extends State<HomeAdultScreen> {
+class _MypageAdultScreenState extends State<MypageAdultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
