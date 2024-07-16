@@ -20,7 +20,7 @@ class ElevatedShadowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 30),
-      width: 200,
+      width: 170,
       height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
