@@ -38,8 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 30,
-                          ))
-                  ),
+                          ))),
                   Container(
                     alignment: Alignment.center,
                     child: Column(
@@ -51,13 +50,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         passwordInputWidget((controller) {
                           _passwordController = controller;
                         }),
+                        SizedBox(height: 20),
                         ButtonTheme(
                             minWidth: 100.0,
                             height: 50.0,
                             child: ElevatedButton(
                               onPressed: () {
                                 _submitLoginForm();
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeAdultScreen()));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => HomeAdultScreen()));
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xffFF7700)),
@@ -71,9 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 50.0,
                         ),
                         TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/findPassword'); // 비밀번호 찾기
-                          },
+                          onPressed: () {},
                           child: Text(
                             "비밀번호를 잊어버리셨나요?",
                             style: CustomUserTextStyle.signUpTextStyle,
@@ -87,9 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Text('계정이 없으신가요?'),
                             TextButton(
-                              onPressed: () {
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => SignupChildren()))   ;
-                              },
+                              onPressed: () {},
                               child: Text(
                                 "가입하기",
                                 style: CustomUserTextStyle.signUpTextStyle,

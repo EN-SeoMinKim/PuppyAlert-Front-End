@@ -29,15 +29,11 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
               width: 200,
               fontSize: 40,
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SpeechRecognitionScreen()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SpeechRecognitionScreen()));
               },
-              text: "식사\n등록"
-          ),
-          GreyBackgroundButton(
-              onPressed: (){
-
-              },
-              text: "나의 정보"),
+              text: "식사\n등록"),
+          GreyBackgroundButton(onPressed: () {}, text: "나의 정보"),
         ],
       ),
     );

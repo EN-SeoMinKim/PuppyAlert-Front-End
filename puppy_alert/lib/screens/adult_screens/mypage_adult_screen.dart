@@ -27,54 +27,52 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
         child: Column(
           children: [
             Container(
-              width:  double.infinity,
-              height:  200,
+              width: double.infinity,
+              height: 200,
               alignment: Alignment.center,
               color: Color(0xffFFD6BF),
-              child: Column(
-                children: [
-                  SizedBox(height: 30.0),
-                  ClipOval(
-                    child: Image.asset(
-                      "image.png",
-                      width: 100.0,
-                      height: 100.0,
-                      fit:  BoxFit.cover,
-                    ),
+              child: Column(children: [
+                SizedBox(height: 30.0),
+                ClipOval(
+                  child: Image.asset(
+                    "image.png",
+                    width: 100.0,
+                    height: 100.0,
+                    fit: BoxFit.cover,
                   ),
-                  SizedBox(height: 16.0),
-                  Text(
-                    'Anton',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  )
-                ]
-            ),),
-            SizedBox(
-              height: 20,
-            ),
-            GreyBackgroundButton(
-                onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PersonalInformationAdultScreen()));
-                },
-                text: "개인 정보"
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'Anton',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                )
+              ]),
             ),
             SizedBox(
               height: 20,
             ),
             GreyBackgroundButton(
-                onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => RecordAdultScreen()));
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PersonalInformationAdultScreen()));
                 },
-                text: "집밥 기록"
+                text: "개인 정보"),
+            SizedBox(
+              height: 20,
             ),
+            GreyBackgroundButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => RecordAdultScreen()));
+                },
+                text: "집밥 기록"),
           ],
         ),
       ),
     );
   }
 }
-
