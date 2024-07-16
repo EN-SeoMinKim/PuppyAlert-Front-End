@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
+import 'package:puppy_alert/screens/adult_screens/personal_information_adult_screen.dart';
+import 'package:puppy_alert/screens/adult_screens/record_adult_screen.dart';
 import 'package:puppy_alert/widgets/adult_widgets/grey_background_button.dart';
 
 class MypageAdultScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
                       fit:  BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: 14.0),
+                  SizedBox(height: 16.0),
                   Text(
                     'Anton',
                     style: TextStyle(
@@ -57,7 +58,7 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
             ),
             GreyBackgroundButton(
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SpeechRecognitionScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PersonalInformationAdultScreen()));
                 },
                 text: "개인 정보"
             ),
@@ -66,7 +67,7 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
             ),
             GreyBackgroundButton(
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SpeechRecognitionScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => RecordAdultScreen()));
                 },
                 text: "집밥 기록"
             ),

@@ -10,8 +10,8 @@ class UserTextFormFieldWidget extends StatefulWidget {
   final TextInputAction actionKeyboard;
   final Function onSubmitField;
 
-  UserTextFormFieldWidget(
-      {super.key,
+  UserTextFormFieldWidget({
+    super.key,
     required this.controller,
     required this.textInputType,
     required this.hintText,
