@@ -72,7 +72,6 @@ class _PersonalInformationAdultScreenState
                         LongRectangleButton(
                             backgroundColor: Colors.grey[300]!,
                             textColor: Colors.black,
-                            borderColor: Colors.grey[300]!,
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => LoginScreen()));

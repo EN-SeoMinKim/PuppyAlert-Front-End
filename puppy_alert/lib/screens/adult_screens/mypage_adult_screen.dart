@@ -56,6 +56,7 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
               height: 20,
             ),
             ElevatedShadowButton(
+              width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PersonalInformationAdultScreen()));
@@ -65,6 +66,7 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
               height: 20,
             ),
             ElevatedShadowButton(
+              width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => RecordAdultScreen()));

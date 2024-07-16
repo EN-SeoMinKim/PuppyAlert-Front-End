@@ -6,6 +6,7 @@ class ElevatedShadowButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
   final double height;
+  final double width;
 
   ElevatedShadowButton({
     super.key,
@@ -14,13 +15,14 @@ class ElevatedShadowButton extends StatelessWidget {
     this.backgroundColor = const Color(0xffEEEEEE),
     this.textColor = Colors.black,
     this.height = 100.0,
+    this.width = 170.0,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 30),
-      width: 170,
+      width: width,
       height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

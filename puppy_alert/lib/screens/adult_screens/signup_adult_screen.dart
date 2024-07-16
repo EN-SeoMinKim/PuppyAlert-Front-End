@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/white_background_button.dart';
 import '../../widgets/common_widgets/custom_user_text_style.dart';
-import '../../widgets/common_widgets/user_textformfield_widget.dart';
+import '../../widgets/common_widgets/user_textformfield.dart';
 
 class SignupAdultScreen extends StatefulWidget {
   @override

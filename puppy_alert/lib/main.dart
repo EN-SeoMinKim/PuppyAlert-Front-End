@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/adult_screens/confirmed_meal_adult_screen.dart';
-import 'package:puppy_alert/screens/adult_screens/mypage_adult_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/record_adult_screen.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
+import 'package:puppy_alert/screens/child_screens/mypage_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/signup_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
 import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
@@ -23,8 +21,9 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xffFF7700),
         )
       ),
+
       // home: LoginScreen(),
-      home:ConfirmedMealAdultScreen(),
+      home: MypageChildScreen(),
       routes:
       {
         '/login': (context) => LoginScreen(),

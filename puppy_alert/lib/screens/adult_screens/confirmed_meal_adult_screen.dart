@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
-import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button.dart';
 
 class ConfirmedMealAdultScreen extends StatefulWidget {
   const ConfirmedMealAdultScreen({super.key});
@@ -30,12 +28,12 @@ class _ConfirmedMealAdultScreenState extends State<ConfirmedMealAdultScreen> {
             height: 30,
           ),
           ClipRRect(
-            borderRadius: BorderRadius.circular(20.0), // 원하는 둥근 사각형의 반지름 설정
+            borderRadius: BorderRadius.circular(20.0),
             child: Image.asset(
-              'food.png', // 이미지 경로
-              width: 150, // 이미지 너비
-              height: 150, // 이미지 높이
-              fit: BoxFit.cover, // 이미지가 사각형에 맞게 자동 조정되도록 설정
+              'food.png',
+              width: 150,
+              height: 150,
+              fit: BoxFit.cover,
             ),
           ),
           SizedBox(

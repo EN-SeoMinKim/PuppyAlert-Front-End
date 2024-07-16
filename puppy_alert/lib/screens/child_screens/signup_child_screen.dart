@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:puppy_alert/widgets/common_widgets/white_background_button.dart';
 import '../../widgets/common_widgets/custom_user_text_style.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/common_widgets/user_datepicker_widget.dart';
-import '../../widgets/common_widgets/user_textformfield_widget.dart';
+import '../../widgets/common_widgets/user_datepicker.dart';
+import '../../widgets/common_widgets/user_textformfield.dart';
 
 class SignupChildScreen extends StatefulWidget {
   @override
@@ -82,7 +82,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         SizedBox(
                           height: 30,
                         ),
-                        DatePicker(),
+                        UserDatePicker(),
                         addressInputWidget((controller) {
                           _addressController = controller;
                         }),

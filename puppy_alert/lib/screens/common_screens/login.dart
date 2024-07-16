@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/home_adult_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
 import '../../widgets/common_widgets/custom_user_text_style.dart';
-import '../../widgets/common_widgets/user_textformfield_widget.dart';
+import '../../widgets/common_widgets/user_textformfield.dart';
 import '../child_screens/signup_child_screen.dart';
 
 class LoginScreen extends StatefulWidget {

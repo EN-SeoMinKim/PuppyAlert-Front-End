@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UserTextFormFieldWidget extends StatefulWidget {
+class UserTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType textInputType;
   final String hintText;
@@ -10,7 +10,7 @@ class UserTextFormFieldWidget extends StatefulWidget {
   final TextInputAction actionKeyboard;
   final Function onSubmitField;
 
-  UserTextFormFieldWidget({
+  UserTextFormField({
     super.key,
     required this.controller,
     required this.textInputType,
@@ -23,13 +23,12 @@ class UserTextFormFieldWidget extends StatefulWidget {
   });
 
   @override
-  _UserTextFormFieldWidgetState createState() => _UserTextFormFieldWidgetState();
+  _UserTextFormFieldState createState() => _UserTextFormFieldState();
 }
 
 
 
-class _UserTextFormFieldWidgetState extends State<UserTextFormFieldWidget> {
-  // double bottomPaddingToError = 12;
+class _UserTextFormFieldState extends State<UserTextFormField> {
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +95,7 @@ Widget idInputWidget(ControllerCallback controllerCallback) {
 
   controllerCallback(loginIdController);
 
-  return UserTextFormFieldWidget(
+  return UserTextFormField(
     hintText: "아이디를 입력하세요",
     labelText: "아이디",
     textInputType: TextInputType.text,
@@ -116,7 +115,7 @@ Widget passwordInputWidget(ControllerCallback controllerCallback) {
 
   controllerCallback(passwordController);
 
-  return UserTextFormFieldWidget(
+  return UserTextFormField(
     hintText: "비밀번호를 입력하세요",
     labelText: "비밀번호",
     obscureText: true,
@@ -137,7 +136,7 @@ Widget passwordConfirmationInputWidget(ControllerCallback controllerCallback) {
 
   controllerCallback(passwordConfirmationController);
 
-  return UserTextFormFieldWidget(
+  return UserTextFormField(
     hintText: "비밀번호를 한번 더 입력하세요",
     labelText: "비밀번호 재확인",
     obscureText: true,
@@ -157,7 +156,7 @@ Widget nameInputWidget(ControllerCallback controllerCallback) {
 
   controllerCallback(nameController);
 
-  return UserTextFormFieldWidget(
+  return UserTextFormField(
     hintText: "이름을 입력하세요",
     labelText: "이름",
     textInputType: TextInputType.text,
@@ -176,7 +175,7 @@ Widget nicknameInputWidget(ControllerCallback controllerCallback) {
 
   controllerCallback(nicknameController);
 
-  return UserTextFormFieldWidget(
+  return UserTextFormField(
     hintText: "닉네임을 입력하세요",
     labelText: "닉네임",
     textInputType: TextInputType.text,
@@ -198,7 +197,7 @@ Widget addressInputWidget(ControllerCallback controllerCallback) {
 
   controllerCallback(addressController);
 
-  return UserTextFormFieldWidget(
+  return UserTextFormField(
     hintText: "주소를 입력하세요",
     labelText: "주소",
     textInputType: TextInputType.text,
@@ -217,7 +216,7 @@ Widget phonenumberInputWidget(ControllerCallback controllerCallback) {
 
   controllerCallback(phonenumberController);
 
-  return UserTextFormFieldWidget(
+  return UserTextFormField(
     hintText: "전화번호를 입력하세요",
     labelText: "전화번호",
     textInputType: TextInputType.text,
@@ -237,7 +236,7 @@ Widget phonenumberConfirmationInputWidget(ControllerCallback controllerCallback)
 
   controllerCallback( phonenumberConfirmationController);
 
-  return UserTextFormFieldWidget(
+  return UserTextFormField(
     hintText: "인증번호를 입력하세요",
     labelText: "인증번호",
     textInputType: TextInputType.text,
