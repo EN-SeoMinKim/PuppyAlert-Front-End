@@ -1,36 +1,40 @@
 import 'package:flutter/material.dart';
 
-class GreyBackgroundButton extends StatelessWidget {
+class ElevatedShadowButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
+  final Color backgroundColor;
+  final Color textColor;
+  final double height;
 
-  GreyBackgroundButton({
+  ElevatedShadowButton({
     super.key,
     required this.onPressed,
     required this.text,
+    this.backgroundColor = const Color(0xffEEEEEE),
+    this.textColor = Colors.black,
+    this.height = 100.0,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30),s
+      margin: EdgeInsets.only(top: 30),
       width: 200,
-      height: 100,
+      height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.grey[200],
-          shadowColor: Colors.black,
+          backgroundColor: backgroundColor,
           elevation: 10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
-            side: BorderSide(color: Colors.grey[200]!),
           ),
         ),
         onPressed: onPressed,
         child: Text(
           text,
           style: TextStyle(
-            color: Colors.black,
+            color: textColor,
             fontWeight: FontWeight.w900,
             fontSize: 35,
           ),

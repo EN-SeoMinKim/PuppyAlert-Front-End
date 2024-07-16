@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
-import 'package:puppy_alert/widgets/adult_widgets/grey_background_button.dart';
+import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
 import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button.dart';
 
 class HomeAdultScreen extends StatefulWidget {
@@ -24,16 +24,16 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
           SizedBox(
             height: 30,
           ),
-          LongRectangleButton(
+          ElevatedShadowButton(
               height: 150,
-              width: 200,
-              fontSize: 40,
+              backgroundColor: Color(0xffFF7700),
+              textColor: Colors.white,
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => SpeechRecognitionScreen()));
               },
               text: "식사\n등록"),
-          GreyBackgroundButton(onPressed: () {}, text: "나의 정보"),
+          ElevatedShadowButton(onPressed: () {}, text: "나의 정보"),
         ],
       ),
     );

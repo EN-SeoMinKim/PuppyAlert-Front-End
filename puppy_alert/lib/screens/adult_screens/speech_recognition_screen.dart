@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:puppy_alert/screens/adult_screens/mypage_adult_screen.dart';
 import '../../service/speech_service.dart';
-import '../../widgets/adult_widgets/grey_background_button.dart';
+import '../../widgets/adult_widgets/elevated_shadow_button.dart';
 
 class SpeechRecognitionScreen extends StatefulWidget {
   @override
@@ -94,7 +94,7 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
                     )),
               ),
             ),
-            GreyBackgroundButton(
+            ElevatedShadowButton(
               text: "나의 정보",
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/personal_information_adult_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/record_adult_screen.dart';
-import 'package:puppy_alert/widgets/adult_widgets/grey_background_button.dart';
+import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
 
 class MypageAdultScreen extends StatefulWidget {
   const MypageAdultScreen({super.key});
@@ -55,7 +55,7 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
             SizedBox(
               height: 20,
             ),
-            GreyBackgroundButton(
+            ElevatedShadowButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PersonalInformationAdultScreen()));
@@ -64,7 +64,7 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
             SizedBox(
               height: 20,
             ),
-            GreyBackgroundButton(
+            ElevatedShadowButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => RecordAdultScreen()));

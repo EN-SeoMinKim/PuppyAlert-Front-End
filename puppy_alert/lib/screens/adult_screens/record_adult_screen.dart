@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets/adult_widgets/grey_background_button.dart';
-import '../../widgets/common_widgets/long_rectangle_button.dart';
+import '../../widgets/adult_widgets/elevated_shadow_button.dart';
 
 class RecordAdultScreen extends StatefulWidget {
   const RecordAdultScreen({super.key});
@@ -50,7 +48,7 @@ class _RecordAdultScreenState extends State<RecordAdultScreen> {
               border: Border.all(color: Colors.grey[200]!, width: 2.0),
             ),
             child: Center(
-              child: GreyBackgroundButton(
+              child: ElevatedShadowButton(
                   onPressed: () {
                     // Navigator.pop();
                   },
