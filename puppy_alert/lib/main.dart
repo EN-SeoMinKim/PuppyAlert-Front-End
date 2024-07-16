@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/adult_screens/mypage_adult_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
 import 'package:puppy_alert/screens/child_screens/signup_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       // home: LoginScreen(),
-      home:SpeechRecognitionScreen(),
+      home:MypageAdultScreen(),
       routes:
       {
         '/login': (context) => LoginScreen(),
@@ -31,3 +32,20 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
