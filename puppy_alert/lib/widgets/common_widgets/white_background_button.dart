@@ -16,7 +16,7 @@ class WhiteBackgroundButton extends StatelessWidget {
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
-          side: BorderSide(color: Colors.grey[300]!),
+          side: BorderSide(color: Colors.grey[300]!, width: 2),
         ),
       ),
       onPressed: onPressed,

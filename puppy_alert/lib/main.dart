@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/record_adult_screen.dart';
 import 'package:puppy_alert/screens/child_screens/mypage_child_screen.dart';
+import 'package:puppy_alert/screens/child_screens/personal_information_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/signup_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
 import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // home: LoginScreen(),
-      home: MypageChildScreen(),
+      home: PersonalInformationChildScreen(),
       routes:
       {
         '/login': (context) => LoginScreen(),
