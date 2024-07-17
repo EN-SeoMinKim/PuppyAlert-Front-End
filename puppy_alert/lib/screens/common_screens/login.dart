@@ -86,12 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        idInputWidget((controller) {
-                          _idController = controller;
-                        }),
-                        passwordInputWidget((controller) {
-                          _passwordController = controller;
-                        }),
+                        idInputWidget(_idController),
+                        passwordInputWidget(_passwordController),
                         SizedBox(height: 20),
                         ButtonTheme(
                             minWidth: 100.0,
@@ -156,12 +152,9 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 
-// typedef ControllerCallback = void Function(TextEditingController controller);
 
-Widget idInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController loginIdController = TextEditingController();
 
-  controllerCallback(loginIdController);
+Widget idInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     width: 300,
@@ -170,7 +163,7 @@ Widget idInputWidget(ControllerCallback controllerCallback) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller: loginIdController,
+    controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",

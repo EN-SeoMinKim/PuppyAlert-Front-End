@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xffFF7700),
         )
       ),
-      // home: LoginScreen(),
-      home:SignupChildScreen(),
+      home: LoginScreen(),
+      // home:SignupChildScreen(),
       routes:
       {
         '/login': (context) => LoginScreen(),

@@ -90,12 +90,9 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
 
 
 
-typedef ControllerCallback = void Function(TextEditingController controller);
 
-Widget idInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController loginIdController = TextEditingController();
 
-  controllerCallback(loginIdController);
+Widget idInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     width: 230,
@@ -104,7 +101,7 @@ Widget idInputWidget(ControllerCallback controllerCallback) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller: loginIdController,
+    controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
@@ -113,10 +110,7 @@ Widget idInputWidget(ControllerCallback controllerCallback) {
 }
 
 
-Widget passwordInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController passwordController = TextEditingController();
-
-  controllerCallback(passwordController);
+Widget passwordInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     hintText: "비밀번호를 입력하세요",
@@ -125,7 +119,7 @@ Widget passwordInputWidget(ControllerCallback controllerCallback) {
     textInputType: TextInputType.visiblePassword,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller: passwordController,
+    controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
@@ -134,10 +128,7 @@ Widget passwordInputWidget(ControllerCallback controllerCallback) {
 }
 
 
-Widget passwordConfirmationInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController passwordConfirmationController = TextEditingController();
-
-  controllerCallback(passwordConfirmationController);
+Widget passwordConfirmationInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     hintText: "비밀번호를 한번 더 입력하세요",
@@ -146,7 +137,7 @@ Widget passwordConfirmationInputWidget(ControllerCallback controllerCallback) {
     textInputType: TextInputType.visiblePassword,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller:passwordConfirmationController,
+    controller:controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
@@ -154,10 +145,7 @@ Widget passwordConfirmationInputWidget(ControllerCallback controllerCallback) {
   );
 }
 
-Widget nameInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController nameController = TextEditingController();
-
-  controllerCallback(nameController);
+Widget nameInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     hintText: "이름을 입력하세요",
@@ -165,7 +153,7 @@ Widget nameInputWidget(ControllerCallback controllerCallback) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller: nameController,
+    controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
@@ -173,10 +161,7 @@ Widget nameInputWidget(ControllerCallback controllerCallback) {
   );
 }
 
-Widget nicknameInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController nicknameController = TextEditingController();
-
-  controllerCallback(nicknameController);
+Widget nicknameInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     hintText: "닉네임을 입력하세요",
@@ -184,7 +169,7 @@ Widget nicknameInputWidget(ControllerCallback controllerCallback) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller: nicknameController,
+    controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
@@ -195,10 +180,7 @@ Widget nicknameInputWidget(ControllerCallback controllerCallback) {
 
 
 
-Widget addressInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController addressController = TextEditingController();
-
-  controllerCallback(addressController);
+Widget addressInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     hintText: "주소를 입력하세요",
@@ -206,7 +188,7 @@ Widget addressInputWidget(ControllerCallback controllerCallback) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller: addressController,
+    controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
@@ -214,10 +196,7 @@ Widget addressInputWidget(ControllerCallback controllerCallback) {
   );
 }
 
-Widget phonenumberInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController phonenumberController = TextEditingController();
-
-  controllerCallback(phonenumberController);
+Widget phonenumberInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     hintText: "전화번호를 입력하세요",
@@ -225,7 +204,7 @@ Widget phonenumberInputWidget(ControllerCallback controllerCallback) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller: phonenumberController,
+    controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
@@ -234,10 +213,7 @@ Widget phonenumberInputWidget(ControllerCallback controllerCallback) {
 }
 
 
-Widget phonenumberConfirmationInputWidget(ControllerCallback controllerCallback) {
-  TextEditingController phonenumberConfirmationController = TextEditingController();
-
-  controllerCallback( phonenumberConfirmationController);
+Widget phonenumberConfirmationInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     width: 200,
@@ -246,7 +222,7 @@ Widget phonenumberConfirmationInputWidget(ControllerCallback controllerCallback)
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
-    controller: phonenumberConfirmationController,
+    controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     prefixIcon: Icon(Icons.verified_outlined),

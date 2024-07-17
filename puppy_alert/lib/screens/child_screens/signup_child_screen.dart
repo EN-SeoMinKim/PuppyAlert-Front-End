@@ -64,24 +64,16 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              idInputWidget((controller) {
-                                _idController = controller;
-                              }),
+                              idInputWidget(_idController),
                               WhiteBackgroundButton(
                                   onPressed: _submitSignUpForm,
                                   text:   "중복확인"),
                             ],
                           ),
                         ),
-                        passwordInputWidget((controller) {
-                          _passwordController = controller;
-                        }),
-                        passwordConfirmationInputWidget((controller) {
-                          _passwordConfirmationController = controller;
-                        }),
-                        nameInputWidget((controller) {
-                          _nameController = controller;
-                        }),
+                        passwordInputWidget(_passwordController),
+                        passwordConfirmationInputWidget(_passwordConfirmationController),
+                        nameInputWidget(_nameController),
                         SizedBox(
                           height: 30,
                         ),
@@ -112,20 +104,14 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                             ],
                           ),
                         ),
-                        addressInputWidget((controller) {
-                          _addressController = controller;
-                        }),
-                        phonenumberInputWidget((controller) {
-                          _phonenumberController = controller;
-                        }),
+                        addressInputWidget(_addressController),
+                        phonenumberInputWidget(_phonenumberController),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              phonenumberConfirmationInputWidget((controller) {
-                                _phonenumberconfirmationController = controller;
-                              }),
+                              phonenumberConfirmationInputWidget(_phonenumberconfirmationController),
                               WhiteBackgroundButton(
                                   onPressed: _submitSignUpForm,
                                   text:   "인증번호확인"),
