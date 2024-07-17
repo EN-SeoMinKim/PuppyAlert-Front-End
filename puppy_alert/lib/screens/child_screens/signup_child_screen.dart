@@ -6,8 +6,10 @@ import '../../widgets/common_widgets/user_datepicker.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
 
 class SignupChildScreen extends StatefulWidget {
+  const SignupChildScreen({super.key});
+
   @override
-  _SignupChildScreenState createState() => _SignupChildScreenState();
+  State<SignupChildScreen> createState() => _SignupChildScreenState();
 }
 
 class _SignupChildScreenState extends State<SignupChildScreen> {

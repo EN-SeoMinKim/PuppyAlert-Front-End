@@ -6,7 +6,7 @@ import '../../widgets/common_widgets/user_textformfield.dart';
 
 class SignupAdultScreen extends StatefulWidget {
   @override
-  _SignupAdultScreenState createState() => _SignupAdultScreenState();
+  State<SignupAdultScreen> createState() => _SignupAdultScreenState();
 }
 
 class _SignupAdultScreenState extends State<SignupAdultScreen> {

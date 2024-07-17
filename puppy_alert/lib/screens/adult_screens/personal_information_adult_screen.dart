@@ -8,7 +8,7 @@ class PersonalInformationAdultScreen extends StatefulWidget {
   const PersonalInformationAdultScreen({super.key});
 
   @override
-  _PersonalInformationAdultScreenState createState() =>
+  State<PersonalInformationAdultScreen> createState() =>
       _PersonalInformationAdultScreenState();
 }
 

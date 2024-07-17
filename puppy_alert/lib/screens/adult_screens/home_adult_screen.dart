@@ -6,7 +6,7 @@ class HomeAdultScreen extends StatefulWidget {
   const HomeAdultScreen({super.key});
 
   @override
-  _HomeAdultScreenState createState() => _HomeAdultScreenState();
+  State<HomeAdultScreen> createState() => _HomeAdultScreenState();
 }
 
 class _HomeAdultScreenState extends State<HomeAdultScreen> {

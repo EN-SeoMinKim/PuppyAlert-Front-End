@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/common_screens/login.dart';
 import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_container.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/mutable_user_info_container.dart';
@@ -9,7 +8,7 @@ class PersonalInformationChildScreen extends StatefulWidget {
   const PersonalInformationChildScreen({super.key});
 
   @override
-  _PersonalInformationChildScreenState createState() =>
+  State<PersonalInformationChildScreen> createState() =>
       _PersonalInformationChildScreenState();
 }
 
@@ -81,18 +80,6 @@ class _PersonalInformationChildScreenState
                     LongRectangleButton(
                       onPressed: _submitEditProfileForm,
                       text: "수정하기",
-                    ),
-                    LongRectangleButton(
-                      backgroundColor: Colors.grey[300]!,
-                      textColor: Colors.black,
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                        );
-                      },
-                      text: "로그아웃",
                     ),
                   ],
                 ),

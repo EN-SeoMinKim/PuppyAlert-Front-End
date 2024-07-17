@@ -6,7 +6,7 @@ import '../../widgets/adult_widgets/elevated_shadow_button.dart';
 
 class SpeechRecognitionScreen extends StatefulWidget {
   @override
-  _SpeechRecognitionScreenState createState() =>
+  State<SpeechRecognitionScreen> createState() =>
       _SpeechRecognitionScreenState();
 }
 

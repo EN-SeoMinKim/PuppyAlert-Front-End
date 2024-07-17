@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/personal_information_adult_screen.dart';
-import 'package:puppy_alert/screens/adult_screens/record_adult_screen.dart';
+import 'package:puppy_alert/screens/adult_screens/meal_record_adult_screen.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
 
 class MypageAdultScreen extends StatefulWidget {
   const MypageAdultScreen({super.key});
 
   @override
-  _MypageAdultScreenState createState() => _MypageAdultScreenState();
+  State<MypageAdultScreen> createState() => _MypageAdultScreenState();
 }
 
 class _MypageAdultScreenState extends State<MypageAdultScreen> {
@@ -69,7 +69,7 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => RecordAdultScreen()));
+                      builder: (context) => MealRecordAdultScreen()));
                 },
                 text: "집밥 기록"),
           ],

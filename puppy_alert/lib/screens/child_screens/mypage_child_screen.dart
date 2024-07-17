@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/child_screens/personal_information_child_screen.dart';
 import 'package:puppy_alert/widgets/child_widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/profile_info_button.dart';
@@ -8,7 +9,7 @@ class MypageChildScreen extends StatefulWidget {
   const MypageChildScreen({super.key});
 
   @override
-  _MypageChildScreenState createState() => _MypageChildScreenState();
+  State<MypageChildScreen> createState() => _MypageChildScreenState();
 }
 
 class _MypageChildScreenState extends State<MypageChildScreen> {
@@ -56,7 +57,10 @@ class _MypageChildScreenState extends State<MypageChildScreen> {
             ProfileInfoButton(
                 icon: Icons.manage_accounts,
                 text: '   개인 정보',
-                onPressed: () {}),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PersonalInformationChildScreen()));
+                }),
             ProfileInfoButton(
                 icon: Icons.library_books, text: '   집밥 기록', onPressed: () {}),
             ProfileInfoButton(

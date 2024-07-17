@@ -5,7 +5,7 @@ class ConfirmedMealAdultScreen extends StatefulWidget {
   const ConfirmedMealAdultScreen({super.key});
 
   @override
-  _ConfirmedMealAdultScreenState createState() => _ConfirmedMealAdultScreenState();
+  State<ConfirmedMealAdultScreen> createState() => _ConfirmedMealAdultScreenState();
 }
 
 class _ConfirmedMealAdultScreenState extends State<ConfirmedMealAdultScreen> {
