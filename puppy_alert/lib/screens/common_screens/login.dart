@@ -22,6 +22,48 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void _showChoiceDialog(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('회원 유형 선택'),
+          content: Text('회원 유형을 선택해주세요',
+          style: TextStyle(
+            color: Colors.grey[600],
+          )),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop('child');
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SignupChildScreen()));
+              },
+              child: Text('결식아동',
+              style: TextStyle(
+                color:Color(0xffFF7700),
+              ),),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop('adult');
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SignupAdultScreen()));
+              },
+              child: Text('1인 가구',
+              style: TextStyle(
+                color: Color(0xffFF7700),
+              ),),
+            ),
+          ],
+        );
+      },
+    ).then((value) {
+      print('Selected option: $value');
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
@@ -86,7 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Text('계정이 없으신가요?'),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                _showChoiceDialog();
+                              },
                               child: Text(
                                 "가입하기",
                                 style: CustomUserTextStyle.signUpTextStyle,
@@ -110,3 +154,6 @@ class _LoginScreenState extends State<LoginScreen> {
     print('Password: $password');
   }
 }
+
+
+

@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xffFF7700),
         )
       ),
-      // home: LoginScreen(),
-      home: FavoriteHostAdultScreen(),
+      home: LoginScreen(),
+      // home: FavoriteHostAdultScreen(),
       routes:
       {
         '/login': (context) => LoginScreen(),
@@ -36,20 +36,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
