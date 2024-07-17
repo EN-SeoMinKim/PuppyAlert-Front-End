@@ -156,4 +156,27 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 
+// typedef ControllerCallback = void Function(TextEditingController controller);
+
+Widget idInputWidget(ControllerCallback controllerCallback) {
+  TextEditingController loginIdController = TextEditingController();
+
+  controllerCallback(loginIdController);
+
+  return UserTextFormField(
+    width: 300,
+    hintText: "아이디를 입력하세요",
+    labelText: "아이디",
+    textInputType: TextInputType.text,
+    actionKeyboard: TextInputAction.done,
+    // functionValidate: commonValidation,
+    controller: loginIdController,
+    // focusNode: _passwordControllerFocus,
+    onSubmitField: () {},
+    // parametersValidate: "Please enter password.",
+    prefixIcon: Icon(Icons.badge_outlined),
+  );
+}
+
+
 

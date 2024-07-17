@@ -17,6 +17,7 @@ class _UserDatePickerState extends State<UserDatePicker> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
+            padding: EdgeInsets.symmetric(horizontal: 12.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
             side: BorderSide(color: Colors.grey[300]!),

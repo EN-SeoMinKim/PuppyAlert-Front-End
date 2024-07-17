@@ -62,6 +62,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               idInputWidget((controller) {
                                 _idController = controller;
@@ -84,7 +85,33 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         SizedBox(
                           height: 30,
                         ),
-                        UserDatePicker(),
+                        SizedBox(
+                          width: 300,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(width:10),
+                                  Icon(Icons.date_range, size: 20),
+                                  SizedBox(width:10),
+                                  Text(
+                                    '생년월일',
+                                    style: TextStyle(
+                                      color: Color(0xff424856),
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FontStyle.normal,
+                                      letterSpacing: 1.2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              UserDatePicker(),
+                            ],
+                          ),
+                        ),
                         addressInputWidget((controller) {
                           _addressController = controller;
                         }),
@@ -94,6 +121,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               phonenumberConfirmationInputWidget((controller) {
                                 _phonenumberconfirmationController = controller;

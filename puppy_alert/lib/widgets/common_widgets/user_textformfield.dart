@@ -4,11 +4,12 @@ class UserTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType textInputType;
   final String hintText;
-  final Widget? prefixIcon;
+  final Widget prefixIcon;
   final String labelText;
   final bool obscureText;
   final TextInputAction actionKeyboard;
   final Function onSubmitField;
+  final double width;
 
   UserTextFormField({
     super.key,
@@ -19,7 +20,8 @@ class UserTextFormField extends StatefulWidget {
     this.obscureText = false,
     this.actionKeyboard = TextInputAction.next,
     required this.onSubmitField,
-    this.prefixIcon,
+    required this.prefixIcon,
+    this.width = 300,
   });
 
   @override
@@ -40,8 +42,8 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
         ),
       ),
       child: Container(
-        margin: EdgeInsets.only(top: 50),
-        width: 300,
+        margin: EdgeInsets.only(top: 35),
+        width: widget.width,
         child: TextFormField(
           controller: widget.controller,
           obscureText: widget.obscureText,
@@ -96,6 +98,7 @@ Widget idInputWidget(ControllerCallback controllerCallback) {
   controllerCallback(loginIdController);
 
   return UserTextFormField(
+    width: 230,
     hintText: "아이디를 입력하세요",
     labelText: "아이디",
     textInputType: TextInputType.text,
@@ -237,6 +240,7 @@ Widget phonenumberConfirmationInputWidget(ControllerCallback controllerCallback)
   controllerCallback( phonenumberConfirmationController);
 
   return UserTextFormField(
+    width: 200,
     hintText: "인증번호를 입력하세요",
     labelText: "인증번호",
     textInputType: TextInputType.text,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
+import '../../widgets/common_widgets/user_datepicker.dart';
 import '../../widgets/common_widgets/white_background_button.dart';
 import '../../widgets/common_widgets/custom_user_text_style.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
@@ -61,6 +62,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               idInputWidget((controller) {
                                 _idController = controller;
@@ -83,6 +85,36 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                         nameInputWidget((controller) {
                           _nameController = controller;
                         }),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(width:10),
+                                  Icon(Icons.date_range, size: 20),
+                                  SizedBox(width:10),
+                                  Text(
+                                    '생년월일',
+                                    style: TextStyle(
+                                      color: Color(0xff424856),
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FontStyle.normal,
+                                      letterSpacing: 1.2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              UserDatePicker(),
+                            ],
+                          ),
+                        ),
                         addressInputWidget((controller) {
                           _addressController = controller;
                         }),
@@ -92,6 +124,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               phonenumberConfirmationInputWidget((controller) {
                                 _phonenumberconfirmationController = controller;
