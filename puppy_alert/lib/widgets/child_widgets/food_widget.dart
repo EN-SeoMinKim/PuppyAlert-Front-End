@@ -6,6 +6,7 @@ class FoodWidget extends StatefulWidget {
   final String hostName;
   final String time;
   final String recruitmentStatus;
+  final Color favorite;
 
   FoodWidget({
     super.key,
@@ -14,6 +15,7 @@ class FoodWidget extends StatefulWidget {
     required this.hostName,
     required this.time,
     required this.recruitmentStatus,
+    required this.favorite,
   });
 
   @override
@@ -57,7 +59,7 @@ class _FoodWidgetState extends State<FoodWidget> {
                 ),
                 Icon(
                   Icons.favorite_border,
-                  color: Colors.red,
+                  color: widget.favorite,
                 )
               ],
             ),
@@ -93,6 +95,7 @@ Widget firstFoodWidget() {
       imagePath: 'food.png',
       foodName: '비빔밥',
       hostName: '김순옥님',
+      favorite: Colors.red,
       time: '18:00',
       recruitmentStatus: '똥강아지 모집완료');
 }

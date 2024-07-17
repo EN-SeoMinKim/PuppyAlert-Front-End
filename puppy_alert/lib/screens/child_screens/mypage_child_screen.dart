@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/child_screens/personal_information_child_screen.dart';
 import 'package:puppy_alert/widgets/child_widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/common_widgets/profile_info_button.dart';
+import '../../widgets/child_widgets/profile_info_button.dart';
 import '../common_screens/login.dart';
 
 class MypageChildScreen extends StatefulWidget {

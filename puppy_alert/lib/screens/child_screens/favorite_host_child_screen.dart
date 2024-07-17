@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/child_widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/child_widgets/food_widget.dart';
+import '../../widgets/child_widgets/host_widget.dart';
 
 class FavoriteHostAdultScreen extends StatefulWidget {
   const FavoriteHostAdultScreen({super.key});
@@ -38,7 +39,7 @@ class _FavoriteHostAdultScreenState extends State<FavoriteHostAdultScreen> {
                 itemCount: 10,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: firstFoodWidget(),
+                    title: firstHostWidget(),
                   );
                 },
               ),
