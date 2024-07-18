@@ -25,74 +25,82 @@ class FoodWidget extends StatefulWidget {
 class _FoodWidgetState extends State<FoodWidget> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image.asset(
-              widget.imagePath,
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
+    return Container(
+      color: Colors.white,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(width:10),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: Image.asset(
+                widget.imagePath,
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Column(
-          children: [
-            Text(
-              widget.foodName,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Text(widget.hostName),
-                SizedBox(
-                  width: 8,
-                ),
-                Icon(
-                  Icons.favorite_border,
-                  color: widget.favorite,
-                )
-              ],
-            ),
-            SizedBox(
-              height:5,
-            ),
-            Text(widget.time),
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xffFFFAE1),
-                border: Border.all(
-                  color: Color(0xff9095A1),
-                  width: 0.2,
-                ),
-                borderRadius: BorderRadius.circular(10.0),
+          SizedBox(
+            width: 15,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.foodName,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              child: Text(
-                widget.recruitmentStatus,
-                style: TextStyle(
-                  color: Color(0xff7D6600),
-                ),
+              SizedBox(
+                height: 5,
               ),
-            )
-          ],
-        ),
-      ],
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(widget.hostName),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Icon(
+                    Icons.favorite_border,
+                    color: widget.favorite,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(widget.time),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(6,2,6,2),
+                decoration: BoxDecoration(
+                  color: Color(0xffFFFAE1),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Text(
+                  widget.recruitmentStatus,
+                  style: TextStyle(
+                    color: Color(0xff7D6600),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
 
 Widget firstFoodWidget() {
   return FoodWidget(
-      imagePath: 'food.png',
+      imagePath: 'assets/food.png',
       foodName: '비빔밥',
       hostName: '김순옥님',
       favorite: Colors.red,

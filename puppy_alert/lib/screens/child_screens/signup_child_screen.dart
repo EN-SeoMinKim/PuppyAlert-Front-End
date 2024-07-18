@@ -13,14 +13,14 @@ class SignupChildScreen extends StatefulWidget {
 }
 
 class _SignupChildScreenState extends State<SignupChildScreen> {
-  TextEditingController _idController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _passwordConfirmationController =
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
   TextEditingController();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _phonenumberController = TextEditingController();
-  TextEditingController _phonenumberconfirmationController =
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phonenumberController = TextEditingController();
+  final TextEditingController _phonenumberconfirmationController =
   TextEditingController();
 
   @override

@@ -19,7 +19,9 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
           SizedBox(
             height: 50,
           ),
-          Center(child: Text('똥강아지를\n모집하세요', style: mainTextStyle)),
+          Center(
+              child: Text('똥강아지를\n모집하세요',
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30))),
           SizedBox(
             height: 30,
           ),
@@ -38,8 +40,3 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
     );
   }
 }
-
-const TextStyle mainTextStyle = TextStyle(
-  fontWeight: FontWeight.w900,
-  fontSize: 30,
-);

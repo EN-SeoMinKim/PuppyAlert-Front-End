@@ -14,6 +14,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.white,
       selectedItemColor: Color(0xffFF7700),
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(

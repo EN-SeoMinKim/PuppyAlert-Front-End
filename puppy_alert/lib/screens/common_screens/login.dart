@@ -6,13 +6,15 @@ import '../../widgets/common_widgets/user_textformfield.dart';
 import '../child_screens/signup_child_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _idController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
