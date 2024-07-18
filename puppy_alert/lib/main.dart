@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/screens/adult_screens/meal_record_adult_screen.dart';
+import 'package:puppy_alert/screens/child_screens/meal_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/signup_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/today_meal_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           )
         ),
         // home: LoginScreen(),
-        home:TodayMealChildScreen(),
+        home:MealChildScreen(),
         routes:
         {
           '/login': (context) => LoginScreen(),
