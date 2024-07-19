@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
 
-class ConfirmedMealAdultScreen extends StatefulWidget {
-  const ConfirmedMealAdultScreen({super.key});
+class ConfirmedZipbobAdultScreen extends StatefulWidget {
+  const ConfirmedZipbobAdultScreen({super.key});
 
   @override
-  State<ConfirmedMealAdultScreen> createState() => _ConfirmedMealAdultScreenState();
+  State<ConfirmedZipbobAdultScreen> createState() => _ConfirmedZipbobAdultScreenState();
 }
 
-class _ConfirmedMealAdultScreenState extends State<ConfirmedMealAdultScreen> {
+class _ConfirmedZipbobAdultScreenState extends State<ConfirmedZipbobAdultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
-class FoodWidget extends StatefulWidget {
+class ZipbobWidget extends StatefulWidget {
   final String imagePath;
   final String foodName;
   final String hostName;
   final String time;
   final String recruitmentStatus;
-  final Color favorite;
 
-  FoodWidget({
+  ZipbobWidget({
     super.key,
     required this.imagePath,
     required this.foodName,
     required this.hostName,
     required this.time,
     required this.recruitmentStatus,
-    required this.favorite,
   });
 
   @override
-  State<FoodWidget> createState() => _FoodWidgetState();
+  State<ZipbobWidget> createState() => _ZipbobWidgetState();
 }
 
-class _FoodWidgetState extends State<FoodWidget> {
+class _ZipbobWidgetState extends State<ZipbobWidget> {
+  bool isFavorite = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +30,7 @@ class _FoodWidgetState extends State<FoodWidget> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width:10),
+          SizedBox(width: 10),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ClipRRect(
@@ -43,9 +43,7 @@ class _FoodWidgetState extends State<FoodWidget> {
               ),
             ),
           ),
-          SizedBox(
-            width: 15,
-          ),
+          SizedBox(width: 15),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,31 +52,30 @@ class _FoodWidgetState extends State<FoodWidget> {
                 widget.foodName,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(
-                height: 5,
-              ),
+              SizedBox(height: 2),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(widget.hostName),
-                  SizedBox(
-                    width: 8,
+                  SizedBox(width: 8),
+                  IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? Colors.red : Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isFavorite = !isFavorite;
+                      });
+                    },
                   ),
-                  Icon(
-                    Icons.favorite_border,
-                    color: widget.favorite,
-                  )
                 ],
               ),
-              SizedBox(
-                height: 5,
-              ),
+              SizedBox(height: 2),
               Text(widget.time),
-              SizedBox(
-                height: 5,
-              ),
+              SizedBox(height: 2),
               Container(
-                padding: EdgeInsets.fromLTRB(6,2,6,2),
+                padding: EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
                   color: Color(0xffFFFAE1),
                   borderRadius: BorderRadius.circular(5.0),
@@ -89,7 +86,7 @@ class _FoodWidgetState extends State<FoodWidget> {
                     color: Color(0xff7D6600),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -99,11 +96,11 @@ class _FoodWidgetState extends State<FoodWidget> {
 }
 
 Widget firstFoodWidget() {
-  return FoodWidget(
-      imagePath: 'assets/food.png',
-      foodName: '비빔밥',
-      hostName: '김순옥님',
-      favorite: Colors.red,
-      time: '18:00',
-      recruitmentStatus: '똥강아지 모집완료');
+  return ZipbobWidget(
+    imagePath: 'assets/food.png',
+    foodName: '비빔밥',
+    hostName: '김순옥님',
+    time: '18:00',
+    recruitmentStatus: '똥강아지 모집완료',
+  );
 }

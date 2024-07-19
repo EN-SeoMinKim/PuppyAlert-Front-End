@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../widgets/adult_widgets/elevated_shadow_button.dart';
 
-class MealRecordAdultScreen extends StatefulWidget {
-  const MealRecordAdultScreen({super.key});
+class ZipbobRecordAdultScreen extends StatefulWidget {
+  const ZipbobRecordAdultScreen({super.key});
 
   @override
-  State<MealRecordAdultScreen> createState() => _MealRecordAdultScreenState();
+  State<ZipbobRecordAdultScreen> createState() => _ZipbobRecordAdultScreenState();
 }
 
-class _MealRecordAdultScreenState extends State<MealRecordAdultScreen> {
+class _ZipbobRecordAdultScreenState extends State<ZipbobRecordAdultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
