@@ -57,6 +57,11 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
       onMapReady: (NaverMapController controller) {
         _mapController = controller;
       },
+      onMapTapped: (NPoint point, NLatLng latLng) {
+        print('===========================');
+        print(latLng.toString());
+        print('===========================');
+      },
     );
   }
 }
