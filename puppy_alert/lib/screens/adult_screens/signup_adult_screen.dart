@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/common_screens/login.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/user_datepicker.dart';
 import '../../widgets/common_widgets/white_background_button.dart';
@@ -74,7 +75,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           ),
                         ),
                         passwordInputWidget(_passwordController),
-                        passwordConfirmationInputWidget(_passwordConfirmationController),
+                        passwordConfirmationInputWidget(_passwordConfirmationController,_passwordController),
                         nicknameInputWidget(_nicknameController),
                         nameInputWidget(_nameController),
                         SizedBox(
@@ -133,13 +134,13 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('계정이 없으신가요?'),
+                      Text('계정이 있으신가요?'),
                       TextButton(
                         onPressed: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) => SignupChildren()))   ;
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()))   ;
                         },
                         child: Text(
-                          "가입하기",
+                          "로그인하기",
                           style: CustomUserTextStyle.signUpTextStyle,
                         ),
                       ),

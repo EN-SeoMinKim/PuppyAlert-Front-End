@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        idInputWidget(_idController),
+                        loginIdInputWidget(_idController),
                         passwordInputWidget(_passwordController),
                         SizedBox(height: 20),
                         ButtonTheme(
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-Widget idInputWidget(TextEditingController controller) {
+Widget loginIdInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
     width: 300,

@@ -104,3 +104,4 @@ Widget firstFoodWidget() {
     recruitmentStatus: '똥강아지 모집완료',
   );
 }
+

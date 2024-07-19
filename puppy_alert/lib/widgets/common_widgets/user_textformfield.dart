@@ -4,12 +4,15 @@ class UserTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType textInputType;
   final String hintText;
-  final Widget prefixIcon;
+  final Widget? prefixIcon;
   final String labelText;
   final bool obscureText;
   final TextInputAction actionKeyboard;
   final Function onSubmitField;
   final double width;
+  final String? Function(String?)? validator;
+  final Widget? additionalField; // 추가된 부분
+  final double margin;
 
   UserTextFormField({
     super.key,
@@ -20,15 +23,16 @@ class UserTextFormField extends StatefulWidget {
     this.obscureText = false,
     this.actionKeyboard = TextInputAction.next,
     required this.onSubmitField,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.width = 300,
+    this.validator,
+    this.additionalField, // 추가된 부분
+    this.margin = 28,
   });
 
   @override
-  _UserTextFormFieldState createState() => _UserTextFormFieldState();
+  State<UserTextFormField> createState() => _UserTextFormFieldState();
 }
-
-
 
 class _UserTextFormFieldState extends State<UserTextFormField> {
 
@@ -42,46 +46,55 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
         ),
       ),
       child: Container(
-        margin: EdgeInsets.only(top: 35),
+        margin: EdgeInsets.only(top: widget.margin),
         width: widget.width,
-        child: TextFormField(
-          controller: widget.controller,
-          obscureText: widget.obscureText,
-          keyboardType: widget.textInputType,
-          textInputAction: widget.actionKeyboard,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.0,
-            fontWeight: FontWeight.w600,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 1.2,
-          ),
-          decoration: InputDecoration(
-            prefixIcon: widget.prefixIcon,
-            labelText: widget.labelText,
-            labelStyle: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
+        child: Column( // 변경된 부분
+          crossAxisAlignment: CrossAxisAlignment.start, // 변경된 부분
+          children: [
+            TextFormField(
+              controller: widget.controller,
+              obscureText: widget.obscureText,
+              keyboardType: widget.textInputType,
+              textInputAction: widget.actionKeyboard,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+                letterSpacing: 1.2,
+              ),
+              decoration: InputDecoration(
+                prefixIcon: widget.prefixIcon,
+                labelText: widget.labelText,
+                labelStyle: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+                hintText: widget.hintText,
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w300,
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 1.2,
+                ),
+                isDense: true,
+                errorStyle: TextStyle(
+                  color: Colors.red,
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w300,
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              validator: widget.validator,
             ),
-            hintText: widget.hintText,
-            hintStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: 14.0,
-              fontWeight: FontWeight.w300,
-              fontStyle: FontStyle.normal,
-              letterSpacing: 1.2,
-            ),
-            isDense: true,
-            errorStyle: TextStyle(
-              color: Colors.red,
-              fontSize: 12.0,
-              fontWeight: FontWeight.w300,
-              fontStyle: FontStyle.normal,
-              letterSpacing: 1.2,
-            ),
-            // validator: (value) => CheckValidate().validateEmail(_emailFocus, value ?? ''),
-            // onSaved: (value) {},
-          ),
+            if (widget.additionalField != null) // 추가된 부분
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: widget.additionalField!,
+              ),
+          ],
         ),
       ),
     );
@@ -93,19 +106,24 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
 
 
 Widget idInputWidget(TextEditingController controller) {
-
   return UserTextFormField(
     width: 230,
     hintText: "아이디를 입력하세요",
     labelText: "아이디",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller: controller,
-    // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
-    // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.badge_outlined),
+    validator: (value) {
+      final RegExp idRegExp = RegExp(r'^[a-zA-Z0-9]{4,12}$');
+      if (value == null || value.isEmpty) {
+        return '아이디를 입력하세요';
+      } else if (!idRegExp.hasMatch(value)) {
+        return '아이디는 4~12자의 알파벳과 숫자만 포함해야 합니다';
+      }
+      return null;
+    },
   );
 }
 
@@ -118,17 +136,27 @@ Widget passwordInputWidget(TextEditingController controller) {
     obscureText: true,
     textInputType: TextInputType.visiblePassword,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
-    prefixIcon: Icon(Icons.enhanced_encryption),
+    prefixIcon: Icon(Icons.enhanced_encryption_outlined),
+    validator: (value){
+      final RegExp passwordRegExp = RegExp(
+        r'^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!%*#?&])[a-zA-Z\d@!%*#?&]{8,15}$',
+      );
+      if (value == null || value.isEmpty) {
+        return '비밀번호를 입력하세요';
+      } else if (!passwordRegExp.hasMatch(value)) {
+        return '비밀번호는 8~15자의 알파벳과 숫자및 특수문자(@!%*#?&)가 하나 이상 포함해야 합니다';
+      }
+      return null;
+    },
   );
 }
 
 
-Widget passwordConfirmationInputWidget(TextEditingController controller) {
+Widget passwordConfirmationInputWidget(TextEditingController controller, TextEditingController passwordController) {
 
   return UserTextFormField(
     hintText: "비밀번호를 한번 더 입력하세요",
@@ -142,6 +170,14 @@ Widget passwordConfirmationInputWidget(TextEditingController controller) {
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.enhanced_encryption),
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return '비밀번호를 확인하세요';
+      } else if (value != passwordController.text) {
+        return '비밀번호가 일치하지 않습니다';
+      }
+      return null;
+    },
   );
 }
 
@@ -152,12 +188,16 @@ Widget nameInputWidget(TextEditingController controller) {
     labelText: "이름",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.perm_identity),
+    validator: (value){
+      if (value == null || value.isEmpty) {
+        return '이름을 입력하세요';
+      }
+    },
   );
 }
 
@@ -168,12 +208,22 @@ Widget nicknameInputWidget(TextEditingController controller) {
     labelText: "닉네임",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller: controller,
     // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.perm_identity),
+    validator: (value){
+      final RegExp nicknameRegExp = RegExp(
+        r'^[a-zA-Z][a-zA-Z0-9_-]{2,18}[a-zA-Z0-9]$',
+      );
+      if (value == null || value.isEmpty) {
+        return '닉네임을 입력하세요';
+      } else if (!nicknameRegExp.hasMatch(value)) {
+        return '닉네임은 3~20자의 알파벳, 숫자, 언더스코어(_), 하이픈(-)만 포함할 수 있습니다.';
+      }
+      return null;
+    },
   );
 }
 
@@ -183,8 +233,10 @@ Widget nicknameInputWidget(TextEditingController controller) {
 Widget addressInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
-    hintText: "주소를 입력하세요",
-    labelText: "주소",
+    margin: 20,
+    width: 200,
+    hintText: "우편번호를 입력하세요",
+    labelText: "우편번호",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     // functionValidate: commonValidation,
@@ -195,6 +247,23 @@ Widget addressInputWidget(TextEditingController controller) {
     prefixIcon: Icon(Icons.location_on_outlined),
   );
 }
+
+Widget addressDetailInputWidget(TextEditingController controller) {
+
+  return UserTextFormField(
+    margin: 10.0,
+    hintText: "상세 주소를 입력하세요",
+    labelText: "           상세주소",
+    textInputType: TextInputType.text,
+    actionKeyboard: TextInputAction.done,
+// functionValidate: commonValidation,
+    controller: controller,
+// focusNode: _passwordControllerFocus,
+    onSubmitField: () {},
+// parametersValidate: "Please enter password.",
+  );
+}
+
 
 Widget phonenumberInputWidget(TextEditingController controller) {
 
@@ -209,6 +278,15 @@ Widget phonenumberInputWidget(TextEditingController controller) {
     onSubmitField: () {},
     // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.call),
+    validator: (value){
+      final RegExp idRegExp = RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$');
+      if (value == null || value.isEmpty) {
+        return '전화번호를 입력하세요';
+      } else if (!idRegExp.hasMatch(value)) {
+        return '010-1234-1234같이 대쉬를 포함해야 합니다';
+      }
+      return null;
+    },
   );
 }
 
