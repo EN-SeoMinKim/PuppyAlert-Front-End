@@ -2,9 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
 import 'package:puppy_alert/screens/child_screens/main_child_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 
 void main() async {
+  await _initNaverMap();
   runApp(const MyApp());
+}
+
+Future<void> _initNaverMap() async {
+  await dotenv.load(fileName: '.env');
+  String id = dotenv.get('CLIENT_ID');
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await NaverMapSdk.instance.initialize(
+      clientId: id, onAuthFailed: (error) => print('Auth failed: $error'));
 }
 
 class MyApp extends StatelessWidget {
