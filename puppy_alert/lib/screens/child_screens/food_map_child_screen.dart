@@ -21,7 +21,12 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
         id: "sejong",
         position: const NLatLng(37.54965636279012, 127.0750237101941));
     _foodMapChildWidget = FoodMapChildWidget(marker: _marker);
-    _foodMapDetailChildWidget = const FoodMapDetailChildWidget();
+    _foodMapDetailChildWidget = FoodMapDetailChildWidget(
+      foodName: '비빔밥',
+      personName: '김순옥',
+      dateTime: DateTime.now(),
+      address: '${_marker.position.latitude}, ${_marker.position.longitude}',
+    );
     _showWidget = _foodMapChildWidget;
     _initMarkerListener();
   }
@@ -32,10 +37,12 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
         _showWidget = Column(
           children: [
             SizedBox(
-              height: 500,
-              child: _foodMapChildWidget,
+              height: 400,
+                child: _foodMapChildWidget
             ),
-            _foodMapDetailChildWidget,
+            SizedBox(
+                height: 250,
+                child: _foodMapDetailChildWidget),
           ],
         );
       });
