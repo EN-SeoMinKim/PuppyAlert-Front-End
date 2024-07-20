@@ -3,14 +3,21 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:geolocator/geolocator.dart';
 
 class FoodMapChildWidget extends StatefulWidget {
-  const FoodMapChildWidget({super.key});
+  NMarker marker;
+
+  FoodMapChildWidget({super.key, required this.marker});
 
   @override
-  State<FoodMapChildWidget> createState() => _FoodMapChildWidgetState();
+  State<FoodMapChildWidget> createState() => _FoodMapChildWidgetState(marker);
 }
 
 class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
+  late NMarker _marker;
   NaverMapController? _mapController;
+
+  _FoodMapChildWidgetState(NMarker marker) {
+    this._marker = marker;
+  }
 
   @override
   void initState() {
@@ -28,6 +35,10 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
     }
 
     Position position = await Geolocator.getCurrentPosition();
+    _setMapController(position);
+  }
+
+  _setMapController(Position position) {
     setState(() {
       if (_mapController != null) {
         _mapController!.updateCamera(
@@ -56,11 +67,10 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
       ),
       onMapReady: (NaverMapController controller) {
         _mapController = controller;
+        _mapController!.addOverlay(_marker);
       },
+
       onMapTapped: (NPoint point, NLatLng latLng) {
-        print('===========================');
-        print(latLng.toString());
-        print('===========================');
       },
     );
   }

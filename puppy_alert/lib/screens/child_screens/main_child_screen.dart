@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/child_screens/favorite_host_child_screen.dart';
-import 'package:puppy_alert/screens/child_screens/food_map_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/home_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/info_main_child_screen.dart';
+
+import 'food_map_child_screen.dart';
 
 class MainChildScreen extends StatefulWidget {
   const MainChildScreen({super.key});
