@@ -1,19 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:http/http.dart';
 
-class FoodMapDetailChildWidget extends StatelessWidget {
-  final String _foodName, _personName, _address;
-  final DateTime _dateTime;
+class FoodMapDetailChildWidget extends StatefulWidget {
+  late final String _foodName, _personName;
+  late final NLatLng _latLng;
+  late final DateTime _dateTime;
 
-  const FoodMapDetailChildWidget(
+  FoodMapDetailChildWidget(
       {super.key,
       required String foodName,
       required String personName,
-      required String address,
-      required DateTime dateTime})
-      : _dateTime = dateTime,
-        _address = address,
-        _personName = personName,
-        _foodName = foodName;
+      required NLatLng latLng,
+      required DateTime dateTime}) {
+    _dateTime = dateTime;
+    _personName = personName;
+    _foodName = foodName;
+    _latLng = latLng;
+  }
+
+  @override
+  State<FoodMapDetailChildWidget> createState() =>
+      _FoodMapDetailChildWidgetState();
+}
+
+class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
+  late String _address = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getAddress(widget._latLng).then((address) {
+      setState(() {
+        _address = address;
+      });
+    });
+  }
+
+  Future<String> _getAddress(NLatLng latLng) async {
+    Response response = await _getResponse(latLng);
+    String jsonData = response.body;
+    print(jsonData);
+    return jsonData;
+  }
+
+  Future<Response> _getResponse(NLatLng latLng) async {
+    String id = dotenv.get('CLIENT_ID');
+    String secret = dotenv.get('CLIENT_SECRET');
+    Map<String, String> header = {
+      'X-NCP-APIGW-API-KEY-ID': id,
+      'X-NCP-APIGW-API-KEY': secret
+    };
+
+    return await get(
+        Uri.parse(
+            'https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=${latLng.longitude},${latLng.latitude}&orders=roadaddr&output=json'),
+        headers: header);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +71,7 @@ class FoodMapDetailChildWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 100.0, 0),
                 child: Text(
-                  _foodName,
+                  widget._foodName,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: Material.defaultSplashRadius,
@@ -37,9 +82,7 @@ class FoodMapDetailChildWidget extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(100.0, 0, 0, 0),
                 child: Row(
                   children: [
-                    Text(
-                      _personName,
-                    ),
+                    Text(widget._personName),
                     const Icon(
                       Icons.favorite_border,
                       color: Colors.red,
@@ -50,8 +93,8 @@ class FoodMapDetailChildWidget extends StatelessWidget {
             ],
           ),
         ),
-        _infoWidget(
-            Icons.access_time, 'Time', '${_dateTime.hour}:${_dateTime.minute}'),
+        _infoWidget(Icons.access_time, 'Time',
+            '${widget._dateTime.hour}:${widget._dateTime.minute}'),
         _infoWidget(Icons.location_on_outlined, 'Address', _address),
       ],
     );

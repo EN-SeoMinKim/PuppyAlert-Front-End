@@ -22,11 +22,10 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
         position: const NLatLng(37.54965636279012, 127.0750237101941));
     _foodMapChildWidget = FoodMapChildWidget(marker: _marker);
     _foodMapDetailChildWidget = FoodMapDetailChildWidget(
-      foodName: '비빔밥',
-      personName: '김순옥',
-      dateTime: DateTime.now(),
-      address: '${_marker.position.latitude}, ${_marker.position.longitude}',
-    );
+        foodName: '비빔밥',
+        personName: '김순옥',
+        latLng: _marker.position,
+        dateTime: DateTime.now());
     _showWidget = _foodMapChildWidget;
     _initMarkerListener();
   }
@@ -37,7 +36,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
         _showWidget = Column(
           children: [
             SizedBox(
-              height: 400,
+                height: 400,
                 child: _foodMapChildWidget
             ),
             SizedBox(
