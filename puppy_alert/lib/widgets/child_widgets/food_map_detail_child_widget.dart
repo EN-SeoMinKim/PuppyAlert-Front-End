@@ -1,60 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:http/http.dart';
 
-class FoodMapDetailChildWidget extends StatefulWidget {
-  final String foodName, personName;
-  final NLatLng latLng;
-  final DateTime dateTime;
+class FoodMapDetailChildWidget extends StatelessWidget {
+  final String _foodName, _personName, _address;
+  final DateTime _dateTime;
 
-  const FoodMapDetailChildWidget({
-    super.key,
-    required this.foodName,
-    required this.personName,
-    required this.latLng,
-    required this.dateTime,
-  });
+  const FoodMapDetailChildWidget(
+      this._foodName, this._personName, this._address, this._dateTime,
+      {super.key});
 
-  @override
-  State<FoodMapDetailChildWidget> createState() =>
-      _FoodMapDetailChildWidgetState();
-}
-
-class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
-  late String _address = "Loading...";
-
-  @override
-  void initState() {
-    super.initState();
-
-    _getAddress(widget.latLng).then((address) {
-      setState(() {
-        _address = address;
-      });
-    });
-  }
-
-  Future<String> _getAddress(NLatLng latLng) async {
-    Response response = await _getResponse(latLng);
-    String jsonData = response.body;
-    print(jsonData);
-    return jsonData;
-  }
-
-  Future<Response> _getResponse(NLatLng latLng) async {
-    String id = dotenv.get('CLIENT_ID');
-    String secret = dotenv.get('CLIENT_SECRET');
-    Map<String, String> header = {
-      'X-NCP-APIGW-API-KEY-ID': id,
-      'X-NCP-APIGW-API-KEY': secret
-    };
-
-    return await get(
-        Uri.parse(
-            'https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=${latLng.longitude},${latLng.latitude}&orders=roadaddr&output=json'),
-        headers: header);
-  }
+  //   late String _address = "Loading...";
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//
+//     _getAddress(widget.latLng).then((address) {
+//       setState(() {
+//         _address = address;
+//       });
+//     });
+//   }
+//
+//   Future<String> _getAddress(NLatLng latLng) async {
+//     Response response = await _getResponse(latLng);
+//     var jsonData = jsonDecode(response.body);
+//     var region = jsonData['results'][0]['region'];
+//     var land = jsonData['results'][0]['land'];
+//     print(region);
+//     print(land);
+//     return jsonData;
+//   }
+//
+//   Future<Response> _getResponse(NLatLng latLng) async {
+//     String id = dotenv.get('CLIENT_ID');
+//     String secret = dotenv.get('CLIENT_SECRET');
+//     Map<String, String> header = {
+//       'X-NCP-APIGW-API-KEY-ID': id,
+//       'X-NCP-APIGW-API-KEY': secret
+//     };
+//
+//     return await get(
+//         Uri.parse(
+//             'https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=${latLng.longitude},${latLng.latitude}&orders=roadaddr&output=json'),
+//         headers: header);
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +56,7 @@ class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 100.0, 0),
                 child: Text(
-                  widget.foodName,
+                  _foodName,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: Material.defaultSplashRadius,
@@ -78,7 +67,7 @@ class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
                 padding: const EdgeInsets.fromLTRB(100.0, 0, 0, 0),
                 child: Row(
                   children: [
-                    Text(widget.personName),
+                    Text(_personName),
                     const Icon(
                       Icons.favorite_border,
                       color: Colors.red,
@@ -90,7 +79,7 @@ class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
           ),
         ),
         _infoWidget(Icons.access_time, 'Time',
-            '${widget.dateTime.hour}:${widget.dateTime.minute}'),
+            '${_dateTime.hour}:${_dateTime.minute}'),
         _infoWidget(Icons.location_on_outlined, 'Address', _address),
       ],
     );
