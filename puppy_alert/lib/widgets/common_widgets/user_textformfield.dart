@@ -59,8 +59,8 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
       child: Container(
         margin: EdgeInsets.only(top: widget.margin),
         width: widget.width,
-        child: Column( // 변경된 부분
-          crossAxisAlignment: CrossAxisAlignment.start, // 변경된 부분
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
               controller: widget.controller,
@@ -147,9 +147,7 @@ Widget passwordInputWidget(TextEditingController controller) {
     textInputType: TextInputType.visiblePassword,
     actionKeyboard: TextInputAction.done,
     controller: controller,
-    // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
-    // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.enhanced_encryption_outlined),
     validator: (value){
       final RegExp passwordRegExp = RegExp(
@@ -174,11 +172,8 @@ Widget passwordConfirmationInputWidget(TextEditingController controller, TextEdi
     obscureText: true,
     textInputType: TextInputType.visiblePassword,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller:controller,
-    // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
-    // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.enhanced_encryption),
     validator: (value) {
       if (value == null || value.isEmpty) {
@@ -199,9 +194,7 @@ Widget nameInputWidget(TextEditingController controller) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     controller: controller,
-    // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
-    // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.perm_identity),
     validator: (value){
       if (value == null || value.isEmpty) {
@@ -219,9 +212,7 @@ Widget nicknameInputWidget(TextEditingController controller) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     controller: controller,
-    // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
-    // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.perm_identity),
     validator: (value){
       final RegExp nicknameRegExp = RegExp(
@@ -249,11 +240,8 @@ Widget addressInputWidget(TextEditingController controller) {
     labelText: "우편번호",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller: controller,
-    // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
-    // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.location_on_outlined),
   );
 }
@@ -266,11 +254,8 @@ Widget addressDetailInputWidget(TextEditingController controller) {
     labelText: "           상세주소",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
-// functionValidate: commonValidation,
     controller: controller,
-// focusNode: _passwordControllerFocus,
     onSubmitField: () {},
-// parametersValidate: "Please enter password.",
   );
 }
 
@@ -282,11 +267,8 @@ Widget phonenumberInputWidget(TextEditingController controller) {
     labelText: "전화번호",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller: controller,
-    // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
-    // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.call),
     validator: (value){
       final RegExp idRegExp = RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$');
@@ -309,12 +291,9 @@ Widget phonenumberConfirmationInputWidget(TextEditingController controller) {
     labelText: "인증번호",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller: controller,
-    // focusNode: _passwordControllerFocus,
     onSubmitField: () {},
     prefixIcon: Icon(Icons.verified_outlined),
-    // parametersValidate: "Please enter password.",
   );
 }
 
