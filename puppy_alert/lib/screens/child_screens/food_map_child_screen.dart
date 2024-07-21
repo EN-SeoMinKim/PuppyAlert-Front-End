@@ -16,7 +16,9 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   late FoodMapDetailChildWidget _foodMapDetailChildWidget;
   late NMarker _marker;
 
-  _FoodMapChildScreenState() {
+  @override
+  void initState() {
+    super.initState();
     _marker = NMarker(
         id: "sejong",
         position: const NLatLng(37.54965636279012, 127.0750237101941));

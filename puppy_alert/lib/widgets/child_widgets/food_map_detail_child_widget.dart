@@ -4,21 +4,17 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:http/http.dart';
 
 class FoodMapDetailChildWidget extends StatefulWidget {
-  late final String _foodName, _personName;
-  late final NLatLng _latLng;
-  late final DateTime _dateTime;
+  final String foodName, personName;
+  final NLatLng latLng;
+  final DateTime dateTime;
 
-  FoodMapDetailChildWidget(
-      {super.key,
-      required String foodName,
-      required String personName,
-      required NLatLng latLng,
-      required DateTime dateTime}) {
-    _dateTime = dateTime;
-    _personName = personName;
-    _foodName = foodName;
-    _latLng = latLng;
-  }
+  const FoodMapDetailChildWidget({
+    super.key,
+    required this.foodName,
+    required this.personName,
+    required this.latLng,
+    required this.dateTime,
+  });
 
   @override
   State<FoodMapDetailChildWidget> createState() =>
@@ -32,7 +28,7 @@ class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
   void initState() {
     super.initState();
 
-    _getAddress(widget._latLng).then((address) {
+    _getAddress(widget.latLng).then((address) {
       setState(() {
         _address = address;
       });
@@ -71,7 +67,7 @@ class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 100.0, 0),
                 child: Text(
-                  widget._foodName,
+                  widget.foodName,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: Material.defaultSplashRadius,
@@ -82,7 +78,7 @@ class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
                 padding: const EdgeInsets.fromLTRB(100.0, 0, 0, 0),
                 child: Row(
                   children: [
-                    Text(widget._personName),
+                    Text(widget.personName),
                     const Icon(
                       Icons.favorite_border,
                       color: Colors.red,
@@ -94,7 +90,7 @@ class _FoodMapDetailChildWidgetState extends State<FoodMapDetailChildWidget> {
           ),
         ),
         _infoWidget(Icons.access_time, 'Time',
-            '${widget._dateTime.hour}:${widget._dateTime.minute}'),
+            '${widget.dateTime.hour}:${widget.dateTime.minute}'),
         _infoWidget(Icons.location_on_outlined, 'Address', _address),
       ],
     );

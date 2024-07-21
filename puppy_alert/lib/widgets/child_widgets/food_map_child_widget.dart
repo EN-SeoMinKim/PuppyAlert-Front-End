@@ -3,9 +3,9 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:geolocator/geolocator.dart';
 
 class FoodMapChildWidget extends StatefulWidget {
-  final NMarker? _marker;
+  NMarker? marker;
 
-  const FoodMapChildWidget({super.key, NMarker? marker}) : _marker = marker;
+  FoodMapChildWidget({super.key, this.marker});
 
   @override
   _FoodMapChildWidgetState createState() => _FoodMapChildWidgetState();
@@ -58,8 +58,8 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
               ),
             ),
             onMapReady: (NaverMapController controller) {
-              if (widget._marker != null) {
-                controller.addOverlay(widget._marker!);
+              if (widget.marker != null) {
+                controller.addOverlay(widget.marker!);
               }
             },
             onMapTapped: (NPoint point, NLatLng latLng) {},
