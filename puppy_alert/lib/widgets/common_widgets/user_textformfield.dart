@@ -11,7 +11,6 @@ class UserTextFormField extends StatefulWidget {
   final Function onSubmitField;
   final double width;
   final String? Function(String?)? validator;
-  final Widget? additionalField; // 추가된 부분
   final double margin;
 
   UserTextFormField({
@@ -26,7 +25,6 @@ class UserTextFormField extends StatefulWidget {
     this.prefixIcon,
     this.width = 300,
     this.validator,
-    this.additionalField, // 추가된 부분
     this.margin = 28,
   });
 
@@ -35,6 +33,19 @@ class UserTextFormField extends StatefulWidget {
 }
 
 class _UserTextFormFieldState extends State<UserTextFormField> {
+  late bool _obscureText;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscureText = widget.obscureText;
+  }
+
+  void _toggleObscureText() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +64,7 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
           children: [
             TextFormField(
               controller: widget.controller,
-              obscureText: widget.obscureText,
+              obscureText: _obscureText,
               keyboardType: widget.textInputType,
               textInputAction: widget.actionKeyboard,
               style: TextStyle(
@@ -86,14 +97,13 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
                   fontStyle: FontStyle.normal,
                   letterSpacing: 1.2,
                 ),
+                suffixIcon: widget.obscureText ? IconButton(
+                  icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+                  onPressed: _toggleObscureText,
+                ) : null,
               ),
               validator: widget.validator,
             ),
-            if (widget.additionalField != null) // 추가된 부분
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: widget.additionalField!,
-              ),
           ],
         ),
       ),
