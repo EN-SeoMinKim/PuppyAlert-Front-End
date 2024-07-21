@@ -8,43 +8,6 @@ class FoodMapDetailChildWidget extends StatelessWidget {
       this._foodName, this._personName, this._address, this._dateTime,
       {super.key});
 
-  //   late String _address = "Loading...";
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//
-//     _getAddress(widget.latLng).then((address) {
-//       setState(() {
-//         _address = address;
-//       });
-//     });
-//   }
-//
-//   Future<String> _getAddress(NLatLng latLng) async {
-//     Response response = await _getResponse(latLng);
-//     var jsonData = jsonDecode(response.body);
-//     var region = jsonData['results'][0]['region'];
-//     var land = jsonData['results'][0]['land'];
-//     print(region);
-//     print(land);
-//     return jsonData;
-//   }
-//
-//   Future<Response> _getResponse(NLatLng latLng) async {
-//     String id = dotenv.get('CLIENT_ID');
-//     String secret = dotenv.get('CLIENT_SECRET');
-//     Map<String, String> header = {
-//       'X-NCP-APIGW-API-KEY-ID': id,
-//       'X-NCP-APIGW-API-KEY': secret
-//     };
-//
-//     return await get(
-//         Uri.parse(
-//             'https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=${latLng.longitude},${latLng.latitude}&orders=roadaddr&output=json'),
-//         headers: header);
-//   }
-
   @override
   Widget build(BuildContext context) {
     return Column(
