@@ -13,13 +13,20 @@ class MainChildScreen extends StatefulWidget {
 }
 
 class _MainChildScreenState extends State<MainChildScreen> {
-  int _selectedIndex = 0;
-  final List<Widget> _widgetOptions = <Widget>[
-    const HomeChildScreen(),
-    const FoodMapChildScreen(),
-    const FavoriteHostChildScreen(),
-    const InfoMainChildScreen(),
-  ];
+  late int _selectedIndex;
+  late final List<Widget> _widgetOptions;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = 0;
+    _widgetOptions = <Widget>[
+      const HomeChildScreen(),
+      const FoodMapChildScreen(),
+      const FavoriteHostChildScreen(),
+      const InfoMainChildScreen(),
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {
