@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 class FoodMapDetailChildWidget extends StatelessWidget {
-  final String _foodName, _personName, _address;
-  final DateTime _dateTime;
+  late final String _foodName, _personName, _address;
+  late final DateTime _dateTime;
 
-  const FoodMapDetailChildWidget(
-      this._foodName, this._personName, this._address, this._dateTime,
-      {super.key});
+  FoodMapDetailChildWidget(String foodName, String personName, String address, DateTime dateTime, {super.key}) {
+    _foodName = foodName;
+    _personName = personName;
+    _address = address;
+    _dateTime = dateTime;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +44,8 @@ class FoodMapDetailChildWidget extends StatelessWidget {
             ],
           ),
         ),
-        _infoWidget(Icons.access_time, 'Time',
-            '${_dateTime.hour}:${_dateTime.minute}'),
+        _infoWidget(
+            Icons.access_time, 'Time', '${_dateTime.hour}:${_dateTime.minute}'),
         _infoWidget(Icons.location_on_outlined, 'Address', _address),
       ],
     );
