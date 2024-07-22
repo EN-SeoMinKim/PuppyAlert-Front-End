@@ -18,17 +18,15 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   late final FoodMapChildWidget _foodMapChildWidget;
   late final FoodMapDetailChildWidget _foodMapDetailChildWidget;
   late Set<NMarker> _markerSet;
+  late int _markerIndex;
 
   @override
   void initState() {
     super.initState();
-    // _markerSet = {NMarker(
-    //     id: "sejong",
-    //     position: const NLatLng(37.54965636279012, 127.0750237101941))};
-
-    String address = '서울특별시 광진구 능동로 209';
+    _markerIndex = -1;
+    String address = '서울특별시 군자로 10길 29-5';
     _markerSet = <NMarker>{};
-    _foodMapChildWidget = FoodMapChildWidget(markerSet: _markerSet);
+    _foodMapChildWidget = FoodMapChildWidget();
     _foodMapDetailChildWidget =
         FoodMapDetailChildWidget('비빔밥', '김순옥', address, DateTime.now());
     _showWidget = _foodMapChildWidget;
@@ -36,25 +34,30 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
     _getNMarker(address).then((marker) {
       setState(() {
         _markerSet.add(marker);
+        _foodMapChildWidget.setMarkerSet(_markerSet);
+        _onTappedMarker();
       });
     });
-
-    _onTappedMarker();
   }
 
   Future<NMarker> _getNMarker(String address) async {
     http.Response response = await _getResponse(address);
     var jsonData = jsonDecode(response.body);
-    JsonEncoder encoder = const JsonEncoder.withIndent(' ');
-    String prettyprint = encoder.convert(jsonData);
-    print(prettyprint);
-    return jsonData;
+    print(jsonData);
+    String longitude = jsonData['addresses'][0]['y'];
+    String latitude = jsonData['addresses'][0]['x'];
+
+    _markerIndex++;
+    return NMarker(
+        id: '$_markerIndex',
+        position: NLatLng(
+            double.parse(longitude), double.parse(latitude)));
   }
 
   Future<http.Response> _getResponse(String address) async {
     Map<String, String> header = {
-      'X-NCP-APIGW-API-KEY-ID': dotenv.get('CLIENT_ID'),
-      'X-NCP-APIGW-API-KEY': dotenv.get('CLIENT_SECRET')
+      'X-NCP-APIGW-API-KEY-ID': dotenv.get('NAVER_API_ID'),
+      'X-NCP-APIGW-API-KEY': dotenv.get('NAVER_API_SECRET')
     };
 
     return await http.get(

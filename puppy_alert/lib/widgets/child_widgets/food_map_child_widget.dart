@@ -3,21 +3,25 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:geolocator/geolocator.dart';
 
 class FoodMapChildWidget extends StatefulWidget {
-  Set<NMarker>? markerSet;
+  Set<NMarker>? _markerSet;
 
-  FoodMapChildWidget({super.key, this.markerSet});
+  FoodMapChildWidget({super.key});
+
+  void setMarkerSet(Set<NMarker> markerSet) {
+    _markerSet = markerSet;
+  }
 
   @override
   _FoodMapChildWidgetState createState() => _FoodMapChildWidgetState();
 }
 
 class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
-  late Future<NLatLng> _futureLatLng;
+  late Future<NLatLng> _futureCameraPosition;
 
   @override
   void initState() {
     super.initState();
-    _futureLatLng = _setLocation();
+    _futureCameraPosition = _setLocation();
   }
 
   Future<NLatLng> _setLocation() async {
@@ -36,7 +40,7 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<NLatLng>(
-      future: _futureLatLng,
+      future: _futureCameraPosition,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -58,11 +62,16 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
               ),
             ),
             onMapReady: (NaverMapController controller) {
-              if (widget.markerSet != null) {
-                controller.addOverlayAll(widget.markerSet!);
+              if (widget._markerSet != null) {
+                controller.addOverlayAll(widget._markerSet!);
               }
             },
-            onMapTapped: (NPoint point, NLatLng latLng) {},
+
+            // 지도에 임의의 점을 눌렀을 때 좌표 반환 코드
+            onMapTapped: (NPoint point, NLatLng latLng) {
+              print('latitude = ${latLng.latitude}');
+              print('longitude = ${latLng.longitude}');
+            },
           );
         } else {
           return const Center(child: Text('Unknown error'));

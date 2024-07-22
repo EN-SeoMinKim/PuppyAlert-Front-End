@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class FoodModel {
   late int id;
   late String foodName;

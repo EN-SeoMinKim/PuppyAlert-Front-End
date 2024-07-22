@@ -12,7 +12,7 @@ void main() async {
 
 Future<void> _initNaverMap() async {
   await dotenv.load(fileName: '.env');
-  String id = dotenv.get('CLIENT_ID');
+  String id = dotenv.get('NAVER_API_ID');
 
   WidgetsFlutterBinding.ensureInitialized();
   await NaverMapSdk.instance.initialize(
