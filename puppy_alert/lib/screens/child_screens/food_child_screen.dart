@@ -4,14 +4,14 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import '../../widgets/child_widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/child_widgets/food_widget.dart';
 
-class ZipbobChildScreen extends StatefulWidget {
-  const ZipbobChildScreen({super.key});
+class FoodChildScreen extends StatefulWidget {
+  const FoodChildScreen({super.key});
 
   @override
-  State<ZipbobChildScreen> createState() => _ZipbobChildScreenState();
+  State<FoodChildScreen> createState() => _FoodChildScreenState();
 }
 
-class _ZipbobChildScreenState extends State<ZipbobChildScreen> {
+class _FoodChildScreenState extends State<FoodChildScreen> {
   late Future<void> _mapInitialization;
 
   @override

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ZipbobWidget extends StatefulWidget {
+class FoodWidget extends StatefulWidget {
   final String imagePath;
   final String foodName;
   final String hostName;
   final String time;
   final String recruitmentStatus;
 
-  const ZipbobWidget({
+  const FoodWidget({
     super.key,
     required this.imagePath,
     required this.foodName,
@@ -17,10 +17,10 @@ class ZipbobWidget extends StatefulWidget {
   });
 
   @override
-  State<ZipbobWidget> createState() => _ZipbobWidgetState();
+  State<FoodWidget> createState() => _FoodWidgetState();
 }
 
-class _ZipbobWidgetState extends State<ZipbobWidget> {
+class _FoodWidgetState extends State<FoodWidget> {
   bool isFavorite = false;
 
   @override
@@ -96,7 +96,7 @@ class _ZipbobWidgetState extends State<ZipbobWidget> {
 }
 
 Widget firstFoodWidget() {
-  return ZipbobWidget(
+  return FoodWidget(
     imagePath: 'assets/food.png',
     foodName: '비빔밥',
     hostName: '김순옥님',

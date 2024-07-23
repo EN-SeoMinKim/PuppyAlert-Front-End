@@ -1,7 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:puppy_alert/screens/adult_screens/zipbob_registration_completion_adult_screen.dart';
+import 'package:puppy_alert/screens/adult_screens/food_registration_completion_adult_screen.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
 import '../../widgets/adult_widgets/elevated_shadow_button.dart';
@@ -54,7 +54,7 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
     return Future.delayed(Duration(seconds: 25), ()  {
       if(_menu.isNotEmpty && _time.isNotEmpty){
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ZipbobRegistrationCompletionAdultScreen()));
+            builder: (context) => FoodRegistrationCompletionAdultScreen()));
       }
     });
   }

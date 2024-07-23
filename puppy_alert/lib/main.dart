@@ -13,6 +13,7 @@ void main() async {
 Future<void> _initNaverMap() async {
   await dotenv.load(fileName: '.env');
   String id = dotenv.get('NAVER_API_ID');
+
   WidgetsFlutterBinding.ensureInitialized();
   await NaverMapSdk.instance.initialize(
       clientId: id, onAuthFailed: (error) => print('Auth failed: $error'));
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
             )),
         home: ChangeNotifierProvider<FoodProvider>(
           create: (context) => FoodProvider(),
-          child: LoginScreen()(),
+          child: const LoginScreen(),
         ));
   }
 }
