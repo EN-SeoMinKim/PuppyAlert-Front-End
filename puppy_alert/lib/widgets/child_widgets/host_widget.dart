@@ -64,7 +64,7 @@ class _HostWidgetState extends State<HostWidget> {
 
 Widget firstHostWidget() {
   return HostWidget(
-    imagePath: 'image.png',
+    imagePath: 'assets/image.png',
     hostName: '김순옥님',
     recentMealDate: '7일 전에 식사',
     favorite: Colors.red,

@@ -51,7 +51,10 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
       data: ThemeData(
         primaryColor: Colors.grey,
         inputDecorationTheme: InputDecorationTheme(
-          labelStyle: TextStyle(color: Color(0xff424856), fontSize: 20.0, fontWeight: FontWeight.w600),
+          labelStyle: TextStyle(
+              color: Color(0xff424856),
+              fontSize: 20.0,
+              fontWeight: FontWeight.w600),
         ),
       ),
       child: Container(
@@ -95,10 +98,14 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
                   fontStyle: FontStyle.normal,
                   letterSpacing: 1.2,
                 ),
-                suffixIcon: widget.obscureText ? IconButton(
-                  icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
-                  onPressed: _toggleObscureText,
-                ) : null,
+                suffixIcon: widget.obscureText
+                    ? IconButton(
+                        icon: Icon(_obscureText
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: _toggleObscureText,
+                      )
+                    : null,
               ),
               validator: widget.validator,
             ),
@@ -109,9 +116,26 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
   }
 }
 
-
-
-
+Widget loginIdInputWidget(TextEditingController controller) {
+  return UserTextFormField(
+    width: 300,
+    hintText: "아이디를 입력하세요",
+    labelText: "아이디",
+    textInputType: TextInputType.text,
+    actionKeyboard: TextInputAction.done,
+    controller: controller,
+    prefixIcon: Icon(Icons.badge_outlined),
+    validator: (value) {
+      final RegExp idRegExp = RegExp(r'^[a-zA-Z0-9]{4,12}$');
+      if (value == null || value.isEmpty) {
+        return '아이디를 입력하세요';
+      } else if (!idRegExp.hasMatch(value)) {
+        return '아이디는 4~12자의 알파벳과 숫자만 포함해야 합니다';
+      }
+      return null;
+    },
+  );
+}
 
 Widget idInputWidget(TextEditingController controller) {
   return UserTextFormField(
@@ -133,9 +157,7 @@ Widget idInputWidget(TextEditingController controller) {
   );
 }
 
-
 Widget passwordInputWidget(TextEditingController controller) {
-
   return UserTextFormField(
     hintText: "비밀번호를 입력하세요",
     labelText: "비밀번호",
@@ -143,7 +165,7 @@ Widget passwordInputWidget(TextEditingController controller) {
     textInputType: TextInputType.visiblePassword,
     controller: controller,
     prefixIcon: Icon(Icons.enhanced_encryption_outlined),
-    validator: (value){
+    validator: (value) {
       final RegExp passwordRegExp = RegExp(
         r'^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!%*#?&])[a-zA-Z\d@!%*#?&]{8,15}$',
       );
@@ -157,15 +179,14 @@ Widget passwordInputWidget(TextEditingController controller) {
   );
 }
 
-
-Widget passwordConfirmationInputWidget(TextEditingController controller, TextEditingController passwordController) {
-
+Widget passwordConfirmationInputWidget(TextEditingController controller,
+    TextEditingController passwordController) {
   return UserTextFormField(
     hintText: "비밀번호를 한번 더 입력하세요",
     labelText: "비밀번호 재확인",
     obscureText: true,
     textInputType: TextInputType.visiblePassword,
-    controller:controller,
+    controller: controller,
     prefixIcon: Icon(Icons.enhanced_encryption),
     validator: (value) {
       if (value == null || value.isEmpty) {
@@ -179,14 +200,13 @@ Widget passwordConfirmationInputWidget(TextEditingController controller, TextEdi
 }
 
 Widget nameInputWidget(TextEditingController controller) {
-
   return UserTextFormField(
     hintText: "이름을 입력하세요",
     labelText: "이름",
     textInputType: TextInputType.text,
     controller: controller,
     prefixIcon: Icon(Icons.perm_identity),
-    validator: (value){
+    validator: (value) {
       if (value == null || value.isEmpty) {
         return '이름을 입력하세요';
       }
@@ -195,7 +215,6 @@ Widget nameInputWidget(TextEditingController controller) {
 }
 
 Widget nicknameInputWidget(TextEditingController controller) {
-
   return UserTextFormField(
     width: 230,
     hintText: "닉네임을 입력하세요",
@@ -203,7 +222,7 @@ Widget nicknameInputWidget(TextEditingController controller) {
     textInputType: TextInputType.text,
     controller: controller,
     prefixIcon: Icon(Icons.perm_identity),
-    validator: (value){
+    validator: (value) {
       final RegExp nicknameRegExp = RegExp(
         r'^[a-zA-Z][a-zA-Z0-9_-]{2,18}[a-zA-Z0-9]$',
       );
@@ -217,11 +236,7 @@ Widget nicknameInputWidget(TextEditingController controller) {
   );
 }
 
-
-
-
 Widget addressInputWidget(TextEditingController controller) {
-
   return UserTextFormField(
     margin: 20,
     width: 200,
@@ -234,7 +249,6 @@ Widget addressInputWidget(TextEditingController controller) {
 }
 
 Widget addressDetailInputWidget(TextEditingController controller) {
-
   return UserTextFormField(
     margin: 10.0,
     hintText: "상세 주소를 입력하세요",
@@ -244,16 +258,14 @@ Widget addressDetailInputWidget(TextEditingController controller) {
   );
 }
 
-
 Widget phonenumberInputWidget(TextEditingController controller) {
-
   return UserTextFormField(
     hintText: "전화번호를 입력하세요",
     labelText: "전화번호",
     textInputType: TextInputType.text,
     controller: controller,
     prefixIcon: Icon(Icons.call),
-    validator: (value){
+    validator: (value) {
       final RegExp idRegExp = RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$');
       if (value == null || value.isEmpty) {
         return '전화번호를 입력하세요';
@@ -265,9 +277,7 @@ Widget phonenumberInputWidget(TextEditingController controller) {
   );
 }
 
-
 Widget phonenumberConfirmationInputWidget(TextEditingController controller) {
-
   return UserTextFormField(
     width: 200,
     hintText: "인증번호를 입력하세요",
@@ -278,4 +288,3 @@ Widget phonenumberConfirmationInputWidget(TextEditingController controller) {
     prefixIcon: Icon(Icons.verified_outlined),
   );
 }
-

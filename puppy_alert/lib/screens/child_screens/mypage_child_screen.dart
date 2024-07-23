@@ -36,7 +36,7 @@ class _MypageChildScreenState extends State<MypageChildScreen> {
                 SizedBox(height: 30.0),
                 ClipOval(
                   child: Image.asset(
-                    "image.png",
+                    "assets/image.png",
                     width: 100.0,
                     height: 100.0,
                     fit: BoxFit.cover,
