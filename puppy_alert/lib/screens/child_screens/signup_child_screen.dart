@@ -149,13 +149,13 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         ),
                       ),
                       addressDetailInputWidget(_addressDetailController),
-                      phonenumberInputWidget(_phoneNumberController),
+                      phoneNumberInputWidget(_phoneNumberController),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            phonenumberConfirmationInputWidget(
+                            phoneNumberConfirmationInputWidget(
                                 _phoneNumberConfirmationController),
                             WhiteBackgroundButton(
                               onPressed: _submitSignUpForm,

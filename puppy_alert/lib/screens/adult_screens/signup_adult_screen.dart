@@ -6,6 +6,16 @@ import '../../widgets/common_widgets/user_textformfield.dart';
 import '../../widgets/common_widgets/white_background_button.dart';
 
 class SignupAdultScreen extends StatefulWidget {
+  final int _id = 0,
+      _password = 1,
+      _passwordConfirmation = 2,
+      _nickName = 3,
+      _name = 4,
+      _address = 5,
+      _addressDetail = 6,
+      _phoneNumber = 7,
+      _phoneNumberConfirmation = 8;
+
   const SignupAdultScreen({super.key});
 
   @override
@@ -14,43 +24,23 @@ class SignupAdultScreen extends StatefulWidget {
 
 class _SignupAdultScreenState extends State<SignupAdultScreen> {
   late final _formKey;
-  late final TextEditingController _idController;
-  late final TextEditingController _passwordController;
-  late final TextEditingController _passwordConfirmationController;
-  late final TextEditingController _nicknameController;
-  late final TextEditingController _nameController;
-  late final TextEditingController _addressController;
-  late final TextEditingController _addressDetailController;
-  late final TextEditingController _phoneNumberController;
-  late final TextEditingController _phoneNumberConfirmationController;
+  late final List<TextEditingController> _textEditingController;
   late DateTime? _selectedDate;
 
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
-    _idController = TextEditingController();
-    _passwordController = TextEditingController();
-    _passwordConfirmationController = TextEditingController();
-    _nicknameController = TextEditingController();
-    _nameController = TextEditingController();
-    _addressController = TextEditingController();
-    _addressDetailController = TextEditingController();
-    _phoneNumberController = TextEditingController();
-    _phoneNumberConfirmationController = TextEditingController();
+    for (int i = 0; i < 9; i++) {
+      _textEditingController[i] = TextEditingController();
+    }
   }
 
   @override
   void dispose() {
-    _idController.dispose();
-    _passwordController.dispose();
-    _passwordConfirmationController.dispose();
-    _nicknameController.dispose();
-    _nameController.dispose();
-    _addressController.dispose();
-    _addressDetailController.dispose();
-    _phoneNumberController.dispose();
-    _phoneNumberConfirmationController.dispose();
+    for (TextEditingController t in _textEditingController) {
+      t.dispose();
+    }
     super.dispose();
   }
 
@@ -67,16 +57,19 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
     bool isValid = formState?.validate() ?? false;
 
     if (isValid) {
-      String id = _idController.text.trim();
-      String password = _passwordController.text.trim();
-      String passwordConfirmation = _passwordConfirmationController.text.trim();
-      String nickname = _nicknameController.text.trim();
-      String name = _nameController.text.trim();
-      String address = _addressController.text.trim();
-      String addressDetail = _addressDetailController.text.trim();
-      String phoneNumber = _phoneNumberController.text.trim();
+      String id = _textEditingController[widget._id].text.trim();
+      String password = _textEditingController[widget._password].text.trim();
+      String passwordConfirmation =
+          _textEditingController[widget._passwordConfirmation].text.trim();
+      String nickname = _textEditingController[widget._nickName].text.trim();
+      String name = _textEditingController[widget._name].text.trim();
+      String address = _textEditingController[widget._address].text.trim();
+      String addressDetail =
+          _textEditingController[widget._addressDetail].text.trim();
+      String phoneNumber =
+          _textEditingController[widget._phoneNumber].text.trim();
       String phoneNumberConfirmation =
-      _phoneNumberConfirmationController.text.trim();
+          _textEditingController[widget._phoneNumberConfirmation].text.trim();
 
       print('Id: $id');
       print('Password: $password');
@@ -127,7 +120,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            idInputWidget(_idController),
+                            idInputWidget(_textEditingController[widget._id]),
                             WhiteBackgroundButton(
                               onPressed: _checkDuplicateId,
                               text: "중복확인",
@@ -135,15 +128,18 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           ],
                         ),
                       ),
-                      passwordInputWidget(_passwordController),
+                      passwordInputWidget(
+                          _textEditingController[widget._password]),
                       passwordConfirmationInputWidget(
-                          _passwordConfirmationController, _passwordController),
+                          _textEditingController[widget._passwordConfirmation],
+                          _textEditingController[widget._password]),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            nicknameInputWidget(_nicknameController),
+                            nicknameInputWidget(
+                                _textEditingController[widget._nickName]),
                             WhiteBackgroundButton(
                               onPressed: _checkDuplicateNickname,
                               text: "중복확인",
@@ -151,7 +147,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           ],
                         ),
                       ),
-                      nameInputWidget(_nameController),
+                      nameInputWidget(_textEditingController[widget._name]),
                       const SizedBox(
                         height: 30,
                       ),
@@ -197,7 +193,8 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            addressInputWidget(_addressController),
+                            addressInputWidget(
+                                _textEditingController[widget._address]),
                             WhiteBackgroundButton(
                               onPressed: _submitSignUpForm,
                               text: "우편번호 검색",
@@ -205,15 +202,18 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           ],
                         ),
                       ),
-                      addressDetailInputWidget(_addressDetailController),
-                      phonenumberInputWidget(_phoneNumberController),
+                      addressDetailInputWidget(
+                          _textEditingController[widget._addressDetail]),
+                      phoneNumberInputWidget(
+                          _textEditingController[widget._phoneNumber]),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            phonenumberConfirmationInputWidget(
-                                _phoneNumberConfirmationController),
+                            phoneNumberConfirmationInputWidget(
+                                _textEditingController[
+                                    widget._phoneNumberConfirmation]),
                             WhiteBackgroundButton(
                               onPressed: _submitSignUpForm,
                               text: "인증번호확인",

@@ -12,7 +12,7 @@ class UserTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final double margin;
 
-  UserTextFormField({
+  const UserTextFormField({
     super.key,
     required this.controller,
     required this.textInputType,
@@ -50,7 +50,7 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
     return Theme(
       data: ThemeData(
         primaryColor: Colors.grey,
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(
               color: Color(0xff424856),
               fontSize: 20.0,
@@ -68,7 +68,7 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
               obscureText: _obscureText,
               keyboardType: widget.textInputType,
               textInputAction: widget.actionKeyboard,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
@@ -78,12 +78,12 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
               decoration: InputDecoration(
                 prefixIcon: widget.prefixIcon,
                 labelText: widget.labelText,
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
                 hintText: widget.hintText,
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 14.0,
                   fontWeight: FontWeight.w300,
@@ -91,7 +91,7 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
                   letterSpacing: 1.2,
                 ),
                 isDense: true,
-                errorStyle: TextStyle(
+                errorStyle: const TextStyle(
                   color: Colors.red,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w300,
@@ -124,7 +124,7 @@ Widget loginIdInputWidget(TextEditingController controller) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     controller: controller,
-    prefixIcon: Icon(Icons.badge_outlined),
+    prefixIcon: const Icon(Icons.badge_outlined),
     validator: (value) {
       final RegExp idRegExp = RegExp(r'^[a-zA-Z0-9]{4,12}$');
       if (value == null || value.isEmpty) {
@@ -144,7 +144,7 @@ Widget idInputWidget(TextEditingController controller) {
     labelText: "아이디",
     textInputType: TextInputType.text,
     controller: controller,
-    prefixIcon: Icon(Icons.badge_outlined),
+    prefixIcon: const Icon(Icons.badge_outlined),
     validator: (value) {
       final RegExp idRegExp = RegExp(r'^[a-zA-Z0-9]{4,12}$');
       if (value == null || value.isEmpty) {
@@ -164,7 +164,7 @@ Widget passwordInputWidget(TextEditingController controller) {
     obscureText: true,
     textInputType: TextInputType.visiblePassword,
     controller: controller,
-    prefixIcon: Icon(Icons.enhanced_encryption_outlined),
+    prefixIcon: const Icon(Icons.enhanced_encryption_outlined),
     validator: (value) {
       final RegExp passwordRegExp = RegExp(
         r'^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!%*#?&])[a-zA-Z\d@!%*#?&]{8,15}$',
@@ -187,7 +187,7 @@ Widget passwordConfirmationInputWidget(TextEditingController controller,
     obscureText: true,
     textInputType: TextInputType.visiblePassword,
     controller: controller,
-    prefixIcon: Icon(Icons.enhanced_encryption),
+    prefixIcon: const Icon(Icons.enhanced_encryption),
     validator: (value) {
       if (value == null || value.isEmpty) {
         return '비밀번호를 확인하세요';
@@ -205,7 +205,7 @@ Widget nameInputWidget(TextEditingController controller) {
     labelText: "이름",
     textInputType: TextInputType.text,
     controller: controller,
-    prefixIcon: Icon(Icons.perm_identity),
+    prefixIcon: const Icon(Icons.perm_identity),
     validator: (value) {
       if (value == null || value.isEmpty) {
         return '이름을 입력하세요';
@@ -221,7 +221,7 @@ Widget nicknameInputWidget(TextEditingController controller) {
     labelText: "닉네임",
     textInputType: TextInputType.text,
     controller: controller,
-    prefixIcon: Icon(Icons.perm_identity),
+    prefixIcon: const Icon(Icons.perm_identity),
     validator: (value) {
       final RegExp nicknameRegExp = RegExp(
         r'^[a-zA-Z][a-zA-Z0-9_-]{2,18}[a-zA-Z0-9]$',
@@ -244,7 +244,7 @@ Widget addressInputWidget(TextEditingController controller) {
     labelText: "우편번호",
     textInputType: TextInputType.text,
     controller: controller,
-    prefixIcon: Icon(Icons.location_on_outlined),
+    prefixIcon: const Icon(Icons.location_on_outlined),
   );
 }
 
@@ -258,7 +258,7 @@ Widget addressDetailInputWidget(TextEditingController controller) {
   );
 }
 
-Widget phonenumberInputWidget(TextEditingController controller) {
+Widget phoneNumberInputWidget(TextEditingController controller) {
   return UserTextFormField(
     hintText: "전화번호를 입력하세요",
     labelText: "전화번호",
@@ -277,7 +277,7 @@ Widget phonenumberInputWidget(TextEditingController controller) {
   );
 }
 
-Widget phonenumberConfirmationInputWidget(TextEditingController controller) {
+Widget phoneNumberConfirmationInputWidget(TextEditingController controller) {
   return UserTextFormField(
     width: 200,
     hintText: "인증번호를 입력하세요",
