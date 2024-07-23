@@ -13,9 +13,7 @@ class FavoriteHostAdultScreen extends StatefulWidget {
 class _FavoriteHostAdultScreenState extends State<FavoriteHostAdultScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(),
-        body: Column(
+    return Column(
           children: <Widget>[
             Container(
               height: 100.0,
@@ -44,10 +42,5 @@ class _FavoriteHostAdultScreenState extends State<FavoriteHostAdultScreen> {
               ),
             ),
           ],
-        ),
-        bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: 3,
-          onTap: (index) {},
-        ));
+        );
   }
-}
