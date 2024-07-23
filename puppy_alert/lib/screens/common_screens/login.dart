@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/home_adult_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
-import '../../widgets/common_widgets/custom_user_text_style.dart';
+import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
 import '../child_screens/signup_child_screen.dart';
 
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {
                                 _submitLoginForm();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => HomeAdultScreen()));
+                                    builder: (context) => SpeechRecognitionScreen()));
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xffFF7700)),
@@ -114,7 +114,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {},
                           child: Text(
                             "비밀번호를 잊어버리셨나요?",
-                            style: CustomUserTextStyle.signUpTextStyle,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color:  Color(0xffFF7700),
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.40,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -130,7 +135,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               child: Text(
                                 "가입하기",
-                                style: CustomUserTextStyle.signUpTextStyle,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color:  Color(0xffFF7700),
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: -0.40,
+                                ),
                               ),
                             ),
                           ],
@@ -163,12 +173,17 @@ Widget loginIdInputWidget(TextEditingController controller) {
     labelText: "아이디",
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
-    // functionValidate: commonValidation,
     controller: controller,
-    // focusNode: _passwordControllerFocus,
-    onSubmitField: () {},
-    // parametersValidate: "Please enter password.",
     prefixIcon: Icon(Icons.badge_outlined),
+    validator: (value) {
+      final RegExp idRegExp = RegExp(r'^[a-zA-Z0-9]{4,12}$');
+      if (value == null || value.isEmpty) {
+        return '아이디를 입력하세요';
+      } else if (!idRegExp.hasMatch(value)) {
+        return '아이디는 4~12자의 알파벳과 숫자만 포함해야 합니다';
+      }
+      return null;
+    },
   );
 }
 

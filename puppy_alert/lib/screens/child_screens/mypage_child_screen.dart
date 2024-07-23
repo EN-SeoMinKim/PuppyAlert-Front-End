@@ -17,7 +17,6 @@ class _MypageChildScreenState extends State<MypageChildScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffFFD6BF),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

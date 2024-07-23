@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
 import 'package:puppy_alert/widgets/common_widgets/white_background_button.dart';
-import '../../widgets/common_widgets/custom_user_text_style.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/user_datepicker.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
@@ -15,16 +14,28 @@ class SignupChildScreen extends StatefulWidget {
 
 class _SignupChildScreenState extends State<SignupChildScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _idController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _addressDetailController = TextEditingController();
-  final TextEditingController _phonenumberController = TextEditingController();
-  final TextEditingController _phonenumberconfirmationController = TextEditingController();
+  late final TextEditingController _idController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _passwordConfirmationController;
+  late final TextEditingController _nameController;
+  late final TextEditingController _addressController;
+  late final TextEditingController _addressDetailController;
+  late final TextEditingController _phonenumberController;
+  late final TextEditingController _phonenumberconfirmationController;
+  late DateTime? _selectedDate;
 
-  DateTime? _selectedDate;  // 선택된 날짜를 저장할 변수
+  @override
+  void initState() {
+    super.initState();
+    _idController = TextEditingController();
+    _passwordController = TextEditingController();
+    _passwordConfirmationController = TextEditingController();
+    _nameController = TextEditingController();
+    _addressController = TextEditingController();
+    _addressDetailController = TextEditingController();
+    _phonenumberController = TextEditingController();
+    _phonenumberconfirmationController = TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -74,14 +85,15 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                           children: [
                             idInputWidget(_idController),
                             WhiteBackgroundButton(
-                              onPressed: _submitSignUpForm,
+                              onPressed: _checkDuplicateId,
                               text: "중복확인",
                             ),
                           ],
                         ),
                       ),
                       passwordInputWidget(_passwordController),
-                      passwordConfirmationInputWidget(_passwordConfirmationController,_passwordController),
+                      passwordConfirmationInputWidget(
+                          _passwordConfirmationController, _passwordController),
                       nameInputWidget(_nameController),
                       SizedBox(
                         height: 30,
@@ -115,7 +127,8 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                                   _selectedDate = date;
                                 });
                                 if (date != null) {
-                                  print("선택된 날짜: ${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}");
+                                  print(
+                                      "선택된 날짜: ${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}");
                                 }
                               },
                             ),
@@ -142,7 +155,8 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            phonenumberConfirmationInputWidget(_phonenumberconfirmationController),
+                            phonenumberConfirmationInputWidget(
+                                _phonenumberconfirmationController),
                             WhiteBackgroundButton(
                               onPressed: _submitSignUpForm,
                               text: "인증번호확인",
@@ -168,12 +182,19 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
                         );
                       },
                       child: Text(
                         "로그인하기",
-                        style: CustomUserTextStyle.signUpTextStyle,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xffFF7700),
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                          letterSpacing: -0.40,
+                        ),
                       ),
                     ),
                   ],
@@ -187,14 +208,18 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
   }
 
   void _submitSignUpForm() {
-    if (_formKey.currentState?.validate() ?? false) {
+    final formState = _formKey.currentState;
+    bool isValid = formState?.validate() ?? false;
+
+    if (isValid) {
       String id = _idController.text.trim();
       String password = _passwordController.text.trim();
       String passwordConfirmation = _passwordConfirmationController.text.trim();
       String name = _nameController.text.trim();
       String address = _addressController.text.trim();
       String phonenumber = _phonenumberController.text.trim();
-      String phonenumberConfirmation = _phonenumberconfirmationController.text.trim();
+      String phonenumberConfirmation =
+          _phonenumberconfirmationController.text.trim();
 
       print('Id: $id');
       print('Password: $password');
@@ -204,8 +229,13 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
       print('Phonenumber: $phonenumber');
       print('Phonenumber Confirmation: $phonenumberConfirmation');
       if (_selectedDate != null) {
-        print('Selected Date: ${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}');
+        print(
+            'Selected Date: ${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}');
       }
     }
+  }
+
+  void _checkDuplicateId() {
+    print('중복 확인 버튼 클릭됨');
   }
 }

@@ -12,7 +12,7 @@ class MutableUserInfoContainer extends StatefulWidget {
   });
 
   @override
-  _MutableUserInfoContainerState createState() => _MutableUserInfoContainerState();
+  State<MutableUserInfoContainer> createState() => _MutableUserInfoContainerState();
 
 }
 

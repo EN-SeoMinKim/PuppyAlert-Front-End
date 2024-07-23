@@ -8,7 +8,6 @@ class UserTextFormField extends StatefulWidget {
   final String labelText;
   final bool obscureText;
   final TextInputAction actionKeyboard;
-  final Function onSubmitField;
   final double width;
   final String? Function(String?)? validator;
   final double margin;
@@ -21,7 +20,6 @@ class UserTextFormField extends StatefulWidget {
     required this.labelText,
     this.obscureText = false,
     this.actionKeyboard = TextInputAction.next,
-    required this.onSubmitField,
     this.prefixIcon,
     this.width = 300,
     this.validator,
@@ -121,9 +119,7 @@ Widget idInputWidget(TextEditingController controller) {
     hintText: "아이디를 입력하세요",
     labelText: "아이디",
     textInputType: TextInputType.text,
-    actionKeyboard: TextInputAction.done,
     controller: controller,
-    onSubmitField: () {},
     prefixIcon: Icon(Icons.badge_outlined),
     validator: (value) {
       final RegExp idRegExp = RegExp(r'^[a-zA-Z0-9]{4,12}$');
@@ -145,9 +141,7 @@ Widget passwordInputWidget(TextEditingController controller) {
     labelText: "비밀번호",
     obscureText: true,
     textInputType: TextInputType.visiblePassword,
-    actionKeyboard: TextInputAction.done,
     controller: controller,
-    onSubmitField: () {},
     prefixIcon: Icon(Icons.enhanced_encryption_outlined),
     validator: (value){
       final RegExp passwordRegExp = RegExp(
@@ -171,9 +165,7 @@ Widget passwordConfirmationInputWidget(TextEditingController controller, TextEdi
     labelText: "비밀번호 재확인",
     obscureText: true,
     textInputType: TextInputType.visiblePassword,
-    actionKeyboard: TextInputAction.done,
     controller:controller,
-    onSubmitField: () {},
     prefixIcon: Icon(Icons.enhanced_encryption),
     validator: (value) {
       if (value == null || value.isEmpty) {
@@ -192,9 +184,7 @@ Widget nameInputWidget(TextEditingController controller) {
     hintText: "이름을 입력하세요",
     labelText: "이름",
     textInputType: TextInputType.text,
-    actionKeyboard: TextInputAction.done,
     controller: controller,
-    onSubmitField: () {},
     prefixIcon: Icon(Icons.perm_identity),
     validator: (value){
       if (value == null || value.isEmpty) {
@@ -207,12 +197,11 @@ Widget nameInputWidget(TextEditingController controller) {
 Widget nicknameInputWidget(TextEditingController controller) {
 
   return UserTextFormField(
+    width: 230,
     hintText: "닉네임을 입력하세요",
     labelText: "닉네임",
     textInputType: TextInputType.text,
-    actionKeyboard: TextInputAction.done,
     controller: controller,
-    onSubmitField: () {},
     prefixIcon: Icon(Icons.perm_identity),
     validator: (value){
       final RegExp nicknameRegExp = RegExp(
@@ -239,9 +228,7 @@ Widget addressInputWidget(TextEditingController controller) {
     hintText: "우편번호를 입력하세요",
     labelText: "우편번호",
     textInputType: TextInputType.text,
-    actionKeyboard: TextInputAction.done,
     controller: controller,
-    onSubmitField: () {},
     prefixIcon: Icon(Icons.location_on_outlined),
   );
 }
@@ -253,9 +240,7 @@ Widget addressDetailInputWidget(TextEditingController controller) {
     hintText: "상세 주소를 입력하세요",
     labelText: "           상세주소",
     textInputType: TextInputType.text,
-    actionKeyboard: TextInputAction.done,
     controller: controller,
-    onSubmitField: () {},
   );
 }
 
@@ -266,9 +251,7 @@ Widget phonenumberInputWidget(TextEditingController controller) {
     hintText: "전화번호를 입력하세요",
     labelText: "전화번호",
     textInputType: TextInputType.text,
-    actionKeyboard: TextInputAction.done,
     controller: controller,
-    onSubmitField: () {},
     prefixIcon: Icon(Icons.call),
     validator: (value){
       final RegExp idRegExp = RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$');
@@ -292,7 +275,6 @@ Widget phonenumberConfirmationInputWidget(TextEditingController controller) {
     textInputType: TextInputType.text,
     actionKeyboard: TextInputAction.done,
     controller: controller,
-    onSubmitField: () {},
     prefixIcon: Icon(Icons.verified_outlined),
   );
 }
