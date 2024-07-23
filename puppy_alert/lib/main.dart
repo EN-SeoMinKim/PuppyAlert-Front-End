@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
+import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
+import 'package:puppy_alert/screens/child_screens/signup_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -30,6 +33,12 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(
               backgroundColor: Color(0xffFF7700),
             )),
-        home: const LoginScreen());
+        initialRoute: '/login',
+        routes: {
+          '/login': (context) => const LoginScreen(),
+          '/signup_adult_screen': (context) => const SignupAdultScreen(),
+          '/signup_child_screen': (context) => const SignupChildScreen(),
+          '/speech_recognition_screen': (context) => const SpeechRecognitionScreen(),
+        });
   }
 }

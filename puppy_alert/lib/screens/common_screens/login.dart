@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
-import '../child_screens/signup_child_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,13 +11,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  // @override
-  // void dispose() {
-  //   _idController.dispose();
-  //   _passwordController.dispose();
-  //   super.dispose();
-  // }
 
   void _showChoiceDialog() {
     showDialog(
@@ -35,9 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop('child');
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SignupChildScreen()));
+                Navigator.pushNamed(context, "/signup_child_screen");
               },
               child: const Text(
                 '결식아동',
@@ -48,9 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop('adult');
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SignupAdultScreen()));
+                Navigator.pushNamed(context, "/signup_adult_screen");
               },
               child: const Text(
                 '1인 가구',
@@ -62,9 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         );
       },
-    ).then((value) {
-      print('Selected option: $value');
-    });
+    );
   }
 
   void _submitLoginForm() {
@@ -107,9 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _submitLoginForm();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SpeechRecognitionScreen()));
+                                Navigator.pushNamed(context, "/speech_recognition_screen");
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xffFF7700)),

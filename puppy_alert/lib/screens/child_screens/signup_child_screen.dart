@@ -20,8 +20,8 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
   late final TextEditingController _nameController;
   late final TextEditingController _addressController;
   late final TextEditingController _addressDetailController;
-  late final TextEditingController _phonenumberController;
-  late final TextEditingController _phonenumberconfirmationController;
+  late final TextEditingController _phoneNumberController;
+  late final TextEditingController _phoneNumberConfirmationController;
   late DateTime? _selectedDate;
 
   @override
@@ -33,8 +33,8 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
     _nameController = TextEditingController();
     _addressController = TextEditingController();
     _addressDetailController = TextEditingController();
-    _phonenumberController = TextEditingController();
-    _phonenumberconfirmationController = TextEditingController();
+    _phoneNumberController = TextEditingController();
+    _phoneNumberConfirmationController = TextEditingController();
   }
 
   @override
@@ -45,8 +45,8 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
     _nameController.dispose();
     _addressController.dispose();
     _addressDetailController.dispose();
-    _phonenumberController.dispose();
-    _phonenumberconfirmationController.dispose();
+    _phoneNumberController.dispose();
+    _phoneNumberConfirmationController.dispose();
     super.dispose();
   }
 
@@ -63,8 +63,8 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
             key: _formKey,
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.only(top: 50)),
-                Center(
+                const Padding(padding: EdgeInsets.only(top: 50)),
+                const Center(
                   child: Text(
                     '회원가입',
                     style: TextStyle(
@@ -95,7 +95,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                       passwordConfirmationInputWidget(
                           _passwordConfirmationController, _passwordController),
                       nameInputWidget(_nameController),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       SizedBox(
@@ -103,7 +103,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(width: 10),
@@ -149,14 +149,14 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         ),
                       ),
                       addressDetailInputWidget(_addressDetailController),
-                      phonenumberInputWidget(_phonenumberController),
+                      phonenumberInputWidget(_phoneNumberController),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             phonenumberConfirmationInputWidget(
-                                _phonenumberconfirmationController),
+                                _phoneNumberConfirmationController),
                             WhiteBackgroundButton(
                               onPressed: _submitSignUpForm,
                               text: "인증번호확인",
@@ -164,7 +164,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       LongRectangleButton(
@@ -177,7 +177,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('계정이 있으신가요?'),
+                    const Text('계정이 있으신가요?'),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -186,7 +186,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                               builder: (context) => LoginScreen()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "로그인하기",
                         style: TextStyle(
                           fontSize: 16,
@@ -217,17 +217,17 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
       String passwordConfirmation = _passwordConfirmationController.text.trim();
       String name = _nameController.text.trim();
       String address = _addressController.text.trim();
-      String phonenumber = _phonenumberController.text.trim();
-      String phonenumberConfirmation =
-          _phonenumberconfirmationController.text.trim();
+      String phoneNumber = _phoneNumberController.text.trim();
+      String phoneNumberConfirmation =
+          _phoneNumberConfirmationController.text.trim();
 
       print('Id: $id');
       print('Password: $password');
       print('Password Confirmation: $passwordConfirmation');
       print('Name: $name');
       print('Address: $address');
-      print('Phonenumber: $phonenumber');
-      print('Phonenumber Confirmation: $phonenumberConfirmation');
+      print('PhoneNumber: $phoneNumber');
+      print('PhoneNumber Confirmation: $phoneNumberConfirmation');
       if (_selectedDate != null) {
         print(
             'Selected Date: ${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}');
