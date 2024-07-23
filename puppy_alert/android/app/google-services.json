@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "783726339",
+    "project_id": "puppyalert-27c64",
+    "storage_bucket": "puppyalert-27c64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783726339:android:ce52e3c1786956f7df9b36",
+        "android_client_info": {
+          "package_name": "com.example.puppy_alert"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRUL2xFxlZk00DFr3JNHcn8dMbw_B9sE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
