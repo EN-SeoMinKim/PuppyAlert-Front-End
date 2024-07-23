@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import '../../widgets/child_widgets/custom_bottom_navigation_bar.dart';
-import '../../widgets/child_widgets/zipbob_widget.dart';
+import '../../widgets/child_widgets/food_widget.dart';
 
 class ZipbobChildScreen extends StatefulWidget {
   const ZipbobChildScreen({super.key});

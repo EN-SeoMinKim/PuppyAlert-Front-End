@@ -7,7 +7,7 @@ class ZipbobWidget extends StatefulWidget {
   final String time;
   final String recruitmentStatus;
 
-  ZipbobWidget({
+  const ZipbobWidget({
     super.key,
     required this.imagePath,
     required this.foodName,
@@ -30,7 +30,7 @@ class _ZipbobWidgetState extends State<ZipbobWidget> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ClipRRect(
@@ -43,21 +43,21 @@ class _ZipbobWidgetState extends State<ZipbobWidget> {
               ),
             ),
           ),
-          SizedBox(width: 15),
+          const SizedBox(width: 15),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.foodName,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 2),
+              const SizedBox(height: 2),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(widget.hostName),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   IconButton(
                     icon: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -71,18 +71,18 @@ class _ZipbobWidgetState extends State<ZipbobWidget> {
                   ),
                 ],
               ),
-              SizedBox(height: 2),
+              const SizedBox(height: 2),
               Text(widget.time),
-              SizedBox(height: 2),
+              const SizedBox(height: 2),
               Container(
-                padding: EdgeInsets.fromLTRB(6, 2, 6, 2),
+                padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
-                  color: Color(0xffFFFAE1),
+                  color: const Color(0xffFFFAE1),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
                   widget.recruitmentStatus,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xff7D6600),
                   ),
                 ),
