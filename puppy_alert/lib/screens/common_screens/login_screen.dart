@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../utils/constants.dart';
@@ -84,12 +83,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _goNextPage(bool isValid, User user) {
-    if (isValid) {
-      if (user == User.adult) {
-        Navigator.pushNamed(context, "/speech_recognition_screen");
-      } else {
-        Navigator.pushNamed(context, "/main_child_screen");
-      }
+    if (!isValid) return;
+
+    if (user == User.adult) {
+      Navigator.pushNamed(context, "/speech_recognition_screen");
+    } else {
+      Navigator.pushNamed(context, "/main_child_screen");
     }
   }
 

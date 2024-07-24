@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/common_screens/login_screen.dart';
+// import 'package:remedi_kopo/remedi_kopo.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/common_widgets/user_datepicker.dart';
+import '../../widgets/common_widgets/user_date_picker.dart';
 import '../../widgets/common_widgets/user_text_form_field.dart';
 import '../../widgets/common_widgets/white_background_button.dart';
 
@@ -25,7 +26,6 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   late final _formKey;
   late final List<TextEditingController> _textEditingController;
-  late DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -51,37 +51,37 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void _submitSignUpForm() {
-    final formState = _formKey.currentState;
-    bool isValid = formState?.validate() ?? false;
+    bool isValid = _formKey.currentState?.validate() ?? false;
 
     if (isValid) {
-      String id = _textEditingController[widget._id].text.trim();
-      String password = _textEditingController[widget._password].text.trim();
-      String passwordConfirmation =
-          _textEditingController[widget._passwordConfirmation].text.trim();
-      String nickname = _textEditingController[widget._nickName].text.trim();
-      String name = _textEditingController[widget._name].text.trim();
-      String address = _textEditingController[widget._address].text.trim();
-      String addressDetail =
-          _textEditingController[widget._addressDetail].text.trim();
-      String phoneNumber =
-          _textEditingController[widget._phoneNumber].text.trim();
-      String phoneNumberConfirmation =
-          _textEditingController[widget._phoneNumberConfirmation].text.trim();
+      List<String> inputString = List.generate(9, (index) => _textEditingController[index].text.trim());
 
-      print('Id: $id');
-      print('Password: $password');
-      print('Password Confirmation: $passwordConfirmation');
-      print('Nickname: $nickname');
-      print('Name: $name');
-      print('Address: $address');
-      print('Address Detail: $addressDetail');
-      print('PhoneNumber: $phoneNumber');
-      print('PhoneNumber Confirmation: $phoneNumberConfirmation');
-      if (_selectedDate != null) {
-        print(
-            'Selected Date: ${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}');
+      for(String s in inputString) {
+        print(s);
       }
+      // String id = _textEditingController[widget._id].text.trim();
+      // String password = _textEditingController[widget._password].text.trim();
+      // String passwordConfirmation =
+      //     _textEditingController[widget._passwordConfirmation].text.trim();
+      // String nickname = _textEditingController[widget._nickName].text.trim();
+      // String name = _textEditingController[widget._name].text.trim();
+      // String address = _textEditingController[widget._address].text.trim();
+      // String addressDetail =
+      //     _textEditingController[widget._addressDetail].text.trim();
+      // String phoneNumber =
+      //     _textEditingController[widget._phoneNumber].text.trim();
+      // String phoneNumberConfirmation =
+      //     _textEditingController[widget._phoneNumberConfirmation].text.trim();
+      //
+      // print('Id: $id');
+      // print('Password: $password');
+      // print('Password Confirmation: $passwordConfirmation');
+      // print('Nickname: $nickname');
+      // print('Name: $name');
+      // print('Address: $address');
+      // print('Address Detail: $addressDetail');
+      // print('PhoneNumber: $phoneNumber');
+      // print('PhoneNumber Confirmation: $phoneNumberConfirmation');
     }
   }
 
@@ -175,9 +175,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             UserDatePicker(
                               onDateSelected: (date) {
-                                setState(() {
-                                  _selectedDate = date;
-                                });
+                                setState(() {});
                                 if (date != null) {
                                   print(
                                       "선택된 날짜: ${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}");
@@ -195,7 +193,16 @@ class _SignupScreenState extends State<SignupScreen> {
                             addressInputWidget(
                                 _textEditingController[widget._address]),
                             WhiteBackgroundButton(
-                              onPressed: _submitSignUpForm,
+                              // ========== remedi_kopo api ========== //
+                              // onPressed: () async {
+                              //   KopoModel model = await Navigator.push(
+                              //     context,
+                              //     CupertinoPageRoute(
+                              //       builder: (context) => RemediKopo(),
+                              //     ),
+                              //   );
+                              // },
+                              onPressed: () {},
                               text: "우편번호 검색",
                             ),
                           ],
@@ -214,7 +221,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 _textEditingController[
                                     widget._phoneNumberConfirmation]),
                             WhiteBackgroundButton(
-                              onPressed: _submitSignUpForm,
+                              onPressed: () {},
                               text: "인증번호확인",
                             ),
                           ],
