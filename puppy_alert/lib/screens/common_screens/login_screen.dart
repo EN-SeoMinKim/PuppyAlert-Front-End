@@ -30,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/signup_screen");
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/signup_screen', (route) => false);
               },
               child: const Text(
                 '결식아동',
@@ -41,7 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/signup_screen");
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/signup_screen', (route) => false);
               },
               child: const Text(
                 '1인 가구',
@@ -64,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
       (value) => _goNextPage(value, User.adult),
     );
     _isValidLoginValue('puppy', id, password).then(
-          (value) => _goNextPage(value, User.child),
+      (value) => _goNextPage(value, User.child),
     );
   }
 
@@ -84,11 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void _goNextPage(bool isValid, User user) {
     if (isValid) {
       if (user == User.adult) {
-        Navigator.pushNamed(
-            context, "/speech_recognition_screen");
+        Navigator.pushNamed(context, "/speech_recognition_screen");
       } else {
-        Navigator.pushNamed(
-            context, "/main_child_screen");
+        Navigator.pushNamed(context, "/main_child_screen");
       }
     }
   }

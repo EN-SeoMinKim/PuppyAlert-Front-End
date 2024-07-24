@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/common_screens/login.dart';
+import 'package:puppy_alert/screens/common_screens/login_screen.dart';
 import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_container.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/mutable_user_info_container.dart';

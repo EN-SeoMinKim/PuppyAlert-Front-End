@@ -3,7 +3,7 @@ import 'package:puppy_alert/screens/child_screens/personal_information_child_scr
 import 'package:puppy_alert/widgets/child_widgets/custom_bottom_navigation_bar.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/child_widgets/profile_info_button.dart';
-import '../common_screens/login.dart';
+import '../common_screens/login_screen.dart';
 
 class MypageChildScreen extends StatefulWidget {
   const MypageChildScreen({super.key});

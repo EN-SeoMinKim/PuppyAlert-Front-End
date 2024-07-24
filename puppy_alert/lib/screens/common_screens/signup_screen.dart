@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/common_screens/login.dart';
+import 'package:puppy_alert/screens/common_screens/login_screen.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/user_datepicker.dart';
 import '../../widgets/common_widgets/user_text_form_field.dart';
@@ -31,9 +31,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
-    print('test1');
     _textEditingController = List.generate(9, (_) => TextEditingController());
-    print('test2');
   }
 
   @override
@@ -120,7 +118,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            idInputWidget(_textEditingController[widget._id], 230),
+                            idInputWidget(
+                                _textEditingController[widget._id], 230),
                             WhiteBackgroundButton(
                               onPressed: _checkDuplicateId,
                               text: "중복확인",
@@ -235,11 +234,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     const Text('계정이 있으신가요?'),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                        );
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/login_screen', (route) => false);
                       },
                       child: const Text(
                         "로그인하기",
