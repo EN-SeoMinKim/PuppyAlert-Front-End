@@ -8,7 +8,7 @@ import 'dart:async';
 import '../../widgets/adult_widgets/elevated_shadow_button.dart';
 import 'mypage_adult_screen.dart';
 
-enum _ButtonStatus { idle, listening, completed }
+enum _ButtonStatus { idle, listening, completed, awaitingTimeInput }
 
 class SpeechRecognitionScreen extends StatefulWidget {
   const SpeechRecognitionScreen({super.key});
@@ -40,15 +40,15 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
     _isListening = false;
   }
 
-  // @override
-  // void dispose() {
-  //   _flutterTts.stop();
-  //   _timer?.cancel();
-  //   if(_isListening){
-  //     _speech.stop();
-  //   }
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _flutterTts.stop();
+    _timer?.cancel();
+    if(_isListening){
+      _speech.stop();
+    }
+    super.dispose();
+  }
 
   Future<void> speakAndRecognize() async {
     setState(() {
@@ -62,9 +62,15 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
     await _initializeTts();
     await _flutterTts.speak('등록하실 메뉴를 말씀해 주세요');
     await _getFood();
-    await _requestTime();
-    await _getTime();
-    // await navigateToFoodRegistrationCompleteScreen();
+  }
+
+  Future<void> _requestTime() async {
+    setState(() {
+      _status = _ButtonStatus.awaitingTimeInput;
+      _topText = '식사를 같이 하실\n시간을 말씀해 주세요';
+      _feedbackText = '';
+    });
+    await _flutterTts.speak('식사를 같이 하실 시간을 말씀해 주세요');
   }
 
   Future<void> _getFood() async {
@@ -74,19 +80,17 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
   }
 
   Future<void> _getTime() async {
-    return Future.delayed(const Duration(seconds: 20), () async {
-      if (_food.isNotEmpty) {
-        await _initializeSpeechAndStartListening(_startListeningTime);
-      }
+    return Future.delayed(const Duration(seconds: 3), () async {
+      await _initializeSpeechAndStartListening(_startListeningTime);
     });
   }
 
-
-  Future<void> _initializeSpeechAndStartListening(Future<void> Function() startListening) async{
+  Future<void> _initializeSpeechAndStartListening(
+      Future<void> Function() startListening) async {
     await _initializeSpeech();
-        if(_isListening){
-          await startListening();
-        }
+    if (_isListening) {
+      await startListening();
+    }
   }
 
   Future<void> _startListeningFood() async {
@@ -119,9 +123,7 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
     await startTimer(verifyTime);
   }
 
-
-
-  Future<void> startTimer( Future<void> Function() verify) async {
+  Future<void> startTimer(Future<void> Function() verify) async {
     _timer = Timer(const Duration(seconds: 6), () async {
       if (_isListening) {
         await _speech.stop();
@@ -133,7 +135,6 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
       }
     });
   }
-
 
   Future<void> _requestPermission() async {
     final status = await Permission.microphone.status;
@@ -169,41 +170,16 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
   }
 
 
-
-  Future<void> _requestTime() {
-    return Future.delayed(const Duration(seconds: 18), () async {
-      if (_food.isNotEmpty) {
-        setState(() {
-          _topText = '식사를 같이 하실\n시간을 말씀해 주세요';
-          _feedbackText = '';
-        });
-        await _flutterTts.speak('식사를 같이 하실 시간을 말씀해 주세요');
-      }
-    });
-  }
-
-  //Navigator 부분 수정하기!!
-
-  Future<void> navigateToFoodRegistrationCompleteScreen() {
-    return Future.delayed(const Duration(seconds: 25), () {
-      if (_food.isNotEmpty && _time.isNotEmpty) {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                const FoodRegistrationCompletionAdultScreen()));
-      }
-    });
-  }
-
   Future<void> verify(String recognizedText, String confirmationText) async {
     if (recognizedText.isNotEmpty) {
       _status = _ButtonStatus.completed;
-      await _flutterTts.speak(
-          '$confirmationText 맞다면 예 버튼을 눌러주시고 아니면 잠시 기다렸다가 식사 등록 버튼을 누르고 메뉴를 다시 한번 말씀해 주세요.');
+      await _flutterTts.speak(confirmationText);
       setState(() {
         _feedbackText = confirmationText;
       });
       print(recognizedText);
     } else {
+      _status = _ButtonStatus.idle;
       await _flutterTts.speak('인식된 음성이 없습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.');
       setState(() {
         _feedbackText = '인식된 음성이 없습니다.';
@@ -218,6 +194,24 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
 
   Future<void> verifyTime() async {
     await verify(_time, '말씀하신 시간이 \n$_time 인가요?');
+  }
+
+  Future<void> _handleConfirm() async {
+    if (_food.isNotEmpty && _time.isEmpty) {
+      await _requestTime();
+      await _getTime();
+    } else if (_food.isNotEmpty && _time.isNotEmpty) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const FoodRegistrationCompletionAdultScreen()));
+    }
+  }
+
+  void _handleReject() {
+    setState(() {
+      _status = _ButtonStatus.idle;
+      _topText = '식사 등록을 버튼을 누르고 다시 시도해주세요';
+      _feedbackText = '';
+    });
   }
 
   Widget _buildAvatarGlow() {
@@ -235,15 +229,8 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
             child: _buildButtonDesign(),
           ),
         );
+      case _ButtonStatus.awaitingTimeInput:
       case _ButtonStatus.completed:
-        return AvatarGlow(
-          animate: false,
-          endRadius: 180.0,
-          child: GestureDetector(
-            onTap: () {},
-            child: _buildButtonDesign(),
-          ),
-        );
       case _ButtonStatus.idle:
       default:
         return AvatarGlow(
@@ -259,13 +246,14 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
 
   Widget _buildButtonDesign() {
     switch (_status) {
+      case _ButtonStatus.awaitingTimeInput:
       case _ButtonStatus.listening:
         return Container(
           width: 150.0,
           height: 150.0,
           decoration: BoxDecoration(
             color: Colors.yellow,
-            borderRadius: BorderRadius.circular(50.0),
+            borderRadius: BorderRadius.circular(80.0),
           ),
           child: const Center(
             child: Icon(
@@ -276,32 +264,63 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
           ),
         );
       case _ButtonStatus.completed:
-        return Container(
-          width: 200.0,
-          height: 200.0,
-          decoration: BoxDecoration(
-            color: Colors.green,
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                offset: const Offset(0, 4),
-                blurRadius: 8.0,
+        return Center(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _handleConfirm();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  fixedSize: const Size(150.0, 150.0),
+                ),
+                child: const Center(
+                  child: Text(
+                    "네",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 36,
+                      color: Colors.white,
+                      letterSpacing: 3.0,
+                      height: 1.2,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _handleReject();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  fixedSize: const Size(150.0, 150.0),
+                ),
+                child: const Center(
+                  child: Text(
+                    "아니오",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 36,
+                      color: Colors.white,
+                      letterSpacing: 3.0,
+                      height: 1.2,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
             ],
-          ),
-          child: const Center(
-            child: Text(
-              "완료",
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 36,
-                color: Colors.white,
-                letterSpacing: 3.0,
-                height: 1.2,
-              ),
-              textAlign: TextAlign.center,
-            ),
           ),
         );
       case _ButtonStatus.idle:
@@ -341,16 +360,16 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          // leading: IconButton(
-          //   icon: const Icon(Icons.arrow_back),
-          //   onPressed: () {
-          //     _flutterTts.stop();
-          //     _timer?.cancel();
-          //     if(_isListening){
-          //       _speech.stop();
-          //     }
-          //   },
-          // ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              _flutterTts.stop();
+              _timer?.cancel();
+              if(_isListening){
+                _speech.stop();
+              }
+            },
+          ),
           ),
       body: Center(
         child: Column(
@@ -384,5 +403,3 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
     );
   }
 }
-
-
