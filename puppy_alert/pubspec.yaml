@@ -37,6 +37,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   flutter_naver_map: ^1.2.3
   remedi_kopo: ^0.0.2
+  permission_handler: ^10.0.0
   provider:
 
   # The following adds the Cupertino Icons font to your application.

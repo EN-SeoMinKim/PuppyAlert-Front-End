@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+
 class HostWidget extends StatefulWidget {
   final String imagePath;
   final String hostName;
   final String recentMealDate;
   final Color favorite;
 
-  HostWidget({
+  const HostWidget({
     super.key,
     required this.imagePath,
     required this.hostName,
