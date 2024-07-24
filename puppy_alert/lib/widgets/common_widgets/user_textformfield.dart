@@ -11,8 +11,9 @@ class UserTextFormField extends StatefulWidget {
   final double width;
   final String? Function(String?)? validator;
   final double margin;
+  final bool readOnly;
 
-  UserTextFormField({
+  const UserTextFormField({
     super.key,
     required this.controller,
     required this.textInputType,
@@ -24,6 +25,7 @@ class UserTextFormField extends StatefulWidget {
     this.width = 300,
     this.validator,
     this.margin = 28,
+    this.readOnly = false,
   });
 
   @override
@@ -113,9 +115,9 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
 
 
 
-Widget idInputWidget(TextEditingController controller) {
+Widget idInputWidget(TextEditingController controller, {required double width}) {
   return UserTextFormField(
-    width: 230,
+    width: width,
     hintText: "아이디를 입력하세요",
     labelText: "아이디",
     textInputType: TextInputType.text,
@@ -219,19 +221,6 @@ Widget nicknameInputWidget(TextEditingController controller) {
 
 
 
-
-Widget addressInputWidget(TextEditingController controller) {
-
-  return UserTextFormField(
-    margin: 20,
-    width: 200,
-    hintText: "우편번호를 입력하세요",
-    labelText: "우편번호",
-    textInputType: TextInputType.text,
-    controller: controller,
-    prefixIcon: Icon(Icons.location_on_outlined),
-  );
-}
 
 Widget addressDetailInputWidget(TextEditingController controller) {
 

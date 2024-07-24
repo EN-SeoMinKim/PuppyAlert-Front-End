@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/home_adult_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/signup_adult_screen.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
+import 'package:puppy_alert/screens/adult_screens/speech_recognition_adult_screen.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
 import '../child_screens/signup_child_screen.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {
                                 _submitLoginForm();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => SpeechRecognitionScreen()));
+                                    builder: (context) => SpeechRecognitionAdultScreen()));
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xffFF7700)),
@@ -133,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {
                                 _showChoiceDialog();
                               },
-                              child: Text(
+                              child: const Text(
                                 "가입하기",
                                 style: TextStyle(
                                   fontSize: 16,
@@ -167,24 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 Widget loginIdInputWidget(TextEditingController controller) {
 
-  return UserTextFormField(
-    width: 300,
-    hintText: "아이디를 입력하세요",
-    labelText: "아이디",
-    textInputType: TextInputType.text,
-    actionKeyboard: TextInputAction.done,
-    controller: controller,
-    prefixIcon: Icon(Icons.badge_outlined),
-    validator: (value) {
-      final RegExp idRegExp = RegExp(r'^[a-zA-Z0-9]{4,12}$');
-      if (value == null || value.isEmpty) {
-        return '아이디를 입력하세요';
-      } else if (!idRegExp.hasMatch(value)) {
-        return '아이디는 4~12자의 알파벳과 숫자만 포함해야 합니다';
-      }
-      return null;
-    },
-  );
+  return idInputWidget(width:300, controller);
 }
 
 

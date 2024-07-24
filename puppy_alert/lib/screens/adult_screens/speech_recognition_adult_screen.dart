@@ -10,15 +10,15 @@ import 'mypage_adult_screen.dart';
 
 enum _ButtonStatus { idle, listening, completed, awaitingTimeInput }
 
-class SpeechRecognitionScreen extends StatefulWidget {
-  const SpeechRecognitionScreen({super.key});
+class SpeechRecognitionAdultScreen extends StatefulWidget {
+  const SpeechRecognitionAdultScreen({super.key});
 
   @override
-  State<SpeechRecognitionScreen> createState() =>
-      _SpeechRecognitionScreenState();
+  State<SpeechRecognitionAdultScreen> createState() =>
+      _SpeechRecognitionAdultScreenState();
 }
 
-class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
+class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScreen> {
   late _ButtonStatus _status;
   late final FlutterTts _flutterTts;
   late final stt.SpeechToText _speech;

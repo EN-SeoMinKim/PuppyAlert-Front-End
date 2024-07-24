@@ -83,7 +83,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            idInputWidget(_idController),
+                            idInputWidget(width:230,_idController),
                             WhiteBackgroundButton(
                               onPressed: _checkDuplicateId,
                               text: "중복확인",
@@ -103,7 +103,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(width: 10),
@@ -140,7 +140,7 @@ class _SignupChildScreenState extends State<SignupChildScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            addressInputWidget(_addressController),
+                            // postcodeInputWidget(_addressController),
                             WhiteBackgroundButton(
                               onPressed: _submitSignUpForm,
                               text: "우편번호 검색",

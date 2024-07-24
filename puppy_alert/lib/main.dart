@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
             )),
         home: ChangeNotifierProvider<FoodProvider>(
           create: (context) => FoodProvider(),
-          child: LoginScreen()(),
+          child: const LoginScreen(),
         ));
   }
 }
+

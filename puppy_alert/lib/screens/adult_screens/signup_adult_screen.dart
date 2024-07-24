@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
+import 'package:remedi_kopo/remedi_kopo.dart';
+import 'package:flutter/cupertino.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/user_datepicker.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
@@ -19,6 +21,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
   late final TextEditingController _passwordConfirmationController;
   late final TextEditingController _nicknameController;
   late final TextEditingController _nameController;
+  late final TextEditingController _postcodeController;
   late final TextEditingController _addressController;
   late final TextEditingController _addressDetailController;
   late final TextEditingController _phonenumberController;
@@ -33,6 +36,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
     _passwordConfirmationController = TextEditingController();
     _nicknameController = TextEditingController();
     _nameController = TextEditingController();
+    _postcodeController = TextEditingController();
     _addressController = TextEditingController();
     _addressDetailController = TextEditingController();
     _phonenumberController = TextEditingController();
@@ -46,11 +50,36 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
     _passwordConfirmationController.dispose();
     _nicknameController.dispose();
     _nameController.dispose();
+    _postcodeController.dispose();
     _addressController.dispose();
     _addressDetailController.dispose();
     _phonenumberController.dispose();
     _phonenumberconfirmationController.dispose();
     super.dispose();
+  }
+
+  void _searchAddress(BuildContext context) async {
+    KopoModel model = await Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => RemediKopo(),
+      ),
+    );
+
+    final postcode = model.zonecode ?? '';
+    _postcodeController.value = TextEditingValue(
+      text: postcode,
+    );
+
+    final address = model.address ?? '';
+    _addressController.value = TextEditingValue(
+      text: address,
+    );
+
+    final buildingName = model.buildingName ?? '';
+    _addressDetailController.value = TextEditingValue(
+      text: buildingName,
+    );
   }
 
   @override
@@ -66,8 +95,8 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
             key: _formKey,
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.only(top: 50)),
-                Center(
+                const Padding(padding: EdgeInsets.only(top: 50)),
+                const Center(
                   child: Text(
                     '회원가입',
                     style: TextStyle(
@@ -86,7 +115,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            idInputWidget(_idController),
+                            idInputWidget(width: 230,_idController),
                             WhiteBackgroundButton(
                               onPressed: _checkDuplicateId,
                               text: "중복확인",
@@ -119,7 +148,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(width: 10),
@@ -156,12 +185,33 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            addressInputWidget(_addressController),
+                            const SizedBox(height:60),
+                            SizedBox(
+                              width:200,
+                              child: TextFormField(
+                                controller: _postcodeController,
+                                decoration: const InputDecoration(
+                                  hintText: '         우편번호',
+                                ),
+                                readOnly: true,
+                              ),
+                            ),
                             WhiteBackgroundButton(
-                              onPressed: _submitSignUpForm,
+                              onPressed: () => _searchAddress(context),
                               text: "우편번호 검색",
                             ),
                           ],
+                        ),
+                      ),
+                      const SizedBox(height:60),
+                      SizedBox(
+                        width:300,
+                        child: TextFormField(
+                          controller: _addressController,
+                          decoration: const InputDecoration(
+                            hintText: '           주소',
+                          ),
+                          readOnly: true,
                         ),
                       ),
                       addressDetailInputWidget(_addressDetailController),
