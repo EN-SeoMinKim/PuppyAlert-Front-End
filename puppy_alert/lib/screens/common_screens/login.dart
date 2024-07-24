@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../../utils/constants.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
 import 'package:http/http.dart' as http;
 
@@ -55,20 +56,41 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _submitLoginForm() async {
+  void _submitLoginForm() {
     String id = _idController.text.trim();
     String password = _passwordController.text.trim();
-    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/host/login');
+
+    _isValidloginValue('host', id, password).then(
+      (value) => _goNextPage(value, User.adult),
+    );
+    _isValidloginValue('puppy', id, password).then(
+          (value) => _goNextPage(value, User.child),
+    );
+  }
+
+  Future<bool> _isValidloginValue(
+      String urlAddress, String id, String password) async {
+    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/$urlAddress/login');
     http.Response response = await http.post(uri,
-        headers: {'Content-Type': 'application/json'}, body: json.encode({
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
           'id': id,
           'password': password,
         }));
 
-    print('Id: $id');
-    print('Password: $password');
-    print('====================');
-    print(response.body.toString());
+    return !response.body.toString().contains('옮지 않은 로그인 정보입니다');
+  }
+
+  void _goNextPage(bool isValid, User user) {
+    if (isValid) {
+      if (user == User.adult) {
+        Navigator.pushNamed(
+            context, "/speech_recognition_screen");
+      } else {
+        Navigator.pushNamed(
+            context, "/main_child_screen");
+      }
+    }
   }
 
   @override
@@ -103,8 +125,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _submitLoginForm();
-                                // Navigator.pushNamed(
-                                //     context, "/speech_recognition_screen");
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xffFF7700)),

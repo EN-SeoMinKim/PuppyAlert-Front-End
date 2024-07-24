@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/child_screens/main_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/signup_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const LoginScreen(),
           '/signup_screen': (context) => const SignupScreen(),
           '/speech_recognition_screen': (context) => const SpeechRecognitionScreen(),
+          '/main_child_screen': (context) => const MainChildScreen(),
         });
   }
 }
