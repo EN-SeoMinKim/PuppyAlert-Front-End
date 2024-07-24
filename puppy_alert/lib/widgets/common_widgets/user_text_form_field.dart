@@ -166,3 +166,113 @@ Widget passwordInputWidget(TextEditingController controller) {
     },
   );
 }
+
+Widget passwordConfirmationInputWidget(TextEditingController controller,
+    TextEditingController passwordController) {
+  return UserTextFormField(
+    hintText: "비밀번호를 한번 더 입력하세요",
+    labelText: "비밀번호 재확인",
+    obscureText: true,
+    textInputType: TextInputType.visiblePassword,
+    controller: controller,
+    prefixIcon: const Icon(Icons.enhanced_encryption),
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return '비밀번호를 확인하세요';
+      } else if (value != passwordController.text) {
+        return '비밀번호가 일치하지 않습니다';
+      }
+      return null;
+    },
+  );
+}
+
+Widget nameInputWidget(TextEditingController controller) {
+  return UserTextFormField(
+    hintText: "이름을 입력하세요",
+    labelText: "이름",
+    textInputType: TextInputType.text,
+    controller: controller,
+    prefixIcon: const Icon(Icons.perm_identity),
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return '이름을 입력하세요';
+      }
+    },
+  );
+}
+
+Widget nicknameInputWidget(TextEditingController controller) {
+  return UserTextFormField(
+    width: 230,
+    hintText: "닉네임을 입력하세요",
+    labelText: "닉네임",
+    textInputType: TextInputType.text,
+    controller: controller,
+    prefixIcon: const Icon(Icons.perm_identity),
+    validator: (value) {
+      final RegExp nicknameRegExp = RegExp(
+        r'^[a-zA-Z][a-zA-Z0-9_-]{2,18}[a-zA-Z0-9]$',
+      );
+      if (value == null || value.isEmpty) {
+        return '닉네임을 입력하세요';
+      } else if (!nicknameRegExp.hasMatch(value)) {
+        return '닉네임은 3~20자의 알파벳, 숫자, 언더스코어(_), 하이픈(-)만 포함할 수 있습니다.';
+      }
+      return null;
+    },
+  );
+}
+
+Widget addressInputWidget(TextEditingController controller) {
+  return UserTextFormField(
+    margin: 20,
+    width: 200,
+    hintText: "우편번호를 입력하세요",
+    labelText: "우편번호",
+    textInputType: TextInputType.text,
+    controller: controller,
+    prefixIcon: const Icon(Icons.location_on_outlined),
+  );
+}
+
+Widget addressDetailInputWidget(TextEditingController controller) {
+  return UserTextFormField(
+    margin: 10.0,
+    hintText: "상세 주소를 입력하세요",
+    labelText: "           상세주소",
+    textInputType: TextInputType.text,
+    controller: controller,
+  );
+}
+
+Widget phoneNumberInputWidget(TextEditingController controller) {
+  return UserTextFormField(
+    hintText: "전화번호를 입력하세요",
+    labelText: "전화번호",
+    textInputType: TextInputType.text,
+    controller: controller,
+    prefixIcon: const Icon(Icons.call),
+    validator: (value) {
+      final RegExp idRegExp = RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$');
+      if (value == null || value.isEmpty) {
+        return '전화번호를 입력하세요';
+      } else if (!idRegExp.hasMatch(value)) {
+        return '010-1234-1234같이 대쉬를 포함해야 합니다';
+      }
+      return null;
+    },
+  );
+}
+
+Widget phoneNumberConfirmationInputWidget(TextEditingController controller) {
+  return UserTextFormField(
+    width: 200,
+    hintText: "인증번호를 입력하세요",
+    labelText: "인증번호",
+    textInputType: TextInputType.text,
+    actionKeyboard: TextInputAction.done,
+    controller: controller,
+    prefixIcon: const Icon(Icons.verified_outlined),
+  );
+}

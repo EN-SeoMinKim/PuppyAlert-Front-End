@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../utils/constants.dart';
-import '../../widgets/common_widgets/user_textformfield.dart';
+import '../../widgets/common_widgets/user_text_form_field.dart';
 import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
@@ -60,15 +60,15 @@ class _LoginScreenState extends State<LoginScreen> {
     String id = _idController.text.trim();
     String password = _passwordController.text.trim();
 
-    _isValidloginValue('host', id, password).then(
+    _isValidLoginValue('host', id, password).then(
       (value) => _goNextPage(value, User.adult),
     );
-    _isValidloginValue('puppy', id, password).then(
+    _isValidLoginValue('puppy', id, password).then(
           (value) => _goNextPage(value, User.child),
     );
   }
 
-  Future<bool> _isValidloginValue(
+  Future<bool> _isValidLoginValue(
       String urlAddress, String id, String password) async {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/$urlAddress/login');
     http.Response response = await http.post(uri,
@@ -77,8 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
           'id': id,
           'password': password,
         }));
-
-    return !response.body.toString().contains('옮지 않은 로그인 정보입니다');
+    // print(response.body);
+    return !(response.body == '옳지 않은 로그인 정보입니다');
   }
 
   void _goNextPage(bool isValid, User user) {
