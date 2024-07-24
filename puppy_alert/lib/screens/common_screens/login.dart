@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        loginIdInputWidget(_idController),
+                        idInputWidget(_idController, 300),
                         passwordInputWidget(_passwordController),
                         const SizedBox(height: 20),
                         ButtonTheme(
