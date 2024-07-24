@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -51,12 +55,20 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _submitLoginForm() {
+  void _submitLoginForm() async {
     String id = _idController.text.trim();
     String password = _passwordController.text.trim();
+    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/host/login');
+    http.Response response = await http.post(uri,
+        headers: {'Content-Type': 'application/json'}, body: json.encode({
+          'id': id,
+          'password': password,
+        }));
 
     print('Id: $id');
     print('Password: $password');
+    print('====================');
+    print(response.body.toString());
   }
 
   @override
@@ -91,7 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _submitLoginForm();
-                                Navigator.pushNamed(context, "/speech_recognition_screen");
+                                // Navigator.pushNamed(
+                                //     context, "/speech_recognition_screen");
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xffFF7700)),
