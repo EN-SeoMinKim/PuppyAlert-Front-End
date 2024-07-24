@@ -5,7 +5,7 @@ import '../../widgets/common_widgets/user_datepicker.dart';
 import '../../widgets/common_widgets/user_textformfield.dart';
 import '../../widgets/common_widgets/white_background_button.dart';
 
-class SignupAdultScreen extends StatefulWidget {
+class SignupScreen extends StatefulWidget {
   final int _id = 0,
       _password = 1,
       _passwordConfirmation = 2,
@@ -16,13 +16,13 @@ class SignupAdultScreen extends StatefulWidget {
       _phoneNumber = 7,
       _phoneNumberConfirmation = 8;
 
-  const SignupAdultScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
-  State<SignupAdultScreen> createState() => _SignupAdultScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupAdultScreenState extends State<SignupAdultScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   late final _formKey;
   late final List<TextEditingController> _textEditingController;
   late DateTime? _selectedDate;
@@ -238,7 +238,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
+                              builder: (context) => const LoginScreen()),
                         );
                       },
                       child: const Text(

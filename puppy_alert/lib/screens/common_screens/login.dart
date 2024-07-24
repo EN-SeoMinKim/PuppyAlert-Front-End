@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/signup_child_screen");
+                Navigator.pushNamed(context, "/signup_screen");
               },
               child: const Text(
                 '결식아동',
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/signup_adult_screen");
+                Navigator.pushNamed(context, "/signup_screen");
               },
               child: const Text(
                 '1인 가구',
