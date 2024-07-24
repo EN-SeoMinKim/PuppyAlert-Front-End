@@ -41,6 +41,11 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
     _addressDetailController = TextEditingController();
     _phonenumberController = TextEditingController();
     _phonenumberconfirmationController = TextEditingController();
+
+    // Listen to changes in the postcode controller
+    _postcodeController.addListener(() {
+      setState(() {}); // Triggers a rebuild when the text changes
+    });
   }
 
   @override
@@ -84,6 +89,8 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final showIcon = _postcodeController.text.isEmpty;
+
     return Scaffold(
       appBar: AppBar(),
       body: GestureDetector(
@@ -115,7 +122,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            idInputWidget(width: 230,_idController),
+                            idInputWidget(width: 230, _idController),
                             WhiteBackgroundButton(
                               onPressed: _checkDuplicateId,
                               text: "중복확인",
@@ -185,13 +192,16 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const SizedBox(height:60),
+                            const SizedBox(height: 60),
                             SizedBox(
-                              width:200,
+                              width: 200,
                               child: TextFormField(
                                 controller: _postcodeController,
-                                decoration: const InputDecoration(
-                                  hintText: '         우편번호',
+                                decoration: InputDecoration(
+                                  hintText: '우편번호',
+                                  prefixIcon: showIcon
+                                      ? Icon(Icons.location_on_outlined)
+                                      : null,
                                 ),
                                 readOnly: true,
                               ),
@@ -203,9 +213,9 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height:60),
+                      const SizedBox(height: 20),
                       SizedBox(
-                        width:300,
+                        width: 300,
                         child: TextFormField(
                           controller: _addressController,
                           decoration: const InputDecoration(
@@ -285,7 +295,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
       String addressDetail = _addressDetailController.text.trim();
       String phonenumber = _phonenumberController.text.trim();
       String phonenumberConfirmation =
-          _phonenumberconfirmationController.text.trim();
+      _phonenumberconfirmationController.text.trim();
 
       print('Id: $id');
       print('Password: $password');
