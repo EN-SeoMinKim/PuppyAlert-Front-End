@@ -1,47 +1,47 @@
 import 'package:flutter/material.dart';
 
 class LongRectangleButtonCommonWidget extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-  final double width;
-  final double? height;
-  final EdgeInsetsGeometry? margin;
-  final double? fontSize;
-  final Color backgroundColor;
-  final Color textColor;
+  final VoidCallback _onPressed;
+  final String _text;
+  final double _width;
+  final double? _height;
+  final EdgeInsetsGeometry? _margin;
+  final double? _fontSize;
+  final Color _backgroundColor;
+  final Color _textColor;
 
   const LongRectangleButtonCommonWidget({
     super.key,
-    required this.onPressed,
-    required this.text,
-    this.width = 300,
-    this.height,
-    this.margin = const EdgeInsets.only(top: 30),
-    this.fontSize,
-    this.backgroundColor = const Color(0xffFF7700),
-    this.textColor = Colors.white,
-  });
+    required void Function() onPressed,
+    required String text,
+    double width = 300,
+    double? height,
+    EdgeInsetsGeometry? margin = const EdgeInsets.only(top: 30),
+    double? fontSize,
+    Color backgroundColor = const Color(0xffFF7700),
+    Color textColor = Colors.white,
+  }) : _textColor = textColor, _backgroundColor = backgroundColor, _fontSize = fontSize, _margin = margin, _height = height, _width = width, _text = text, _onPressed = onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin,
-      width: width ,
-      height: height,
+      margin: _margin,
+      width: _width ,
+      height: _height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
+          backgroundColor: _backgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
-        onPressed: onPressed,
+        onPressed: _onPressed,
         child: Text(
-          text,
+          _text,
           style: TextStyle(
-            color: textColor,
+            color: _textColor,
             fontWeight: FontWeight.bold,
-            fontSize: fontSize,
+            fontSize: _fontSize,
           ),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import '../../widgets/common_widgets/food_common_widget.dart';
+import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
 class TodayFoodChildScreen extends StatefulWidget {
   const TodayFoodChildScreen({super.key});

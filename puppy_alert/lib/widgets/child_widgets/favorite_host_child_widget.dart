@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
+
 class FavoriteHostChildWidget extends StatefulWidget {
-  final String imagePath;
-  final String hostName;
-  final String recentMealDate;
-  final Color favorite;
+  final String _imagePath;
+  final String _hostName;
+  final String _recentMealDate;
+  final Color _favorite;
 
   const FavoriteHostChildWidget({
     super.key,
-    required this.imagePath,
-    required this.hostName,
-    required this.recentMealDate,
-    required this.favorite,
-  });
+    required String imagePath,
+    required String hostName,
+    required String recentMealDate,
+    required Color favorite,
+  }) : _favorite = favorite, _recentMealDate = recentMealDate, _hostName = hostName, _imagePath = imagePath;
 
   @override
   State<FavoriteHostChildWidget> createState() => _FavoriteHostChildWidgetState();
@@ -26,7 +27,7 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
         children: [
           ClipOval(
             child: Image.asset(
-              widget.imagePath,
+              widget._imagePath,
               width: 80,
               height: 80,
               fit: BoxFit.cover,
@@ -36,14 +37,14 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
           Column(
             children: [
               Text(
-                widget.hostName,
-                style: const TextStyle(fontWeight: FontWeight.w900),
+                widget._hostName,
+                style: TextStyle(fontWeight: FontWeight.w900),
               ),
               const SizedBox(
                 height: 5,
               ),
               Text(
-                  widget.recentMealDate,
+                  widget._recentMealDate,
               style: TextStyle(fontWeight: FontWeight.w200, color: Colors.grey[500]),),
             ],
           ),
@@ -53,7 +54,7 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
         children: [
           Icon(
             Icons.favorite_border,
-            color: widget.favorite,
+            color: widget._favorite,
           ),
           const SizedBox(width: 30),
         ],
@@ -63,8 +64,8 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
 }
 
 Widget firstHostWidget() {
-  return const FavoriteHostChildWidget(
-    imagePath: 'assets/image.png',
+  return FavoriteHostChildWidget(
+    imagePath: 'image.png',
     hostName: '김순옥님',
     recentMealDate: '7일 전에 식사',
     favorite: Colors.red,

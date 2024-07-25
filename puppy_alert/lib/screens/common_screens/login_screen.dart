@@ -68,15 +68,22 @@ class _LoginScreenState extends State<LoginScreen> {
           'password': password,
         }));
 
-    // 로그인 실패 했을 때 팝업 창 띄우기
-    if (response.body == '등록되지 않은 회원입니다') return;
+        if (response.body == '등록되지 않은 회원입니다') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('로그인에 실패했습니다.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
 
     _goNextPage(jsonDecode(response.body));
   }
 
   void _goNextPage(Map<String, dynamic> jsonData) {
     if (jsonData['userType'] == 'HOST') {
-      Navigator.of(context).pushNamed("/speech_recognition_screen");
+      Navigator.of(context).pushNamed("/speech_recognition_adult_screen");
     } else {
       Navigator.of(context).pushNamed("/main_child_screen");
     }

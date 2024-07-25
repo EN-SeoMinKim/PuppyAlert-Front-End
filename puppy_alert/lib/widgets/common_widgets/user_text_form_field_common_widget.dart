@@ -138,7 +138,7 @@ Widget idInputWidget(TextEditingController controller, double width) {
       if (value == null || value.isEmpty) {
         return '아이디를 입력하세요';
       } else if (!idRegExp.hasMatch(value)) {
-        return '아이디는 4~12자의 알파벳과 숫자만 포함해야 합니다';
+        return '아이디는 4~12자의 알파벳과 \n숫자만 포함해야 합니다';
       }
       return null;
     },
@@ -160,7 +160,7 @@ Widget passwordInputWidget(TextEditingController controller) {
       if (value == null || value.isEmpty) {
         return '비밀번호를 입력하세요';
       } else if (!passwordRegExp.hasMatch(value)) {
-        return '비밀번호는 8~15자의 알파벳과 숫자및 특수문자(@!%*#?&)가 하나 이상 포함해야 합니다';
+        return '비밀번호는 8~15자의 알파벳과 숫자및 \n특수문자(@!%*#?&)가 하나 이상 포함해야 합니다';
       }
       return null;
     },
@@ -217,7 +217,7 @@ Widget nicknameInputWidget(TextEditingController controller) {
       if (value == null || value.isEmpty) {
         return '닉네임을 입력하세요';
       } else if (!nicknameRegExp.hasMatch(value)) {
-        return '닉네임은 3~20자의 알파벳, 숫자, 언더스코어(_), 하이픈(-)만 포함할 수 있습니다.';
+        return '닉네임은 3~20자의 알파벳, 숫자, \n_ 와 - 만 포함할 수 있습니다.';
       }
       return null;
     },

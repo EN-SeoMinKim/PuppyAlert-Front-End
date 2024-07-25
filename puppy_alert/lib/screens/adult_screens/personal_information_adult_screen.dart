@@ -50,20 +50,38 @@ class _PersonalInformationAdultScreenState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        userIdContainer(),
-                        userPasswordContainer((controller) {
-                          _passwordController = controller;
-                        }),
-                        userPasswordConfirmationContainer((controller) {
-                          _passwordConfirmationController = controller;
-                        }),
-                        userNicknameContainer(),
-                        userNameContainer(),
-                        userBirthContainer(),
-                        userAddressContainer((controller) {
-                          _addressController = controller;
-                        }),
-                        userPhoneNumberContainer(),
+                        const ImmutableUserInfoCommonWidget(
+                          label: '아이디',
+                          value: 'userId',
+                        ),
+                      MutableUserInfoCommonWidget(
+                          controller: _passwordController,
+                          label: "비밀번호"
+                      ),
+                        MutableUserInfoCommonWidget(
+                            controller: _passwordConfirmationController,
+                            label: "비밀번호 재확인"
+                        ),
+                    const ImmutableUserInfoCommonWidget(
+                      label: '닉네임',
+                      value: 'userNickname',
+                    ),
+                      const ImmutableUserInfoCommonWidget(
+                        label: '이름',
+                        value: 'userName',
+                      ),
+                      const ImmutableUserInfoCommonWidget(
+                        label: '생년월일',
+                        value: '2024.09.09',
+                      ),
+                        MutableUserInfoCommonWidget(
+                            controller: _addressController,
+                            label: "주소"
+                        ),
+                    const ImmutableUserInfoCommonWidget(
+                      label: '전화번호',
+                      value: '010-1234-1234',
+                    ),
                         const SizedBox(
                           height: 20,
                         ),

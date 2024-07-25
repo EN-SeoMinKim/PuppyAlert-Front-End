@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
 
 class FoodCommonWidget extends StatefulWidget {
-  final String imagePath;
-  final String foodName;
-  final String hostName;
-  final String time;
-  final String recruitmentStatus;
+  final String _imagePath;
+  final String _foodName;
+  final String _hostName;
+  final String _time;
+  final String _recruitmentStatus;
 
   const FoodCommonWidget({
     super.key,
-    required this.imagePath,
-    required this.foodName,
-    required this.hostName,
-    required this.time,
-    required this.recruitmentStatus,
-  });
+    required String imagePath,
+    required String foodName,
+    required String hostName,
+    required String time,
+    required String recruitmentStatus,
+  })  : _imagePath = imagePath,
+        _foodName = foodName,
+        _hostName = hostName,
+        _time = time,
+        _recruitmentStatus = recruitmentStatus;
+
+  String get imagePath => _imagePath;
+  String get foodName => _foodName;
+  String get hostName => _hostName;
+  String get time => _time;
+  String get recruitmentStatus => _recruitmentStatus;
 
   @override
   State<FoodCommonWidget> createState() => _FoodCommonWidgetState();
 }
 
 class _FoodCommonWidgetState extends State<FoodCommonWidget> {
-  bool isFavorite = false;
+  bool _isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +70,12 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
                   const SizedBox(width: 8),
                   IconButton(
                     icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.grey,
+                      _isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: _isFavorite ? Colors.red : Colors.grey,
                     ),
                     onPressed: () {
                       setState(() {
-                        isFavorite = !isFavorite;
+                        _isFavorite = !_isFavorite;
                       });
                     },
                   ),
@@ -104,4 +114,3 @@ Widget firstFoodWidget() {
     recruitmentStatus: '똥강아지 모집완료',
   );
 }
-

@@ -57,5 +57,3 @@ class _FoodRegistrationCompletionAdultScreenState extends State<FoodRegistration
     );
   }
 }
-
-

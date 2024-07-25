@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/adult_screens/speech_recognition_adult_screen.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
 class HomeAdultScreen extends StatefulWidget {
@@ -30,7 +31,7 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
               textColor: Colors.white,
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SpeechRecognitionScreen()));
+                    builder: (context) => const SpeechRecognitionAdultScreen()));
               },
               text: "식사\n등록"),
           ElevatedShadowButtonAdultWidget(onPressed: () {}, text: "나의 정보"),
