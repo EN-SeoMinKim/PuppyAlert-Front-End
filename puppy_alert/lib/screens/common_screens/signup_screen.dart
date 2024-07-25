@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+
 // import 'package:remedi_kopo/remedi_kopo.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/user_date_picker.dart';
@@ -24,13 +29,15 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  late final _formKey;
+  late final GlobalKey<FormState> _allFormKey, _idFormKey, _nickNameFormKey;
   late final List<TextEditingController> _textEditingController;
 
   @override
   void initState() {
     super.initState();
-    _formKey = GlobalKey<FormState>();
+    _allFormKey = GlobalKey<FormState>();
+    _idFormKey = GlobalKey<FormState>();
+    _nickNameFormKey = GlobalKey<FormState>();
     _textEditingController = List.generate(9, (_) => TextEditingController());
   }
 
@@ -42,17 +49,35 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void _checkDuplicateId() {
-    print('id 중복 확인 버튼 클릭됨');
-  }
+  void _clickDuplicationButton(bool isId) async {
+    GlobalKey<FormState> key;
+    Uri uri;
+    if (isId) {
+      key = _idFormKey;
+      String inputString = _textEditingController[widget._id].text.trim();
+      uri =
+          Uri.parse('${dotenv.get('BASE_URL')}/common/checkId?id=$inputString');
+    } else {
+      key = _nickNameFormKey;
+      String inputString = _textEditingController[widget._nickName].text.trim();
+      uri = Uri.parse(
+          '${dotenv.get('BASE_URL')}/common/checkNickName?nickName=$inputString');
+    }
 
-  void _checkDuplicateNickname() {
-    print('닉네임 중복 확인 버튼 클릭됨');
+    if (!_isKeyValid(key)) return;
+
+    // 중복이 없디면 수정 안되게 해주고 중복이 있다면 다른 입력 하라고 스낵바 띄워주삼
+    // 중복이 없는 입력이라면
+    if (!jsonDecode((await http.get(uri)).body)['isExists']) {
+    } else {
+      // 중복이 있다면
+    }
   }
 
   void _submitSignUpForm(Object arguments) {
-    bool isValid = _formKey.currentState?.validate() ?? false;
-    if (!isValid) return;
+    if (!_isKeyValid(_idFormKey) ||
+        !_isKeyValid(_nickNameFormKey) ||
+        !_isKeyValid(_allFormKey)) return;
 
     List<String> inputString =
         List.generate(9, (index) => _textEditingController[index].text.trim());
@@ -62,11 +87,13 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-
+  bool _isKeyValid(GlobalKey<FormState> key) {
+    return key.currentState?.validate() ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Object? arguments = ModalRoute.of(context)!.settings.arguments;
+    final Object arguments = ModalRoute.of(context)!.settings.arguments!;
 
     return Scaffold(
       appBar: AppBar(),
@@ -76,7 +103,7 @@ class _SignupScreenState extends State<SignupScreen> {
         },
         child: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: _allFormKey,
             child: Column(
               children: [
                 const Padding(padding: EdgeInsets.only(top: 50)),
@@ -99,10 +126,15 @@ class _SignupScreenState extends State<SignupScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            idInputWidget(
-                                _textEditingController[widget._id], 230),
+                            Form(
+                              key: _idFormKey,
+                              child: idInputWidget(
+                                  _textEditingController[widget._id], 230),
+                            ),
                             WhiteBackgroundButton(
-                              onPressed: _checkDuplicateId,
+                              onPressed: () {
+                                _clickDuplicationButton(true);
+                              },
                               text: "중복확인",
                             ),
                           ],
@@ -118,10 +150,15 @@ class _SignupScreenState extends State<SignupScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            nicknameInputWidget(
-                                _textEditingController[widget._nickName]),
+                            Form(
+                              key: _nickNameFormKey,
+                              child: nicknameInputWidget(
+                                  _textEditingController[widget._nickName]),
+                            ),
                             WhiteBackgroundButton(
-                              onPressed: _checkDuplicateNickname,
+                              onPressed: () {
+                                _clickDuplicationButton(false);
+                              },
                               text: "중복확인",
                             ),
                           ],
@@ -210,7 +247,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 20),
                       LongRectangleButton(
                         onPressed: () {
-                          _submitSignUpForm(arguments!);
+                          _submitSignUpForm(arguments);
                         },
                         text: "회원가입",
                       ),
