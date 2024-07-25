@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/child_widgets/host_widget.dart';
+import '../../widgets/child_widgets/favorite_host_child_widget.dart';
 
 class FavoriteHostChildScreen extends StatefulWidget {
   const FavoriteHostChildScreen({super.key});

@@ -7,10 +7,10 @@ import 'package:http/http.dart' as http;
 
 // import 'package:remedi_kopo/remedi_kopo.dart';
 import '../../utils/constants.dart';
-import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/common_widgets/user_date_picker.dart';
-import '../../widgets/common_widgets/user_text_form_field.dart';
-import '../../widgets/common_widgets/white_background_button.dart';
+import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
+import '../../widgets/common_widgets/user_date_picker_common_widget.dart';
+import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
+import '../../widgets/common_widgets/white_background_button_common_widget.dart';
 
 class SignupScreen extends StatefulWidget {
   final int _id = 0,
@@ -172,7 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: idInputWidget(
                                   _textEditingController[widget._id], 230),
                             ),
-                            WhiteBackgroundButton(
+                            WhiteBackgroundButtonCommonWidget(
                               onPressed: () {
                                 _clickDuplicationButton(true);
                               },
@@ -196,7 +196,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: nicknameInputWidget(
                                   _textEditingController[widget._nickName]),
                             ),
-                            WhiteBackgroundButton(
+                            WhiteBackgroundButtonCommonWidget(
                               onPressed: () {
                                 _clickDuplicationButton(false);
                               },
@@ -232,7 +232,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                               ],
                             ),
-                            UserDatePicker(onDateSelected: (date) {
+                            UserDatePickerCommonWidget(onDateSelected: (date) {
                               setState(() {
                                 if (date != null) {
                                   _birth = date;
@@ -249,7 +249,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           children: [
                             addressInputWidget(
                                 _textEditingController[widget._address]),
-                            WhiteBackgroundButton(
+                            WhiteBackgroundButtonCommonWidget(
                               // ========== remedi_kopo api ========== //
                               // onPressed: () async {
                               //   KopoModel model = await Navigator.push(
@@ -277,7 +277,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             phoneNumberConfirmationInputWidget(
                                 _textEditingController[
                                     widget._phoneNumberConfirmation]),
-                            WhiteBackgroundButton(
+                            WhiteBackgroundButtonCommonWidget(
                               onPressed: () {},
                               text: "인증번호확인",
                             ),
@@ -285,7 +285,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      LongRectangleButton(
+                      LongRectangleButtonCommonWidget(
                         onPressed: () {
                           _submitSignUpForm(arguments);
                         },

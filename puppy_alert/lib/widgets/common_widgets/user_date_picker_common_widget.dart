@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class UserDatePicker extends StatefulWidget {
+class UserDatePickerCommonWidget extends StatefulWidget {
   final ValueChanged<DateTime?>? onDateSelected;
 
-  const UserDatePicker({super.key, this.onDateSelected});
+  const UserDatePickerCommonWidget({super.key, this.onDateSelected});
 
   @override
-  State<UserDatePicker> createState() => _UserDatePickerState();
+  State<UserDatePickerCommonWidget> createState() => _UserDatePickerCommonWidgetState();
 }
 
-class _UserDatePickerState extends State<UserDatePicker> {
+class _UserDatePickerCommonWidgetState extends State<UserDatePickerCommonWidget> {
   DateTime? _selectedDate;
 
   @override

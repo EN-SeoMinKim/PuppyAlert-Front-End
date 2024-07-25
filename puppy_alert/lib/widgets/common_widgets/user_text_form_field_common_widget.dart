@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UserTextFormField extends StatefulWidget {
+class UserTextFormFieldCommonWidget extends StatefulWidget {
   final TextEditingController _controller;
   final TextInputType _textInputType;
   final String _hintText;
@@ -12,7 +12,7 @@ class UserTextFormField extends StatefulWidget {
   final String? Function(String?)? _validator;
   final double _margin;
 
-  const UserTextFormField({
+  const UserTextFormFieldCommonWidget({
     super.key,
     required TextEditingController controller,
     required TextInputType textInputType,
@@ -36,10 +36,10 @@ class UserTextFormField extends StatefulWidget {
         _margin = margin;
 
   @override
-  State<UserTextFormField> createState() => _UserTextFormFieldState();
+  State<UserTextFormFieldCommonWidget> createState() => _UserTextFormFieldCommonWidgetState();
 }
 
-class _UserTextFormFieldState extends State<UserTextFormField> {
+class _UserTextFormFieldCommonWidgetState extends State<UserTextFormFieldCommonWidget> {
   late bool _obscureText;
 
   @override
@@ -126,7 +126,7 @@ class _UserTextFormFieldState extends State<UserTextFormField> {
 }
 
 Widget idInputWidget(TextEditingController controller, double width) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     width: width,
     hintText: "아이디를 입력하세요",
     labelText: "아이디",
@@ -146,7 +146,7 @@ Widget idInputWidget(TextEditingController controller, double width) {
 }
 
 Widget passwordInputWidget(TextEditingController controller) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     hintText: "비밀번호를 입력하세요",
     labelText: "비밀번호",
     obscureText: true,
@@ -169,7 +169,7 @@ Widget passwordInputWidget(TextEditingController controller) {
 
 Widget passwordConfirmationInputWidget(TextEditingController controller,
     TextEditingController passwordController) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     hintText: "비밀번호를 한번 더 입력하세요",
     labelText: "비밀번호 재확인",
     obscureText: true,
@@ -188,7 +188,7 @@ Widget passwordConfirmationInputWidget(TextEditingController controller,
 }
 
 Widget nameInputWidget(TextEditingController controller) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     hintText: "이름을 입력하세요",
     labelText: "이름",
     textInputType: TextInputType.text,
@@ -203,7 +203,7 @@ Widget nameInputWidget(TextEditingController controller) {
 }
 
 Widget nicknameInputWidget(TextEditingController controller) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     width: 230,
     hintText: "닉네임을 입력하세요",
     labelText: "닉네임",
@@ -225,7 +225,7 @@ Widget nicknameInputWidget(TextEditingController controller) {
 }
 
 Widget addressInputWidget(TextEditingController controller) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     margin: 20,
     width: 200,
     hintText: "우편번호를 입력하세요",
@@ -237,7 +237,7 @@ Widget addressInputWidget(TextEditingController controller) {
 }
 
 Widget addressDetailInputWidget(TextEditingController controller) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     margin: 10.0,
     hintText: "상세 주소를 입력하세요",
     labelText: "           상세주소",
@@ -247,7 +247,7 @@ Widget addressDetailInputWidget(TextEditingController controller) {
 }
 
 Widget phoneNumberInputWidget(TextEditingController controller) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     hintText: "전화번호를 입력하세요",
     labelText: "전화번호",
     textInputType: TextInputType.text,
@@ -266,7 +266,7 @@ Widget phoneNumberInputWidget(TextEditingController controller) {
 }
 
 Widget phoneNumberConfirmationInputWidget(TextEditingController controller) {
-  return UserTextFormField(
+  return UserTextFormFieldCommonWidget(
     width: 200,
     hintText: "인증번호를 입력하세요",
     labelText: "인증번호",

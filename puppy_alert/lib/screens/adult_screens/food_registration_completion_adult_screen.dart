@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
+import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
 class FoodRegistrationCompletionAdultScreen extends StatefulWidget {
   const FoodRegistrationCompletionAdultScreen({super.key});
@@ -15,16 +15,16 @@ class _FoodRegistrationCompletionAdultScreenState extends State<FoodRegistration
       appBar: AppBar(),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Center(child: Text('똥강아지\n모집완료!',
+          const Center(child: Text('똥강아지\n모집완료!',
               style: TextStyle(
                 fontWeight: FontWeight.w900,
                 fontSize: 40,
                 color: Colors.red,
               ))),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           ClipRRect(
@@ -36,10 +36,10 @@ class _FoodRegistrationCompletionAdultScreenState extends State<FoodRegistration
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
-          Text(
+          const Text(
             '비빔밥\n 18:00',
             style: TextStyle(
               fontSize: 40.0,
@@ -47,7 +47,7 @@ class _FoodRegistrationCompletionAdultScreenState extends State<FoodRegistration
               color: Colors.black,
             ),
           ),
-          ElevatedShadowButton(
+          ElevatedShadowButtonAdultWidget(
               backgroundColor: Colors.red,
               textColor: Colors.white,
               onPressed: () {},

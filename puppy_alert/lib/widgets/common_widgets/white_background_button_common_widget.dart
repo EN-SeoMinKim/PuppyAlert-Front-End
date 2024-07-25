@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class WhiteBackgroundButton extends StatelessWidget {
+class WhiteBackgroundButtonCommonWidget extends StatelessWidget {
   final VoidCallback _onPressed;
   final String _text;
 
-  const WhiteBackgroundButton({
+  const WhiteBackgroundButtonCommonWidget({
     super.key,
     required VoidCallback onPressed,
     required String text,

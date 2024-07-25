@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/adult_widgets/elevated_shadow_button.dart';
+import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
 class FoodRecordAdultScreen extends StatefulWidget {
   const FoodRecordAdultScreen({super.key});
@@ -15,7 +15,7 @@ class _FoodRecordAdultScreenState extends State<FoodRecordAdultScreen> {
       appBar: AppBar(),
       body: Column(
         children: <Widget>[
-          Container(
+          const SizedBox(
             height: 100.0,
             child: Center(
               child: Text(
@@ -48,7 +48,7 @@ class _FoodRecordAdultScreenState extends State<FoodRecordAdultScreen> {
               border: Border.all(color: Colors.grey[200]!, width: 2.0),
             ),
             child: Center(
-              child: ElevatedShadowButton(
+              child: ElevatedShadowButtonAdultWidget(
                   onPressed: () {
                     // Navigator.pop();
                   },

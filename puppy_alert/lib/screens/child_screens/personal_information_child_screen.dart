@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_container.dart';
-import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/common_widgets/mutable_user_info_container.dart';
-import '../../widgets/common_widgets/white_background_button.dart';
+import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_common_widget.dart';
+import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
+import '../../widgets/common_widgets/mutable_user_info_common_widget.dart';
+import '../../widgets/common_widgets/white_background_button_common_widget.dart';
 
 class PersonalInformationChildScreen extends StatefulWidget {
   const PersonalInformationChildScreen({super.key});
@@ -45,8 +45,8 @@ class _PersonalInformationChildScreenState
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(padding: EdgeInsets.only(top: 50)),
-              Center(
+              const Padding(padding: EdgeInsets.only(top: 50)),
+              const Center(
                 child: Text(
                   '개인정보',
                   style: TextStyle(
@@ -73,11 +73,11 @@ class _PersonalInformationChildScreenState
                       _addressController = controller;
                     }),
                     userPhoneNumberContainer(),
-                    SizedBox(height: 25,),
-                    WhiteBackgroundButton(
+                    const SizedBox(height: 25,),
+                    WhiteBackgroundButtonCommonWidget(
                         onPressed: () {},
                         text:   "프로필 사진 수정하기"),
-                    LongRectangleButton(
+                    LongRectangleButtonCommonWidget(
                       onPressed: _submitEditProfileForm,
                       text: "수정하기",
                     ),

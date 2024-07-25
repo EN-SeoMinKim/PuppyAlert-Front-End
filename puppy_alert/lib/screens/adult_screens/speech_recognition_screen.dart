@@ -4,8 +4,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:puppy_alert/screens/adult_screens/food_registration_completion_adult_screen.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
-import '../../widgets/adult_widgets/elevated_shadow_button.dart';
-import 'mypage_adult_screen.dart';
+import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
+import 'my_page_adult_screen.dart';
 
 class SpeechRecognitionScreen extends StatefulWidget {
   const SpeechRecognitionScreen({super.key});
@@ -45,23 +45,23 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
 
     await _flutterTts.setLanguage('ko');
     await _flutterTts.speak('등록하실 메뉴를 말씀해 주세요');
-    await _getZipbobMenu();
+    await _getFoodMenu();
     await _getZipbobTime();
-    await navigateToZipbobRegistrationCompleteScreen();
+    await navigateToFoodRegistrationCompleteScreen();
   }
 
-  Future<void> navigateToZipbobRegistrationCompleteScreen() {
-    return Future.delayed(Duration(seconds: 25), ()  {
+  Future<void> navigateToFoodRegistrationCompleteScreen() {
+    return Future.delayed(const Duration(seconds: 25), ()  {
       if(_menu.isNotEmpty && _time.isNotEmpty){
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => FoodRegistrationCompletionAdultScreen()));
+            builder: (context) => const FoodRegistrationCompletionAdultScreen()));
       }
     });
   }
 
 
-  Future<void> _getZipbobMenu() {
-    return Future.delayed(Duration(seconds: 3), () async {
+  Future<void> _getFoodMenu() {
+    return Future.delayed(const Duration(seconds: 3), () async {
       await _initializeSpeech();
       if (_isListening) {
         await _startListeningMenu();
@@ -70,7 +70,7 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
   }
 
   Future<void> _getZipbobTime() async {
-    return Future.delayed(Duration(seconds: 18), () async {
+    return Future.delayed(const Duration(seconds: 18), () async {
       if (_menu.isNotEmpty) {
         setState(() {
           _topText = '식사를 같이 하실 \n시간을 말씀해 주세요';
@@ -115,7 +115,7 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
       },
     );
 
-    _timer = Timer(Duration(seconds: 6), () async {
+    _timer = Timer(const Duration(seconds: 6), () async {
       if (_isListening) {
         await _speech.stop();
         setState(() {
@@ -153,7 +153,7 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
       },
     );
 
-    _timer = Timer(Duration(seconds: 7), () async {
+    _timer = Timer(const Duration(seconds: 7), () async {
       if (_isListening) {
         await _speech.stop();
         setState(() {
@@ -197,7 +197,7 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
             _flutterTts.stop();
@@ -217,35 +217,35 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
               Center(
                 child: Text(
                   _topText,
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
                 ),
               ),
             Center(
                 child: Text(_feedbackText,
                     style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.w900))),
+                        const TextStyle(fontSize: 30, fontWeight: FontWeight.w900))),
             AvatarGlow(
               animate: _isListening,
-              glowColor: Color(0xffFF7700),
+              glowColor: const Color(0xffFF7700),
               endRadius: 150.0,
-              duration: Duration(milliseconds: 2000),
-              repeatPauseDuration: Duration(milliseconds: 100),
+              duration: const Duration(milliseconds: 2000),
+              repeatPauseDuration: const Duration(milliseconds: 100),
               repeat: true,
               child: ConstrainedBox(
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                   minWidth: 180.0,
                   minHeight: 150.0,
                 ),
                 child: FloatingActionButton(
-                    backgroundColor: Color(0xffFF7700),
+                    backgroundColor: const Color(0xffFF7700),
                     onPressed: speakAndRecognize,
                     child: _isListening
-                        ? Icon(
+                        ? const Icon(
                             Icons.mic,
                             size: 80,
                             color: Colors.white,
                           )
-                        : Text(
+                        : const Text(
                             "식사\n등록",
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -256,12 +256,12 @@ class _SpeechRecognitionScreenState extends State<SpeechRecognitionScreen> {
                           )),
               ),
             ),
-            ElevatedShadowButton(
+            ElevatedShadowButtonAdultWidget(
               width: 190,
               text: "나의 정보",
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MypageAdultScreen()));
+                    builder: (context) => const MyPageAdultScreen()));
               },
             ),
           ],

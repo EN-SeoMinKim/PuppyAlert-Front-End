@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/child_screens/personal_information_child_screen.dart';
-import 'package:puppy_alert/widgets/child_widgets/custom_bottom_navigation_bar.dart';
-import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/child_widgets/profile_info_button.dart';
+import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
+import '../../widgets/child_widgets/profile_info_button_child_widget.dart';
 import '../common_screens/login_screen.dart';
 
-class MypageChildScreen extends StatefulWidget {
-  const MypageChildScreen({super.key});
+class MyPageChildScreen extends StatefulWidget {
+  const MyPageChildScreen({super.key});
 
   @override
-  State<MypageChildScreen> createState() => _MypageChildScreenState();
+  State<MyPageChildScreen> createState() => _MyPageChildScreenState();
 }
 
-class _MypageChildScreenState extends State<MypageChildScreen> {
+class _MyPageChildScreenState extends State<MyPageChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -31,9 +30,9 @@ class _MypageChildScreenState extends State<MypageChildScreen> {
               width: double.infinity,
               height: 200,
               alignment: Alignment.center,
-              color: Color(0xffFFD6BF),
+              color: const Color(0xffFFD6BF),
               child: Column(children: [
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
                 ClipOval(
                   child: Image.asset(
                     "assets/image.png",
@@ -42,8 +41,8 @@ class _MypageChildScreenState extends State<MypageChildScreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Text(
+                const SizedBox(height: 16.0),
+                const Text(
                   'Anton',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -53,31 +52,27 @@ class _MypageChildScreenState extends State<MypageChildScreen> {
                 )
               ]),
             ),
-            ProfileInfoButton(
+            ProfileInfoButtonChildWidget(
                 icon: Icons.manage_accounts,
                 text: '   개인 정보',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PersonalInformationChildScreen()));
+                      builder: (context) => const PersonalInformationChildScreen()));
                 }),
-            ProfileInfoButton(
+            ProfileInfoButtonChildWidget(
                 icon: Icons.library_books, text: '   집밥 기록', onPressed: () {}),
-            ProfileInfoButton(
+            ProfileInfoButtonChildWidget(
                 icon: Icons.rice_bowl, text: '   오늘의 집밥', onPressed: () {}),
-            LongRectangleButton(
+            LongRectangleButtonCommonWidget(
                 backgroundColor: Colors.grey[100]!,
                 textColor: Colors.grey[700]!,
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                      MaterialPageRoute(builder: (context) => const LoginScreen()));
                 },
                 text: "Logout"),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: 3,
-        onTap: (index) {},
       ),
     );
   }

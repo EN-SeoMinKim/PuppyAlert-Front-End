@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
-import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
+import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
 class HomeAdultScreen extends StatefulWidget {
   const HomeAdultScreen({super.key});
@@ -16,25 +16,25 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
       appBar: AppBar(),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Center(
+          const Center(
               child: Text('똥강아지를\n모집하세요',
                   style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30))),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
-          ElevatedShadowButton(
+          ElevatedShadowButtonAdultWidget(
               height: 150,
               backgroundColor: Color(0xffFF7700),
               textColor: Colors.white,
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => SpeechRecognitionScreen()));
+                    builder: (context) => const SpeechRecognitionScreen()));
               },
               text: "식사\n등록"),
-          ElevatedShadowButton(onPressed: () {}, text: "나의 정보"),
+          ElevatedShadowButtonAdultWidget(onPressed: () {}, text: "나의 정보"),
         ],
       ),
     );

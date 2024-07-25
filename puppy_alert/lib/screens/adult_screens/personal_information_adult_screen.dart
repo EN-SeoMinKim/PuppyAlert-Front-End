@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/common_screens/login_screen.dart';
-import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_container.dart';
-import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/common_widgets/mutable_user_info_container.dart';
+import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_common_widget.dart';
+import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
+import '../../widgets/common_widgets/mutable_user_info_common_widget.dart';
 
 class PersonalInformationAdultScreen extends StatefulWidget {
   const PersonalInformationAdultScreen({super.key});
@@ -38,8 +38,8 @@ class _PersonalInformationAdultScreenState
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(padding: EdgeInsets.only(top: 50)),
-                  Center(
+                  const Padding(padding: EdgeInsets.only(top: 50)),
+                  const Center(
                       child: Text('개인정보',
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
@@ -64,17 +64,17 @@ class _PersonalInformationAdultScreenState
                           _addressController = controller;
                         }),
                         userPhoneNumberContainer(),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        LongRectangleButton(
+                        LongRectangleButtonCommonWidget(
                             onPressed: _submitEditProfileForm, text: "수정하기"),
-                        LongRectangleButton(
+                        LongRectangleButtonCommonWidget(
                             backgroundColor: Colors.grey[300]!,
                             textColor: Colors.black,
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                                  builder: (context) => const LoginScreen()));
                             },
                             text: "로그아웃"),
                       ],

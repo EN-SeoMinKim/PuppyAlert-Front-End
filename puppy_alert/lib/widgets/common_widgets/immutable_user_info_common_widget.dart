@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 
-class ImmutableUserInfoContainer extends StatelessWidget {
+class ImmutableUserInfoCommonWidget extends StatelessWidget {
   final String label;
   final String value;
 
-  const ImmutableUserInfoContainer({
+  const ImmutableUserInfoCommonWidget({
     super.key,
     required this.label,
     required this.value,
@@ -14,10 +14,10 @@ class ImmutableUserInfoContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 30),
       height: 55,
       width: 300,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Color(0xFF757575))),
       ),
       child: Column(
@@ -25,7 +25,7 @@ class ImmutableUserInfoContainer extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
@@ -33,7 +33,7 @@ class ImmutableUserInfoContainer extends StatelessWidget {
               letterSpacing: 1.2,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
@@ -53,35 +53,35 @@ class ImmutableUserInfoContainer extends StatelessWidget {
 }
 
 Widget userIdContainer(){
-  return  ImmutableUserInfoContainer(
+  return  const ImmutableUserInfoCommonWidget(
     label: '아이디',
     value: 'userId',
   );
 }
 
 Widget userNicknameContainer(){
-  return  ImmutableUserInfoContainer(
+  return  const ImmutableUserInfoCommonWidget(
     label: '닉네임',
     value: 'userNickname',
   );
 }
 
 Widget userNameContainer(){
-  return  ImmutableUserInfoContainer(
+  return  const ImmutableUserInfoCommonWidget(
     label: '이름',
     value: 'userName',
   );
 }
 
 Widget userBirthContainer(){
-  return  ImmutableUserInfoContainer(
+  return  const ImmutableUserInfoCommonWidget(
     label: '생년월일',
     value: '2024.09.09',
   );
 }
 
 Widget userPhoneNumberContainer(){
-  return  ImmutableUserInfoContainer(
+  return  const ImmutableUserInfoCommonWidget(
     label: '전화번호',
     value: '010-1234-1234',
   );

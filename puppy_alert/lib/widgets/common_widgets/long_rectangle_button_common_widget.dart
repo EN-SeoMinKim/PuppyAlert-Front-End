@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
 
-class ElevatedShadowButton extends StatelessWidget {
+class LongRectangleButtonCommonWidget extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
+  final double width;
+  final double? height;
+  final EdgeInsetsGeometry? margin;
+  final double? fontSize;
   final Color backgroundColor;
   final Color textColor;
-  final double height;
-  final double width;
 
-  ElevatedShadowButton({
+  const LongRectangleButtonCommonWidget({
     super.key,
     required this.onPressed,
     required this.text,
-    this.backgroundColor = const Color(0xffEEEEEE),
-    this.textColor = Colors.black,
-    this.height = 100.0,
-    this.width = 170.0,
+    this.width = 300,
+    this.height,
+    this.margin = const EdgeInsets.only(top: 30),
+    this.fontSize,
+    this.backgroundColor = const Color(0xffFF7700),
+    this.textColor = Colors.white,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30),
-      width: width,
+      margin: margin,
+      width: width ,
       height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
-          elevation: 10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -37,8 +40,8 @@ class ElevatedShadowButton extends StatelessWidget {
           text,
           style: TextStyle(
             color: textColor,
-            fontWeight: FontWeight.w900,
-            fontSize: 35,
+            fontWeight: FontWeight.bold,
+            fontSize: fontSize,
           ),
         ),
       ),

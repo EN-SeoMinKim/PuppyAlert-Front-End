@@ -1,33 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_naver_map/flutter_naver_map.dart';
-import '../../widgets/child_widgets/custom_bottom_navigation_bar.dart';
-import '../../widgets/child_widgets/food_widget.dart';
+import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
+import '../../widgets/common_widgets/food_common_widget.dart';
 
-class FoodChildScreen extends StatefulWidget {
-  const FoodChildScreen({super.key});
+class FoodDetailChildScreen extends StatefulWidget {
+  const FoodDetailChildScreen({super.key});
 
   @override
-  State<FoodChildScreen> createState() => _FoodChildScreenState();
+  State<FoodDetailChildScreen> createState() => _FoodDetailChildScreenState();
 }
 
-class _FoodChildScreenState extends State<FoodChildScreen> {
+class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
   late Future<void> _mapInitialization;
 
   @override
   void initState() {
     super.initState();
-    _mapInitialization = _initNaverMap();
-  }
-
-  Future<void> _initNaverMap() async {
-    await dotenv.load(fileName: '.env');
-    String id = dotenv.get('CLIENT_ID');
-
-    WidgetsFlutterBinding.ensureInitialized();
-    await NaverMapSdk.instance.initialize(
-      clientId: id,
-    );
   }
 
   void _showConfirmationDialog() {
@@ -36,12 +23,12 @@ class _FoodChildScreenState extends State<FoodChildScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('신청 완료',
+          title: const Text('신청 완료',
           style: TextStyle(
             fontWeight: FontWeight.w800,
             color: Color(0xffFF7700),
           ),),
-          content: Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
+          content: const Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
           style: TextStyle(
             height: 2.0
           )),
@@ -50,7 +37,7 @@ class _FoodChildScreenState extends State<FoodChildScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('확인',
+              child: const Text('확인',
               style: TextStyle(
                 color: Color(0xffFF7700),
               )),
@@ -70,7 +57,7 @@ class _FoodChildScreenState extends State<FoodChildScreen> {
           Container(
             height: 100,
             color: Colors.white,
-            child: Center(
+            child: const Center(
               child: Text(
                 '집밥',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
@@ -97,7 +84,7 @@ class _FoodChildScreenState extends State<FoodChildScreen> {
           ),
           Container(
             height: 60,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Row(
@@ -110,9 +97,9 @@ class _FoodChildScreenState extends State<FoodChildScreen> {
                       _showConfirmationDialog();
                     },
                     style: TextButton.styleFrom(
-                      backgroundColor: Color(0xffFFF1E4),
+                      backgroundColor: const Color(0xffFFF1E4),
                     ),
-                    child: Text(
+                    child: const Text(
                       '신청',
                       style: TextStyle(
                         color: Color(0xffFF7700),
@@ -137,8 +124,8 @@ class _FoodChildScreenState extends State<FoodChildScreen> {
             color: Colors.white,
             child: Column(
               children: [
-                SizedBox(height: 10),
-                Row(
+                const SizedBox(height: 10),
+                const Row(
                   children: [
                     SizedBox(width: 40),
                     Icon(
@@ -149,72 +136,27 @@ class _FoodChildScreenState extends State<FoodChildScreen> {
                     Text('주소 입력할 부분!!')
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 FutureBuilder(
                   future: _mapInitialization,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
                       return Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             'Error: ${snapshot.error}',
-                            style: TextStyle(fontSize: 15),
+                            style: const TextStyle(fontSize: 15),
                           ),
                         ),
                       );
                     } else {
-                      return Container(
+                      return SizedBox(
                         width: 300,
                         height: 200,
-                        child: Stack(
-                          children: [
-                            NaverMap(
-                              options: NaverMapViewOptions(
-                                pickTolerance: 8,
-                                indoorEnable: false,
-                                locationButtonEnable: true,
-                                scrollGesturesEnable: true,
-                                consumeSymbolTapEvents: true,
-                                initialCameraPosition: NCameraPosition(
-                                  target: NLatLng(37.5666, 126.979),
-                                  zoom: 10,
-                                  bearing: 0,
-                                  tilt: 0,
-                                ),
-                                mapType: NMapType.basic,
-                                activeLayerGroups: [
-                                  NLayerGroup.building,
-                                  NLayerGroup.transit
-                                ],
-                              ),
-                              onMapReady: (controller) {
-                                final symbol = Symbol('asdf');
-                                final marker = NMarker(
-                                    id: 'test',
-                                    position: NLatLng(37.506932467450326,
-                                        127.05578661133796));
-                                final marker1 = NMarker(
-                                    id: 'test1',
-                                    position: NLatLng(37.606932467450326,
-                                        127.05578661133796));
-                                controller.addOverlayAll({marker, marker1});
-                                final OnMarkerInfoMap = NInfoWindow.onMarker(
-                                    id: marker.info.id, text: "웅이네 떡볶이");
-                                marker.openInfoWindow(OnMarkerInfoMap);
-                              },
-                              onMapTapped: (point, latLng) {
-                                debugPrint(
-                                    "${latLng.latitude}、${latLng.longitude}");
-                              },
-                              onSymbolTapped: (NSymbolInfo symbol) {
-                                debugPrint("${symbol}");
-                              },
-                            ),
-                          ],
-                        ),
+                        child: FoodMapChildWidget(),
                       );
                     }
                   },
@@ -227,10 +169,6 @@ class _FoodChildScreenState extends State<FoodChildScreen> {
             color: Colors.grey[100],
           ),
         ],
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: 0,
-        onTap: (index) {},
       ),
     );
   }
