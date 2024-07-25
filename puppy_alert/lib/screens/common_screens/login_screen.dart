@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _goNextPage(Map<String, dynamic> jsonData) {
-    if (jsonData['userType'] == 'Host') {
+    if (jsonData['userType'] == 'HOST') {
       Navigator.of(context).pushNamed("/speech_recognition_screen");
     } else {
       Navigator.of(context).pushNamed("/main_child_screen");

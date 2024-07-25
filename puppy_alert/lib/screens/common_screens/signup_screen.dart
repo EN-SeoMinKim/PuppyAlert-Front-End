@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 // import 'package:remedi_kopo/remedi_kopo.dart';
+import '../../utils/constants.dart';
 import '../../widgets/common_widgets/long_rectangle_button.dart';
 import '../../widgets/common_widgets/user_date_picker.dart';
 import '../../widgets/common_widgets/user_text_form_field.dart';
@@ -31,6 +32,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   late final GlobalKey<FormState> _allFormKey, _idFormKey, _nickNameFormKey;
   late final List<TextEditingController> _textEditingController;
+  DateTime? _birth;
 
   @override
   void initState() {
@@ -74,21 +76,60 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-  void _submitSignUpForm(Object arguments) {
+  void _submitSignUpForm(Object arguments) async {
     if (!_isKeyValid(_idFormKey) ||
         !_isKeyValid(_nickNameFormKey) ||
         !_isKeyValid(_allFormKey)) return;
 
+    Uri uri = getUri(arguments);
     List<String> inputString =
         List.generate(9, (index) => _textEditingController[index].text.trim());
+    List<String> coordinate =
+        await _getCoordinate(inputString[widget._address]);
 
-    for (String s in inputString) {
-      print(s);
-    }
+    http.post(uri,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'id': inputString[widget._id],
+          'password': inputString[widget._password],
+          'name': inputString[widget._name],
+          'birth': _birth,
+          'phoneNumber': inputString[widget._phoneNumber],
+          'address': inputString[widget._address],
+          'location': {
+            'latitude': coordinate[1],
+            'longitude': coordinate[0],
+          },
+        }));
+
+    Navigator.of(context).pushNamedAndRemoveUntil('/login_screen', (route) => false,);
   }
 
   bool _isKeyValid(GlobalKey<FormState> key) {
     return key.currentState?.validate() ?? false;
+  }
+
+  Uri getUri(Object arguments) {
+    if (arguments == User.adult) {
+      return Uri.parse('${dotenv.get('BASE_URL')}/host/signup');
+    }
+    return Uri.parse('${dotenv.get('BASE_URL')}/puppy/signup');
+  }
+
+  Future<List<String>> _getCoordinate(String address) async {
+    Map<String, String> header = {
+      'X-NCP-APIGW-API-KEY-ID': dotenv.get('NAVER_API_ID'),
+      'X-NCP-APIGW-API-KEY': dotenv.get('NAVER_API_SECRET')
+    };
+    http.Response response = await http.get(
+        Uri.parse(
+            'https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=$address'),
+        headers: header);
+
+    var jsonData = jsonDecode(response.body);
+    String longitude = jsonData['addresses'][0]['y'];
+    String latitude = jsonData['addresses'][0]['x'];
+    return [longitude, latitude];
   }
 
   @override
@@ -194,8 +235,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             UserDatePicker(onDateSelected: (date) {
                               setState(() {
                                 if (date != null) {
-                                  print(
-                                      "선택된 날짜: ${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}");
+                                  _birth = date;
                                 }
                               });
                             }),

@@ -43,7 +43,6 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   Future<NMarker> _getNMarker(String address) async {
     http.Response response = await _getResponse(address);
     var jsonData = jsonDecode(response.body);
-    print(jsonData);
     String longitude = jsonData['addresses'][0]['y'];
     String latitude = jsonData['addresses'][0]['x'];
 
