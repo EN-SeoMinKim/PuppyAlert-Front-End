@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/widgets/child_widgets/home_food_child_widget.dart';
 import 'package:puppy_alert/widgets/child_widgets/search_bar_child_widget.dart';
 
 class HomeChildScreen extends StatefulWidget {
@@ -15,10 +14,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
     return const Column(
       children: [
         SearchBarChildWidget(),
-        HomeFoodChildWidget(),
-        HomeFoodChildWidget(),
-        HomeFoodChildWidget(),
-        HomeFoodChildWidget()
+
       ],
     );
   }

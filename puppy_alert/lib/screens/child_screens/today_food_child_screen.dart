@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:puppy_alert/widgets/child_widgets/custom_bottom_navigation_bar.dart';
-import 'package:puppy_alert/widgets/child_widgets/zipbob_widget.dart';
+import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
-class TodayZipbobChildScreen extends StatefulWidget {
-  const TodayZipbobChildScreen({super.key});
+class TodayFoodChildScreen extends StatefulWidget {
+  const TodayFoodChildScreen({super.key});
 
   @override
-  State<TodayZipbobChildScreen> createState() => _TodayZipbobChildScreenState();
+  State<TodayFoodChildScreen> createState() => _TodayFoodChildScreenState();
 }
 
-class _TodayZipbobChildScreenState extends State<TodayZipbobChildScreen> {
+class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +20,7 @@ class _TodayZipbobChildScreenState extends State<TodayZipbobChildScreen> {
             flex: 10,
             child: Container(
               color: Colors.white,
-              child: Center(
+              child: const Center(
                 child: Text(
                   '오늘의 집밥',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
@@ -50,7 +49,7 @@ class _TodayZipbobChildScreenState extends State<TodayZipbobChildScreen> {
           Flexible(
             flex: 5,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               child: Column(
@@ -63,9 +62,9 @@ class _TodayZipbobChildScreenState extends State<TodayZipbobChildScreen> {
                         child: TextButton(
                           onPressed: () {},
                           style: TextButton.styleFrom(
-                            backgroundColor: Color(0xffFFF1E4),
+                            backgroundColor: const Color(0xffFFF1E4),
                           ),
-                          child: Text(
+                          child: const Text(
                             '신청',
                             style: TextStyle(
                               color: Color(0xffFF7700),
@@ -92,12 +91,12 @@ class _TodayZipbobChildScreenState extends State<TodayZipbobChildScreen> {
           Flexible(
             flex: 30,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               child: Column(
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       SizedBox(width:15),
                       Icon(Icons.location_on_outlined,
@@ -131,10 +130,6 @@ class _TodayZipbobChildScreenState extends State<TodayZipbobChildScreen> {
             child: greyContainer(),
           ),
         ],
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: 3,
-        onTap: (index) {},
       ),
     );
   }

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/adult_screens/personal_information_adult_screen.dart';
-import 'package:puppy_alert/screens/adult_screens/zipbob_record_adult_screen.dart';
-import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
+import 'package:puppy_alert/screens/adult_screens/food_record_adult_screen.dart';
+import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
-class MypageAdultScreen extends StatefulWidget {
-  const MypageAdultScreen({super.key});
+class MyPageAdultScreen extends StatefulWidget {
+  const MyPageAdultScreen({super.key});
 
   @override
-  State<MypageAdultScreen> createState() => _MypageAdultScreenState();
+  State<MyPageAdultScreen> createState() => _MyPageAdultScreenState();
 }
 
-class _MypageAdultScreenState extends State<MypageAdultScreen> {
+class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffFFD6BF),
+        backgroundColor: const Color(0xffFFD6BF),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -30,19 +30,19 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
               width: double.infinity,
               height: 200,
               alignment: Alignment.center,
-              color: Color(0xffFFD6BF),
+              color: const Color(0xffFFD6BF),
               child: Column(children: [
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
                 ClipOval(
                   child: Image.asset(
-                    "image.png",
+                    "assets/image.png",
                     width: 100.0,
                     height: 100.0,
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Text(
+                const SizedBox(height: 16.0),
+                const Text(
                   'Anton',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -52,24 +52,24 @@ class _MypageAdultScreenState extends State<MypageAdultScreen> {
                 )
               ]),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            ElevatedShadowButton(
+            ElevatedShadowButtonAdultWidget(
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PersonalInformationAdultScreen()));
+                      builder: (context) => const PersonalInformationAdultScreen()));
                 },
                 text: "개인 정보"),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            ElevatedShadowButton(
+            ElevatedShadowButtonAdultWidget(
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ZipbobRecordAdultScreen()));
+                      builder: (context) => FoodRecordAdultScreen()));
                 },
                 text: "집밥 기록"),
           ],

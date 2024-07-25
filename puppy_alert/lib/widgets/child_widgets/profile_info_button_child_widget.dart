@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 
-class ProfileInfoButton extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final VoidCallback onPressed;
+class ProfileInfoButtonChildWidget extends StatelessWidget {
+  final IconData _icon;
+  final String _text;
+  final VoidCallback _onPressed;
 
-  const ProfileInfoButton({
+  const ProfileInfoButtonChildWidget({
     super.key,
-    required this.icon,
-    required this.text,
-    required this.onPressed,
-  });
+    required IconData icon,
+    required String text,
+    required void Function() onPressed,
+  }) : _onPressed = onPressed, _text = text, _icon = icon;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: _onPressed,
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(0.0),
         ),
         side: BorderSide.none,
         elevation: 0,
-        fixedSize: Size.fromHeight(50.0),
+        fixedSize: const Size.fromHeight(50.0),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,12 +31,12 @@ class ProfileInfoButton extends StatelessWidget {
           Row(
             children: [
               Icon(
-                icon,
+                _icon,
                 color: Colors.grey[700],
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
-                text,
+                _text,
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontSize: 16,
