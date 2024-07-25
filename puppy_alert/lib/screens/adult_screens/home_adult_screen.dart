@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_screen.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
 class HomeAdultScreen extends StatefulWidget {
