@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_container.dart';
-import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/common_widgets/mutable_user_info_container.dart';
-import '../../widgets/common_widgets/white_background_button.dart';
+import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_common_widget.dart';
+import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
+import '../../widgets/common_widgets/mutable_user_info_common_widget.dart';
+import '../../widgets/common_widgets/white_background_button_common_widget.dart';
 
 class PersonalInformationChildScreen extends StatefulWidget {
   const PersonalInformationChildScreen({super.key});
@@ -60,24 +60,34 @@ class _PersonalInformationChildScreenState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    userIdContainer(),
-                    userPasswordContainer((controller) {
-                      _passwordController = controller;
-                    }),
-                    userPasswordConfirmationContainer((controller) {
-                      _passwordConfirmationController = controller;
-                    }),
-                    userNameContainer(),
-                    userBirthContainer(),
-                    userAddressContainer((controller) {
-                      _addressController = controller;
-                    }),
-                    userPhoneNumberContainer(),
-                    SizedBox(height: 25,),
-                    WhiteBackgroundButton(
-                        onPressed: () {},
-                        text:   "프로필 사진 수정하기"),
-                    LongRectangleButton(
+                    const ImmutableUserInfoCommonWidget(
+                      label: '아이디',
+                      value: 'userId',
+                    ),
+                    MutableUserInfoCommonWidget(
+                        controller: _passwordController, label: '비밀번호'),
+                    MutableUserInfoCommonWidget(
+                        controller:  _passwordConfirmationController, label: '비밀번호 재확인'),
+                    const ImmutableUserInfoCommonWidget(
+                      label: '이름',
+                      value: 'userName',
+                    ),
+                    const ImmutableUserInfoCommonWidget(
+                      label: '생년월일',
+                      value: '2024.09.09',
+                    ),
+                    MutableUserInfoCommonWidget(
+                        controller:  _addressController, label: '주소'),
+                    const ImmutableUserInfoCommonWidget(
+                      label: '전화번호',
+                      value: '010-1234-1234',
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    WhiteBackgroundButtonCommonWidget(
+                        onPressed: () {}, text: "프로필 사진 수정하기"),
+                    LongRectangleButtonCommonWidget(
                       onPressed: _submitEditProfileForm,
                       text: "수정하기",
                     ),

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/child_screens/personal_information_child_screen.dart';
-import 'package:puppy_alert/widgets/child_widgets/custom_bottom_navigation_bar.dart';
-import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/child_widgets/profile_info_button.dart';
-import '../common_screens/login.dart';
+import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
+import '../../widgets/child_widgets/profile_info_button_child_widget.dart';
+import '../common_screens/login_screen.dart';
 
-class MypageChildScreen extends StatefulWidget {
-  const MypageChildScreen({super.key});
+class MyPageChildScreen extends StatefulWidget {
+  const MyPageChildScreen({super.key});
 
   @override
-  State<MypageChildScreen> createState() => _MypageChildScreenState();
+  State<MyPageChildScreen> createState() => _MyPageChildScreenState();
 }
 
-class _MypageChildScreenState extends State<MypageChildScreen> {
+class _MyPageChildScreenState extends State<MyPageChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,18 +52,18 @@ class _MypageChildScreenState extends State<MypageChildScreen> {
                 )
               ]),
             ),
-            ProfileInfoButton(
+            ProfileInfoButtonChildWidget(
                 icon: Icons.manage_accounts,
                 text: '   개인 정보',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PersonalInformationChildScreen()));
                 }),
-            ProfileInfoButton(
+            ProfileInfoButtonChildWidget(
                 icon: Icons.library_books, text: '   집밥 기록', onPressed: () {}),
-            ProfileInfoButton(
+            ProfileInfoButtonChildWidget(
                 icon: Icons.rice_bowl, text: '   오늘의 집밥', onPressed: () {}),
-            LongRectangleButton(
+            LongRectangleButtonCommonWidget(
                 backgroundColor: Colors.grey[100]!,
                 textColor: Colors.grey[700]!,
                 onPressed: () {
@@ -74,10 +73,6 @@ class _MypageChildScreenState extends State<MypageChildScreen> {
                 text: "Logout"),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: 3,
-        onTap: (index) {},
       ),
     );
   }

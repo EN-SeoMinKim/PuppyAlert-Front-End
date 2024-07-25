@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 
-class ImmutableUserInfoContainer extends StatelessWidget {
-  final String label;
-  final String value;
+class ImmutableUserInfoCommonWidget extends StatelessWidget {
+  final String _label;
+  final String _value;
 
-  const ImmutableUserInfoContainer({
+  const ImmutableUserInfoCommonWidget({
     super.key,
-    required this.label,
-    required this.value,
-  });
+    required String label,
+    required String value,
+  }) : _value = value, _label = label;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ImmutableUserInfoContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label,
+            _label,
             style: TextStyle(
               color: Colors.black,
               fontSize: 16.0,
@@ -37,7 +37,7 @@ class ImmutableUserInfoContainer extends StatelessWidget {
             height: 5,
           ),
           Text(
-            value,
+            _value,
             style: TextStyle(
               color: Colors.grey[600],
               fontSize: 16.0,
@@ -51,47 +51,3 @@ class ImmutableUserInfoContainer extends StatelessWidget {
     );
   }
 }
-
-Widget userIdContainer(){
-  return  ImmutableUserInfoContainer(
-    label: '아이디',
-    value: 'userId',
-  );
-}
-
-Widget userNicknameContainer(){
-  return  ImmutableUserInfoContainer(
-    label: '닉네임',
-    value: 'userNickname',
-  );
-}
-
-Widget userNameContainer(){
-  return  ImmutableUserInfoContainer(
-    label: '이름',
-    value: 'userName',
-  );
-}
-
-Widget userBirthContainer(){
-  return  ImmutableUserInfoContainer(
-    label: '생년월일',
-    value: '2024.09.09',
-  );
-}
-
-Widget userPhoneNumberContainer(){
-  return  ImmutableUserInfoContainer(
-    label: '전화번호',
-    value: '010-1234-1234',
-  );
-}
-
-
-
-
-
-
-
-
-

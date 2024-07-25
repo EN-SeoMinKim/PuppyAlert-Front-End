@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class WhiteBackgroundButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
+class WhiteBackgroundButtonCommonWidget extends StatelessWidget {
+  final VoidCallback _onPressed;
+  final String _text;
 
-  WhiteBackgroundButton({super.key,
-    required this.onPressed,
-    required this.text,
-  });
+  const WhiteBackgroundButtonCommonWidget({super.key,
+    required void Function() onPressed,
+    required String text,
+  }) : _text = text, _onPressed = onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,9 @@ class WhiteBackgroundButton extends StatelessWidget {
             side: BorderSide(color: Colors.grey[300]!, width: 2),
           ),
         ),
-        onPressed: onPressed,
+        onPressed: _onPressed,
         child: Text(
-          text,
+          _text,
           style: TextStyle(
             color: Color(0xFF303030),
             fontWeight: FontWeight.bold,

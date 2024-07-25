@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../widgets/adult_widgets/elevated_shadow_button.dart';
+import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
-class ZipbobRecordAdultScreen extends StatefulWidget {
-  const ZipbobRecordAdultScreen({super.key});
+class FoodRecordAdultScreen extends StatefulWidget {
+  const FoodRecordAdultScreen({super.key});
 
   @override
-  State<ZipbobRecordAdultScreen> createState() => _ZipbobRecordAdultScreenState();
+  State<FoodRecordAdultScreen> createState() => _FoodRecordAdultScreenState();
 }
 
-class _ZipbobRecordAdultScreenState extends State<ZipbobRecordAdultScreen> {
+class _FoodRecordAdultScreenState extends State<FoodRecordAdultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +48,7 @@ class _ZipbobRecordAdultScreenState extends State<ZipbobRecordAdultScreen> {
               border: Border.all(color: Colors.grey[200]!, width: 2.0),
             ),
             child: Center(
-              child: ElevatedShadowButton(
+              child: ElevatedShadowButtonAdultWidget(
                   onPressed: () {
                     // Navigator.pop();
                   },

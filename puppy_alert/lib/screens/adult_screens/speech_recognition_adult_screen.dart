@@ -5,8 +5,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:puppy_alert/screens/adult_screens/food_registration_completion_adult_screen.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
-import '../../widgets/adult_widgets/elevated_shadow_button.dart';
-import 'mypage_adult_screen.dart';
+import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
+import 'my_page_adult_screen.dart';
 
 enum _ButtonStatus { idle, listening, completed, awaitingTimeInput }
 
@@ -18,7 +18,8 @@ class SpeechRecognitionAdultScreen extends StatefulWidget {
       _SpeechRecognitionAdultScreenState();
 }
 
-class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScreen> {
+class _SpeechRecognitionAdultScreenState
+    extends State<SpeechRecognitionAdultScreen> {
   late _ButtonStatus _status;
   late final FlutterTts _flutterTts;
   late final stt.SpeechToText _speech;
@@ -27,7 +28,7 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
   late String _feedbackText;
   late String _topText;
   late bool _isListening;
-  Timer? _timer;
+  late Timer? _timer;
 
   @override
   void initState() {
@@ -44,13 +45,13 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
   void dispose() {
     _flutterTts.stop();
     _timer?.cancel();
-    if(_isListening){
+    if (_isListening) {
       _speech.stop();
     }
     super.dispose();
   }
 
-  Future<void> speakAndRecognize() async {
+  Future<void> speakAndRecognizeFood() async {
     setState(() {
       _food = '';
       _time = '';
@@ -61,7 +62,7 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
     await _requestPermission();
     await _initializeTts();
     await _flutterTts.speak('등록하실 메뉴를 말씀해 주세요');
-    await _getFood();
+    await _delayedInitializeAndStartListening(_startListeningFood);
   }
 
   Future<void> _requestTime() async {
@@ -73,15 +74,10 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
     await _flutterTts.speak('식사를 같이 하실 시간을 말씀해 주세요');
   }
 
-  Future<void> _getFood() async {
+  Future<void> _delayedInitializeAndStartListening(
+      Future<void> Function() startListening) async {
     return Future.delayed(const Duration(seconds: 3), () async {
-      await _initializeSpeechAndStartListening(_startListeningFood);
-    });
-  }
-
-  Future<void> _getTime() async {
-    return Future.delayed(const Duration(seconds: 3), () async {
-      await _initializeSpeechAndStartListening(_startListeningTime);
+      await _initializeSpeechAndStartListening(startListening);
     });
   }
 
@@ -105,7 +101,7 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
         });
       },
     );
-    await startTimer(verifyFood);
+    await _endListeningAndVerify(_verifyFood);
   }
 
   Future<void> _startListeningTime() async {
@@ -120,10 +116,10 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
         });
       },
     );
-    await startTimer(verifyTime);
+    await _endListeningAndVerify(_verifyTime);
   }
 
-  Future<void> startTimer(Future<void> Function() verify) async {
+  Future<void> _endListeningAndVerify(Future<void> Function() verify) async {
     _timer = Timer(const Duration(seconds: 6), () async {
       if (_isListening) {
         await _speech.stop();
@@ -169,8 +165,7 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
     }
   }
 
-
-  Future<void> verify(String recognizedText, String confirmationText) async {
+  Future<void> _verify(String recognizedText, String confirmationText) async {
     if (recognizedText.isNotEmpty) {
       _status = _ButtonStatus.completed;
       await _flutterTts.speak(confirmationText);
@@ -188,18 +183,18 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
     }
   }
 
-  Future<void> verifyFood() async {
-    await verify(_food, '말씀하신 메뉴가 \n$_food 인가요?');
+  Future<void> _verifyFood() async {
+    await _verify(_food, '말씀하신 메뉴가 \n$_food 인가요?');
   }
 
-  Future<void> verifyTime() async {
-    await verify(_time, '말씀하신 시간이 \n$_time 인가요?');
+  Future<void> _verifyTime() async {
+    await _verify(_time, '말씀하신 시간이 \n$_time 인가요?');
   }
 
   Future<void> _handleConfirm() async {
     if (_food.isNotEmpty && _time.isEmpty) {
       await _requestTime();
-      await _getTime();
+      await _delayedInitializeAndStartListening(_startListeningTime);
     } else if (_food.isNotEmpty && _time.isNotEmpty) {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const FoodRegistrationCompletionAdultScreen()));
@@ -225,7 +220,7 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
           repeatPauseDuration: const Duration(milliseconds: 100),
           repeat: true,
           child: GestureDetector(
-            onTap: speakAndRecognize,
+            onTap: speakAndRecognizeFood,
             child: _buildButtonDesign(),
           ),
         );
@@ -237,7 +232,7 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
           animate: false,
           endRadius: 180.0,
           child: GestureDetector(
-            onTap: speakAndRecognize,
+            onTap: speakAndRecognizeFood,
             child: _buildButtonDesign(),
           ),
         );
@@ -360,17 +355,17 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              _flutterTts.stop();
-              _timer?.cancel();
-              if(_isListening){
-                _speech.stop();
-              }
-            },
-          ),
-          ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            _flutterTts.stop();
+            _timer?.cancel();
+            if (_isListening) {
+              _speech.stop();
+            }
+          },
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -389,12 +384,12 @@ class _SpeechRecognitionAdultScreenState extends State<SpeechRecognitionAdultScr
                       style: const TextStyle(
                           fontSize: 30, fontWeight: FontWeight.w900))),
             _buildAvatarGlow(),
-            ElevatedShadowButton(
+            ElevatedShadowButtonAdultWidget(
               width: 190,
               text: "나의 정보",
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const MypageAdultScreen()));
+                    builder: (context) => const MyPageAdultScreen()));
               },
             ),
           ],

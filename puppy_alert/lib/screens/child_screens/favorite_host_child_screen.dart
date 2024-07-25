@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/child_widgets/custom_bottom_navigation_bar.dart';
-import '../../widgets/child_widgets/food_widget.dart';
+import '../../widgets/child_widgets/favorite_host_child_widget.dart';
 
 class FavoriteHostChildScreen extends StatefulWidget {
   const FavoriteHostChildScreen({super.key});

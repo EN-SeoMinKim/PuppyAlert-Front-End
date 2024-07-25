@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import '../../widgets/child_widgets/custom_bottom_navigation_bar.dart';
-import '../../widgets/child_widgets/zipbob_widget.dart';
+import '../../widgets/common_widgets/food_common_widget.dart';
 
-class ZipbobChildScreen extends StatefulWidget {
-  const ZipbobChildScreen({super.key});
+class FoodDetailChildScreen extends StatefulWidget {
+  const FoodDetailChildScreen({super.key});
 
   @override
-  State<ZipbobChildScreen> createState() => _ZipbobChildScreenState();
+  State<FoodDetailChildScreen> createState() => _FoodDetailChildScreenState();
 }
 
-class _ZipbobChildScreenState extends State<ZipbobChildScreen> {
+class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
   late Future<void> _mapInitialization;
 
   @override
@@ -227,10 +226,6 @@ class _ZipbobChildScreenState extends State<ZipbobChildScreen> {
             color: Colors.grey[100],
           ),
         ],
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: 0,
-        onTap: (index) {},
       ),
     );
   }

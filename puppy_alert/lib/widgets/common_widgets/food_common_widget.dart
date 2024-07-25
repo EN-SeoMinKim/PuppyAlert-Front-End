@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class FoodWidget extends StatefulWidget {
+class FoodCommonWidget extends StatefulWidget {
   final String _imagePath;
   final String _foodName;
   final String _hostName;
   final String _time;
   final String _recruitmentStatus;
 
-  const FoodWidget({
+  const FoodCommonWidget({
     super.key,
     required String imagePath,
     required String foodName,
@@ -27,10 +27,10 @@ class FoodWidget extends StatefulWidget {
   String get recruitmentStatus => _recruitmentStatus;
 
   @override
-  State<FoodWidget> createState() => _FoodWidgetState();
+  State<FoodCommonWidget> createState() => _FoodCommonWidgetState();
 }
 
-class _FoodWidgetState extends State<FoodWidget> {
+class _FoodCommonWidgetState extends State<FoodCommonWidget> {
   bool _isFavorite = false;
 
   @override
@@ -106,7 +106,7 @@ class _FoodWidgetState extends State<FoodWidget> {
 }
 
 Widget firstFoodWidget() {
-  return const FoodWidget(
+  return const FoodCommonWidget(
     imagePath: 'assets/food.png',
     foodName: '비빔밥',
     hostName: '김순옥님',

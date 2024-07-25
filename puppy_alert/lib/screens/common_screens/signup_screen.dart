@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/common_screens/login.dart';
+import 'package:puppy_alert/screens/common_screens/login_screen.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
 import 'package:flutter/cupertino.dart';
-import '../../widgets/common_widgets/long_rectangle_button.dart';
-import '../../widgets/common_widgets/user_datepicker.dart';
-import '../../widgets/common_widgets/user_textformfield.dart';
-import '../../widgets/common_widgets/white_background_button.dart';
+import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
+import '../../widgets/common_widgets/user_date_picker_common_widget.dart';
+import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
+import '../../widgets/common_widgets/white_background_button_common_widget.dart';
 
-class SignupAdultScreen extends StatefulWidget {
-  const SignupAdultScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<SignupAdultScreen> createState() => _SignupAdultScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupAdultScreenState extends State<SignupAdultScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _idController;
   late final TextEditingController _passwordController;
@@ -41,10 +41,8 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
     _addressDetailController = TextEditingController();
     _phonenumberController = TextEditingController();
     _phonenumberconfirmationController = TextEditingController();
-
-    // Listen to changes in the postcode controller
     _postcodeController.addListener(() {
-      setState(() {}); // Triggers a rebuild when the text changes
+      setState(() {});
     });
   }
 
@@ -115,7 +113,6 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                 Container(
                   alignment: Alignment.center,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
                         child: Row(
@@ -123,9 +120,15 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             idInputWidget(width: 230, _idController),
-                            WhiteBackgroundButton(
-                              onPressed: _checkDuplicateId,
-                              text: "중복확인",
+                            Column(
+                              children: [
+                                WhiteBackgroundButtonCommonWidget(
+                                  onPressed: _checkDuplicateId,
+                                  text: "중복확인",
+                                ),
+                                if(_formKey.currentState?.validate() ?? false)
+                                  const SizedBox(height:100),
+                              ],
                             ),
                           ],
                         ),
@@ -136,12 +139,20 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             nicknameInputWidget(_nicknameController),
-                            WhiteBackgroundButton(
-                              onPressed: _checkDuplicateNickname,
-                              text: "중복확인",
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                if(_formKey.currentState?.validate() ?? true)
+                                  const SizedBox(height:50),
+                                WhiteBackgroundButtonCommonWidget(
+                                  onPressed: _checkDuplicateNickname,
+                                  text: "중복확인",
+                                ),
+                                if(_formKey.currentState?.validate() ?? false)
+                                  const SizedBox(height:150),
+                              ],
                             ),
                           ],
                         ),
@@ -173,7 +184,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                                 ),
                               ],
                             ),
-                            UserDatePicker(
+                            UserDatePickerCommonWidget(
                               onDateSelected: (date) {
                                 setState(() {
                                   _selectedDate = date;
@@ -206,7 +217,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                                 readOnly: true,
                               ),
                             ),
-                            WhiteBackgroundButton(
+                            WhiteBackgroundButtonCommonWidget(
                               onPressed: () => _searchAddress(context),
                               text: "우편번호 검색",
                             ),
@@ -233,7 +244,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                           children: [
                             phonenumberConfirmationInputWidget(
                                 _phonenumberconfirmationController),
-                            WhiteBackgroundButton(
+                            WhiteBackgroundButtonCommonWidget(
                               onPressed: _submitSignUpForm,
                               text: "인증번호확인",
                             ),
@@ -241,7 +252,7 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      LongRectangleButton(
+                      LongRectangleButtonCommonWidget(
                         onPressed: _submitSignUpForm,
                         text: "회원가입",
                       ),
@@ -284,6 +295,8 @@ class _SignupAdultScreenState extends State<SignupAdultScreen> {
   void _submitSignUpForm() {
     final formState = _formKey.currentState;
     bool isValid = formState?.validate() ?? false;
+
+
 
     if (isValid) {
       String id = _idController.text.trim();

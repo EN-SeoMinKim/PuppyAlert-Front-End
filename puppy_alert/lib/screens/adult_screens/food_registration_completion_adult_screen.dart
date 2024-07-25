@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button.dart';
+import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
 class FoodRegistrationCompletionAdultScreen extends StatefulWidget {
   const FoodRegistrationCompletionAdultScreen({super.key});
@@ -47,7 +47,7 @@ class _FoodRegistrationCompletionAdultScreenState extends State<FoodRegistration
               color: Colors.black,
             ),
           ),
-          ElevatedShadowButton(
+          ElevatedShadowButtonAdultWidget(
               backgroundColor: Colors.red,
               textColor: Colors.white,
               onPressed: () {},

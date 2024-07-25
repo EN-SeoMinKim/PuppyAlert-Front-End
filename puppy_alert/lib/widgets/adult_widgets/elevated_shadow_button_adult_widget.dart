@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 
-class ElevatedShadowButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
+class ElevatedShadowButtonAdultWidget extends StatelessWidget {
+  final VoidCallback _onPressed;
+  final String _text;
   final Color _backgroundColor;
-  final Color textColor;
-  final double height;
-  final double width;
+  final Color _textColor;
+  final double _height;
+  final double _width;
 
-  const ElevatedShadowButton({
+  const ElevatedShadowButtonAdultWidget({
     super.key,
-    required this.onPressed,
-    required this.text,
+    required void Function() onPressed,
+    required String text,
     Color backgroundColor = const Color(0xffEEEEEE),
-    this.textColor = Colors.black,
-    this.height = 100.0,
-    this.width = 170.0,
-  }) : _backgroundColor = backgroundColor;
+    Color textColor = Colors.black,
+    double height = 100.0,
+    double width = 170.0,
+  }) : _width = width, _height = height, _textColor = textColor, _text = text, _onPressed = onPressed, _backgroundColor = backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 30),
-      width: width,
-      height: height,
+      width: _width,
+      height: _height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: _backgroundColor,
@@ -32,11 +32,11 @@ class ElevatedShadowButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
-        onPressed: onPressed,
+        onPressed: _onPressed,
         child: Text(
-          text,
+          _text,
           style: TextStyle(
-            color: textColor,
+            color: _textColor,
             fontWeight: FontWeight.w900,
             fontSize: 35,
           ),
