@@ -14,10 +14,10 @@ class ImmutableUserInfoCommonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 30),
       height: 55,
       width: 300,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Color(0xFF757575))),
       ),
       child: Column(
@@ -33,7 +33,7 @@ class ImmutableUserInfoCommonWidget extends StatelessWidget {
               letterSpacing: 1.2,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(

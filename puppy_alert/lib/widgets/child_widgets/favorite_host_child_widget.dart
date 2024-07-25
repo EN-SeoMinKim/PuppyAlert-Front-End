@@ -33,14 +33,14 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(width: 40),
+          const SizedBox(width: 40),
           Column(
             children: [
               Text(
                 widget._hostName,
                 style: TextStyle(fontWeight: FontWeight.w900),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
@@ -56,7 +56,7 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
             Icons.favorite_border,
             color: widget._favorite,
           ),
-          SizedBox(width: 30),
+          const SizedBox(width: 30),
         ],
       )
     ]);

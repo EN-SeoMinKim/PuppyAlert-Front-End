@@ -15,7 +15,7 @@ class _FoodRecordAdultScreenState extends State<FoodRecordAdultScreen> {
       appBar: AppBar(),
       body: Column(
         children: <Widget>[
-          Container(
+          const SizedBox(
             height: 100.0,
             child: Center(
               child: Text(

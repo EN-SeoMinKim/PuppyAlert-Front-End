@@ -17,13 +17,13 @@ class ProfileInfoButtonChildWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: _onPressed,
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(0.0),
         ),
         side: BorderSide.none,
         elevation: 0,
-        fixedSize: Size.fromHeight(50.0),
+        fixedSize: const Size.fromHeight(50.0),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +34,7 @@ class ProfileInfoButtonChildWidget extends StatelessWidget {
                 _icon,
                 color: Colors.grey[700],
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
                 _text,
                 style: TextStyle(

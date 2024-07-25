@@ -20,7 +20,7 @@ class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
             flex: 10,
             child: Container(
               color: Colors.white,
-              child: Center(
+              child: const Center(
                 child: Text(
                   '오늘의 집밥',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
@@ -49,7 +49,7 @@ class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
           Flexible(
             flex: 5,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               child: Column(
@@ -62,9 +62,9 @@ class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
                         child: TextButton(
                           onPressed: () {},
                           style: TextButton.styleFrom(
-                            backgroundColor: Color(0xffFFF1E4),
+                            backgroundColor: const Color(0xffFFF1E4),
                           ),
-                          child: Text(
+                          child: const Text(
                             '신청',
                             style: TextStyle(
                               color: Color(0xffFF7700),
@@ -91,12 +91,12 @@ class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
           Flexible(
             flex: 30,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               child: Column(
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       SizedBox(width:15),
                       Icon(Icons.location_on_outlined,

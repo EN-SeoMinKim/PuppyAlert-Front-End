@@ -2,12 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/common_screens/login_screen.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import '../../utils/constants.dart';
 import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
 import '../../widgets/common_widgets/user_date_picker_common_widget.dart';
 import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
 import '../../widgets/common_widgets/white_background_button_common_widget.dart';
 
 class SignupScreen extends StatefulWidget {
+  final int _id = 0,
+      _password = 1,
+      _passwordConfirmation = 2,
+      _nickName = 3,
+      _name = 4,
+      _address = 5,
+      _addressDetail = 6,
+      _phoneNumber = 7,
+      _phoneNumberConfirmation = 8;
+
   const SignupScreen({super.key});
 
   @override
@@ -15,49 +29,24 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _idController;
-  late final TextEditingController _passwordController;
-  late final TextEditingController _passwordConfirmationController;
-  late final TextEditingController _nicknameController;
-  late final TextEditingController _nameController;
-  late final TextEditingController _postcodeController;
-  late final TextEditingController _addressController;
-  late final TextEditingController _addressDetailController;
-  late final TextEditingController _phonenumberController;
-  late final TextEditingController _phonenumberconfirmationController;
-  late DateTime? _selectedDate;
+  late final GlobalKey<FormState> _allFormKey, _idFormKey, _nickNameFormKey;
+  late final List<TextEditingController> _textEditingController;
+  DateTime? _birth;
 
   @override
   void initState() {
     super.initState();
-    _idController = TextEditingController();
-    _passwordController = TextEditingController();
-    _passwordConfirmationController = TextEditingController();
-    _nicknameController = TextEditingController();
-    _nameController = TextEditingController();
-    _postcodeController = TextEditingController();
-    _addressController = TextEditingController();
-    _addressDetailController = TextEditingController();
-    _phonenumberController = TextEditingController();
-    _phonenumberconfirmationController = TextEditingController();
-    _postcodeController.addListener(() {
-      setState(() {});
-    });
+    _allFormKey = GlobalKey<FormState>();
+    _idFormKey = GlobalKey<FormState>();
+    _nickNameFormKey = GlobalKey<FormState>();
+    _textEditingController = List.generate(9, (_) => TextEditingController());
   }
 
   @override
   void dispose() {
-    _idController.dispose();
-    _passwordController.dispose();
-    _passwordConfirmationController.dispose();
-    _nicknameController.dispose();
-    _nameController.dispose();
-    _postcodeController.dispose();
-    _addressController.dispose();
-    _addressDetailController.dispose();
-    _phonenumberController.dispose();
-    _phonenumberconfirmationController.dispose();
+        for (TextEditingController t in _textEditingController) {
+      t.dispose();
+    }
     super.dispose();
   }
 
@@ -83,11 +72,92 @@ class _SignupScreenState extends State<SignupScreen> {
     _addressDetailController.value = TextEditingValue(
       text: buildingName,
     );
+
+  void _clickDuplicationButton(bool isId) async {
+    GlobalKey<FormState> key;
+    Uri uri;
+    if (isId) {
+      key = _idFormKey;
+      String inputString = _textEditingController[widget._id].text.trim();
+      uri =
+          Uri.parse('${dotenv.get('BASE_URL')}/common/checkId?id=$inputString');
+    } else {
+      key = _nickNameFormKey;
+      String inputString = _textEditingController[widget._nickName].text.trim();
+      uri = Uri.parse(
+          '${dotenv.get('BASE_URL')}/common/checkNickName?nickName=$inputString');
+    }
+
+    if (!_isKeyValid(key)) return;
+
+    // 중복이 없디면 수정 안되게 해주고 중복이 있다면 다른 입력 하라고 스낵바 띄워주삼
+    // 중복이 없는 입력이라면
+    if (!jsonDecode((await http.get(uri)).body)['isExists']) {
+    } else {
+      // 중복이 있다면
+    }
+  }
+
+  void _submitSignUpForm(Object arguments) async {
+    if (!_isKeyValid(_idFormKey) ||
+        !_isKeyValid(_nickNameFormKey) ||
+        !_isKeyValid(_allFormKey)) return;
+
+    Uri uri = getUri(arguments);
+    List<String> inputString =
+        List.generate(9, (index) => _textEditingController[index].text.trim());
+    List<String> coordinate =
+        await _getCoordinate(inputString[widget._address]);
+
+    http.post(uri,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'id': inputString[widget._id],
+          'password': inputString[widget._password],
+          'name': inputString[widget._name],
+          'birth': _birth,
+          'phoneNumber': inputString[widget._phoneNumber],
+          'address': inputString[widget._address],
+          'location': {
+            'latitude': coordinate[1],
+            'longitude': coordinate[0],
+          },
+        }));
+
+    Navigator.of(context).pushNamedAndRemoveUntil('/login_screen', (route) => false,);
+  }
+
+  bool _isKeyValid(GlobalKey<FormState> key) {
+    return key.currentState?.validate() ?? false;
+  }
+
+  Uri getUri(Object arguments) {
+    if (arguments == User.adult) {
+      return Uri.parse('${dotenv.get('BASE_URL')}/host/signup');
+    }
+    return Uri.parse('${dotenv.get('BASE_URL')}/puppy/signup');
+  }
+
+  Future<List<String>> _getCoordinate(String address) async {
+    Map<String, String> header = {
+      'X-NCP-APIGW-API-KEY-ID': dotenv.get('NAVER_API_ID'),
+      'X-NCP-APIGW-API-KEY': dotenv.get('NAVER_API_SECRET')
+    };
+    http.Response response = await http.get(
+        Uri.parse(
+            'https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=$address'),
+        headers: header);
+
+    var jsonData = jsonDecode(response.body);
+    String longitude = jsonData['addresses'][0]['y'];
+    String latitude = jsonData['addresses'][0]['x'];
+    return [longitude, latitude];
   }
 
   @override
   Widget build(BuildContext context) {
     final showIcon = _postcodeController.text.isEmpty;
+    final Object arguments = ModalRoute.of(context)!.settings.arguments!;
 
     return Scaffold(
       appBar: AppBar(),
@@ -97,7 +167,7 @@ class _SignupScreenState extends State<SignupScreen> {
         },
         child: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: _allFormKey,
             child: Column(
               children: [
                 const Padding(padding: EdgeInsets.only(top: 50)),
@@ -113,52 +183,53 @@ class _SignupScreenState extends State<SignupScreen> {
                 Container(
                   alignment: Alignment.center,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            idInputWidget(width: 230, _idController),
-                            Column(
-                              children: [
-                                WhiteBackgroundButtonCommonWidget(
-                                  onPressed: _checkDuplicateId,
-                                  text: "중복확인",
-                                ),
-                                if(_formKey.currentState?.validate() ?? false)
-                                  const SizedBox(height:100),
-                              ],
+                            Form(
+                              key: _idFormKey,
+                              child: idInputWidget(
+                                  _textEditingController[widget._id], 230),
+                            ),
+                            WhiteBackgroundButtonCommonWidget(
+                              onPressed: () {
+                                _clickDuplicationButton(true);
+                              },
+                              text: "중복확인",
                             ),
                           ],
                         ),
                       ),
-                      passwordInputWidget(_passwordController),
+                      passwordInputWidget(
+                          _textEditingController[widget._password]),
                       passwordConfirmationInputWidget(
-                          _passwordConfirmationController, _passwordController),
+                          _textEditingController[widget._passwordConfirmation],
+                          _textEditingController[widget._password]),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            nicknameInputWidget(_nicknameController),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                if(_formKey.currentState?.validate() ?? true)
-                                  const SizedBox(height:50),
-                                WhiteBackgroundButtonCommonWidget(
-                                  onPressed: _checkDuplicateNickname,
-                                  text: "중복확인",
-                                ),
-                                if(_formKey.currentState?.validate() ?? false)
-                                  const SizedBox(height:150),
-                              ],
+                            Form(
+                              key: _nickNameFormKey,
+                              child: nicknameInputWidget(
+                                  _textEditingController[widget._nickName]),
+                            ),
+                            WhiteBackgroundButtonCommonWidget(
+                              onPressed: () {
+                                _clickDuplicationButton(false);
+                              },
+                              text: "중복확인",
                             ),
                           ],
                         ),
                       ),
-                      nameInputWidget(_nameController),
-                      SizedBox(
+                      nameInputWidget(_textEditingController[widget._name]),
+                      const SizedBox(
                         height: 30,
                       ),
                       SizedBox(
@@ -184,17 +255,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                               ],
                             ),
-                            UserDatePickerCommonWidget(
-                              onDateSelected: (date) {
-                                setState(() {
-                                  _selectedDate = date;
-                                });
+                            UserDatePickerCommonWidget(onDateSelected: (date) {
+                              setState(() {
                                 if (date != null) {
-                                  print(
-                                      "선택된 날짜: ${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}");
+                                  _birth = date;
                                 }
-                              },
-                            ),
+                              });
+                            }),
                           ],
                         ),
                       ),
@@ -235,25 +302,30 @@ class _SignupScreenState extends State<SignupScreen> {
                           readOnly: true,
                         ),
                       ),
-                      addressDetailInputWidget(_addressDetailController),
-                      phonenumberInputWidget(_phonenumberController),
+                      addressDetailInputWidget(
+                          _textEditingController[widget._addressDetail]),
+                      phonenumberInputWidget(
+                          _textEditingController[widget._phoneNumber]),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            phonenumberConfirmationInputWidget(
-                                _phonenumberconfirmationController),
+                            phoneNumberConfirmationInputWidget(
+                                _textEditingController[
+                                    widget._phoneNumberConfirmation]),
                             WhiteBackgroundButtonCommonWidget(
-                              onPressed: _submitSignUpForm,
+                              onPressed: () {},
                               text: "인증번호확인",
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       LongRectangleButtonCommonWidget(
-                        onPressed: _submitSignUpForm,
+                        onPressed: () {
+                          _submitSignUpForm(arguments);
+                        },
                         text: "회원가입",
                       ),
                     ],
@@ -262,16 +334,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('계정이 있으신가요?'),
+                    const Text('계정이 있으신가요?'),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
-                        );
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/login_screen', (route) => false);
                       },
-                      child: Text(
+                      child: const Text(
                         "로그인하기",
                         style: TextStyle(
                           fontSize: 16,
@@ -290,47 +359,5 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
-  }
-
-  void _submitSignUpForm() {
-    final formState = _formKey.currentState;
-    bool isValid = formState?.validate() ?? false;
-
-
-
-    if (isValid) {
-      String id = _idController.text.trim();
-      String password = _passwordController.text.trim();
-      String passwordConfirmation = _passwordConfirmationController.text.trim();
-      String nickname = _nicknameController.text.trim();
-      String name = _nameController.text.trim();
-      String address = _addressController.text.trim();
-      String addressDetail = _addressDetailController.text.trim();
-      String phonenumber = _phonenumberController.text.trim();
-      String phonenumberConfirmation =
-      _phonenumberconfirmationController.text.trim();
-
-      print('Id: $id');
-      print('Password: $password');
-      print('Password Confirmation: $passwordConfirmation');
-      print('Nickname: $nickname');
-      print('Name: $name');
-      print('Address: $address');
-      print('Address Detail: $addressDetail');
-      print('Phonenumber: $phonenumber');
-      print('Phonenumber Confirmation: $phonenumberConfirmation');
-      if (_selectedDate != null) {
-        print(
-            'Selected Date: ${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}');
-      }
-    }
-  }
-
-  void _checkDuplicateId() {
-    print('id 중복 확인 버튼 클릭됨');
-  }
-
-  void _checkDuplicateNickname() {
-    print('닉네임 중복 확인 버튼 클릭됨');
   }
 }

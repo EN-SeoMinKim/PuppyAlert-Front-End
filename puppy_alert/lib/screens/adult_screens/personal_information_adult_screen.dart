@@ -92,7 +92,7 @@ class _PersonalInformationAdultScreenState
                             textColor: Colors.black,
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                                  builder: (context) => const LoginScreen()));
                             },
                             text: "로그아웃"),
                       ],

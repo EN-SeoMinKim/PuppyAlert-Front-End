@@ -45,8 +45,8 @@ class _PersonalInformationChildScreenState
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(padding: EdgeInsets.only(top: 50)),
-              Center(
+              const Padding(padding: EdgeInsets.only(top: 50)),
+              const Center(
                 child: Text(
                   '개인정보',
                   style: TextStyle(

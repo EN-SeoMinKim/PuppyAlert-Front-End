@@ -14,7 +14,7 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
+        const SizedBox(
           height: 100.0,
           child: Center(
             child: Text(

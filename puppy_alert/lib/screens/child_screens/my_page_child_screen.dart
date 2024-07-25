@@ -17,7 +17,7 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -30,19 +30,19 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
               width: double.infinity,
               height: 200,
               alignment: Alignment.center,
-              color: Color(0xffFFD6BF),
+              color: const Color(0xffFFD6BF),
               child: Column(children: [
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
                 ClipOval(
                   child: Image.asset(
-                    "image.png",
+                    "assets/image.png",
                     width: 100.0,
                     height: 100.0,
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Text(
+                const SizedBox(height: 16.0),
+                const Text(
                   'Anton',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -57,7 +57,7 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
                 text: '   개인 정보',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PersonalInformationChildScreen()));
+                      builder: (context) => const PersonalInformationChildScreen()));
                 }),
             ProfileInfoButtonChildWidget(
                 icon: Icons.library_books, text: '   집밥 기록', onPressed: () {}),
@@ -68,7 +68,7 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
                 textColor: Colors.grey[700]!,
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                      MaterialPageRoute(builder: (context) => const LoginScreen()));
                 },
                 text: "Logout"),
           ],

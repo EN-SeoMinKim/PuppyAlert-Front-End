@@ -4,10 +4,12 @@ class WhiteBackgroundButtonCommonWidget extends StatelessWidget {
   final VoidCallback _onPressed;
   final String _text;
 
-  const WhiteBackgroundButtonCommonWidget({super.key,
-    required void Function() onPressed,
+  const WhiteBackgroundButtonCommonWidget({
+    super.key,
+    required VoidCallback onPressed,
     required String text,
-  }) : _text = text, _onPressed = onPressed;
+  })  : _onPressed = onPressed,
+        _text = text;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class WhiteBackgroundButtonCommonWidget extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
             side: BorderSide(color: Colors.grey[300]!, width: 2),
@@ -24,7 +26,7 @@ class WhiteBackgroundButtonCommonWidget extends StatelessWidget {
         onPressed: _onPressed,
         child: Text(
           _text,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF303030),
             fontWeight: FontWeight.bold,
           ),
@@ -33,6 +35,3 @@ class WhiteBackgroundButtonCommonWidget extends StatelessWidget {
     );
   }
 }
-
-
-

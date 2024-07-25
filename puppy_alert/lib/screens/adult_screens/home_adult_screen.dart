@@ -16,13 +16,13 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
       appBar: AppBar(),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Center(
+          const Center(
               child: Text('똥강아지를\n모집하세요',
                   style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30))),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           ElevatedShadowButtonAdultWidget(
@@ -31,7 +31,7 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
               textColor: Colors.white,
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => SpeechRecognitionAdultScreen()));
+                    builder: (context) => const SpeechRecognitionAdultScreen()));
               },
               text: "식사\n등록"),
           ElevatedShadowButtonAdultWidget(onPressed: () {}, text: "나의 정보"),

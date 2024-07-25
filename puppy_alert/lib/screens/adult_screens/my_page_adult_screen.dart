@@ -15,9 +15,9 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffFFD6BF),
+        backgroundColor: const Color(0xffFFD6BF),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -30,9 +30,9 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
               width: double.infinity,
               height: 200,
               alignment: Alignment.center,
-              color: Color(0xffFFD6BF),
+              color: const Color(0xffFFD6BF),
               child: Column(children: [
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
                 ClipOval(
                   child: Image.asset(
                     "assets/image.png",
@@ -41,8 +41,8 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Text(
+                const SizedBox(height: 16.0),
+                const Text(
                   'Anton',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -52,17 +52,17 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
                 )
               ]),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedShadowButtonAdultWidget(
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PersonalInformationAdultScreen()));
+                      builder: (context) => const PersonalInformationAdultScreen()));
                 },
                 text: "개인 정보"),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedShadowButtonAdultWidget(
