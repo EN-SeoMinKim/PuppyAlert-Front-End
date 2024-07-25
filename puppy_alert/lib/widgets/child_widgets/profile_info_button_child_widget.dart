@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ProfileInfoButton extends StatelessWidget {
+class ProfileInfoButtonChildWidget extends StatelessWidget {
   final IconData icon;
   final String text;
   final VoidCallback onPressed;
 
-  const ProfileInfoButton({
+  const ProfileInfoButtonChildWidget({
     super.key,
     required this.icon,
     required this.text,
@@ -17,13 +17,13 @@ class ProfileInfoButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(0.0),
         ),
         side: BorderSide.none,
         elevation: 0,
-        fixedSize: Size.fromHeight(50.0),
+        fixedSize: const Size.fromHeight(50.0),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +34,7 @@ class ProfileInfoButton extends StatelessWidget {
                 icon,
                 color: Colors.grey[700],
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
                 text,
                 style: TextStyle(

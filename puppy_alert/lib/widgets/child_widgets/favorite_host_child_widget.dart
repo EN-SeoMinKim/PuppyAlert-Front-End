@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class HostWidget extends StatefulWidget {
+class FavoriteHostChildWidget extends StatefulWidget {
   final String imagePath;
   final String hostName;
   final String recentMealDate;
   final Color favorite;
 
-  HostWidget({
+  const FavoriteHostChildWidget({
     super.key,
     required this.imagePath,
     required this.hostName,
@@ -15,10 +15,10 @@ class HostWidget extends StatefulWidget {
   });
 
   @override
-  State<HostWidget> createState() => _HostWidgetState();
+  State<FavoriteHostChildWidget> createState() => _FavoriteHostChildWidgetState();
 }
 
-class _HostWidgetState extends State<HostWidget> {
+class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -32,14 +32,14 @@ class _HostWidgetState extends State<HostWidget> {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(width: 40),
+          const SizedBox(width: 40),
           Column(
             children: [
               Text(
                 widget.hostName,
-                style: TextStyle(fontWeight: FontWeight.w900),
+                style: const TextStyle(fontWeight: FontWeight.w900),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
@@ -55,7 +55,7 @@ class _HostWidgetState extends State<HostWidget> {
             Icons.favorite_border,
             color: widget.favorite,
           ),
-          SizedBox(width: 30),
+          const SizedBox(width: 30),
         ],
       )
     ]);
@@ -63,8 +63,8 @@ class _HostWidgetState extends State<HostWidget> {
 }
 
 Widget firstHostWidget() {
-  return HostWidget(
-    imagePath: 'image.png',
+  return const FavoriteHostChildWidget(
+    imagePath: 'assets/image.png',
     hostName: '김순옥님',
     recentMealDate: '7일 전에 식사',
     favorite: Colors.red,
