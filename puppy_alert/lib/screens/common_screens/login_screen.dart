@@ -29,8 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/signup_screen', (route) => false);
+                Navigator.of(context).pushReplacementNamed('/signup_screen',
+                    arguments: User.child);
               },
               child: const Text(
                 '결식아동',
@@ -41,8 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/signup_screen', (route) => false);
+                Navigator.of(context).pushReplacementNamed('/signup_screen',
+                    arguments: User.adult);
               },
               child: const Text(
                 '1인 가구',
@@ -57,38 +57,28 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _submitLoginForm() {
+  void _submitLoginForm() async {
     String id = _idController.text.trim();
     String password = _passwordController.text.trim();
-
-    _isValidLoginValue('host', id, password).then(
-      (value) => _goNextPage(value, User.adult),
-    );
-    _isValidLoginValue('puppy', id, password).then(
-      (value) => _goNextPage(value, User.child),
-    );
-  }
-
-  Future<bool> _isValidLoginValue(
-      String urlAddress, String id, String password) async {
-    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/$urlAddress/login');
+    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/common/login');
     http.Response response = await http.post(uri,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id': id,
           'password': password,
         }));
-    // print(response.body);
-    return !(response.body == '옳지 않은 로그인 정보입니다');
+
+    // 로그인 실패 했을 때 팝업 창 띄우기
+    if (response.body == '등록되지 않은 회원입니다') return;
+
+    _goNextPage(jsonDecode(response.body));
   }
 
-  void _goNextPage(bool isValid, User user) {
-    if (!isValid) return;
-
-    if (user == User.adult) {
-      Navigator.pushNamed(context, "/speech_recognition_screen");
+  void _goNextPage(Map<String, dynamic> jsonData) {
+    if (jsonData['userType'] == 'Host') {
+      Navigator.of(context).pushNamed("/speech_recognition_screen");
     } else {
-      Navigator.pushNamed(context, "/main_child_screen");
+      Navigator.of(context).pushNamed("/main_child_screen");
     }
   }
 

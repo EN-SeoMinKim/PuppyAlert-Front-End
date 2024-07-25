@@ -50,43 +50,24 @@ class _SignupScreenState extends State<SignupScreen> {
     print('닉네임 중복 확인 버튼 클릭됨');
   }
 
-  void _submitSignUpForm() {
+  void _submitSignUpForm(Object arguments) {
     bool isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
 
-    if (isValid) {
-      List<String> inputString = List.generate(9, (index) => _textEditingController[index].text.trim());
+    List<String> inputString =
+        List.generate(9, (index) => _textEditingController[index].text.trim());
 
-      for(String s in inputString) {
-        print(s);
-      }
-      // String id = _textEditingController[widget._id].text.trim();
-      // String password = _textEditingController[widget._password].text.trim();
-      // String passwordConfirmation =
-      //     _textEditingController[widget._passwordConfirmation].text.trim();
-      // String nickname = _textEditingController[widget._nickName].text.trim();
-      // String name = _textEditingController[widget._name].text.trim();
-      // String address = _textEditingController[widget._address].text.trim();
-      // String addressDetail =
-      //     _textEditingController[widget._addressDetail].text.trim();
-      // String phoneNumber =
-      //     _textEditingController[widget._phoneNumber].text.trim();
-      // String phoneNumberConfirmation =
-      //     _textEditingController[widget._phoneNumberConfirmation].text.trim();
-      //
-      // print('Id: $id');
-      // print('Password: $password');
-      // print('Password Confirmation: $passwordConfirmation');
-      // print('Nickname: $nickname');
-      // print('Name: $name');
-      // print('Address: $address');
-      // print('Address Detail: $addressDetail');
-      // print('PhoneNumber: $phoneNumber');
-      // print('PhoneNumber Confirmation: $phoneNumberConfirmation');
+    for (String s in inputString) {
+      print(s);
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+    final Object? arguments = ModalRoute.of(context)!.settings.arguments;
+
     return Scaffold(
       appBar: AppBar(),
       body: GestureDetector(
@@ -173,15 +154,14 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                               ],
                             ),
-                            UserDatePicker(
-                              onDateSelected: (date) {
-                                setState(() {});
+                            UserDatePicker(onDateSelected: (date) {
+                              setState(() {
                                 if (date != null) {
                                   print(
                                       "선택된 날짜: ${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}");
                                 }
-                              },
-                            ),
+                              });
+                            }),
                           ],
                         ),
                       ),
@@ -229,7 +209,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       const SizedBox(height: 20),
                       LongRectangleButton(
-                        onPressed: _submitSignUpForm,
+                        onPressed: () {
+                          _submitSignUpForm(arguments!);
+                        },
                         text: "회원가입",
                       ),
                     ],

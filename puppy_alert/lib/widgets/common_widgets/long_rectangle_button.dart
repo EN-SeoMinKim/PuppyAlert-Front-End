@@ -10,7 +10,7 @@ class LongRectangleButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
 
-  LongRectangleButton({
+  const LongRectangleButton({
     super.key,
     required this.onPressed,
     required this.text,
