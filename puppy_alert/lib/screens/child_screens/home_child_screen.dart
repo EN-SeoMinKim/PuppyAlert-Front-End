@@ -14,10 +14,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
     return const Column(
       children: [
         SearchBarChildWidget(),
-        // HomeFoodChildWidget(),
-        // HomeFoodChildWidget(),
-        // HomeFoodChildWidget(),
-        // HomeFoodChildWidget()
+
       ],
     );
   }
