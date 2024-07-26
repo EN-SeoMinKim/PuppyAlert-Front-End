@@ -14,15 +14,7 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xffFFD6BF),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           children: [

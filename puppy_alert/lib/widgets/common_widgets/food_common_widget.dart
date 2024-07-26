@@ -1,35 +1,48 @@
 import 'package:flutter/material.dart';
 
 class FoodCommonWidget extends StatefulWidget {
-  final String imagePath;
-  final String foodName;
-  final String hostName;
-  final String time;
-  final String recruitmentStatus;
+  final String _imagePath;
+  final String _foodName;
+  final String _hostName;
+  final String _time;
+  final String _recruitmentStatus;
+  late bool _isFavorite;
 
-  const FoodCommonWidget({
+  FoodCommonWidget({
     super.key,
-    required this.imagePath,
-    required this.foodName,
-    required this.hostName,
-    required this.time,
-    required this.recruitmentStatus,
-  });
+    required String imagePath,
+    required String foodName,
+    required String hostName,
+    required String time,
+    required String recruitmentStatus,
+    required bool isFavorite,
+  })  : _isFavorite = isFavorite,
+        _recruitmentStatus = recruitmentStatus,
+        _time = time,
+        _hostName = hostName,
+        _foodName = foodName,
+        _imagePath = imagePath;
 
   @override
   State<FoodCommonWidget> createState() => _FoodCommonWidgetState();
 }
 
 class _FoodCommonWidgetState extends State<FoodCommonWidget> {
-  bool _isFavorite = false;
-
-  Color _getBackgroundColor(String status) {
-    if(status == 'MATCHED'){
+  Color _getBackgroundColor(String recruitmentStatus) {
+    if (recruitmentStatus == 'MATCHED') {
       return Colors.grey[200]!;
     }
     return const Color(0xffFFFAE1);
-
   }
+
+  Icon _getFavoriteIcon(bool isFavorite) {
+    return Icon(
+      isFavorite ? Icons.favorite : Icons.favorite_border,
+      color: isFavorite ? Colors.red : Colors.grey,
+      size: 20,
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +57,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image.asset(
-                widget.imagePath,
+                widget._imagePath,
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
@@ -56,7 +69,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.foodName,
+                widget._foodName,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
@@ -65,16 +78,12 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(widget.hostName),
+                    Text(widget._hostName),
                     IconButton(
-                      icon: Icon(
-                        _isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: _isFavorite ? Colors.red : Colors.grey,
-                        size: 20,
-                      ),
+                      icon: _getFavoriteIcon(widget._isFavorite),
                       onPressed: () {
                         setState(() {
-                          _isFavorite = !_isFavorite;
+                          widget._isFavorite = !widget._isFavorite;
                         });
                       },
                     ),
@@ -82,16 +91,16 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
                 ),
               ),
               const SizedBox(height: 4),
-              Text(widget.time),
+              Text(widget._time),
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
-                  color: _getBackgroundColor(widget.recruitmentStatus),
+                  color: _getBackgroundColor(widget._recruitmentStatus),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
-                  widget.recruitmentStatus,
+                  widget._recruitmentStatus,
                   style: const TextStyle(
                     color: Color(0xff7D6600),
                   ),
@@ -106,11 +115,12 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
 }
 
 Widget firstFoodWidget() {
-  return const FoodCommonWidget(
+  return FoodCommonWidget(
     imagePath: 'assets/food.png',
     foodName: '비빔밥',
     hostName: '김순옥님',
     time: '18:00',
     recruitmentStatus: 'MATCHED',
+    isFavorite: true,
   );
 }

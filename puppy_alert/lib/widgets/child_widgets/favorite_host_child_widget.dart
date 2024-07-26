@@ -1,73 +1,86 @@
 import 'package:flutter/material.dart';
 
-
 class FavoriteHostChildWidget extends StatefulWidget {
-  final String _imagePath;
-  final String _hostName;
-  final String _recentMealDate;
-  final Color _favorite;
+  final String _hostId;
+  final String _recentFoodTime;
+  late bool _isFavorite;
 
-  const FavoriteHostChildWidget({
+  FavoriteHostChildWidget({
     super.key,
-    required String imagePath,
-    required String hostName,
-    required String recentMealDate,
-    required Color favorite,
-  }) : _favorite = favorite, _recentMealDate = recentMealDate, _hostName = hostName, _imagePath = imagePath;
+    required String hostId,
+    required String recentFoodTime,
+    required bool isFavorite,
+  })  : _hostId = hostId,
+        _recentFoodTime = recentFoodTime,
+        _isFavorite = isFavorite;
 
   @override
-  State<FavoriteHostChildWidget> createState() => _FavoriteHostChildWidgetState();
+  State<FavoriteHostChildWidget> createState() =>
+      _FavoriteHostChildWidgetState();
 }
 
-class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
+class _FavoriteHostChildWidgetState
+    extends State<FavoriteHostChildWidget> {
+  Icon _getFavoriteIcon(bool isFavorite) {
+    return Icon(
+      isFavorite ? Icons.favorite : Icons.favorite_border,
+      color: isFavorite ? Colors.red : Colors.grey,
+      size: 20,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Row(
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ClipOval(
-            child: Image.asset(
-              widget._imagePath,
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
+      SizedBox(
+        height: 80,
+        child: Row(
+          children: [
+            ClipOval(
+              child: Image.asset(
+                'assets/image.png',
+                width: 70,
+                height: 70,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          const SizedBox(width: 40),
-          Column(
-            children: [
-              Text(
-                widget._hostName,
-                style: TextStyle(fontWeight: FontWeight.w900),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                  widget._recentMealDate,
-              style: TextStyle(fontWeight: FontWeight.w200, color: Colors.grey[500]),),
-            ],
-          ),
-        ],
+            const SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget._hostId,
+                  style: const TextStyle(fontWeight: FontWeight.w900),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  widget._recentFoodTime,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w200, color: Colors.grey[500]),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       Row(
         children: [
-          Icon(
-            Icons.favorite_border,
-            color: widget._favorite,
+          IconButton(
+            icon: _getFavoriteIcon(widget._isFavorite),
+            onPressed: () {
+              setState(() {
+                widget._isFavorite = !widget._isFavorite;
+              });
+            },
           ),
           const SizedBox(width: 30),
         ],
       )
     ]);
   }
-}
-
-Widget firstHostWidget() {
-  return FavoriteHostChildWidget(
-    imagePath: 'image.png',
-    hostName: '김순옥님',
-    recentMealDate: '7일 전에 식사',
-    favorite: Colors.red,
-  );
 }

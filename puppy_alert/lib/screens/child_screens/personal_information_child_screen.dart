@@ -36,9 +36,7 @@ class _PersonalInformationChildScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: GestureDetector(
+    return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
@@ -97,7 +95,6 @@ class _PersonalInformationChildScreenState
             ],
           ),
         ),
-      ),
     );
   }
 

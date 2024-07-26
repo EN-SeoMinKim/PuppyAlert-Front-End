@@ -12,9 +12,7 @@ class TodayFoodChildScreen extends StatefulWidget {
 class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
+    return  Column(
         children: [
           Flexible(
             flex: 10,
@@ -130,7 +128,6 @@ class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
             child: greyContainer(),
           ),
         ],
-      ),
     );
   }
 }

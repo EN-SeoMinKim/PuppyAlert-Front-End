@@ -14,17 +14,7 @@ class MyPageChildScreen extends StatefulWidget {
 class _MyPageChildScreenState extends State<MyPageChildScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Center(
-        child: Column(
+    return Column(
           children: [
             Container(
               width: double.infinity,
@@ -72,8 +62,6 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
                 },
                 text: "Logout"),
           ],
-        ),
-      ),
-    );
+        );
   }
 }

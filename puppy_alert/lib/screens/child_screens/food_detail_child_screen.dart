@@ -51,9 +51,7 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
+    return Column(
         children: [
           Container(
             height: 100,
@@ -170,7 +168,6 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
             color: Colors.grey[100],
           ),
         ],
-      ),
     );
   }
 }

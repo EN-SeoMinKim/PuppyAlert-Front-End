@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class SearchBarChildWidget extends StatefulWidget {
@@ -37,7 +39,7 @@ class _SearchBarChildWidgetState extends State<SearchBarChildWidget> {
             height: 60,
             color: const Color(0xffFF7700),
             child: const Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
               child: SearchBar(
                 leading: Icon(Icons.search),
                 overlayColor: WidgetStatePropertyAll(Colors.orange),
