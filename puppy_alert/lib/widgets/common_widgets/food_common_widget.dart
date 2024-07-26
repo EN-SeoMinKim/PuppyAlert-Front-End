@@ -55,35 +55,36 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
           ),
           const SizedBox(width: 15),
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.foodName,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 2),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(widget.hostName),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: Icon(
-                      _isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: _isFavorite ? Colors.red : Colors.grey,
+              SizedBox(
+                height: 30,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(widget.hostName),
+                    IconButton(
+                      icon: Icon(
+                        _isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: _isFavorite ? Colors.red : Colors.grey,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isFavorite = !_isFavorite;
+                        });
+                      },
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isFavorite = !_isFavorite;
-                      });
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const SizedBox(height: 2),
               Text(widget.time),
-              const SizedBox(height: 2),
+              const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
