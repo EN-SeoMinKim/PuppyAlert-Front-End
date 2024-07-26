@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -52,8 +50,10 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
       print(_foodList[i]['time']);
       List<String> timeSplit = _foodList[i]['time'].toString().split('T');
 
-      String monthDay = '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
-      String hourMinute = '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
+      String monthDay =
+          '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
+      String hourMinute =
+          '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
       _foodList[i]['time'] = '$monthDay $hourMinute';
     }
   }
