@@ -5,6 +5,7 @@ import 'package:puppy_alert/screens/common_screens/signup_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:remedi_kopo/remedi_kopo.dart';
 
 void main() async {
   await _initNaverMap();
