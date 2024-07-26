@@ -20,7 +20,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
   void initState() {
     super.initState();
     _fetchData().then((v) {
-      _parsingTime();
+      // _parsingTime();
     });
   }
 
@@ -42,19 +42,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
       setState(() {
         _isLoading = false;
       });
-    }
-  }
-
-  void _parsingTime() {
-    for (int i = 0; i < _foodList.length; i++) {
-      print(_foodList[i]['time']);
-      List<String> timeSplit = _foodList[i]['time'].toString().split('T');
-
-      String monthDay =
-          '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
-      String hourMinute =
-          '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
-      _foodList[i]['time'] = '$monthDay $hourMinute';
     }
   }
 

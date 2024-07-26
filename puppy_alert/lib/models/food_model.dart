@@ -30,6 +30,13 @@ class FoodModel {
         _locationMap = locationMap;
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
+    List<String> timeSplit = json['time'].split('T');
+    String monthDay =
+        '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
+    String hourMinute =
+        '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
+
+    json['time'] = '$monthDay $hourMinute';
     return FoodModel(
         foodId: json['foodId'],
         hostId: json['hostId'],
