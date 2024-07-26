@@ -7,7 +7,7 @@ class FoodModel {
       _address,
       _addressDetail,
       _status;
-  late Map<String, Map<String, String>> _locationMap;
+  late var _locationMap;
 
   FoodModel(
       {required int foodId,
@@ -18,7 +18,7 @@ class FoodModel {
       required String address,
       required String addressDetail,
       required String status,
-      required Map<String, Map<String, String>> locationMap})
+      required var locationMap})
       : _foodId = foodId,
         _hostId = hostId,
         _menu = menu,
@@ -44,7 +44,7 @@ class FoodModel {
         time: json['time'],
         imageURL: json['imageURL'],
         address: json['address'],
-        addressDetail: json['addressDetail'],
+        addressDetail: json['detailAddress'],
         status: json['status'],
         locationMap: json['locationMap']);
   }
@@ -65,5 +65,5 @@ class FoodModel {
 
   String get status => _status;
 
-  Map<String, Map<String, String>> get locationMap => _locationMap;
+  get locationMap => _locationMap;
 }

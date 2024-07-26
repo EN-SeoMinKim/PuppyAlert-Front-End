@@ -13,8 +13,9 @@ class FoodProvider with ChangeNotifier {
   }
 
   void _fetchFood() async {
-    http.Response response = await http.get(Uri.parse('${dotenv.get('BASE_URL')}/api/food/'));
-    List<FoodModel> result = jsonDecode(response.body).map<FoodModel>((json) => FoodModel.fromJson(json)).toList();
+    http.Response response = await http.get(Uri.parse('${dotenv.get('BASE_URL')}/food/all'));
+    var jsonData = jsonDecode(utf8.decode(response.bodyBytes));
+    List<FoodModel> result = jsonData.map<FoodModel>((json) => FoodModel.fromJson(json)).toList();
 
     _foodList.clear();
     _foodList.addAll(result);
