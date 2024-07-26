@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
 import 'package:puppy_alert/widgets/child_widgets/search_bar_child_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
-
 import '../../models/food_model.dart';
 
 class HomeChildScreen extends StatefulWidget {

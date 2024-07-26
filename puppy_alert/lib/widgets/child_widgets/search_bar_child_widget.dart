@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SearchBarChildWidget extends StatefulWidget {
-  const SearchBarChildWidget({super.key});
+  final String _address;
+
+  const SearchBarChildWidget({super.key, required this._address});
 
   @override
   State<SearchBarChildWidget> createState() => _SearchBarChildWidgetState();
@@ -26,7 +28,7 @@ class _SearchBarChildWidgetState extends State<SearchBarChildWidget> {
                     size: 35,
                   ),
                   Text(
-                    '군자동',
+                    '$widget._address',
                     style: TextStyle(color: Colors.white, fontSize: 20, ),
                   )
                 ],

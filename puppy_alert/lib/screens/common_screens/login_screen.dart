@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:puppy_alert/models/user_dto.dart';
 import '../../utils/constants.dart';
 import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
 import 'package:http/http.dart' as http;
@@ -30,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed('/signup_screen',
-                    arguments: User.child);
+                    arguments: UserType.child);
               },
               child: const Text(
                 '결식아동',
@@ -42,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed('/signup_screen',
-                    arguments: User.adult);
+                    arguments: UserType.adult);
               },
               child: const Text(
                 '1인 가구',
@@ -83,10 +84,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _goNextPage(Map<String, dynamic> jsonData) {
     if (jsonData['userType'] == 'HOST') {
-      Navigator.of(context).pushNamed("/speech_recognition_adult_screen");
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        "/speech_recognition_adult_screen",
+        (route) => false,
+      );
     } else {
-      Navigator.of(context).pushNamed("/main_child_screen");
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        "/main_child_screen",
+        (route) => false,
+      );
     }
+  }
+
+  UserDto getUserDto() {
+    
   }
 
   @override

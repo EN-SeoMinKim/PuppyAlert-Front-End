@@ -135,14 +135,14 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Uri getUri(Object argument) {
-    if (argument == User.adult) {
+    if (argument == UserType.adult) {
       return Uri.parse('${dotenv.get('BASE_URL')}/host/signup');
     }
     return Uri.parse('${dotenv.get('BASE_URL')}/puppy/signup');
   }
 
   String _getUserTypeString(Object argument) {
-    if (argument == User.adult) {
+    if (argument == UserType.adult) {
       return 'HOST';
     }
     return 'PUPPY';
