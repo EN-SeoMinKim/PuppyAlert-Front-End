@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:puppy_alert/models/food_model.dart';
+import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
 import 'package:puppy_alert/widgets/child_widgets/search_bar_child_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
-import '../../models/food_model.dart';
 
 class HomeChildScreen extends StatefulWidget {
-  const HomeChildScreen({super.key});
+  final UserDto _userDto;
+
+  const HomeChildScreen({super.key, required userDto}) : _userDto = userDto;
 
   @override
   State<StatefulWidget> createState() => _HomeChildScreenState();
@@ -24,7 +27,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
       create: (context) => FoodProvider(),
       child: Column(
         children: [
-          const SearchBarChildWidget(),
+          SearchBarChildWidget(userDto: widget._userDto,),
           Consumer<FoodProvider>(
             builder: (context, provider, child) {
               List<FoodModel> foodList = provider.getFoodList();

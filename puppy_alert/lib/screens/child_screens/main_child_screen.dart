@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/screens/child_screens/favorite_host_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/home_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/my_page_child_screen.dart';
@@ -14,18 +15,13 @@ class MainChildScreen extends StatefulWidget {
 
 class _MainChildScreenState extends State<MainChildScreen> {
   late int _selectedIndex;
-  late final List<Widget> _widgetOptions;
+  late final List<Widget> _widgetOptionList;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = 0;
-    _widgetOptions = <Widget>[
-      const HomeChildScreen(),
-      const FoodMapChildScreen(),
-      const FavoriteHostChildScreen(),
-      const MyPageChildScreen(),
-    ];
+
   }
 
   void _onItemTapped(int index) {
@@ -36,10 +32,18 @@ class _MainChildScreenState extends State<MainChildScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final UserDto user = ModalRoute.of(context)!.settings.arguments as UserDto;
+    _widgetOptionList = <Widget>[
+      HomeChildScreen(userDto: user,),
+      const FoodMapChildScreen(),
+      const FavoriteHostChildScreen(),
+      const MyPageChildScreen(),
+    ];
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptionList.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
