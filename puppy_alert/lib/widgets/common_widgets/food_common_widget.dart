@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FoodCommonWidget extends StatefulWidget {
-  final String _imagePath;
-  final String _foodName;
-  final String _hostName;
-  final String _time;
-  final String _recruitmentStatus;
+  final String _imagePath, _foodName, _hostName, _time, _recruitmentStatus;
 
   const FoodCommonWidget({
     super.key,
@@ -19,12 +15,6 @@ class FoodCommonWidget extends StatefulWidget {
         _hostName = hostName,
         _time = time,
         _recruitmentStatus = recruitmentStatus;
-
-  String get imagePath => _imagePath;
-  String get foodName => _foodName;
-  String get hostName => _hostName;
-  String get time => _time;
-  String get recruitmentStatus => _recruitmentStatus;
 
   @override
   State<FoodCommonWidget> createState() => _FoodCommonWidgetState();
@@ -46,7 +36,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image.asset(
-                widget.imagePath,
+                widget._imagePath,
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
@@ -59,14 +49,14 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.foodName,
+                widget._foodName,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 2),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(widget.hostName),
+                  Text(widget._hostName),
                   const SizedBox(width: 8),
                   IconButton(
                     icon: Icon(
@@ -82,7 +72,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
                 ],
               ),
               const SizedBox(height: 2),
-              Text(widget.time),
+              Text(widget._time),
               const SizedBox(height: 2),
               Container(
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
@@ -91,7 +81,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
-                  widget.recruitmentStatus,
+                  widget._recruitmentStatus,
                   style: const TextStyle(
                     color: Color(0xff7D6600),
                   ),
@@ -103,14 +93,4 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
       ),
     );
   }
-}
-
-Widget firstFoodWidget() {
-  return const FoodCommonWidget(
-    imagePath: 'assets/food.png',
-    foodName: '비빔밥',
-    hostName: '김순옥님',
-    time: '18:00',
-    recruitmentStatus: '똥강아지 모집완료',
-  );
 }

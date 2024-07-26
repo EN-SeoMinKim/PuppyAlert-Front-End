@@ -27,7 +27,7 @@ class _HomeAdultScreenState extends State<HomeAdultScreen> {
           ),
           ElevatedShadowButtonAdultWidget(
               height: 150,
-              backgroundColor: Color(0xffFF7700),
+              backgroundColor: const Color(0xffFF7700),
               textColor: Colors.white,
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(

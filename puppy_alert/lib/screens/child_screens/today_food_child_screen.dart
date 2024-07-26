@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
+import '../../widgets/child_widgets/food_map_child_widget.dart';
+
 class TodayFoodChildScreen extends StatefulWidget {
   const TodayFoodChildScreen({super.key});
 
@@ -32,9 +34,15 @@ class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
             flex: 1,
             child: greyContainer(),
           ),
-          Flexible(
-            flex: 14,
-              child: firstFoodWidget()),
+          const Flexible(
+              flex: 14,
+              child: FoodCommonWidget(
+                imagePath: 'assets/food.png',
+                foodName: '비빔밥',
+                hostName: '김순옥님',
+                time: '18:00',
+                recruitmentStatus: '똥강아지 모집완료',
+              )),
           Flexible(
             flex: 1,
             child: Container(
@@ -91,39 +99,30 @@ class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
           Flexible(
             flex: 30,
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Column(
-                children: [
-                  const Row(
-                    children: [
-                      SizedBox(width:15),
-                      Icon(Icons.location_on_outlined,
-                        color: Color(0xffFF7700),),
-                      SizedBox(width: 10),
-                      Text(
-                        '주소 입력할 부분!!'
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    width: 300,
-                    height: 220,
-                    child: const NaverMap(
-                      options: NaverMapViewOptions(
-                        zoomGesturesEnable: true, // zoom in, out 가능
-                        extent: NLatLngBounds(
-                          // 지도 영역 한반도 인근으로 제한
-                            southWest: NLatLng(31.43, 122.37),
-                            northEast: NLatLng(44.35, 132.0)),
-                      ),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Column(
+                  children: [
+                    const Row(
+                      children: [
+                        SizedBox(width: 15),
+                        Icon(
+                          Icons.location_on_outlined,
+                          color: Color(0xffFF7700),
+                        ),
+                        SizedBox(width: 10),
+                        Text('주소 입력할 부분!!')
+                      ],
                     ),
-                  ),
-                ],
-              )
-            ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: 300,
+                      height: 220,
+                      child: FoodMapChildWidget(),
+                    ),
+                  ],
+                )),
           ),
           Flexible(
             flex: 1,
@@ -135,7 +134,7 @@ class _TodayFoodChildScreenState extends State<TodayFoodChildScreen> {
   }
 }
 
-Widget greyContainer(){
+Widget greyContainer() {
   return Container(
     decoration: BoxDecoration(
       color: Colors.grey[100],

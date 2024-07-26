@@ -70,9 +70,15 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
             color: Colors.grey[100],
             child: greyContainer(),
           ),
-          Container(
+          const SizedBox(
             height: 130,
-            child: firstFoodWidget(),
+            child: FoodCommonWidget(
+              imagePath: 'assets/food.png',
+              foodName: '비빔밥',
+              hostName: '김순옥님',
+              time: '18:00',
+              recruitmentStatus: '똥강아지 모집완료',
+            ),
           ),
           Container(
             height: 5,
