@@ -21,7 +21,9 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _fetchData().then((v) {
+      _parsingTime();
+    });
   }
 
   Future<void> _fetchData() async {
@@ -45,6 +47,17 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
     }
   }
 
+  void _parsingTime() {
+    for (int i = 0; i < _foodList.length; i++) {
+      print(_foodList[i]['time']);
+      List<String> timeSplit = _foodList[i]['time'].toString().split('T');
+
+      String monthDay = '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
+      String hourMinute = '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
+      _foodList[i]['time'] = '$monthDay $hourMinute';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,17 +67,17 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
           child: _isLoading
               ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
-            itemCount: _foodList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return FoodCommonWidget(
-                imagePath: 'assets/bibimbab.jpg',
-                foodName: _foodList[index]['menu'],
-                hostName: _foodList[index]['hostId'],
-                time: _foodList[index]['time'],
-                recruitmentStatus: _foodList[index]['status'],
-              );
-            },
-          ),
+                  itemCount: _foodList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return FoodCommonWidget(
+                      imagePath: _foodList[index]['imageURL'],
+                      foodName: _foodList[index]['menu'],
+                      hostName: _foodList[index]['hostId'],
+                      time: _foodList[index]['time'],
+                      recruitmentStatus: _foodList[index]['status'],
+                    );
+                  },
+                ),
         ),
       ],
     );
