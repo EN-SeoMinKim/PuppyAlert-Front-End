@@ -22,6 +22,16 @@ class FoodCommonWidget extends StatefulWidget {
 
 class _FoodCommonWidgetState extends State<FoodCommonWidget> {
   bool _isFavorite = false;
+  Color _recruitmentStatusColor = const Color(0xffFFFAE1);
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget._recruitmentStatus == 'READY') {
+      _recruitmentStatusColor = const Color(0xED6931);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +45,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
             padding: const EdgeInsets.all(10.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              child: Image.asset(
+              child: Image.network(
                 widget._imagePath,
                 width: 80,
                 height: 80,
@@ -77,7 +87,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
               Container(
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
-                  color: const Color(0xffFFFAE1),
+                  color: _recruitmentStatusColor,
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
