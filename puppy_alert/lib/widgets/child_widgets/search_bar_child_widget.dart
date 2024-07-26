@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/models/user_dto.dart';
 
 class SearchBarChildWidget extends StatefulWidget {
-  final UserDto _userDto;
+  final String _address;
 
-  const SearchBarChildWidget({super.key, required userDto})
-      : _userDto = userDto;
+  const SearchBarChildWidget({super.key, required address})
+      : _address = address;
 
   @override
   State<SearchBarChildWidget> createState() => _SearchBarChildWidgetState();
@@ -30,7 +29,7 @@ class _SearchBarChildWidgetState extends State<SearchBarChildWidget> {
                     size: 35,
                   ),
                   Text(
-                    widget._userDto.address,
+                    widget._address,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,

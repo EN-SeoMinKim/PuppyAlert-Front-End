@@ -3,7 +3,6 @@ import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/screens/child_screens/favorite_host_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/home_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/my_page_child_screen.dart';
-
 import 'food_map_child_screen.dart';
 
 class MainChildScreen extends StatefulWidget {
@@ -21,7 +20,6 @@ class _MainChildScreenState extends State<MainChildScreen> {
   void initState() {
     super.initState();
     _selectedIndex = 0;
-
   }
 
   void _onItemTapped(int index) {
@@ -30,12 +28,19 @@ class _MainChildScreenState extends State<MainChildScreen> {
     });
   }
 
+  String getAddress(UserDto userDto) {
+    // required address parsing
+    return userDto.address;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final UserDto user = ModalRoute.of(context)!.settings.arguments as UserDto;
+    final UserDto userDto = ModalRoute.of(context)!.settings.arguments as UserDto;
     _widgetOptionList = <Widget>[
-      HomeChildScreen(userDto: user,),
-      const FoodMapChildScreen(),
+      HomeChildScreen(
+        userAddress: getAddress(userDto),
+      ),
+      FoodMapChildScreen(userDto: userDto,),
       const FavoriteHostChildScreen(),
       const MyPageChildScreen(),
     ];

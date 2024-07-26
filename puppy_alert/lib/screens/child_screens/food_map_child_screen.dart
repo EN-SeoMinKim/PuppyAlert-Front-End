@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:http/http.dart' as http;
+import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_detail_child_widget.dart';
 
 class FoodMapChildScreen extends StatefulWidget {
-  const FoodMapChildScreen({super.key});
+  final UserDto _userDto;
+
+  const FoodMapChildScreen({super.key, required userDto}) : _userDto = userDto;
 
   @override
   State<FoodMapChildScreen> createState() => _FoodMapChildScreenState();
@@ -23,46 +26,32 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   @override
   void initState() {
     super.initState();
-    _markerIndex = -1;
-    String address = '서울특별시 군자로 10길 29-5';
-    _markerSet = <NMarker>{};
-    _foodMapChildWidget = FoodMapChildWidget();
-    _foodMapDetailChildWidget =
-        FoodMapDetailChildWidget('비빔밥', '김순옥', address, DateTime.now());
+    _markerIndex = 0;
+    // 음식 데이터 받아와서 제대로 띄우기
+    _foodMapDetailChildWidget = FoodMapDetailChildWidget(
+        '비빔밥', '김순옥', widget._userDto.address, DateTime.now());
     _showWidget = _foodMapChildWidget;
 
-    _getNMarker(address).then((marker) {
-      setState(() {
-        _markerSet.add(marker);
-        _foodMapChildWidget.setMarkerSet(_markerSet);
-        _onTappedMarker();
-      });
+    _initNMarkerSet();
+    setState(() {
+      // _markerset을 future로 변경해야 함.
+      _foodMapChildWidget = FoodMapChildWidget(markerSetFuture: _markerSet,);
+      _onTappedMarker();
     });
   }
 
-  Future<NMarker> _getNMarker(String address) async {
-    http.Response response = await _getResponse(address);
-    var jsonData = jsonDecode(response.body);
-    String longitude = jsonData['addresses'][0]['y'];
-    String latitude = jsonData['addresses'][0]['x'];
+  Future<void> _initNMarkerSet() async {
+    String value = (await http.get(Uri.parse(
+            '${dotenv.get('BASE_URL')}/puppy/food?puppyId=${widget._userDto.name}')))
+        .body;
+    var jsonData = jsonDecode(value);
 
-    _markerIndex++;
-    return NMarker(
-        id: '$_markerIndex',
-        position: NLatLng(
-            double.parse(longitude), double.parse(latitude)));
-  }
-
-  Future<http.Response> _getResponse(String address) async {
-    Map<String, String> header = {
-      'X-NCP-APIGW-API-KEY-ID': dotenv.get('NAVER_API_ID'),
-      'X-NCP-APIGW-API-KEY': dotenv.get('NAVER_API_SECRET')
-    };
-
-    return await http.get(
-        Uri.parse(
-            'https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=$address'),
-        headers: header);
+    for (var data in jsonData) {
+      _markerSet.add(NMarker(
+          id: '$_markerIndex',
+          position: NLatLng(data['latitude'], data['longitude'])));
+      _markerIndex++;
+    }
   }
 
   void _onTappedMarker() {
