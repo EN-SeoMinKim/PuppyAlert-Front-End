@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
 
 class FoodCommonWidget extends StatefulWidget {
-  final String _imagePath;
-  final String _foodName;
-  final String _hostName;
-  final String _time;
-  final String _recruitmentStatus;
+  final String imagePath;
+  final String foodName;
+  final String hostName;
+  final String time;
+  final String recruitmentStatus;
 
   const FoodCommonWidget({
     super.key,
-    required String imagePath,
-    required String foodName,
-    required String hostName,
-    required String time,
-    required String recruitmentStatus,
-  })  : _imagePath = imagePath,
-        _foodName = foodName,
-        _hostName = hostName,
-        _time = time,
-        _recruitmentStatus = recruitmentStatus;
-
-  String get imagePath => _imagePath;
-  String get foodName => _foodName;
-  String get hostName => _hostName;
-  String get time => _time;
-  String get recruitmentStatus => _recruitmentStatus;
+    required this.imagePath,
+    required this.foodName,
+    required this.hostName,
+    required this.time,
+    required this.recruitmentStatus,
+  });
 
   @override
   State<FoodCommonWidget> createState() => _FoodCommonWidgetState();
@@ -32,6 +22,14 @@ class FoodCommonWidget extends StatefulWidget {
 
 class _FoodCommonWidgetState extends State<FoodCommonWidget> {
   bool _isFavorite = false;
+
+  Color _getBackgroundColor(String status) {
+    if(status == 'MATCHED'){
+      return Colors.grey[200]!;
+    }
+    return const Color(0xffFFFAE1);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +59,10 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
                 widget.foodName,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
+              const SizedBox(height: 4),
               SizedBox(
                 height: 30,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(widget.hostName),
@@ -83,12 +81,13 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
                   ],
                 ),
               ),
-              Text(widget.time),
               const SizedBox(height: 4),
+              Text(widget.time),
+              const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
-                  color: const Color(0xffFFFAE1),
+                  color: _getBackgroundColor(widget.recruitmentStatus),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
@@ -112,6 +111,6 @@ Widget firstFoodWidget() {
     foodName: '비빔밥',
     hostName: '김순옥님',
     time: '18:00',
-    recruitmentStatus: '똥강아지 모집완료',
+    recruitmentStatus: 'MATCHED',
   );
 }
