@@ -39,7 +39,8 @@ class _SignupScreenState extends State<SignupScreen> {
     _allFormKey = GlobalKey<FormState>();
     _idFormKey = GlobalKey<FormState>();
     _nickNameFormKey = GlobalKey<FormState>();
-    _textEditingControllerList = List.generate(10, (_) => TextEditingController());
+    _textEditingControllerList =
+        List.generate(10, (_) => TextEditingController());
   }
 
   @override
@@ -78,7 +79,8 @@ class _SignupScreenState extends State<SignupScreen> {
       uri =
           Uri.parse('${dotenv.get('BASE_URL')}/common/checkId?id=$inputString');
     } else {
-      String inputString = _textEditingControllerList[widget._nickName].text.trim();
+      String inputString =
+          _textEditingControllerList[widget._nickName].text.trim();
       key = _nickNameFormKey;
       uri = Uri.parse(
           '${dotenv.get('BASE_URL')}/common/checkNickName?nickName=$inputString');
@@ -100,8 +102,8 @@ class _SignupScreenState extends State<SignupScreen> {
         !_isKeyValid(_allFormKey)) return;
 
     Uri uri = getUri(argument);
-    List<String> inputTextList =
-        List.generate(10, (index) => _textEditingControllerList[index].text.trim());
+    List<String> inputTextList = List.generate(
+        10, (index) => _textEditingControllerList[index].text.trim());
     List<String> coordinate =
         await _getCoordinate(inputTextList[widget._address]);
 
@@ -122,7 +124,6 @@ class _SignupScreenState extends State<SignupScreen> {
           'phoneNumber': inputTextList[widget._phoneNumber],
           'userType': _getUserTypeString(argument),
         }));
-
 
     Navigator.of(context).pushNamedAndRemoveUntil(
       '/login_screen',
@@ -217,7 +218,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       passwordInputWidget(
                           _textEditingControllerList[widget._password]),
                       passwordConfirmationInputWidget(
-                          _textEditingControllerList[widget._passwordConfirmation],
+                          _textEditingControllerList[
+                              widget._passwordConfirmation],
                           _textEditingControllerList[widget._password]),
                       Center(
                         child: Row(
@@ -284,8 +286,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             SizedBox(
                               width: 200,
                               child: TextFormField(
-                                controller:
-                                    _textEditingControllerList[widget._postcode],
+                                controller: _textEditingControllerList[
+                                    widget._postcode],
                                 decoration: InputDecoration(
                                   hintText: '우편번호',
                                   prefixIcon: showIcon
@@ -306,7 +308,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       SizedBox(
                         width: 300,
                         child: TextFormField(
-                          controller: _textEditingControllerList[widget._address],
+                          controller:
+                              _textEditingControllerList[widget._address],
                           decoration: const InputDecoration(
                             hintText: '           주소',
                           ),

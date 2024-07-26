@@ -79,25 +79,44 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    _goNextPage(jsonDecode(response.body));
+    _goNextPage(jsonDecode(response.body), id, password);
   }
 
-  void _goNextPage(Map<String, dynamic> jsonData) {
+  void _goNextPage(Map<String, dynamic> jsonData, String id, String password) {
     if (jsonData['userType'] == 'HOST') {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        "/speech_recognition_adult_screen",
-        (route) => false,
-      );
+      getUserDto('host', id, password).then((userDto) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          "/speech_recognition_adult_screen",
+          (route) => false,
+          arguments: userDto,
+        );
+      });
     } else {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        "/main_child_screen",
-        (route) => false,
-      );
+      getUserDto('puppy', id, password).then((userDto) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          "/main_child_screen",
+          (route) => false,
+          arguments: userDto,
+        );
+      });
     }
   }
 
-  UserDto getUserDto() {
-    
+  Future<UserDto> getUserDto(
+      String userType, String userId, String userPassword) async {
+    String value = (await http
+            .get(Uri.parse('${dotenv.get('BASE_URL')}/$userType/$userId')))
+        .body;
+    var jsonData = jsonDecode(value);
+    return UserDto(
+        userId,
+        userPassword,
+        jsonData['name'],
+        jsonData['nickName'],
+        jsonData['birth'],
+        jsonData['phoneNumber'],
+        jsonData['address'],
+        jsonData['location']);
   }
 
   @override
