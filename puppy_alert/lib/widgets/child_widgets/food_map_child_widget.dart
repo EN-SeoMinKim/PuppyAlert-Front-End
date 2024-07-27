@@ -19,6 +19,7 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
   Widget build(BuildContext context) {
     return NaverMap(
       options: NaverMapViewOptions(
+        locationButtonEnable: true,
         initialCameraPosition: NCameraPosition(
           target: widget._latLng,
           zoom: 14,

@@ -19,14 +19,11 @@ class FoodMapChildScreen extends StatefulWidget {
 class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   late Widget _showWidget;
   late final FoodMapChildWidget _foodMapChildWidget;
-  late final FoodMapDetailChildWidget _foodMapDetailChildWidget;
+  late final _foodJsonData;
 
   @override
   void initState() {
     super.initState();
-    // 음식 데이터 받아와서 제대로 띄우기
-    _foodMapDetailChildWidget = FoodMapDetailChildWidget(
-        '비빔밥', '김순옥', widget._userDto.address, DateTime.now());
     _showWidget = const CircularProgressIndicator();
 
     _initFoodMapChildWidget().then((markerSet) {
@@ -46,15 +43,37 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
     Set<NMarker> markerSet = {};
     http.Response response = await http.get(Uri.parse(
         '${dotenv.get('BASE_URL')}/puppy/food?puppyId=${widget._userDto.userId}'));
-    var jsonData = jsonDecode(utf8.decode(response.bodyBytes));
+    _foodJsonData = jsonDecode(utf8.decode(response.bodyBytes));
 
-    for (var data in jsonData) {
+    for (var data in _foodJsonData) {
       markerSet.add(NMarker(
           id: '${data['foodId']}',
-          position: NLatLng(data['location']['latitude'], data['location']['longitude'])));
+          position: NLatLng(
+              data['location']['latitude'], data['location']['longitude'])));
     }
 
     return markerSet;
+  }
+
+  void _initFoodMapDetailChildWidget(NMarker marker) {
+    var foodInfo;
+    int markerId = int.parse(marker.info.id);
+
+    for (var data in _foodJsonData) {
+      int dataId = int.parse(data['foodId'].toString());
+      if (markerId == dataId) {
+        foodInfo = data;
+        break;
+      }
+    }
+
+    _showWidget = Column(
+      children: [
+        SizedBox(height: 400, child: _foodMapChildWidget),
+        SizedBox(height: 250, child: FoodMapDetailChildWidget(
+            foodInfo['menu'], foodInfo['hostId'], foodInfo['address'], foodInfo['time'])),
+      ],
+    );
   }
 
   void _onTappedMarker(Set<NMarker> markerSet) {
@@ -62,12 +81,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
       for (var m in markerSet) {
         m.setOnTapListener((NMarker marker) {
           setState(() {
-            _showWidget = Column(
-              children: [
-                SizedBox(height: 400, child: _foodMapChildWidget),
-                SizedBox(height: 250, child: _foodMapDetailChildWidget),
-              ],
-            );
+            _initFoodMapDetailChildWidget(marker);
           });
         });
       }
@@ -76,8 +90,6 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: _showWidget
-    );
+    return Center(child: _showWidget);
   }
 }
