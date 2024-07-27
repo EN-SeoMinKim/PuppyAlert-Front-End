@@ -5,11 +5,11 @@ class UserDto {
       _nickName,
       _birth,
       _phoneNumber,
-      _address,
-      _location;
+      _address;
+  late Map<String, dynamic> _location;
 
   UserDto(String userId, String password, String name, String nickName,
-      String birth, String phoneNumber, String address, String location) {
+      String birth, String phoneNumber, String address, Map<String, dynamic> location) {
     _userId = userId;
     _password = password;
     _name = name;
@@ -20,7 +20,7 @@ class UserDto {
     _location = location;
   }
 
-  String get location => _location;
+  Map<String, dynamic> get location => _location;
 
   String get address => _address;
 

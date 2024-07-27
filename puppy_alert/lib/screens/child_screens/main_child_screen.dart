@@ -29,13 +29,23 @@ class _MainChildScreenState extends State<MainChildScreen> {
   }
 
   String getAddress(UserDto userDto) {
-    // required address parsing
-    return userDto.address;
+    List<String> splitString = userDto.address.split(' ');
+    for(String s in splitString) {
+      if (s[s.length - 1] == '동') {
+        return s;
+      }
+    }
+
+    if (splitString.length >2) {
+      return splitString[splitString.length - 2];
+    }
+    return 'NONE';
   }
 
   @override
   Widget build(BuildContext context) {
     final UserDto userDto = ModalRoute.of(context)!.settings.arguments as UserDto;
+
     _widgetOptionList = <Widget>[
       HomeChildScreen(
         userAddress: getAddress(userDto),
