@@ -3,27 +3,25 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 
 class FoodMapChildWidget extends StatefulWidget {
   final Set<NMarker> _markerSet;
-  final double _latitude, _longitude;
+  final NLatLng _latLng;
 
-  const FoodMapChildWidget(
+  FoodMapChildWidget(
       {super.key, required markerSet, required latitude, required longitude})
       : _markerSet = markerSet,
-        _latitude = latitude,
-        _longitude = longitude;
+        _latLng = NLatLng(latitude, longitude);
 
   @override
   State<FoodMapChildWidget> createState() => _FoodMapChildWidgetState();
 }
 
 class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
-
   @override
   Widget build(BuildContext context) {
     return NaverMap(
       options: NaverMapViewOptions(
         initialCameraPosition: NCameraPosition(
-          target: NLatLng(widget._latitude, widget._longitude),
-          zoom: 15,
+          target: widget._latLng,
+          zoom: 14,
           bearing: 0,
           tilt: 0,
         ),
@@ -35,6 +33,8 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
       ),
       onMapReady: (NaverMapController controller) {
         if (widget._markerSet.isNotEmpty) {
+          controller.addOverlay(
+              NCircleOverlay(id: 'id', center: widget._latLng, radius: 500, outlineWidth: 0.5, color: Colors.transparent));
           controller.addOverlayAll(widget._markerSet);
         }
       },

@@ -6,16 +6,25 @@ import '../models/food_model.dart';
 
 class FoodProvider with ChangeNotifier {
   final List<FoodModel> _foodList = List.empty(growable: true);
+  bool _isDisposed = false;
 
   List<FoodModel> getFoodList() {
     _fetchFood();
     return _foodList;
   }
 
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
   void _fetchFood() async {
     http.Response response = await http.get(Uri.parse('${dotenv.get('BASE_URL')}/food/all'));
     var jsonData = jsonDecode(utf8.decode(response.bodyBytes));
     List<FoodModel> result = jsonData.map<FoodModel>((json) => FoodModel.fromJson(json)).toList();
+
+    if (_isDisposed) return;
 
     _foodList.clear();
     _foodList.addAll(result);
