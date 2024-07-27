@@ -17,30 +17,32 @@ class FoodMapChildScreen extends StatefulWidget {
 }
 
 class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
+  late Set<NMarker> _markerSet;
   late Widget _showWidget;
   late final FoodMapChildWidget _foodMapChildWidget;
   late final FoodMapDetailChildWidget _foodMapDetailChildWidget;
-  late Set<NMarker> _markerSet;
-  late int _markerIndex;
 
   @override
   void initState() {
     super.initState();
-    _markerIndex = 0;
     // 음식 데이터 받아와서 제대로 띄우기
     _foodMapDetailChildWidget = FoodMapDetailChildWidget(
         '비빔밥', '김순옥', widget._userDto.address, DateTime.now());
     _showWidget = _foodMapChildWidget;
 
-    _initNMarkerSet();
-    setState(() {
-      // _markerset을 future로 변경해야 함.
-      _foodMapChildWidget = FoodMapChildWidget(markerSetFuture: _markerSet,);
-      _onTappedMarker();
+    _initNMarkerSet().then((_) {
+      _foodMapChildWidget = FoodMapChildWidget(
+          markerSet: _markerSet,
+          latitude: widget._userDto.location['latitude'] as double,
+          longitude: widget._userDto.location['longitude'] as double);
+      setState(() {
+        _onTappedMarker();
+      });
     });
   }
 
   Future<void> _initNMarkerSet() async {
+    _markerSet = {};
     String value = (await http.get(Uri.parse(
             '${dotenv.get('BASE_URL')}/puppy/food?puppyId=${widget._userDto.name}')))
         .body;
@@ -48,9 +50,8 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
     for (var data in jsonData) {
       _markerSet.add(NMarker(
-          id: '$_markerIndex',
+          id: '${data['foodId']}',
           position: NLatLng(data['latitude'], data['longitude'])));
-      _markerIndex++;
     }
   }
 
@@ -73,6 +74,8 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return _showWidget;
+    return Center(
+      child: _showWidget ?? CircularProgressIndicator(),
+    );
   }
 }

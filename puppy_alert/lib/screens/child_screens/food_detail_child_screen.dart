@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
+import 'package:puppy_alert/models/user_dto.dart';
 import '../../widgets/common_widgets/food_common_widget.dart';
+import 'food_map_child_screen.dart';
 
 class FoodDetailChildScreen extends StatefulWidget {
   const FoodDetailChildScreen({super.key});
@@ -11,37 +11,30 @@ class FoodDetailChildScreen extends StatefulWidget {
 }
 
 class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
-  late Future<void> _mapInitialization;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void _showConfirmationDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: const Text('신청 완료',
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
-            color: Color(0xffFF7700),
-          ),),
+          title: const Text(
+            '신청 완료',
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              color: Color(0xffFF7700),
+            ),
+          ),
           content: const Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
-          style: TextStyle(
-            height: 2.0
-          )),
+              style: TextStyle(height: 2.0)),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: const Text('확인',
-              style: TextStyle(
-                color: Color(0xffFF7700),
-              )),
+                  style: TextStyle(
+                    color: Color(0xffFF7700),
+                  )),
             ),
           ],
         );
@@ -51,6 +44,8 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final UserDto userDto = ModalRoute.of(context)!.settings.arguments as UserDto;
+
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -144,29 +139,10 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                FutureBuilder(
-                  future: _mapInitialization,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Error: ${snapshot.error}',
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ),
-                      );
-                    } else {
-                      return SizedBox(
-                        width: 300,
-                        height: 200,
-                        child: FoodMapChildWidget(),
-                      );
-                    }
-                  },
+                SizedBox(
+                  width: 300,
+                  height: 200,
+                  child: FoodMapChildScreen(userDto: userDto),
                 ),
               ],
             ),

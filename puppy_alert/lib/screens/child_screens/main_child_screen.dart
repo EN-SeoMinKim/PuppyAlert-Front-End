@@ -6,7 +6,9 @@ import 'package:puppy_alert/screens/child_screens/my_page_child_screen.dart';
 import 'food_map_child_screen.dart';
 
 class MainChildScreen extends StatefulWidget {
-  const MainChildScreen({super.key});
+  final UserDto _userDto;
+
+  const MainChildScreen({super.key, required userDto}) : _userDto = userDto;
 
   @override
   State<MainChildScreen> createState() => _MainChildScreenState();
@@ -20,6 +22,16 @@ class _MainChildScreenState extends State<MainChildScreen> {
   void initState() {
     super.initState();
     _selectedIndex = 0;
+    _widgetOptionList = <Widget>[
+      HomeChildScreen(
+        userAddress: getAddress(widget._userDto),
+      ),
+      FoodMapChildScreen(
+        userDto: widget._userDto,
+      ),
+      const FavoriteHostChildScreen(),
+      const MyPageChildScreen(),
+    ];
   }
 
   void _onItemTapped(int index) {
@@ -30,13 +42,13 @@ class _MainChildScreenState extends State<MainChildScreen> {
 
   String getAddress(UserDto userDto) {
     List<String> splitString = userDto.address.split(' ');
-    for(String s in splitString) {
+    for (String s in splitString) {
       if (s[s.length - 1] == '동') {
         return s;
       }
     }
 
-    if (splitString.length >2) {
+    if (splitString.length > 2) {
       return splitString[splitString.length - 2];
     }
     return 'NONE';
@@ -44,17 +56,6 @@ class _MainChildScreenState extends State<MainChildScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final UserDto userDto = ModalRoute.of(context)!.settings.arguments as UserDto;
-
-    _widgetOptionList = <Widget>[
-      HomeChildScreen(
-        userAddress: getAddress(userDto),
-      ),
-      FoodMapChildScreen(userDto: userDto,),
-      const FavoriteHostChildScreen(),
-      const MyPageChildScreen(),
-    ];
-
     return Scaffold(
       appBar: AppBar(),
       body: Center(

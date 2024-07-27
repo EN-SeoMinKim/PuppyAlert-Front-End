@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/screens/common_screens/login_screen.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:convert';
@@ -11,6 +12,7 @@ import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
 import '../../widgets/common_widgets/white_background_button_common_widget.dart';
 
 class SignupScreen extends StatefulWidget {
+  final UserType _userType;
   final int _id = 0,
       _password = 1,
       _passwordConfirmation = 2,
@@ -22,7 +24,7 @@ class SignupScreen extends StatefulWidget {
       _phoneNumberConfirmation = 8,
       _postcode = 9;
 
-  const SignupScreen({super.key});
+  const SignupScreen({super.key, required userType}) : _userType = userType;
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -96,18 +98,17 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-  void _submitSignUpForm(Object argument) async {
+  void _submitSignUpForm(UserType userType) async {
     if (!_isKeyValid(_idFormKey) ||
         !_isKeyValid(_nickNameFormKey) ||
         !_isKeyValid(_allFormKey)) return;
 
-    Uri uri = getUri(argument);
     List<String> inputTextList = List.generate(
         10, (index) => _textEditingControllerList[index].text.trim());
     List<String> coordinate =
         await _getCoordinate(inputTextList[widget._address]);
 
-    http.post(uri,
+    http.post(getUri(userType),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id': inputTextList[widget._id],
@@ -122,28 +123,25 @@ class _SignupScreenState extends State<SignupScreen> {
             'longitude': coordinate[0],
           },
           'phoneNumber': inputTextList[widget._phoneNumber],
-          'userType': _getUserTypeString(argument),
+          'userType': _getUserTypeString(userType),
         }));
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      '/login_screen',
-      (route) => false,
-    );
+    _goLoginScreen();
   }
 
   bool _isKeyValid(GlobalKey<FormState> key) {
     return key.currentState?.validate() ?? false;
   }
 
-  Uri getUri(Object argument) {
-    if (argument == UserType.adult) {
+  Uri getUri(UserType userType) {
+    if (userType == UserType.adult) {
       return Uri.parse('${dotenv.get('BASE_URL')}/host/signup');
     }
     return Uri.parse('${dotenv.get('BASE_URL')}/puppy/signup');
   }
 
-  String _getUserTypeString(Object argument) {
-    if (argument == UserType.adult) {
+  String _getUserTypeString(UserType userType) {
+    if (userType == UserType.adult) {
       return 'HOST';
     }
     return 'PUPPY';
@@ -165,10 +163,19 @@ class _SignupScreenState extends State<SignupScreen> {
     return [longitude, latitude];
   }
 
+  void _goLoginScreen() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) {
+        return const LoginScreen();
+      }),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final showIcon = _textEditingControllerList[widget._postcode].text.isEmpty;
-    final Object arguments = ModalRoute.of(context)!.settings.arguments!;
 
     return Scaffold(
       appBar: AppBar(),
@@ -338,7 +345,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 20),
                       LongRectangleButtonCommonWidget(
                         onPressed: () {
-                          _submitSignUpForm(arguments);
+                          _submitSignUpForm(widget._userType);
                         },
                         text: "회원가입",
                       ),
@@ -351,8 +358,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     const Text('계정이 있으신가요?'),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/login_screen', (route) => false);
+                        _goLoginScreen();
                       },
                       child: const Text(
                         "로그인하기",
