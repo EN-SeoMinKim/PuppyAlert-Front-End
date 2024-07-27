@@ -5,9 +5,9 @@ import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/screens/adult_screens/home_adult_screen.dart';
 import 'package:puppy_alert/screens/child_screens/main_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/signup_screen.dart';
-import '../../utils/constants.dart';
-import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
+import 'package:puppy_alert/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:puppy_alert/widgets/common_widgets/user_text_form_field_common_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

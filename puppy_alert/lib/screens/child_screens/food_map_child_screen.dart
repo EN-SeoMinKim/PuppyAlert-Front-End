@@ -17,7 +17,6 @@ class FoodMapChildScreen extends StatefulWidget {
 }
 
 class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
-  late Set<NMarker> _markerSet;
   late Widget _showWidget;
   late final FoodMapChildWidget _foodMapChildWidget;
   late final FoodMapDetailChildWidget _foodMapDetailChildWidget;
@@ -28,36 +27,39 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
     // 음식 데이터 받아와서 제대로 띄우기
     _foodMapDetailChildWidget = FoodMapDetailChildWidget(
         '비빔밥', '김순옥', widget._userDto.address, DateTime.now());
-    _showWidget = _foodMapChildWidget;
+    _showWidget = const CircularProgressIndicator();
 
-    _initNMarkerSet().then((_) {
+    _initFoodMapChildWidget().then((markerSet) {
       _foodMapChildWidget = FoodMapChildWidget(
-          markerSet: _markerSet,
+          markerSet: markerSet,
           latitude: widget._userDto.location['latitude'] as double,
           longitude: widget._userDto.location['longitude'] as double);
+      _showWidget = _foodMapChildWidget;
+
       setState(() {
-        _onTappedMarker();
+        _onTappedMarker(markerSet);
       });
     });
   }
 
-  Future<void> _initNMarkerSet() async {
-    _markerSet = {};
-    String value = (await http.get(Uri.parse(
-            '${dotenv.get('BASE_URL')}/puppy/food?puppyId=${widget._userDto.name}')))
-        .body;
-    var jsonData = jsonDecode(value);
+  Future<Set<NMarker>> _initFoodMapChildWidget() async {
+    Set<NMarker> markerSet = {};
+    http.Response response = await http.get(Uri.parse(
+        '${dotenv.get('BASE_URL')}/puppy/food?puppyId=${widget._userDto.userId}'));
+    var jsonData = jsonDecode(utf8.decode(response.bodyBytes));
 
     for (var data in jsonData) {
-      _markerSet.add(NMarker(
+      markerSet.add(NMarker(
           id: '${data['foodId']}',
-          position: NLatLng(data['latitude'], data['longitude'])));
+          position: NLatLng(data['location']['latitude'], data['location']['longitude'])));
     }
+
+    return markerSet;
   }
 
-  void _onTappedMarker() {
-    if (_markerSet.isNotEmpty) {
-      for (var m in _markerSet) {
+  void _onTappedMarker(Set<NMarker> markerSet) {
+    if (markerSet.isNotEmpty) {
+      for (var m in markerSet) {
         m.setOnTapListener((NMarker marker) {
           setState(() {
             _showWidget = Column(
@@ -75,7 +77,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: _showWidget ?? CircularProgressIndicator(),
+      child: _showWidget
     );
   }
 }
