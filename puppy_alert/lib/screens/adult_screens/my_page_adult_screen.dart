@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/adult_screens/personal_information_adult_screen.dart';
 import 'package:puppy_alert/screens/adult_screens/food_record_adult_screen.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
@@ -58,8 +57,8 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
             ElevatedShadowButtonAdultWidget(
               width: 200,
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PersonalInformationAdultScreen()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => const PersonalInformationAdultScreen()));
                 },
                 text: "개인 정보"),
             const SizedBox(
@@ -69,7 +68,7 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => FoodRecordAdultScreen()));
+                      builder: (context) => const FoodRecordAdultScreen()));
                 },
                 text: "집밥 기록"),
           ],

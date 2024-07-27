@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/child_screens/personal_information_child_screen.dart';
 import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
 import '../../widgets/child_widgets/profile_info_button_child_widget.dart';
 import '../common_screens/login_screen.dart';
@@ -47,9 +46,9 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
                 icon: Icons.manage_accounts,
                 text: '   개인 정보',
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          const PersonalInformationChildScreen()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         const PersonalInformationChildScreen()));
                 }),
             ProfileInfoButtonChildWidget(
                 icon: Icons.library_books, text: '   집밥 기록', onPressed: () {}),

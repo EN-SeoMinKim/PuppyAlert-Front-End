@@ -1,3 +1,3 @@
-enum UserType {
-  child, adult
-}
+enum UserType { child, adult }
+
+enum ButtonStatus { idle, listening, completed, awaitingTimeInput }
