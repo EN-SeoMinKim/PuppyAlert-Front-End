@@ -38,7 +38,7 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
             children: [
               Text(
                 widget._hostName,
-                style: TextStyle(fontWeight: FontWeight.w900),
+                style: const TextStyle(fontWeight: FontWeight.w900),
               ),
               const SizedBox(
                 height: 5,
@@ -64,8 +64,8 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
 }
 
 Widget firstHostWidget() {
-  return FavoriteHostChildWidget(
-    imagePath: 'image.png',
+  return const FavoriteHostChildWidget(
+    imagePath: 'assets/image.png',
     hostName: '김순옥님',
     recentMealDate: '7일 전에 식사',
     favorite: Colors.red,

@@ -14,16 +14,7 @@ class MyPageChildScreen extends StatefulWidget {
 class _MyPageChildScreenState extends State<MyPageChildScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Center(
+    return Center(
         child: Column(
           children: [
             Container(
@@ -57,7 +48,8 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
                 text: '   개인 정보',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PersonalInformationChildScreen()));
+                      builder: (context) =>
+                          const PersonalInformationChildScreen()));
                 }),
             ProfileInfoButtonChildWidget(
                 icon: Icons.library_books, text: '   집밥 기록', onPressed: () {}),
@@ -67,13 +59,16 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
                 backgroundColor: Colors.grey[100]!,
                 textColor: Colors.grey[700]!,
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const LoginScreen()));
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                    (route) => false,
+                  );
                 },
                 text: "Logout"),
           ],
         ),
-      ),
-    );
+      );
   }
 }
