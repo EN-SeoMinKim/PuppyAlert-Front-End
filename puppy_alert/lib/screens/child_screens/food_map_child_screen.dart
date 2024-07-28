@@ -7,6 +7,8 @@ import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_detail_child_widget.dart';
 
+import 'food_detail_child_screen.dart';
+
 class FoodMapChildScreen extends StatefulWidget {
   final UserDto _userDto;
 
@@ -70,8 +72,17 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
     _showWidget = Column(
       children: [
         SizedBox(height: 400, child: _foodMapChildWidget),
-        SizedBox(height: 250, child: FoodMapDetailChildWidget(
-            foodInfo['menuName'], foodInfo['hostId'], foodInfo['address'], foodInfo['time'])),
+        SizedBox(
+            height: 250,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        const FoodDetailChildScreen(canRegister: true)));
+              },
+              child: FoodMapDetailChildWidget(foodInfo['menuName'],
+                  foodInfo['hostId'], foodInfo['address'], foodInfo['time']),
+            )),
       ],
     );
   }

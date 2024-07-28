@@ -24,7 +24,7 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
 
   Future<List<FavoriteHostModel>> _fetchFavoriteHostModelList() async {
     final response = await http
-        .get(Uri.parse('${dotenv.get('BASE_URL')}/favoriteHost?puppyId=SeoSangHyeok'));
+        .get(Uri.parse('${dotenv.get('BASE_URL')}/puppy/favoriteHost?puppyId=SeoSangHyeok'));
 
     if (response.body == '최근 집밥을 먹은 적이 없습니다') {
       return [];
