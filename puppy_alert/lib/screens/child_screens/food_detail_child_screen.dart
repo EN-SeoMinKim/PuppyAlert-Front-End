@@ -1,13 +1,26 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
-import '../../widgets/common_widgets/food_common_widget.dart';
+import 'package:http/http.dart' as http;
 
 class FoodDetailChildScreen extends StatefulWidget {
+  final Widget _foodCommonWidget;
   final bool _canRegister;
+  final String? _userId;
+  final int? _foodId;
 
-  const FoodDetailChildScreen({super.key, required bool canRegister})
-      : _canRegister = canRegister;
+  const FoodDetailChildScreen(
+      {super.key,
+      required Widget foodCommonWidget,
+      required bool canRegister,
+      String? userId,
+      int? foodId})
+      : _foodCommonWidget = foodCommonWidget,
+        _canRegister = canRegister,
+        _userId = userId,
+        _foodId = foodId;
 
   @override
   State<FoodDetailChildScreen> createState() => _FoodDetailChildScreenState();
@@ -45,6 +58,19 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
     );
   }
 
+  void _applyForFood() async {
+    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/food');
+
+    http.Response response = await http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'foodId': widget._foodId,
+        'puppyId': widget._userId,
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,17 +96,9 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
             height: widget._canRegister ? 0 : 20,
             color: Colors.white,
           ),
-          SizedBox(
-              height: 130,
-              child: FoodCommonWidget(
-                  imagePath:
-                      "https://thenaum.cdn-nhncommerce.com/data/goods/20/07/31/1000005027/1000005027_detail_093.jpg",
-                  foodName: '비빔밥',
-                  hostName: '김순옥님',
-                  time: '18:00',
-                  recruitmentStatus: 'READY',
-                  isFavorite: true)),
-          if (widget._canRegister) _registrationColumn(_showConfirmationDialog),
+          SizedBox(height: 130, child: widget._foodCommonWidget),
+          if (widget._canRegister)
+            _registrationColumn(_showConfirmationDialog, _applyForFood),
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -144,7 +162,8 @@ Widget _greyContainer() {
   );
 }
 
-Widget _registrationColumn(Function() showConfirmationDialog) {
+Widget _registrationColumn(
+    Function() showConfirmationDialog, Function() applyFood) {
   return Column(children: [
     Container(
       height: 5,
@@ -167,6 +186,7 @@ Widget _registrationColumn(Function() showConfirmationDialog) {
             width: 70,
             child: TextButton(
               onPressed: () {
+                applyFood();
                 showConfirmationDialog();
               },
               style: TextButton.styleFrom(

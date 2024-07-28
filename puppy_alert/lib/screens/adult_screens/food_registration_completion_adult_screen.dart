@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'package:http/http.dart' as http;
-import '../../models/user_dto.dart';
 
 class FoodRegistrationCompletionAdultScreen extends StatefulWidget {
-  final UserDto _userDto;
+  final String _userId;
   final String _food;
   final String _time;
 
   const FoodRegistrationCompletionAdultScreen({
     super.key,
-    required UserDto userDto,
+    required String userId,
     required String food,
     required String time,
-  })  : _userDto = userDto,
+  })  : _userId = userId,
         _food = food,
         _time = time;
 
@@ -34,14 +33,14 @@ class _FoodRegistrationCompletionAdultScreenState
     _registerFood();
   }
 
-  Future<void> _registerFood() async {
+  void _registerFood() async {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/host/food');
 
     http.Response response = await http.post(
       uri,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
-        'hostId': widget._userDto.userId,
+        'hostId': widget._userId,
         'menuName': widget._food,
         'time': _getFormattedDateTime(widget._time),
         'status': 'READY',
