@@ -71,7 +71,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
       children: [
         SizedBox(height: 400, child: _foodMapChildWidget),
         SizedBox(height: 250, child: FoodMapDetailChildWidget(
-            foodInfo['menu'], foodInfo['hostId'], foodInfo['address'], foodInfo['time'])),
+            foodInfo['menuName'], foodInfo['hostId'], foodInfo['address'], foodInfo['time'])),
       ],
     );
   }
