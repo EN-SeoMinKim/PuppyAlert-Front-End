@@ -36,10 +36,12 @@ class UserTextFormFieldCommonWidget extends StatefulWidget {
         _margin = margin;
 
   @override
-  State<UserTextFormFieldCommonWidget> createState() => _UserTextFormFieldCommonWidgetState();
+  State<UserTextFormFieldCommonWidget> createState() =>
+      _UserTextFormFieldCommonWidgetState();
 }
 
-class _UserTextFormFieldCommonWidgetState extends State<UserTextFormFieldCommonWidget> {
+class _UserTextFormFieldCommonWidgetState
+    extends State<UserTextFormFieldCommonWidget> {
   late bool _obscureText;
 
   @override
@@ -109,11 +111,11 @@ class _UserTextFormFieldCommonWidgetState extends State<UserTextFormFieldCommonW
                 ),
                 suffixIcon: widget._obscureText
                     ? IconButton(
-                  icon: Icon(_obscureText
-                      ? Icons.visibility_off
-                      : Icons.visibility),
-                  onPressed: _toggleObscureText,
-                )
+                        icon: Icon(_obscureText
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: _toggleObscureText,
+                      )
                     : null,
               ),
               validator: widget._validator,

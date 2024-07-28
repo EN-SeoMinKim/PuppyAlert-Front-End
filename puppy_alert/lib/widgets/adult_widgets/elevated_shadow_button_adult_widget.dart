@@ -15,7 +15,7 @@ class ElevatedShadowButtonAdultWidget extends StatelessWidget {
     Color backgroundColor = const Color(0xffEEEEEE),
     Color textColor = Colors.black,
     double height = 100.0,
-    double width = 170.0,
+    double width = 180.0,
   }) : _width = width, _height = height, _textColor = textColor, _text = text, _onPressed = onPressed, _backgroundColor = backgroundColor;
 
   @override

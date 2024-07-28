@@ -8,6 +8,8 @@ import 'package:puppy_alert/utils/constants.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
+import '../../utils/constants.dart';
+import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'my_page_adult_screen.dart';
 
 class SpeechRecognitionAdultScreen extends StatefulWidget {
@@ -174,14 +176,15 @@ class _SpeechRecognitionAdultScreenState
         _feedbackText = confirmationText;
       });
       print(recognizedText);
-    } else {
+      return;
+    }
       _status = ButtonStatus.idle;
       await _flutterTts.speak('인식된 음성이 없습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.');
       setState(() {
         _feedbackText = '인식된 음성이 없습니다.';
       });
       print('인식된 음성이 없습니다.');
-    }
+
   }
 
   Future<void> _verifyFood() async {
@@ -390,7 +393,7 @@ class _SpeechRecognitionAdultScreenState
               text: "나의 정보",
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const MyPageAdultScreen()));
+                    builder: (context) =>  MyPageAdultScreen()));
               },
             ),
           ],

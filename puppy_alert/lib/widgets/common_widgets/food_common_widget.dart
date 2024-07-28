@@ -2,104 +2,120 @@ import 'package:flutter/material.dart';
 
 class FoodCommonWidget extends StatefulWidget {
   final String _imagePath, _foodName, _hostName, _time, _recruitmentStatus;
+    final Widget Function()? _foodDetailChildScreen;
+  late bool _isFavorite;
 
-  const FoodCommonWidget({
+  FoodCommonWidget({
     super.key,
     required String imagePath,
     required String foodName,
     required String hostName,
     required String time,
     required String recruitmentStatus,
-  })  : _imagePath = imagePath,
-        _foodName = foodName,
-        _hostName = hostName,
+    Widget Function()? foodDetailChildScreen,
+    required bool isFavorite,
+  })  : _isFavorite = isFavorite,
+        _recruitmentStatus = recruitmentStatus,
         _time = time,
-        _recruitmentStatus = recruitmentStatus;
+        _hostName = hostName,
+        _foodName = foodName,
+        _foodDetailChildScreen = foodDetailChildScreen,
+        _imagePath = imagePath;
 
   @override
   State<FoodCommonWidget> createState() => _FoodCommonWidgetState();
 }
 
 class _FoodCommonWidgetState extends State<FoodCommonWidget> {
-  bool _isFavorite = false;
-  Color _recruitmentStatusColor = const Color(0xffFFFAE1);
 
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget._recruitmentStatus == 'READY') {
-      _recruitmentStatusColor = const Color(0xED6931);
+  Color _getBackgroundColor(String recruitmentStatus) {
+    if (recruitmentStatus == 'MATCHED') {
+      return Colors.grey[200]!;
     }
+    return const Color(0xffFFFAE1);
+  }
+
+  Icon _getFavoriteIcon(bool isFavorite) {
+    return Icon(
+      isFavorite ? Icons.favorite : Icons.favorite_border,
+      color: isFavorite ? Colors.red : Colors.grey,
+      size: 20,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(width: 10),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Image.network(
-                widget._imagePath,
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        if (widget._foodDetailChildScreen != null) {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => widget._foodDetailChildScreen!()));
+        }
+      },
+      child: Container(
+        color: Colors.white,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(width: 10),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.asset(
+                  widget._imagePath,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 15),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget._foodName,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 2),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(widget._hostName),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: Icon(
-                      _isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: _isFavorite ? Colors.red : Colors.grey,
+            const SizedBox(width: 15),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget._foodName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 4),
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(widget._hostName),
+                      IconButton(
+                        icon: _getFavoriteIcon(widget._isFavorite),
+                        onPressed: () {
+                          setState(() {
+                            widget._isFavorite = !widget._isFavorite;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(widget._time),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
+                  decoration: BoxDecoration(
+                    color: _getBackgroundColor(widget._recruitmentStatus),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child: Text(
+                    widget._recruitmentStatus,
+                    style: const TextStyle(
+                      color: Color(0xff7D6600),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isFavorite = !_isFavorite;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 2),
-              Text(widget._time),
-              const SizedBox(height: 2),
-              Container(
-                padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
-                decoration: BoxDecoration(
-                  color: _recruitmentStatusColor,
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Text(
-                  widget._recruitmentStatus,
-                  style: const TextStyle(
-                    color: Color(0xff7D6600),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

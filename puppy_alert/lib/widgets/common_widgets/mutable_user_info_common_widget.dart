@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class MutableUserInfoCommonWidget extends StatefulWidget {
   final TextEditingController _controller;
   final String _label;
@@ -9,22 +8,23 @@ class MutableUserInfoCommonWidget extends StatefulWidget {
     super.key,
     required TextEditingController controller,
     required String label,
-  }) : _label = label, _controller = controller;
+  })  : _label = label,
+        _controller = controller;
 
   @override
-  State<MutableUserInfoCommonWidget> createState() => _MutableUserInfoCommonWidgetState();
-
+  State<MutableUserInfoCommonWidget> createState() =>
+      _MutableUserInfoCommonWidgetState();
 }
 
-class _MutableUserInfoCommonWidgetState extends State<MutableUserInfoCommonWidget> {
-
+class _MutableUserInfoCommonWidgetState
+    extends State<MutableUserInfoCommonWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 30),
       height: 55,
       width: 300,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Color(0xFF757575))),
       ),
       child: Column(
@@ -32,7 +32,7 @@ class _MutableUserInfoCommonWidgetState extends State<MutableUserInfoCommonWidge
         children: [
           Text(
             widget._label,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
@@ -40,7 +40,7 @@ class _MutableUserInfoCommonWidgetState extends State<MutableUserInfoCommonWidge
               letterSpacing: 1.2,
             ),
           ),
-          Container(
+          SizedBox(
             height: 15,
             child: TextFormField(
               controller: widget._controller,
