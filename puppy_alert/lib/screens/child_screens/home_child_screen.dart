@@ -8,9 +8,11 @@ import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
 class HomeChildScreen extends StatefulWidget {
   final String _userAddress;
+  final String _userId;
 
-  const HomeChildScreen({super.key, required userAddress})
-      : _userAddress = userAddress;
+  const HomeChildScreen({super.key, required userAddress, required userId})
+      : _userAddress = userAddress,
+        _userId = userId;
 
   @override
   State<StatefulWidget> createState() => _HomeChildScreenState();
@@ -49,8 +51,12 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     return InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const FoodDetailChildScreen(
-                                canRegister: true)));
+                            builder: (context) => FoodDetailChildScreen(
+                                  foodCommonWidget: foodCommonWidget,
+                                  canRegister: true,
+                                  userId: widget._userId,
+                                  foodId: foodList[index].foodId,
+                                )));
                       },
                       child: foodCommonWidget,
                     );

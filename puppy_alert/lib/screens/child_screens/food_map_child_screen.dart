@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_detail_child_widget.dart';
-
+import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 import 'food_detail_child_screen.dart';
 
 class FoodMapChildScreen extends StatefulWidget {
@@ -77,8 +77,18 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
             child: InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        const FoodDetailChildScreen(canRegister: true)));
+                    builder: (context) => FoodDetailChildScreen(
+                        foodId: foodInfo['foodId'],
+                        foodCommonWidget: FoodCommonWidget(
+                          imagePath: foodInfo['imageURL'],
+                          foodName: foodInfo['menuName'],
+                          recruitmentStatus: foodInfo['status'],
+                          hostName: foodInfo['hostId'],
+                          time: foodInfo['time'],
+                          isFavorite: foodInfo['isFavorite'],
+                        ),
+                        canRegister: true,
+                        userId: widget._userDto.userId)));
               },
               child: FoodMapDetailChildWidget(foodInfo['menuName'],
                   foodInfo['hostId'], foodInfo['address'], foodInfo['time']),

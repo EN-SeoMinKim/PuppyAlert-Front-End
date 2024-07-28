@@ -8,10 +8,10 @@ class FavoriteHostModel {
 
   factory FavoriteHostModel.fromJson(Map<String, dynamic> json) {
     return FavoriteHostModel(
-        hostId: json['hostId'],
-        recentFoodTime: json['recentFoodTime']);
+        hostId: json['hostId'], recentFoodTime: json['recentFoodTime']);
   }
 
   String get hostId => _hostId;
+
   String get recentFoodTime => _recentFoodTime;
 }
