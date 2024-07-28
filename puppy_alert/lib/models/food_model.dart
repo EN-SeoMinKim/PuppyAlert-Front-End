@@ -57,7 +57,7 @@ class FoodModel {
 
   String get hostId => _hostId;
 
-  String get menu => _menuName;
+  String get menuName => _menuName;
 
   String get time => _time;
 
