@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:puppy_alert/screens/adult_screens/speech_recognition_adult_screen.dart';
+import 'package:puppy_alert/screens/child_screens/food_detail_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/main_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/signup_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login_screen.dart';
@@ -37,9 +39,9 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login_screen': (context) => const LoginScreen(),
           '/signup_screen': (context) => const SignupScreen(),
-          '/speech_recognition_adult_screen': (context) => const SpeechRecognitionAdultScreen(),
+          '/speech_recognition_adult_screen': (context) =>
+              const SpeechRecognitionAdultScreen(),
           '/main_child_screen': (context) => const MainChildScreen(),
         });
   }
 }
-

@@ -22,10 +22,10 @@ class FoodMapDetailChildWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 100.0, 0),
                 child: Text(
-                  _foodName,
+                  "     "+_foodName,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: Material.defaultSplashRadius,
+                    fontSize: 22,
                   ),
                 ),
               ),
@@ -46,6 +46,7 @@ class FoodMapDetailChildWidget extends StatelessWidget {
         ),
         _infoWidget(
             Icons.access_time, 'Time', '${_dateTime.hour}:${_dateTime.minute}'),
+        SizedBox(height: 20),
         _infoWidget(Icons.location_on_outlined, 'Address', _address),
       ],
     );
@@ -58,20 +59,22 @@ Widget _infoWidget(IconData iconData, String topString, String bottomString) {
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(width: 20),
           Icon(
             iconData,
             color: const Color(0xffFF7700),
-            size: Material.defaultSplashRadius,
+            size: 30,
           ),
           Text(
             topString,
             style: const TextStyle(
                 color: Color(0xffFF7700),
-                fontSize: Material.defaultSplashRadius),
+                fontSize: 25),
             textAlign: TextAlign.start,
           ),
         ],
       ),
+      SizedBox(height: 5),
       Padding(
         padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
         child: SizedBox(

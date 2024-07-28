@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import '../../widgets/common_widgets/food_common_widget.dart';
 
 class FoodDetailChildScreen extends StatefulWidget {
-  const FoodDetailChildScreen({super.key});
+  final bool _canRegister;
+
+  const FoodDetailChildScreen({super.key, required bool canRegister})
+      : _canRegister = canRegister;
 
   @override
   State<FoodDetailChildScreen> createState() => _FoodDetailChildScreenState();
 }
 
 class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
-  late Future<void> _mapInitialization;
+  late final FoodMapChildWidget _foodMapChildWidget;
 
   @override
   void initState() {
@@ -24,24 +26,24 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: const Text('신청 완료',
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
-            color: Color(0xffFF7700),
-          ),),
+          title: const Text(
+            '신청 완료',
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              color: Color(0xffFF7700),
+            ),
+          ),
           content: const Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
-          style: TextStyle(
-            height: 2.0
-          )),
+              style: TextStyle(height: 2.0), textAlign: TextAlign.center),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: const Text('확인',
-              style: TextStyle(
-                color: Color(0xffFF7700),
-              )),
+                  style: TextStyle(
+                    color: Color(0xffFF7700),
+                  )),
             ),
           ],
         );
@@ -66,62 +68,36 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
             ),
           ),
           Container(
-            height: 10,
+            height:  20,
             color: Colors.grey[100],
-            child: greyContainer(),
+            child: _greyContainer(),
           ),
           Container(
-            height: 130,
-            child: firstFoodWidget(),
-          ),
-          Container(
-            height: 5,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                top: BorderSide(color: Colors.grey[300]!),
-              ),
-            ),
-          ),
-          Container(
-            height: 60,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width: 70,
-                  child: TextButton(
-                    onPressed: () {
-                      _showConfirmationDialog();
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: const Color(0xffFFF1E4),
-                    ),
-                    child: const Text(
-                      '신청',
-                      style: TextStyle(
-                        color: Color(0xffFF7700),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 10,
-            color: Colors.grey[100],
-            child: greyContainer(),
-          ),
-          Container(
-            height: 10,
+            height: widget._canRegister ? 0:20,
             color: Colors.white,
           ),
           Container(
-            height: 300,
+              height: 130,
+              child: FoodCommonWidget(
+                  imagePath: 'assets/food.png',
+                  foodName: '비빔밥',
+                  hostName: '김순옥님',
+                  time: '18:00',
+                  recruitmentStatus: 'READY',
+                  isFavorite: true)),
+          if (widget._canRegister)
+            _registrationColumn(_showConfirmationDialog),
+          Container(
+            height: 20,
+            color: Colors.grey[100],
+            child: _greyContainer(),
+          ),
+          Container(
+            height: widget._canRegister ? 10 :30,
+            color: Colors.white,
+          ),
+          Container(
+            height: widget._canRegister ? 368 : 394,
             color: Colors.white,
             child: Column(
               children: [
@@ -138,35 +114,16 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                FutureBuilder(
-                  future: _mapInitialization,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Error: ${snapshot.error}',
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ),
-                      );
-                    } else {
-                      return SizedBox(
-                        width: 300,
-                        height: 200,
-                        child: FoodMapChildWidget(),
-                      );
-                    }
-                  },
-                ),
+                SizedBox(
+                  width: 300,
+                  height: 230,
+                  child: FoodMapChildWidget(),
+                )
               ],
             ),
           ),
           Container(
-            height: 10,
+            height: 20,
             color: Colors.grey[100],
           ),
         ],
@@ -175,7 +132,7 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
   }
 }
 
-Widget greyContainer() {
+Widget _greyContainer() {
   return Container(
     height: 20,
     decoration: BoxDecoration(
@@ -183,4 +140,46 @@ Widget greyContainer() {
       border: Border.all(color: Colors.grey[200]!, width: 2.0),
     ),
   );
+}
+
+Widget _registrationColumn(Function() showConfirmationDialog) {
+  return Column(children: [
+    Container(
+      height: 5,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(color: Colors.grey[300]!),
+        ),
+      ),
+    ),
+    Container(
+      height: 60,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(
+            width: 70,
+            child: TextButton(
+              onPressed: () {
+                showConfirmationDialog();
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xffFFF1E4),
+              ),
+              child: const Text(
+                '신청',
+                style: TextStyle(
+                  color: Color(0xffFF7700),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ]);
 }

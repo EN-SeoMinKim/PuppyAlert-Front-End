@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class ImmutableUserInfoCommonWidget extends StatelessWidget {
   final String _label;
   final String _value;
@@ -9,7 +8,8 @@ class ImmutableUserInfoCommonWidget extends StatelessWidget {
     super.key,
     required String label,
     required String value,
-  }) : _value = value, _label = label;
+  })  : _value = value,
+        _label = label;
 
   @override
   Widget build(BuildContext context) {

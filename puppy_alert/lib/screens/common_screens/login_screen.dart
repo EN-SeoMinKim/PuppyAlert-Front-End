@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
           'password': password,
         }));
 
-        if (response.body == '등록되지 않은 회원입니다') {
+    if (response.body == '등록되지 않은 회원입니다') {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('로그인에 실패했습니다.'),

@@ -5,10 +5,9 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:puppy_alert/screens/adult_screens/food_registration_completion_adult_screen.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
+import '../../utils/constants.dart';
 import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'my_page_adult_screen.dart';
-
-enum _ButtonStatus { idle, listening, completed, awaitingTimeInput }
 
 class SpeechRecognitionAdultScreen extends StatefulWidget {
   const SpeechRecognitionAdultScreen({super.key});
@@ -20,7 +19,7 @@ class SpeechRecognitionAdultScreen extends StatefulWidget {
 
 class _SpeechRecognitionAdultScreenState
     extends State<SpeechRecognitionAdultScreen> {
-  late _ButtonStatus _status;
+  late ButtonStatus _status;
   late final FlutterTts _flutterTts;
   late final stt.SpeechToText _speech;
   late String _food;
@@ -33,7 +32,7 @@ class _SpeechRecognitionAdultScreenState
   @override
   void initState() {
     super.initState();
-    _status = _ButtonStatus.idle;
+    _status = ButtonStatus.idle;
     _flutterTts = FlutterTts();
     _speech = stt.SpeechToText();
     _feedbackText = '';
@@ -67,7 +66,7 @@ class _SpeechRecognitionAdultScreenState
 
   Future<void> _requestTime() async {
     setState(() {
-      _status = _ButtonStatus.awaitingTimeInput;
+      _status = ButtonStatus.awaitingTimeInput;
       _topText = '식사를 같이 하실\n시간을 말씀해 주세요';
       _feedbackText = '';
     });
@@ -91,7 +90,7 @@ class _SpeechRecognitionAdultScreenState
 
   Future<void> _startListeningFood() async {
     setState(() {
-      _status = _ButtonStatus.listening;
+      _status = ButtonStatus.listening;
       _topText = '';
     });
     await _speech.listen(
@@ -106,7 +105,7 @@ class _SpeechRecognitionAdultScreenState
 
   Future<void> _startListeningTime() async {
     setState(() {
-      _status = _ButtonStatus.listening;
+      _status = ButtonStatus.listening;
       _topText = '';
     });
     await _speech.listen(
@@ -167,20 +166,21 @@ class _SpeechRecognitionAdultScreenState
 
   Future<void> _verify(String recognizedText, String confirmationText) async {
     if (recognizedText.isNotEmpty) {
-      _status = _ButtonStatus.completed;
+      _status = ButtonStatus.completed;
       await _flutterTts.speak(confirmationText);
       setState(() {
         _feedbackText = confirmationText;
       });
       print(recognizedText);
-    } else {
-      _status = _ButtonStatus.idle;
+      return;
+    }
+      _status = ButtonStatus.idle;
       await _flutterTts.speak('인식된 음성이 없습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.');
       setState(() {
         _feedbackText = '인식된 음성이 없습니다.';
       });
       print('인식된 음성이 없습니다.');
-    }
+
   }
 
   Future<void> _verifyFood() async {
@@ -203,7 +203,7 @@ class _SpeechRecognitionAdultScreenState
 
   void _handleReject() {
     setState(() {
-      _status = _ButtonStatus.idle;
+      _status = ButtonStatus.idle;
       _topText = '식사 등록을 버튼을 누르고 다시 시도해주세요';
       _feedbackText = '';
     });
@@ -211,7 +211,7 @@ class _SpeechRecognitionAdultScreenState
 
   Widget _buildAvatarGlow() {
     switch (_status) {
-      case _ButtonStatus.listening:
+      case ButtonStatus.listening:
         return AvatarGlow(
           animate: true,
           glowColor: Colors.yellow,
@@ -224,9 +224,9 @@ class _SpeechRecognitionAdultScreenState
             child: _buildButtonDesign(),
           ),
         );
-      case _ButtonStatus.awaitingTimeInput:
-      case _ButtonStatus.completed:
-      case _ButtonStatus.idle:
+      case ButtonStatus.awaitingTimeInput:
+      case ButtonStatus.completed:
+      case ButtonStatus.idle:
       default:
         return AvatarGlow(
           animate: false,
@@ -241,8 +241,8 @@ class _SpeechRecognitionAdultScreenState
 
   Widget _buildButtonDesign() {
     switch (_status) {
-      case _ButtonStatus.awaitingTimeInput:
-      case _ButtonStatus.listening:
+      case ButtonStatus.awaitingTimeInput:
+      case ButtonStatus.listening:
         return Container(
           width: 150.0,
           height: 150.0,
@@ -258,7 +258,7 @@ class _SpeechRecognitionAdultScreenState
             ),
           ),
         );
-      case _ButtonStatus.completed:
+      case ButtonStatus.completed:
         return Center(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -318,7 +318,7 @@ class _SpeechRecognitionAdultScreenState
             ],
           ),
         );
-      case _ButtonStatus.idle:
+      case ButtonStatus.idle:
       default:
         return Container(
           width: 200.0,
@@ -389,7 +389,7 @@ class _SpeechRecognitionAdultScreenState
               text: "나의 정보",
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const MyPageAdultScreen()));
+                    builder: (context) =>  MyPageAdultScreen()));
               },
             ),
           ],
