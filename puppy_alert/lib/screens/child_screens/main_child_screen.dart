@@ -30,12 +30,13 @@ class _MainChildScreenState extends State<MainChildScreen> {
       FoodMapChildScreen(
         userDto: widget._userDto,
       ),
-      const FavoriteHostChildScreen(),
+      FavoriteHostChildScreen(userId: widget._userDto.userId),
       const MyPageChildScreen(),
     ];
   }
 
   void _onItemTapped(int index) {
+
     setState(() {
       _selectedIndex = index;
     });

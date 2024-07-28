@@ -36,13 +36,14 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
           Consumer<FoodProvider>(
             builder: (context, provider, child) {
               List<FoodModel> foodList = provider.getFoodList();
+
               return Expanded(
                 child: ListView.builder(
                   itemCount: foodList.length,
                   itemBuilder: (BuildContext context, int index) {
                     FoodCommonWidget foodCommonWidget = FoodCommonWidget(
                       imagePath: foodList[index].imageURL,
-                      foodName: foodList[index].menu,
+                      foodName: foodList[index].menuName,
                       hostName: foodList[index].hostId,
                       time: foodList[index].time,
                       isFavorite: foodList[index].isFavorite,
