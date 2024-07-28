@@ -91,20 +91,22 @@ class _SignupScreenState extends State<SignupScreen> {
     if (!_isKeyValid(key)) return;
 
     // 중복이 없디면 수정 안되게 해주고 중복이 있다면 다른 입력 하라고 스낵바 띄워주삼
-    if (jsonDecode((await http.get(uri)).body)['isExists']) {  // 중복이 있다면
- ScaffoldMessenger.of(context).showSnackBar(
+    if (jsonDecode((await http.get(uri)).body)['isExists']) {
+      // 중복이 있다면
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('이미 존재하는 ID입니다.'),
           duration: Duration(seconds: 2),
         ),
       );
-    } else {  // 중복이 없는 입력이라면
-         ScaffoldMessenger.of(context).showSnackBar(
+    } else {
+      // 중복이 없는 입력이라면
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('사용가능한 ID입니다'),
           duration: Duration(seconds: 2),
         ),
-      ),
+      );
     }
   }
 
