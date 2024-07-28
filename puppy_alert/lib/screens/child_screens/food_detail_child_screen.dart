@@ -73,7 +73,8 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
           SizedBox(
               height: 130,
               child: FoodCommonWidget(
-                  imagePath: 'assets/food.png',
+                  imagePath:
+                      "https://thenaum.cdn-nhncommerce.com/data/goods/20/07/31/1000005027/1000005027_detail_093.jpg",
                   foodName: '비빔밥',
                   hostName: '김순옥님',
                   time: '18:00',

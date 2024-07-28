@@ -47,7 +47,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       isFavorite: foodList[index].isFavorite,
                       recruitmentStatus: foodList[index].status,
                     );
-
                     return InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(

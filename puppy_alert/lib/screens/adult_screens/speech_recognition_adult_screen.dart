@@ -8,13 +8,13 @@ import 'package:puppy_alert/utils/constants.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
-import '../../utils/constants.dart';
-import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'my_page_adult_screen.dart';
 
 class SpeechRecognitionAdultScreen extends StatefulWidget {
   final UserDto _userDto;
-  const SpeechRecognitionAdultScreen({super.key, required userDto}) :_userDto = userDto;
+
+  const SpeechRecognitionAdultScreen({super.key, required userDto})
+      : _userDto = userDto;
 
   @override
   State<SpeechRecognitionAdultScreen> createState() =>
@@ -178,13 +178,12 @@ class _SpeechRecognitionAdultScreenState
       print(recognizedText);
       return;
     }
-      _status = ButtonStatus.idle;
-      await _flutterTts.speak('인식된 음성이 없습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.');
-      setState(() {
-        _feedbackText = '인식된 음성이 없습니다.';
-      });
-      print('인식된 음성이 없습니다.');
-
+    _status = ButtonStatus.idle;
+    await _flutterTts.speak('인식된 음성이 없습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.');
+    setState(() {
+      _feedbackText = '인식된 음성이 없습니다.';
+    });
+    print('인식된 음성이 없습니다.');
   }
 
   Future<void> _verifyFood() async {
@@ -201,14 +200,15 @@ class _SpeechRecognitionAdultScreenState
       await _delayedInitializeAndStartListening(_startListeningTime);
     } else if (_food.isNotEmpty && _time.isNotEmpty) {
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const FoodRegistrationCompletionAdultScreen()));
+          builder: (context) => FoodRegistrationCompletionAdultScreen(
+              userDto: widget._userDto, food: _food, time: _time)));
     }
   }
 
   void _handleReject() {
     setState(() {
       _status = ButtonStatus.idle;
-      _topText = '식사 등록을 버튼을 누르고 다시 시도해주세요';
+      _topText = '식사 등록을 버튼을 누르고\n다시 시도해주세요';
       _feedbackText = '';
     });
   }
@@ -393,7 +393,7 @@ class _SpeechRecognitionAdultScreenState
               text: "나의 정보",
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>  MyPageAdultScreen()));
+                    builder: (context) => MyPageAdultScreen()));
               },
             ),
           ],
