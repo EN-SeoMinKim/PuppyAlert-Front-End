@@ -24,7 +24,7 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
 
   Future<List<FavoriteHostModel>> _fetchFavoriteHostModelList() async {
     final response = await http
-        .get(Uri.parse('${dotenv.get('BASE_URL')}/favoriteHost/SeoSangHyeok'));
+        .get(Uri.parse('${dotenv.get('BASE_URL')}/favoriteHost?puppyId=SeoSangHyeok'));
 
     if (response.body == '최근 집밥을 먹은 적이 없습니다') {
       return [];
@@ -65,8 +65,8 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
-                final favoriteHosts = snapshot.data;
-                if (favoriteHosts != null && favoriteHosts.isEmpty) {
+                final favoriteHostList = snapshot.data;
+                if (favoriteHostList != null && favoriteHostList.isEmpty) {
                   return const Center(
                       child: Text(
                     '설정한 관심 HOST가 없습니다',
@@ -74,9 +74,9 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
                   ));
                 } else {
                   return ListView.builder(
-                    itemCount: favoriteHosts?.length ?? 0,
+                    itemCount: favoriteHostList?.length,
                     itemBuilder: (context, index) {
-                      final host = favoriteHosts?[index];
+                      final host = favoriteHostList?[index];
                       return FavoriteHostChildWidget(
                         hostId: host!.hostId,
                         recentFoodTime: host.recentFoodTime,

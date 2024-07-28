@@ -9,8 +9,6 @@ import '../../utils/constants.dart';
 import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'my_page_adult_screen.dart';
 
-
-
 class SpeechRecognitionAdultScreen extends StatefulWidget {
   const SpeechRecognitionAdultScreen({super.key});
 
@@ -391,7 +389,7 @@ class _SpeechRecognitionAdultScreenState
               text: "나의 정보",
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const MyPageAdultScreen()));
+                    builder: (context) =>  MyPageAdultScreen()));
               },
             ),
           ],

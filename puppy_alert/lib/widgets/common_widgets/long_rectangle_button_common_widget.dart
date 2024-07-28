@@ -20,13 +20,20 @@ class LongRectangleButtonCommonWidget extends StatelessWidget {
     double? fontSize,
     Color backgroundColor = const Color(0xffFF7700),
     Color textColor = Colors.white,
-  }) : _textColor = textColor, _backgroundColor = backgroundColor, _fontSize = fontSize, _margin = margin, _height = height, _width = width, _text = text, _onPressed = onPressed;
+  })  : _textColor = textColor,
+        _backgroundColor = backgroundColor,
+        _fontSize = fontSize,
+        _margin = margin,
+        _height = height,
+        _width = width,
+        _text = text,
+        _onPressed = onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: _margin,
-      width: _width ,
+      width: _width,
       height: _height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
