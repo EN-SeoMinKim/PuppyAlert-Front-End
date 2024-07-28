@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/common_screens/food_record_screen.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
-
 import '../../widgets/common_widgets/my_page_header_common_widget.dart';
 import '../common_screens/personal_information_screen.dart';
 
@@ -38,7 +37,7 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const FoodRecordScreen(isChildScreen: false,)));
+                      builder: (context) => const FoodRecordScreen(isChildScreen: false)));
                 },
                 text: "집밥 기록"),
           ],

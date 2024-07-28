@@ -2,7 +2,10 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/screens/adult_screens/food_registration_completion_adult_screen.dart';
+import 'package:puppy_alert/utils/constants.dart';
+import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
 import '../../utils/constants.dart';
@@ -10,7 +13,8 @@ import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'my_page_adult_screen.dart';
 
 class SpeechRecognitionAdultScreen extends StatefulWidget {
-  const SpeechRecognitionAdultScreen({super.key});
+  final UserDto _userDto;
+  const SpeechRecognitionAdultScreen({super.key, required userDto}) :_userDto = userDto;
 
   @override
   State<SpeechRecognitionAdultScreen> createState() =>

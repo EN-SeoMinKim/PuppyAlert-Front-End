@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../../utils/constants.dart';
-import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
+import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/screens/adult_screens/speech_recognition_adult_screen.dart';
+import 'package:puppy_alert/screens/child_screens/main_child_screen.dart';
+import 'package:puppy_alert/screens/common_screens/signup_screen.dart';
+import 'package:puppy_alert/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:puppy_alert/widgets/common_widgets/user_text_form_field_common_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -29,8 +33,10 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/signup_screen',
-                    arguments: User.child);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return const SignupScreen(userType: UserType.child,);
+                    }));
               },
               child: const Text(
                 '결식아동',
@@ -41,8 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/signup_screen',
-                    arguments: User.adult);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return const SignupScreen(userType: UserType.adult,);
+                    }));
               },
               child: const Text(
                 '1인 가구',
@@ -78,15 +86,43 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    _goNextPage(jsonDecode(response.body));
+    _goNextPage(jsonDecode(response.body), id, password);
   }
 
-  void _goNextPage(Map<String, dynamic> jsonData) {
+  void _goNextPage(Map<String, dynamic> jsonData, String id, String password) {
     if (jsonData['userType'] == 'HOST') {
-      Navigator.of(context).pushNamed("/speech_recognition_adult_screen");
+      getUserDto('host', id, password).then((userDto) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+              return SpeechRecognitionAdultScreen(userDto: userDto,);
+            }));
+      });
     } else {
-      Navigator.of(context).pushNamed("/main_child_screen");
+      getUserDto('puppy', id, password).then((userDto) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+              return MainChildScreen(userDto: userDto,);
+            }));
+      });
     }
+  }
+
+  Future<UserDto> getUserDto(
+      String userType, String userId, String userPassword) async {
+    Uri uri =
+        Uri.parse('${dotenv.get('BASE_URL')}/$userType?${userType}Id=$userId');
+    final value = (await http.get(uri)).bodyBytes;
+    final jsonData = jsonDecode(utf8.decode(value));
+
+    return UserDto(
+        userId,
+        userPassword,
+        jsonData['name'],
+        jsonData['nickName'],
+        jsonData['birth'],
+        jsonData['phoneNumber'],
+        jsonData['address'],
+        jsonData['location']);
   }
 
   @override

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FoodCommonWidget extends StatefulWidget {
-  final String _imagePath;
-  final String _foodName;
-  final String _hostName;
-  final String _time;
-  final String _recruitmentStatus;
-  final Widget Function()? _foodDetailChildScreen;
+  final String _imagePath, _foodName, _hostName, _time, _recruitmentStatus;
   late bool _isFavorite;
 
   FoodCommonWidget({
@@ -16,14 +11,12 @@ class FoodCommonWidget extends StatefulWidget {
     required String hostName,
     required String time,
     required String recruitmentStatus,
-    Widget Function()? foodDetailChildScreen,
     required bool isFavorite,
   })  : _isFavorite = isFavorite,
         _recruitmentStatus = recruitmentStatus,
         _time = time,
         _hostName = hostName,
         _foodName = foodName,
-        _foodDetailChildScreen = foodDetailChildScreen,
         _imagePath = imagePath;
 
   @override
@@ -48,14 +41,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (widget._foodDetailChildScreen != null) {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => widget._foodDetailChildScreen!()));
-        }
-      },
-      child: Container(
+    return Container(
         color: Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,17 +105,6 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
             ),
           ],
         ),
-      ),
     );
   }
-}
-
-Widget firstFoodWidget() {
-  return FoodCommonWidget(
-      imagePath: 'assets/food.png',
-      foodName: '비빔밥',
-      hostName: '김순옥님',
-      time: '18:00',
-      recruitmentStatus: 'MATCHED',
-      isFavorite: true);
 }

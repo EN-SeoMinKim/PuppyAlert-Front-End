@@ -28,20 +28,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'PuppyAlert',
-        theme: ThemeData(
-            primarySwatch: Colors.orange,
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Color(0xffFF7700),
-            )),
-        initialRoute: '/login_screen',
-        routes: {
-          '/login_screen': (context) => const LoginScreen(),
-          '/signup_screen': (context) => const SignupScreen(),
-          '/speech_recognition_adult_screen': (context) =>
-              const SpeechRecognitionAdultScreen(),
-          '/main_child_screen': (context) => const MainChildScreen(),
-        });
+      debugShowCheckedModeBanner: false,
+      title: 'PuppyAlert',
+      theme: ThemeData(
+          primarySwatch: Colors.orange,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xffFF7700),
+          )),
+      home: const LoginScreen(),
+    );
   }
 }

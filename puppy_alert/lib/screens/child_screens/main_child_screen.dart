@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/screens/child_screens/favorite_host_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/home_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/my_page_child_screen.dart';
 import 'food_map_child_screen.dart';
 
 class MainChildScreen extends StatefulWidget {
-  const MainChildScreen({super.key});
+  final UserDto _userDto;
+
+  const MainChildScreen({super.key, required userDto}) : _userDto = userDto;
 
   @override
   State<MainChildScreen> createState() => _MainChildScreenState();
@@ -13,15 +16,19 @@ class MainChildScreen extends StatefulWidget {
 
 class _MainChildScreenState extends State<MainChildScreen> {
   late int _selectedIndex;
-  late final List<Widget> _widgetOptions;
+  late final List<Widget> _widgetOptionList;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = 0;
-    _widgetOptions = <Widget>[
-      const HomeChildScreen(),
-      const FoodMapChildScreen(),
+    _widgetOptionList = <Widget>[
+      HomeChildScreen(
+        userAddress: getAddress(widget._userDto),
+      ),
+      FoodMapChildScreen(
+        userDto: widget._userDto,
+      ),
       const FavoriteHostChildScreen(),
       const MyPageChildScreen(),
     ];
@@ -33,12 +40,26 @@ class _MainChildScreenState extends State<MainChildScreen> {
     });
   }
 
+  String getAddress(UserDto userDto) {
+    List<String> splitString = userDto.address.split(' ');
+    for (String s in splitString) {
+      if (s[s.length - 1] == '동') {
+        return s;
+      }
+    }
+
+    if (splitString.length > 2) {
+      return splitString[splitString.length - 2];
+    }
+    return 'NONE';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptionList.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

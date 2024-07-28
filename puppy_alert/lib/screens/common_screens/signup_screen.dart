@@ -12,6 +12,7 @@ import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
 import '../../widgets/common_widgets/white_background_button_common_widget.dart';
 
 class SignupScreen extends StatefulWidget {
+  final UserType _userType;
   final int _id = 0,
       _password = 1,
       _passwordConfirmation = 2,
@@ -23,7 +24,7 @@ class SignupScreen extends StatefulWidget {
       _phoneNumberConfirmation = 8,
       _postcode = 9;
 
-  const SignupScreen({super.key});
+  const SignupScreen({super.key, required userType}) : _userType = userType;
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -31,7 +32,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   late final GlobalKey<FormState> _allFormKey, _idFormKey, _nickNameFormKey;
-  late final List<TextEditingController> _textEditingController;
+  late final List<TextEditingController> _textEditingControllerList;
   DateTime? _birth;
 
   @override
@@ -40,12 +41,13 @@ class _SignupScreenState extends State<SignupScreen> {
     _allFormKey = GlobalKey<FormState>();
     _idFormKey = GlobalKey<FormState>();
     _nickNameFormKey = GlobalKey<FormState>();
-    _textEditingController = List.generate(10, (_) => TextEditingController());
+    _textEditingControllerList =
+        List.generate(10, (_) => TextEditingController());
   }
 
   @override
   void dispose() {
-    for (TextEditingController t in _textEditingController) {
+    for (TextEditingController t in _textEditingControllerList) {
       t.dispose();
     }
     super.dispose();
@@ -59,19 +61,14 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
 
-    final postcode = model.zonecode ?? '';
-    _textEditingController[widget._postcode].value = TextEditingValue(
-      text: postcode,
+    _textEditingControllerList[widget._postcode].value = TextEditingValue(
+      text: model.zonecode ?? '',
     );
-
-    final address = model.address ?? '';
-    _textEditingController[widget._address].value = TextEditingValue(
-      text: address,
+    _textEditingControllerList[widget._address].value = TextEditingValue(
+      text: model.address ?? '',
     );
-
-    final buildingName = model.buildingName ?? '';
-    _textEditingController[widget._addressDetail].value = TextEditingValue(
-      text: buildingName,
+    _textEditingControllerList[widget._addressDetail].value = TextEditingValue(
+      text: model.buildingName ?? '',
     );
   }
 
@@ -79,30 +76,31 @@ class _SignupScreenState extends State<SignupScreen> {
     GlobalKey<FormState> key;
     Uri uri;
     if (isId) {
+      String inputString = _textEditingControllerList[widget._id].text.trim();
       key = _idFormKey;
-      String inputString = _textEditingController[widget._id].text.trim();
       uri =
           Uri.parse('${dotenv.get('BASE_URL')}/common/checkId?id=$inputString');
     } else {
+      String inputString =
+          _textEditingControllerList[widget._nickName].text.trim();
       key = _nickNameFormKey;
-      String inputString = _textEditingController[widget._nickName].text.trim();
       uri = Uri.parse(
           '${dotenv.get('BASE_URL')}/common/checkNickName?nickName=$inputString');
     }
 
-    if (!_isKeyValid(key)) {return;}
+    if (!_isKeyValid(key)) return;
 
     // 중복이 없디면 수정 안되게 해주고 중복이 있다면 다른 입력 하라고 스낵바 띄워주삼
-    // 중복이 없는 입력이라면
     if (jsonDecode((await http.get(uri)).body)['isExists']) {
+      // 중복이 있다면
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('이미 존재하는 ID입니다.'),
           duration: Duration(seconds: 2),
         ),
       );
-
     } else {
+      // 중복이 없는 입력이라면
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('사용가능한 ID입니다'),
@@ -112,47 +110,53 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-  void _submitSignUpForm(Object arguments) async {
+  void _submitSignUpForm(UserType userType) async {
     if (!_isKeyValid(_idFormKey) ||
         !_isKeyValid(_nickNameFormKey) ||
         !_isKeyValid(_allFormKey)) return;
 
-    Uri uri = getUri(arguments);
-    List<String> inputString =
-        List.generate(10, (index) => _textEditingController[index].text.trim());
+    List<String> inputTextList = List.generate(
+        10, (index) => _textEditingControllerList[index].text.trim());
     List<String> coordinate =
-        await _getCoordinate(inputString[widget._address]);
+        await _getCoordinate(inputTextList[widget._address]);
 
-    http.post(uri,
+    http.post(getUri(userType),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'id': inputString[widget._id],
-          'password': inputString[widget._password],
-          'name': inputString[widget._name],
+          'id': inputTextList[widget._id],
+          'password': inputTextList[widget._password],
+          'nickname': inputTextList[widget._nickName],
+          'name': inputTextList[widget._name],
           'birth': _birth,
-          'phoneNumber': inputString[widget._phoneNumber],
-          'address': inputString[widget._address],
+          'address': inputTextList[widget._address],
+          'addressDetail': inputTextList[widget._addressDetail],
           'location': {
             'latitude': coordinate[1],
             'longitude': coordinate[0],
           },
+          'phoneNumber': inputTextList[widget._phoneNumber],
+          'userType': _getUserTypeString(userType),
         }));
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      '/login_screen',
-      (route) => false,
-    );
+    _goLoginScreen();
   }
 
   bool _isKeyValid(GlobalKey<FormState> key) {
     return key.currentState?.validate() ?? false;
   }
 
-  Uri getUri(Object arguments) {
-    if (arguments == User.adult) {
+  Uri getUri(UserType userType) {
+    if (userType == UserType.adult) {
       return Uri.parse('${dotenv.get('BASE_URL')}/host/signup');
     }
     return Uri.parse('${dotenv.get('BASE_URL')}/puppy/signup');
+  }
+
+  String _getUserTypeString(UserType userType) {
+    if (userType == UserType.adult) {
+      return 'HOST';
+    }
+    return 'PUPPY';
   }
 
   Future<List<String>> _getCoordinate(String address) async {
@@ -171,10 +175,19 @@ class _SignupScreenState extends State<SignupScreen> {
     return [longitude, latitude];
   }
 
+  void _goLoginScreen() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) {
+        return const LoginScreen();
+      }),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final showIcon = _textEditingController[widget._postcode].text.isEmpty;
-    final Object arguments = ModalRoute.of(context)!.settings.arguments!;
+    final showIcon = _textEditingControllerList[widget._postcode].text.isEmpty;
 
     return Scaffold(
       appBar: AppBar(),
@@ -210,7 +223,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             Form(
                               key: _idFormKey,
                               child: idInputWidget(
-                                  _textEditingController[widget._id], 230),
+                                  _textEditingControllerList[widget._id], 230),
                             ),
                             WhiteBackgroundButtonCommonWidget(
                               onPressed: () {
@@ -222,10 +235,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       passwordInputWidget(
-                          _textEditingController[widget._password]),
+                          _textEditingControllerList[widget._password]),
                       passwordConfirmationInputWidget(
-                          _textEditingController[widget._passwordConfirmation],
-                          _textEditingController[widget._password]),
+                          _textEditingControllerList[
+                              widget._passwordConfirmation],
+                          _textEditingControllerList[widget._password]),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -234,7 +248,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             Form(
                               key: _nickNameFormKey,
                               child: nicknameInputWidget(
-                                  _textEditingController[widget._nickName]),
+                                  _textEditingControllerList[widget._nickName]),
                             ),
                             WhiteBackgroundButtonCommonWidget(
                               onPressed: () {
@@ -245,7 +259,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ],
                         ),
                       ),
-                      nameInputWidget(_textEditingController[widget._name]),
+                      nameInputWidget(_textEditingControllerList[widget._name]),
                       const SizedBox(
                         height: 30,
                       ),
@@ -291,8 +305,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             SizedBox(
                               width: 200,
                               child: TextFormField(
-                                controller:
-                                    _textEditingController[widget._postcode],
+                                controller: _textEditingControllerList[
+                                    widget._postcode],
                                 decoration: InputDecoration(
                                   hintText: '우편번호',
                                   prefixIcon: showIcon
@@ -313,7 +327,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       SizedBox(
                         width: 300,
                         child: TextFormField(
-                          controller: _textEditingController[widget._address],
+                          controller:
+                              _textEditingControllerList[widget._address],
                           decoration: const InputDecoration(
                             hintText: '           주소',
                           ),
@@ -321,16 +336,16 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       addressDetailInputWidget(
-                          _textEditingController[widget._addressDetail]),
+                          _textEditingControllerList[widget._addressDetail]),
                       phoneNumberInputWidget(
-                          _textEditingController[widget._phoneNumber]),
+                          _textEditingControllerList[widget._phoneNumber]),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             phoneNumberConfirmationInputWidget(
-                                _textEditingController[
+                                _textEditingControllerList[
                                     widget._phoneNumberConfirmation]),
                             WhiteBackgroundButtonCommonWidget(
                               onPressed: () {},
@@ -342,7 +357,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 20),
                       LongRectangleButtonCommonWidget(
                         onPressed: () {
-                          _submitSignUpForm(arguments);
+                          _submitSignUpForm(widget._userType);
                         },
                         text: "회원가입",
                       ),
@@ -355,8 +370,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     const Text('계정이 있으신가요?'),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/login_screen', (route) => false);
+                        _goLoginScreen();
                       },
                       child: const Text(
                         "로그인하기",

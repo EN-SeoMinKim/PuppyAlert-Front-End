@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import '../../widgets/common_widgets/food_common_widget.dart';
 
@@ -13,13 +14,6 @@ class FoodDetailChildScreen extends StatefulWidget {
 }
 
 class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
-  late final FoodMapChildWidget _foodMapChildWidget;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void _showConfirmationDialog() {
     showDialog(
       context: context,
@@ -68,15 +62,15 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
             ),
           ),
           Container(
-            height:  20,
+            height: 20,
             color: Colors.grey[100],
             child: _greyContainer(),
           ),
           Container(
-            height: widget._canRegister ? 0:20,
+            height: widget._canRegister ? 0 : 20,
             color: Colors.white,
           ),
-          Container(
+          SizedBox(
               height: 130,
               child: FoodCommonWidget(
                   imagePath: 'assets/food.png',
@@ -85,15 +79,14 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
                   time: '18:00',
                   recruitmentStatus: 'READY',
                   isFavorite: true)),
-          if (widget._canRegister)
-            _registrationColumn(_showConfirmationDialog),
+          if (widget._canRegister) _registrationColumn(_showConfirmationDialog),
           Container(
             height: 20,
             color: Colors.grey[100],
             child: _greyContainer(),
           ),
           Container(
-            height: widget._canRegister ? 10 :30,
+            height: widget._canRegister ? 10 : 30,
             color: Colors.white,
           ),
           Container(
@@ -117,7 +110,15 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
                 SizedBox(
                   width: 300,
                   height: 230,
-                  child: FoodMapChildWidget(),
+                  child: FoodMapChildWidget(
+                    markerSet: {
+                      NMarker(
+                          id: 'test',
+                          position: const NLatLng(37.5666102, 126.9783881))
+                    },
+                    latitude: 37.5666102,
+                    longitude: 126.9783881,
+                  ),
                 )
               ],
             ),

@@ -59,7 +59,7 @@ class _FavoriteHostChildWidgetState
                   height: 5,
                 ),
                 Text(
-                  widget._recentFoodTime,
+                                    widget._recentFoodTime,
                   style: TextStyle(
                       fontWeight: FontWeight.w200, color: Colors.grey[500]),
                 ),
