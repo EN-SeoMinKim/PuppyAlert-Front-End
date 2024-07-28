@@ -51,7 +51,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
               padding: const EdgeInsets.all(10.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image.asset(
+                child: Image.network(
                   widget._imagePath,
                   width: 80,
                   height: 80,

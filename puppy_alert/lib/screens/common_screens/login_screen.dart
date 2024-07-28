@@ -113,7 +113,6 @@ class _LoginScreenState extends State<LoginScreen> {
         Uri.parse('${dotenv.get('BASE_URL')}/$userType?${userType}Id=$userId');
     final value = (await http.get(uri)).bodyBytes;
     final jsonData = jsonDecode(utf8.decode(value));
-
     return UserDto(
         userId,
         userPassword,

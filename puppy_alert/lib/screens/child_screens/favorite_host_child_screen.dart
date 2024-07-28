@@ -6,7 +6,11 @@ import 'package:puppy_alert/models/favorite_host_model.dart';
 import 'package:puppy_alert/widgets/child_widgets/favorite_host_child_widget.dart';
 
 class FavoriteHostChildScreen extends StatefulWidget {
-  const FavoriteHostChildScreen({super.key});
+  final String _userId;
+
+  const FavoriteHostChildScreen(
+      {super.key, required String userId})
+      : _userId = userId;
 
   @override
   State<FavoriteHostChildScreen> createState() =>
@@ -14,18 +18,21 @@ class FavoriteHostChildScreen extends StatefulWidget {
 }
 
 class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
-  late Future<List<FavoriteHostModel>> _favoriteHostModelList;
+  List<FavoriteHostModel>? favoriteHostModelList;
 
   @override
   void initState() {
     super.initState();
-    _favoriteHostModelList = _fetchFavoriteHostModelList();
+    _fetchFavoriteHostModelList().then((jsonDataList) {
+      setState(() {
+        favoriteHostModelList = jsonDataList;
+      });
+    });
   }
 
   Future<List<FavoriteHostModel>> _fetchFavoriteHostModelList() async {
-    final response = await http
-        .get(Uri.parse('${dotenv.get('BASE_URL')}/favoriteHost?puppyId=SeoSangHyeok'));
-
+    final response = await http.get(Uri.parse(
+        '${dotenv.get('BASE_URL')}/puppy/favoriteHost?puppyId=${widget._userId}'));
     if (response.body == '최근 집밥을 먹은 적이 없습니다') {
       return [];
     }
@@ -36,6 +43,30 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
     } else {
       throw Exception('Failed to load items');
     }
+  }
+
+  Widget getShowWidget() {
+    if (favoriteHostModelList == null) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (favoriteHostModelList!.isEmpty) {
+      return const Center(
+          child: Text(
+        '설정한 관심 HOST가 없습니다',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+      ));
+    }
+    return Expanded(
+        child: ListView.builder(
+      itemCount: favoriteHostModelList!.length,
+      itemBuilder: (context, index) {
+        return FavoriteHostChildWidget(
+          hostId: favoriteHostModelList![index].hostId,
+          puppyId: widget._userId,
+          recentFoodTime: favoriteHostModelList![index].recentFoodTime,
+          isFavorite: true,
+        );
+      },
+    ));
   }
 
   @override
@@ -58,39 +89,7 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
             border: Border.all(color: Colors.grey[200]!, width: 2.0),
           ),
         ),
-        Expanded(
-          child: FutureBuilder<List<FavoriteHostModel>>(
-            future: _favoriteHostModelList,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasData) {
-                final favoriteHostList = snapshot.data;
-                if (favoriteHostList != null && favoriteHostList.isEmpty) {
-                  return const Center(
-                      child: Text(
-                    '설정한 관심 HOST가 없습니다',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-                  ));
-                } else {
-                  return ListView.builder(
-                    itemCount: favoriteHostList?.length,
-                    itemBuilder: (context, index) {
-                      final host = favoriteHostList?[index];
-                      return FavoriteHostChildWidget(
-                        hostId: host!.hostId,
-                        recentFoodTime: host.recentFoodTime,
-                        isFavorite: true,
-                      );
-                    },
-                  );
-                }
-              } else {
-                return const Center(child: Text('데이터를 로드할 수 없습니다'));
-              }
-            },
-          ),
-        ),
+        getShowWidget(),
       ],
     );
   }
