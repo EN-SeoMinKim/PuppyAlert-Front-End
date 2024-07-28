@@ -201,7 +201,7 @@ class _SpeechRecognitionAdultScreenState
     } else if (_food.isNotEmpty && _time.isNotEmpty) {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => FoodRegistrationCompletionAdultScreen(
-              userDto: widget._userDto, food: _food, time: _time)));
+              userId: widget._userDto.userId, food: _food, time: _time)));
     }
   }
 
