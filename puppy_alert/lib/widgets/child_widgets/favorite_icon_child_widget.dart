@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:puppy_alert/models/food_model.dart';
+import 'package:puppy_alert/models/favorite_host_model.dart';
 
 class FavoriteIconChildWidget extends StatefulWidget {
   final String _puppyId, _hostId;
@@ -30,17 +30,16 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
     http.Response response = await http.get(Uri.parse(
         '${dotenv.get('BASE_URL')}/puppy/favoriteHost?puppyId=${widget
             ._puppyId}'));
-    List<FoodModel> foodList = jsonDecode(response.body).map<FoodModel>((json) => FoodModel.fromJson(json)).toList();
+    List<FavoriteHostModel> hostList = jsonDecode(response.body).map<FavoriteHostModel>((json) => FavoriteHostModel.fromJson(json)).toList();
 
-    for (var food in foodList) {
-      if (food.hostId == widget._hostId) {
+    for (var host in hostList) {
+      if (host.hostId == widget._hostId) {
         setState(() {
           _isFavorite = true;
         });
         break;
       }
     }
-
   }
 
   void updateFavoriteHost() {
@@ -69,6 +68,7 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
       ),
       onPressed: () {
         setState(() {
+          _isFavorite = !_isFavorite;
           updateFavoriteHost();
         });
       },
