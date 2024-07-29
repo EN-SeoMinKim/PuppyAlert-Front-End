@@ -35,8 +35,10 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return const SignupScreen(userType: UserType.child,);
-                    }));
+                  return const SignupScreen(
+                    userType: UserType.child,
+                  );
+                }));
               },
               child: const Text(
                 '결식아동',
@@ -49,8 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return const SignupScreen(userType: UserType.adult,);
-                    }));
+                  return const SignupScreen(
+                    userType: UserType.adult,
+                  );
+                }));
               },
               child: const Text(
                 '1인 가구',
@@ -76,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
           'password': password,
         }));
 
-    if (response.body == '등록되지 않은 회원입니다') {
+    if (response.body == '존재하지 않는 아이디입니다' || response.body == '비밀번호가 옳지 않습니다') {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('로그인에 실패했습니다.'),
@@ -94,15 +98,19 @@ class _LoginScreenState extends State<LoginScreen> {
       getUserDto('host', id, password).then((userDto) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) {
-              return SpeechRecognitionAdultScreen(userDto: userDto,);
-            }));
+          return SpeechRecognitionAdultScreen(
+            userDto: userDto,
+          );
+        }));
       });
     } else {
       getUserDto('puppy', id, password).then((userDto) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) {
-              return MainChildScreen(userDto: userDto,);
-            }));
+          return MainChildScreen(
+            userDto: userDto,
+          );
+        }));
       });
     }
   }

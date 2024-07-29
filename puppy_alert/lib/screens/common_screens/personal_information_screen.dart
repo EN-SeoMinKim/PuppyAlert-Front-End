@@ -35,7 +35,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     String password = _passwordController.text.trim();
     String passwordConfirmation = _passwordConfirmationController.text.trim();
 
-    print('Password: $password');
   }
 
   Widget _buildColumn() {
