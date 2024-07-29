@@ -35,7 +35,7 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
             text: '   집밥 기록',
             onPressed: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const FoodRecordScreen(isChildScreen: true)));
+                  MaterialPageRoute(builder: (context) => FoodRecordScreen(isChildScreen: true, userId: widget._userDto.userId,)));
             }),
         ProfileInfoButtonChildWidget(
             icon: Icons.rice_bowl, text: '   오늘의 집밥',

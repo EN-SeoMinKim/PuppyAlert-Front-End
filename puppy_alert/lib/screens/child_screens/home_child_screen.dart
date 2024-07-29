@@ -41,7 +41,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       foodName: foodList[index].menuName,
                       hostName: foodList[index].hostId,
                       time: foodList[index].time,
-                      isFavorite: foodList[index].isFavorite,
                       recruitmentStatus: foodList[index].status,
                       userId: widget._userId,
                     );

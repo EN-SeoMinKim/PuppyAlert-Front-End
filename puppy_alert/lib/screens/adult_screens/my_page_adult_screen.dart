@@ -40,7 +40,7 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const FoodRecordScreen(isChildScreen: false)));
+                      builder: (context) => FoodRecordScreen(isChildScreen: false, userId: widget._userDto.userId,)));
                 },
                 text: "집밥 기록"),
           ],

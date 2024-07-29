@@ -86,7 +86,6 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
                           recruitmentStatus: foodInfo['status'],
                           hostName: foodInfo['hostId'],
                           time: foodInfo['time'],
-                          isFavorite: foodInfo['isFavorite'],
                         ),
                         canRegister: true,
                         userId: widget._userDto.userId)));

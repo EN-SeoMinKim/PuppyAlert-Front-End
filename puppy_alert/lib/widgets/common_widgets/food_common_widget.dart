@@ -13,7 +13,6 @@ class FoodCommonWidget extends StatelessWidget {
     required String hostName,
     required String time,
     required String recruitmentStatus,
-    required bool isFavorite,
   })
       : _userId = userId,
         _recruitmentStatus = recruitmentStatus,
