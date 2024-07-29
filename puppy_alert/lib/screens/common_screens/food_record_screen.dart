@@ -27,15 +27,17 @@ class _FoodRecordScreenState extends State<FoodRecordScreen> {
     _foodCommonWidget = List.empty(growable: true);
 
     getJsonData().then((jsonData) {
-      for (var data in jsonData) {
-        _foodCommonWidget.add(FoodCommonWidget(
-            userId: widget._userId,
-            imagePath: data['imageURL'],
-            foodName: data['menuName'],
-            hostName: data['partnerId'],
-            time: getParsingTimeData(data['localDateTime']),
-            recruitmentStatus: 'MATCHED'));
-      }
+      setState(() {
+        for (var data in jsonData) {
+          _foodCommonWidget.add(FoodCommonWidget(
+              userId: widget._userId,
+              imagePath: data['imageURL'],
+              foodName: data['menuName'],
+              hostName: data['partnerId'],
+              time: getParsingTimeData(data['localDateTime']),
+              recruitmentStatus: 'MATCHED'));
+        }
+      });
     });
   }
 
@@ -85,7 +87,7 @@ class _FoodRecordScreenState extends State<FoodRecordScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 20,
+                itemCount: _foodCommonWidget.length,
                 itemBuilder: (BuildContext context, int index) {
                   if (_foodCommonWidget.isEmpty) {
                     return const LinearProgressIndicator();

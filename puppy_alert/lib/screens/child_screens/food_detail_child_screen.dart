@@ -59,7 +59,10 @@ class FoodDetailChildScreen extends StatelessWidget {
             height: _canRegister ? 0 : 20,
             color: Colors.white,
           ),
+          if (_foodCommonWidget != null)
           SizedBox(height: 130, child: _foodCommonWidget),
+          if (_foodCommonWidget == null)
+
           if (_canRegister)
             _registrationColumn(context, _applyForFood),
           Container(
