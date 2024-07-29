@@ -80,6 +80,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
                     builder: (context) => FoodDetailChildScreen(
                         foodId: foodInfo['foodId'],
                         foodCommonWidget: FoodCommonWidget(
+                          userId: widget._userDto.userId,
                           imagePath: foodInfo['imageURL'],
                           foodName: foodInfo['menuName'],
                           recruitmentStatus: foodInfo['status'],

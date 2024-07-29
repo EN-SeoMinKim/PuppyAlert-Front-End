@@ -23,14 +23,14 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchFavoriteHostModelList().then((jsonDataList) {
+    _fetchFavoriteHostList().then((jsonDataList) {
       setState(() {
         favoriteHostModelList = jsonDataList;
       });
     });
   }
 
-  Future<List<FavoriteHostModel>> _fetchFavoriteHostModelList() async {
+  Future<List<FavoriteHostModel>> _fetchFavoriteHostList() async {
     final response = await http.get(Uri.parse(
         '${dotenv.get('BASE_URL')}/puppy/favoriteHost?puppyId=${widget._userId}'));
     if (response.body == '최근 집밥을 먹은 적이 없습니다') {

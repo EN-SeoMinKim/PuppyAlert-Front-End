@@ -1,54 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
+import 'package:puppy_alert/widgets/child_widgets/favorite_icon_child_widget.dart';
 
-class FavoriteHostChildWidget extends StatefulWidget {
+class FavoriteHostChildWidget extends StatelessWidget {
   final String _hostId, _puppyId;
   final String _recentFoodTime;
-  late bool _isFavorite;
 
-  FavoriteHostChildWidget({
+  const FavoriteHostChildWidget({
     super.key,
     required String hostId,
     required String puppyId,
     required String recentFoodTime,
     required bool isFavorite,
-  })  : _hostId = hostId,
+  })
+      : _hostId = hostId,
         _puppyId = puppyId,
-        _recentFoodTime = recentFoodTime,
-        _isFavorite = isFavorite;
-
-  @override
-  State<FavoriteHostChildWidget> createState() =>
-      _FavoriteHostChildWidgetState();
-}
-
-class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
-  Icon _getFavoriteIcon(bool isFavorite) {
-    return Icon(
-      isFavorite ? Icons.favorite : Icons.favorite_border,
-      color: isFavorite ? Colors.red : Colors.grey,
-      size: 20,
-    );
-  }
-
-  void updateFavoriteHost() {
-    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/favoriteHost');
-    var bodyData = json.encode({
-      'hostId': widget._hostId,
-      'puppyId': widget._puppyId,
-    });
-
-    if (widget._isFavorite) {
-      http.post(uri,
-          headers: {'Content-Type': 'application/json'}, body: bodyData);
-      return;
-    }
-    http.delete(uri,
-        headers: {'Content-Type': 'application/json'}, body: bodyData);
-  }
+        _recentFoodTime = recentFoodTime;
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +37,14 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  widget._hostId,
+                  _hostId,
                   style: const TextStyle(fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 Text(
-                  widget._recentFoodTime,
+                  _recentFoodTime,
                   style: TextStyle(
                       fontWeight: FontWeight.w200, color: Colors.grey[500]),
                 ),
@@ -89,15 +55,8 @@ class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
       ),
       Row(
         children: [
-          IconButton(
-            icon: _getFavoriteIcon(widget._isFavorite),
-            onPressed: () {
-              setState(() {
-                widget._isFavorite = !widget._isFavorite;
-                updateFavoriteHost();
-              });
-            },
-          ),
+          FavoriteIconChildWidget(
+              puppyId: _puppyId, hostId: _hostId),
           const SizedBox(width: 30),
         ],
       )
