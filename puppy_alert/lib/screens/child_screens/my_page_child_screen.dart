@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/child_screens/food_detail_child_screen.dart';
+import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/screens/common_screens/food_record_screen.dart';
+import 'package:puppy_alert/screens/common_screens/login_screen.dart';
 import 'package:puppy_alert/screens/common_screens/personal_information_screen.dart';
+import 'package:puppy_alert/widgets/child_widgets/profile_info_button_child_widget.dart';
+import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button_common_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/my_page_header_common_widget.dart';
-import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
-import '../../widgets/child_widgets/profile_info_button_child_widget.dart';
-import '../common_screens/login_screen.dart';
 
 class MyPageChildScreen extends StatefulWidget {
-  const MyPageChildScreen({super.key});
+  final UserDto _userDto;
+
+  const MyPageChildScreen({super.key, required userDto}) : _userDto = userDto;
 
   @override
   State<MyPageChildScreen> createState() => _MyPageChildScreenState();
@@ -19,7 +21,7 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const MyPageHeaderCommonWidget(imagePath: 'assets/image.png', userName: 'Anton'),
+        MyPageHeaderCommonWidget(imagePath: 'assets/image.png', userName: widget._userDto.nickName),
         ProfileInfoButtonChildWidget(
             icon: Icons.manage_accounts,
             text: '   개인 정보',

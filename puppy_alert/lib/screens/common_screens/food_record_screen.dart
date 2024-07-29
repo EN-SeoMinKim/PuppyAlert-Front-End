@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 
 class FoodRecordScreen extends StatefulWidget {
@@ -14,47 +15,45 @@ class FoodRecordScreen extends StatefulWidget {
 class _FoodRecordScreenState extends State<FoodRecordScreen> {
   @override
   Widget build(BuildContext context) {
-    if (widget._isChildScreen) {
-      return Scaffold(appBar: AppBar(), body: foodRecordColumn(context,true));
-    } else {
-      return Scaffold(appBar: AppBar(), body: foodRecordColumn(context, false));
-    }
+    return Scaffold(
+        appBar: AppBar(),
+        body: Column(
+          children: <Widget>[
+            const SizedBox(
+              height: 100.0,
+              child: Center(
+                child: Text(
+                  '집밥 기록',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+                ),
+              ),
+            ),
+            Container(
+              height: 20,
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                border: Border.all(color: Colors.grey[200]!, width: 2.0),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return FoodCommonWidget(
+                      userId: userId,
+                      imagePath: imagePath,
+                      foodName: foodName,
+                      hostName: hostName,
+                      time: time,
+                      recruitmentStatus: recruitmentStatus,
+                      isFavorite: isFavorite);
+                },
+              ),
+            ),
+            if (!widget._isChildScreen) goBackButton(context),
+          ],
+        ));
   }
-}
-
-Widget foodRecordColumn(BuildContext context, bool isChildScreen) {
-  return Column(
-    children: <Widget>[
-      const SizedBox(
-        height: 100.0,
-        child: Center(
-          child: Text(
-            '집밥 기록',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
-          ),
-        ),
-      ),
-      Container(
-        height: 20,
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-          border: Border.all(color: Colors.grey[200]!, width: 2.0),
-        ),
-      ),
-      Expanded(
-        child: ListView.builder(
-          itemCount: 20,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text('Item $index'),
-            );
-          },
-        ),
-      ),
-      if(!isChildScreen)
-        goBackButton(context),
-    ],
-  );
 }
 
 Widget goBackButton(BuildContext context) {
