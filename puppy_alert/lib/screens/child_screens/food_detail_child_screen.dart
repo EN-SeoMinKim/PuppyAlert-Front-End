@@ -5,68 +5,31 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:http/http.dart' as http;
 
-class FoodDetailChildScreen extends StatefulWidget {
-  final Widget _foodCommonWidget;
+class FoodDetailChildScreen extends StatelessWidget {
+  final Widget? _foodCommonWidget;
   final bool _canRegister;
   final String? _userId;
   final int? _foodId;
 
   const FoodDetailChildScreen(
       {super.key,
-      required Widget foodCommonWidget,
-      required bool canRegister,
-      String? userId,
-      int? foodId})
+        required bool canRegister,
+        Widget? foodCommonWidget,
+        String? userId,
+        int? foodId})
       : _foodCommonWidget = foodCommonWidget,
         _canRegister = canRegister,
         _userId = userId,
         _foodId = foodId;
 
-  @override
-  State<FoodDetailChildScreen> createState() => _FoodDetailChildScreenState();
-}
-
-class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
-  void _showConfirmationDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: const Text(
-            '신청 완료',
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-              color: Color(0xffFF7700),
-            ),
-          ),
-          content: const Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
-              style: TextStyle(height: 2.0), textAlign: TextAlign.center),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('확인',
-                  style: TextStyle(
-                    color: Color(0xffFF7700),
-                  )),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _applyForFood() async {
+  void _applyForFood() {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/food');
-
-    http.Response response = await http.post(
+    http.post(
       uri,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
-        'foodId': widget._foodId,
-        'puppyId': widget._userId,
+        'foodId': _foodId,
+        'puppyId': _userId,
       }),
     );
   }
@@ -93,23 +56,23 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
             child: _greyContainer(),
           ),
           Container(
-            height: widget._canRegister ? 0 : 20,
+            height: _canRegister ? 0 : 20,
             color: Colors.white,
           ),
-          SizedBox(height: 130, child: widget._foodCommonWidget),
-          if (widget._canRegister)
-            _registrationColumn(_showConfirmationDialog, _applyForFood),
+          SizedBox(height: 130, child: _foodCommonWidget),
+          if (_canRegister)
+            _registrationColumn(context, _applyForFood),
           Container(
             height: 20,
             color: Colors.grey[100],
             child: _greyContainer(),
           ),
           Container(
-            height: widget._canRegister ? 10 : 30,
+            height: _canRegister ? 10 : 30,
             color: Colors.white,
           ),
           Container(
-            height: widget._canRegister ? 368 : 394,
+            height: _canRegister ? 368 : 394,
             color: Colors.white,
             child: Column(
               children: [
@@ -163,7 +126,7 @@ Widget _greyContainer() {
 }
 
 Widget _registrationColumn(
-    Function() showConfirmationDialog, Function() applyFood) {
+    BuildContext context, Function() applyFood) {
   return Column(children: [
     Container(
       height: 5,
@@ -187,7 +150,7 @@ Widget _registrationColumn(
             child: TextButton(
               onPressed: () {
                 applyFood();
-                showConfirmationDialog();
+                _showConfirmationDialog(context);
               },
               style: TextButton.styleFrom(
                 backgroundColor: const Color(0xffFFF1E4),
@@ -204,4 +167,35 @@ Widget _registrationColumn(
       ),
     ),
   ]);
+}
+
+void _showConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        title: const Text(
+          '신청 완료',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+            color: Color(0xffFF7700),
+          ),
+        ),
+        content: const Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
+            style: TextStyle(height: 2.0), textAlign: TextAlign.center),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('확인',
+                style: TextStyle(
+                  color: Color(0xffFF7700),
+                )),
+          ),
+        ],
+      );
+    },
+  );
 }

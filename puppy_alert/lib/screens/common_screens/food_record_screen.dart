@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
-import '../../widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'package:http/http.dart' as http;
 
 class FoodRecordScreen extends StatefulWidget {
@@ -34,10 +33,19 @@ class _FoodRecordScreenState extends State<FoodRecordScreen> {
             imagePath: data['imageURL'],
             foodName: data['menuName'],
             hostName: data['partnerId'],
-            time: data['time'],
+            time: getParsingTimeData(data['localDateTime']),
             recruitmentStatus: 'MATCHED'));
       }
     });
+  }
+
+  String getParsingTimeData(String time) {
+    List<String> timeSplit = time.split('T');
+    String monthDay =
+        '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
+    String hourMinute =
+        '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
+    return '$monthDay $hourMinute';
   }
 
   Future<dynamic> getJsonData() async {

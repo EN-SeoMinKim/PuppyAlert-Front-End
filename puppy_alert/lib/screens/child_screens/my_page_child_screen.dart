@@ -40,9 +40,7 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
         ProfileInfoButtonChildWidget(
             icon: Icons.rice_bowl, text: '   오늘의 집밥',
             onPressed: () {
-              // Navigator.of(context).push(
-              //     MaterialPageRoute(builder: (context) =>
-              //         FoodDetailChildScreen(canRegister: false)));
+
             }),
         LongRectangleButtonCommonWidget(
             backgroundColor: Colors.grey[100]!,
