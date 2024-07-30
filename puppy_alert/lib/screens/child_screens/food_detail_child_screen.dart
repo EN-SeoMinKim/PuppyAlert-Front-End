@@ -12,7 +12,7 @@ class FoodDetailChildScreen extends StatelessWidget {
   final String _allAddress;
   final bool _canRegister;
   final double _latitude, _longitude;
-    final String _recruitmentStatus;
+  final String _recruitmentStatus;
 
   const FoodDetailChildScreen({
     super.key,
@@ -21,7 +21,7 @@ class FoodDetailChildScreen extends StatelessWidget {
     required latitude,
     required longitude,
     required int foodId,
-     required String recruitmentStatus,
+    required String recruitmentStatus,
     Widget? foodCommonWidget,
     String? userId,
   })  : _foodCommonWidget = foodCommonWidget,
@@ -72,8 +72,7 @@ class FoodDetailChildScreen extends StatelessWidget {
           ),
           if (_foodCommonWidget != null)
             SizedBox(height: 130, child: _foodCommonWidget),
-          if (_canRegister) _registrationColumn(context, _applyForFood),
-
+          if (_canRegister) _registrationColumn(context, _applyForFood, _recruitmentStatus),
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -137,7 +136,7 @@ Widget _greyContainer() {
   );
 }
 
-Widget _registrationColumn(BuildContext context, Function() applyFood) {
+Widget _registrationColumn(BuildContext context, Function() applyFood, String recruitmentStatus) {
   return Column(children: [
     Container(
       height: 5,
@@ -157,20 +156,26 @@ Widget _registrationColumn(BuildContext context, Function() applyFood) {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            width: recruitmentStatus == 'READY' ? 70: 90,
+            width: recruitmentStatus == 'READY' ? 70 : 90,
             child: TextButton(
               onPressed: () {
                 applyFood();
                 _showConfirmationDialog(context);
-                recruitmentStatus == 'READY' ? {applyFood(), showConfirmationDialog()} :null;
+                recruitmentStatus == 'READY'
+                    ? {applyFood(), _showConfirmationDialog(context)}
+                    : null;
               },
               style: TextButton.styleFrom(
-                backgroundColor: recruitmentStatus == 'READY' ? const Color(0xffFFF1E4) : Colors.grey[200]!,
+                backgroundColor: recruitmentStatus == 'READY'
+                    ? const Color(0xffFFF1E4)
+                    : Colors.grey[200]!,
               ),
-              child:  Text(
-                recruitmentStatus == 'READY' ? '신청' :'신청완료',
+              child: Text(
+                recruitmentStatus == 'READY' ? '신청' : '신청완료',
                 style: TextStyle(
-                  color: recruitmentStatus == 'READY' ?const Color(0xffFF7700):const Color(0xff7D6600) ,
+                  color: recruitmentStatus == 'READY'
+                      ? const Color(0xffFF7700)
+                      : const Color(0xff7D6600),
                 ),
               ),
             ),
