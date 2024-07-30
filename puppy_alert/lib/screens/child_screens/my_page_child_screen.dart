@@ -21,35 +21,35 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
-        const MyPageHeaderCommonWidget( userName: widget._userDto.nickName),
+        MyPageHeaderCommonWidget(userName: widget._userDto.nickName),
         ProfileInfoButtonChildWidget(
             icon: Icons.manage_accounts,
             text: '   개인 정보',
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      const PersonalInformationScreen()));
+                  builder: (context) => const PersonalInformationScreen()));
             }),
         ProfileInfoButtonChildWidget(
             icon: Icons.library_books,
             text: '   집밥 기록',
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => FoodRecordScreen(isChildScreen: true, userId: widget._userDto.userId,)));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => FoodRecordScreen(
+                        isChildScreen: true,
+                        userId: widget._userDto.userId,
+                      )));
             }),
         ProfileInfoButtonChildWidget(
-            icon: Icons.rice_bowl, text: '   오늘의 집밥',
-            onPressed: () {
+            icon: Icons.rice_bowl, text: '   오늘의 집밥', onPressed: () {
 
-            }),
+        }),
         LongRectangleButtonCommonWidget(
             backgroundColor: Colors.grey[100]!,
             textColor: Colors.grey[700]!,
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                    (Route<dynamic> route) => false);
+                  (Route<dynamic> route) => false);
             },
             text: "Logout"),
       ],
