@@ -7,17 +7,25 @@ import 'package:http/http.dart' as http;
 
 class FoodDetailChildScreen extends StatelessWidget {
   final Widget? _foodCommonWidget;
-  final bool _canRegister;
   final String? _userId;
-  final int? _foodId;
+  final int _foodId;
+  final String _allAddress;
+  final bool _canRegister;
+  final double _latitude, _longitude;
 
-  const FoodDetailChildScreen(
-      {super.key,
-        required bool canRegister,
-        Widget? foodCommonWidget,
-        String? userId,
-        int? foodId})
-      : _foodCommonWidget = foodCommonWidget,
+  const FoodDetailChildScreen({
+    super.key,
+    required canRegister,
+    required allAddress,
+    required latitude,
+    required longitude,
+    required int foodId,
+    Widget? foodCommonWidget,
+    String? userId,
+  })  : _foodCommonWidget = foodCommonWidget,
+        _allAddress = allAddress,
+        _latitude = latitude,
+        _longitude = longitude,
         _canRegister = canRegister,
         _userId = userId,
         _foodId = foodId;
@@ -60,11 +68,9 @@ class FoodDetailChildScreen extends StatelessWidget {
             color: Colors.white,
           ),
           if (_foodCommonWidget != null)
-          SizedBox(height: 130, child: _foodCommonWidget),
+            SizedBox(height: 130, child: _foodCommonWidget),
           if (_foodCommonWidget == null)
-
-          if (_canRegister)
-            _registrationColumn(context, _applyForFood),
+            if (_canRegister) _registrationColumn(context, _applyForFood),
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -80,15 +86,15 @@ class FoodDetailChildScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                const Row(
+                Row(
                   children: [
-                    SizedBox(width: 40),
-                    Icon(
+                    const SizedBox(width: 40),
+                    const Icon(
                       Icons.location_on_outlined,
                       color: Color(0xffFF7700),
                     ),
-                    SizedBox(width: 10),
-                    Text('주소 입력할 부분!!')
+                    const SizedBox(width: 10),
+                    Text(_allAddress),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -98,11 +104,10 @@ class FoodDetailChildScreen extends StatelessWidget {
                   child: FoodMapChildWidget(
                     markerSet: {
                       NMarker(
-                          id: 'test',
-                          position: const NLatLng(37.5666102, 126.9783881))
+                          id: _foodId.toString(), position: NLatLng(_latitude, _longitude))
                     },
-                    latitude: 37.5666102,
-                    longitude: 126.9783881,
+                    latitude: _latitude,
+                    longitude: _longitude,
                   ),
                 )
               ],
@@ -128,8 +133,7 @@ Widget _greyContainer() {
   );
 }
 
-Widget _registrationColumn(
-    BuildContext context, Function() applyFood) {
+Widget _registrationColumn(BuildContext context, Function() applyFood) {
   return Column(children: [
     Container(
       height: 5,

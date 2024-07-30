@@ -51,7 +51,7 @@ class FoodModel {
         address: json['address'],
         addressDetail: json['detailAddress'],
         status: json['status'],
-        locationMap: json['locationMap'],
+        locationMap: json['location'],
         isFavorite: json['isFavorite']);
   }
 

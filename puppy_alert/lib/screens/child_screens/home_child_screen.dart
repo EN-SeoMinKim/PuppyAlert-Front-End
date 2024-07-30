@@ -53,6 +53,11 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                   canRegister: true,
                                   userId: widget._userId,
                                   foodId: foodList[index].foodId,
+                                  allAddress: '${foodList[index].address} ${foodList[index].addressDetail}',
+                                  latitude:
+                                      foodList[index].locationMap['latitude'],
+                                  longitude:
+                                      foodList[index].locationMap['longitude'],
                                 )));
                       },
                       child: foodCommonWidget,

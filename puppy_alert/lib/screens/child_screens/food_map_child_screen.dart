@@ -78,17 +78,21 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => FoodDetailChildScreen(
-                        foodId: foodInfo['foodId'],
-                        foodCommonWidget: FoodCommonWidget(
+                          foodId: foodInfo['foodId'],
+                          canRegister: true,
                           userId: widget._userDto.userId,
-                          imagePath: foodInfo['imageURL'],
-                          foodName: foodInfo['menuName'],
-                          recruitmentStatus: foodInfo['status'],
-                          hostName: foodInfo['hostId'],
-                          time: foodInfo['time'],
-                        ),
-                        canRegister: true,
-                        userId: widget._userDto.userId)));
+                          allAddress: '${foodInfo['address']} ${foodInfo['detailAddress']}',
+                          latitude: foodInfo['locationMap']['latitude'],
+                          longitude: foodInfo['locationMap']['longitude'],
+                          foodCommonWidget: FoodCommonWidget(
+                            userId: widget._userDto.userId,
+                            imagePath: foodInfo['imageURL'],
+                            foodName: foodInfo['menuName'],
+                            recruitmentStatus: foodInfo['status'],
+                            hostName: foodInfo['hostId'],
+                            time: foodInfo['time'],
+                          ),
+                        )));
               },
               child: FoodMapDetailChildWidget(foodInfo['menuName'],
                   foodInfo['hostId'], foodInfo['address'], foodInfo['time']),
