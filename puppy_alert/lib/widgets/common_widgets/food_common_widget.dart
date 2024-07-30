@@ -42,38 +42,41 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.white,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(width: 10),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: Image.network(
-                  widget._imagePath,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
+      padding: const EdgeInsets.symmetric( vertical: 10.0),
+      color: Colors.white,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(width: 10),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: Image.network(
+                widget._imagePath,
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 15),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget._foodName,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 4),
-                SizedBox(
-                  height: 30,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(widget._hostName),
+          ),
+          const SizedBox(width: 15),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget._foodName,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 4),
+              Container(
+                width:150,
+                height: 30,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(widget._hostName),
                       IconButton(
                         icon: _getFavoriteIcon(widget._isFavorite),
                         onPressed: () {
@@ -82,29 +85,30 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
                           });
                         },
                       ),
-                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(widget._time),
+              const SizedBox(height: 8),
+              Container(
+                height: 23,
+                padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
+                decoration: BoxDecoration(
+                  color: _getBackgroundColor(widget._recruitmentStatus),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Text(
+                  widget._recruitmentStatus,
+                  style: const TextStyle(
+                    color: Color(0xff7D6600),
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(widget._time),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
-                  decoration: BoxDecoration(
-                    color: _getBackgroundColor(widget._recruitmentStatus),
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  child: Text(
-                    widget._recruitmentStatus,
-                    style: const TextStyle(
-                      color: Color(0xff7D6600),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
