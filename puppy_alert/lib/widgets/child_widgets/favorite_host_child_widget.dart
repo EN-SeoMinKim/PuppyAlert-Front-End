@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/widgets/child_widgets/favorite_icon_child_widget.dart';
 
@@ -10,12 +11,30 @@ class FavoriteHostChildWidget extends StatelessWidget {
     required String hostId,
     required String puppyId,
     required String recentFoodTime,
-  })  : _hostId = hostId,
+    required bool isFavorite,
+  })
+      : _hostId = hostId,
         _puppyId = puppyId,
-        _recentFoodTime = recentFoodTime;
+        _recentFoodTime = recentFoodTime,
+        _isFavorite = isFavorite;
 
-  String _getImageURL() {
-    switch (_hostId) {
+  @override
+  State<FavoriteHostChildWidget> createState() =>
+      _FavoriteHostChildWidgetState();
+}
+
+class _FavoriteHostChildWidgetState extends State<FavoriteHostChildWidget> {
+  late String _imageURL = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _imageURL = '';
+    _imageURL = _getImageURL(widget._hostId);
+  }
+
+  String _getImageURL(String hostId) {
+    switch (hostId) {
       case "ChoSangJun":
         return 'https://avatars.githubusercontent.com/u/43038815?v=4';
 
@@ -45,6 +64,30 @@ class FavoriteHostChildWidget extends StatelessWidget {
     }
   }
 
+  Icon _getFavoriteIcon(bool isFavorite) {
+    return Icon(
+      isFavorite ? Icons.favorite : Icons.favorite_border,
+      color: isFavorite ? Colors.red : Colors.grey,
+      size: 20,
+    );
+  }
+
+  void updateFavoriteHost() {
+    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/favoriteHost');
+    var bodyData = json.encode({
+      'hostId': widget._hostId,
+      'puppyId': widget._puppyId,
+    });
+
+    if (widget._isFavorite) {
+      http.post(uri,
+          headers: {'Content-Type': 'application/json'}, body: bodyData);
+      return;
+    }
+    http.delete(uri,
+        headers: {'Content-Type': 'application/json'}, body: bodyData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -52,14 +95,15 @@ class FavoriteHostChildWidget extends StatelessWidget {
         height: 80,
         child: Row(
           children: [
-            ClipOval(
-              child: Image.network(
-                _getImageURL(),
-                width: 70,
-                height: 70,
-                fit: BoxFit.cover,
+            if (_imageURL.isNotEmpty)
+              ClipOval(
+                child: Image.network(
+                  _imageURL,
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
             const SizedBox(width: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +128,8 @@ class FavoriteHostChildWidget extends StatelessWidget {
       ),
       Row(
         children: [
-          FavoriteIconChildWidget(puppyId: _puppyId, hostId: _hostId),
+          FavoriteIconChildWidget(
+              puppyId: _puppyId, hostId: _hostId),
           const SizedBox(width: 30),
         ],
       )

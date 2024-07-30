@@ -63,6 +63,7 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
               hostId: favoriteHostModelList![index].hostId,
               puppyId: widget._userId,
               recentFoodTime: favoriteHostModelList![index].recentFoodTime,
+              isFavorite: true,
             );
           },
         ));
