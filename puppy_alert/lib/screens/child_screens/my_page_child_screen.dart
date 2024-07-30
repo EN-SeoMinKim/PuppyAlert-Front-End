@@ -7,21 +7,16 @@ import 'package:puppy_alert/widgets/child_widgets/profile_info_button_child_widg
 import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button_common_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/my_page_header_common_widget.dart';
 
-class MyPageChildScreen extends StatefulWidget {
+class MyPageChildScreen extends StatelessWidget {
   final UserDto _userDto;
 
   const MyPageChildScreen({super.key, required userDto}) : _userDto = userDto;
 
   @override
-  State<MyPageChildScreen> createState() => _MyPageChildScreenState();
-}
-
-class _MyPageChildScreenState extends State<MyPageChildScreen> {
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MyPageHeaderCommonWidget(userName: widget._userDto.nickName),
+        MyPageHeaderCommonWidget(userName: _userDto.nickName),
         ProfileInfoButtonChildWidget(
             icon: Icons.manage_accounts,
             text: '   개인 정보',
@@ -36,13 +31,11 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => FoodRecordScreen(
                         isChildScreen: true,
-                        userId: widget._userDto.userId,
+                        userId: _userDto.userId,
                       )));
             }),
         ProfileInfoButtonChildWidget(
-            icon: Icons.rice_bowl, text: '   오늘의 집밥', onPressed: () {
-
-        }),
+            icon: Icons.rice_bowl, text: '   오늘의 집밥', onPressed: () {}),
         LongRectangleButtonCommonWidget(
             backgroundColor: Colors.grey[100]!,
             textColor: Colors.grey[700]!,
