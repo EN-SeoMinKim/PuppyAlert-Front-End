@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_common_widget.dart';
-import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
-import '../../widgets/common_widgets/mutable_user_info_common_widget.dart';
-import '../../widgets/common_widgets/white_background_button_common_widget.dart';
+import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button_common_widget.dart';
+import 'package:puppy_alert/widgets/common_widgets/mutable_user_info_common_widget.dart';
+import 'package:puppy_alert/widgets/common_widgets/white_background_button_common_widget.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
 
@@ -35,7 +35,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     String password = _passwordController.text.trim();
     String passwordConfirmation = _passwordConfirmationController.text.trim();
 
-    print('Password: $password');
   }
 
   Widget _buildColumn() {
