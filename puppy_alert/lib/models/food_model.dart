@@ -8,7 +8,6 @@ class FoodModel {
       _addressDetail,
       _status;
   late var _locationMap;
-  late bool _isFavorite;
 
   FoodModel(
       {required int foodId,
@@ -19,8 +18,7 @@ class FoodModel {
       required String address,
       required String addressDetail,
       required String status,
-      required var locationMap,
-      required bool isFavorite})
+      required var locationMap})
       : _foodId = foodId,
         _hostId = hostId,
         _menuName = menu,
@@ -29,8 +27,7 @@ class FoodModel {
         _address = address,
         _addressDetail = addressDetail,
         _status = status,
-        _locationMap = locationMap,
-        _isFavorite = isFavorite;
+        _locationMap = locationMap;
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
     if (json['time'] != null) {
@@ -51,8 +48,7 @@ class FoodModel {
         address: json['address'],
         addressDetail: json['detailAddress'],
         status: json['status'],
-        locationMap: json['location'],
-        isFavorite: json['isFavorite']);
+        locationMap: json['location']);
   }
 
   int get foodId => _foodId;
@@ -72,6 +68,4 @@ class FoodModel {
   String get status => _status;
 
   get locationMap => _locationMap;
-
-  bool get isFavorite => _isFavorite;
 }

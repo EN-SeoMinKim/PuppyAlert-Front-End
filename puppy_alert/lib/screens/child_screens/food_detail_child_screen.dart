@@ -69,8 +69,7 @@ class FoodDetailChildScreen extends StatelessWidget {
           ),
           if (_foodCommonWidget != null)
             SizedBox(height: 130, child: _foodCommonWidget),
-          if (_foodCommonWidget == null)
-            if (_canRegister) _registrationColumn(context, _applyForFood),
+          if (_canRegister) _registrationColumn(context, _applyForFood),
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -104,7 +103,8 @@ class FoodDetailChildScreen extends StatelessWidget {
                   child: FoodMapChildWidget(
                     markerSet: {
                       NMarker(
-                          id: _foodId.toString(), position: NLatLng(_latitude, _longitude))
+                          id: _foodId.toString(),
+                          position: NLatLng(_latitude, _longitude))
                     },
                     latitude: _latitude,
                     longitude: _longitude,
