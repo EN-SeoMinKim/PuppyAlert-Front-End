@@ -31,6 +31,7 @@ class FoodCommonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric( vertical: 10.0),
       color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

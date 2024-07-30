@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyPageHeaderCommonWidget extends StatelessWidget {
-  final String _imagePath;
   final String _userName;
 
   const MyPageHeaderCommonWidget({
     super.key,
-    required String imagePath,
     required String userName,
-  })  : _userName = userName,
-        _imagePath = imagePath;
+  })  : _userName = userName;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +20,7 @@ class MyPageHeaderCommonWidget extends StatelessWidget {
           const SizedBox(height: 30.0),
           ClipOval(
             child: Image.asset(
-              _imagePath,
+              'assets/profile_image.png',
               width: 100.0,
               height: 100.0,
               fit: BoxFit.cover,

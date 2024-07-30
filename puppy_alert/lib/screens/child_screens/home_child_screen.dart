@@ -58,6 +58,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                       foodList[index].locationMap['latitude'],
                                   longitude:
                                       foodList[index].locationMap['longitude'],
+                                  recruitmentStatus: foodList[index].status,
                                 )));
                       },
                       child: foodCommonWidget,

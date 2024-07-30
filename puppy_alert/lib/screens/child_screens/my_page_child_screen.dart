@@ -21,7 +21,8 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MyPageHeaderCommonWidget(imagePath: 'assets/image.png', userName: widget._userDto.nickName),
+
+        const MyPageHeaderCommonWidget( userName: widget._userDto.nickName),
         ProfileInfoButtonChildWidget(
             icon: Icons.manage_accounts,
             text: '   개인 정보',

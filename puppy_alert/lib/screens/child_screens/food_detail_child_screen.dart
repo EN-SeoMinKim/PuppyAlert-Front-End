@@ -12,6 +12,7 @@ class FoodDetailChildScreen extends StatelessWidget {
   final String _allAddress;
   final bool _canRegister;
   final double _latitude, _longitude;
+    final String _recruitmentStatus;
 
   const FoodDetailChildScreen({
     super.key,
@@ -20,6 +21,7 @@ class FoodDetailChildScreen extends StatelessWidget {
     required latitude,
     required longitude,
     required int foodId,
+     required String recruitmentStatus,
     Widget? foodCommonWidget,
     String? userId,
   })  : _foodCommonWidget = foodCommonWidget,
@@ -27,6 +29,7 @@ class FoodDetailChildScreen extends StatelessWidget {
         _latitude = latitude,
         _longitude = longitude,
         _canRegister = canRegister,
+        _recruitmentStatus = recruitmentStatus,
         _userId = userId,
         _foodId = foodId;
 
@@ -70,6 +73,7 @@ class FoodDetailChildScreen extends StatelessWidget {
           if (_foodCommonWidget != null)
             SizedBox(height: 130, child: _foodCommonWidget),
           if (_canRegister) _registrationColumn(context, _applyForFood),
+
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -153,19 +157,20 @@ Widget _registrationColumn(BuildContext context, Function() applyFood) {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            width: 70,
+            width: recruitmentStatus == 'READY' ? 70: 90,
             child: TextButton(
               onPressed: () {
                 applyFood();
                 _showConfirmationDialog(context);
+                recruitmentStatus == 'READY' ? {applyFood(), showConfirmationDialog()} :null;
               },
               style: TextButton.styleFrom(
-                backgroundColor: const Color(0xffFFF1E4),
+                backgroundColor: recruitmentStatus == 'READY' ? const Color(0xffFFF1E4) : Colors.grey[200]!,
               ),
-              child: const Text(
-                '신청',
+              child:  Text(
+                recruitmentStatus == 'READY' ? '신청' :'신청완료',
                 style: TextStyle(
-                  color: Color(0xffFF7700),
+                  color: recruitmentStatus == 'READY' ?const Color(0xffFF7700):const Color(0xff7D6600) ,
                 ),
               ),
             ),
@@ -189,7 +194,7 @@ void _showConfirmationDialog(BuildContext context) {
             color: Color(0xffFF7700),
           ),
         ),
-        content: const Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
+        content: const Text('\n신청이 완료되었습니다!',
             style: TextStyle(height: 2.0), textAlign: TextAlign.center),
         actions: <Widget>[
           TextButton(

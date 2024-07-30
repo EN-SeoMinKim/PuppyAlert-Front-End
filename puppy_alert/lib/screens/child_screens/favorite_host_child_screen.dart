@@ -51,22 +51,22 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
     } else if (favoriteHostModelList!.isEmpty) {
       return const Center(
           child: Text(
-        '설정한 관심 HOST가 없습니다',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-      ));
+            '설정한 관심 HOST가 없습니다',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+          ));
     }
     return Expanded(
         child: ListView.builder(
-      itemCount: favoriteHostModelList!.length,
-      itemBuilder: (context, index) {
-        return FavoriteHostChildWidget(
-          hostId: favoriteHostModelList![index].hostId,
-          puppyId: widget._userId,
-          recentFoodTime: favoriteHostModelList![index].recentFoodTime,
-          isFavorite: true,
-        );
-      },
-    ));
+          itemCount: favoriteHostModelList!.length,
+          itemBuilder: (context, index) {
+            return FavoriteHostChildWidget(
+              hostId: favoriteHostModelList![index].hostId,
+              puppyId: widget._userId,
+              recentFoodTime: favoriteHostModelList![index].recentFoodTime,
+              isFavorite: true,
+            );
+          },
+        ));
   }
 
   @override
