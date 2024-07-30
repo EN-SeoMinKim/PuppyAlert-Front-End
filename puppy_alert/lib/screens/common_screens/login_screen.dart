@@ -35,8 +35,10 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return const SignupScreen(userType: UserType.child,);
-                    }));
+                  return const SignupScreen(
+                    userType: UserType.child,
+                  );
+                }));
               },
               child: const Text(
                 '결식아동',
@@ -49,8 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return const SignupScreen(userType: UserType.adult,);
-                    }));
+                  return const SignupScreen(
+                    userType: UserType.adult,
+                  );
+                }));
               },
               child: const Text(
                 '1인 가구',
@@ -94,15 +98,19 @@ class _LoginScreenState extends State<LoginScreen> {
       getUserDto('host', id, password).then((userDto) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) {
-              return SpeechRecognitionAdultScreen(userDto: userDto,);
-            }));
+          return SpeechRecognitionAdultScreen(
+            userDto: userDto,
+          );
+        }));
       });
     } else {
       getUserDto('puppy', id, password).then((userDto) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) {
-              return MainChildScreen(userDto: userDto,);
-            }));
+          return MainChildScreen(
+            userDto: userDto,
+          );
+        }));
       });
     }
   }

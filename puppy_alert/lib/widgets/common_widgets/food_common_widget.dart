@@ -92,6 +92,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
               Text(widget._time),
               const SizedBox(height: 8),
               Container(
+                height: 23,
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
                   color: _getBackgroundColor(widget._recruitmentStatus),

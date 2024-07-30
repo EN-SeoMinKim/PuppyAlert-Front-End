@@ -19,7 +19,7 @@ class _MyPageChildScreenState extends State<MyPageChildScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const MyPageHeaderCommonWidget(imagePath: 'assets/image.png', userName: 'Anton'),
+        const MyPageHeaderCommonWidget( userName: 'Anton'),
         ProfileInfoButtonChildWidget(
             icon: Icons.manage_accounts,
             text: '   개인 정보',

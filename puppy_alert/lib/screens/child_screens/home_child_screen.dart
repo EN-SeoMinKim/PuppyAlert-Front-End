@@ -57,6 +57,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                   canRegister: true,
                                   userId: widget._userId,
                                   foodId: foodList[index].foodId,
+                                  recruitmentStatus: foodList[index].status,
                                 )));
                       },
                       child: foodCommonWidget,

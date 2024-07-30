@@ -19,7 +19,7 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
       body: Center(
         child: Column(
           children: [
-            const MyPageHeaderCommonWidget(imagePath: 'assets/image.png', userName: 'Anton'),
+            const MyPageHeaderCommonWidget( userName: 'Anton'),
             const SizedBox(
               height: 20,
             ),

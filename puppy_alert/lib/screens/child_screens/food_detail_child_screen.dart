@@ -7,18 +7,21 @@ import 'package:http/http.dart' as http;
 
 class FoodDetailChildScreen extends StatefulWidget {
   final Widget _foodCommonWidget;
+  final int _foodId;
   final bool _canRegister;
+  final String _recruitmentStatus;
   final String? _userId;
-  final int? _foodId;
 
   const FoodDetailChildScreen(
       {super.key,
       required Widget foodCommonWidget,
       required bool canRegister,
+      required String recruitmentStatus,
       String? userId,
-      int? foodId})
+      required int foodId})
       : _foodCommonWidget = foodCommonWidget,
         _canRegister = canRegister,
+        _recruitmentStatus = recruitmentStatus,
         _userId = userId,
         _foodId = foodId;
 
@@ -40,7 +43,7 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
               color: Color(0xffFF7700),
             ),
           ),
-          content: const Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
+          content: const Text('\n신청이 완료되었습니다!',
               style: TextStyle(height: 2.0), textAlign: TextAlign.center),
           actions: <Widget>[
             TextButton(
@@ -98,7 +101,11 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
           ),
           SizedBox(height: 130, child: widget._foodCommonWidget),
           if (widget._canRegister)
-            _registrationColumn(_showConfirmationDialog, _applyForFood),
+            _registrationColumn(
+              _showConfirmationDialog,
+              _applyForFood,
+              widget._recruitmentStatus
+            ),
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -163,7 +170,7 @@ Widget _greyContainer() {
 }
 
 Widget _registrationColumn(
-    Function() showConfirmationDialog, Function() applyFood) {
+    Function() showConfirmationDialog, Function() applyFood, String recruitmentStatus) {
   return Column(children: [
     Container(
       height: 5,
@@ -183,19 +190,18 @@ Widget _registrationColumn(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            width: 70,
+            width: recruitmentStatus == 'READY' ? 70: 90,
             child: TextButton(
               onPressed: () {
-                applyFood();
-                showConfirmationDialog();
+                recruitmentStatus == 'READY' ? {applyFood(), showConfirmationDialog()} :null;
               },
               style: TextButton.styleFrom(
-                backgroundColor: const Color(0xffFFF1E4),
+                backgroundColor: recruitmentStatus == 'READY' ? const Color(0xffFFF1E4) : Colors.grey[200]!,
               ),
-              child: const Text(
-                '신청',
+              child:  Text(
+                recruitmentStatus == 'READY' ? '신청' :'신청완료',
                 style: TextStyle(
-                  color: Color(0xffFF7700),
+                  color: recruitmentStatus == 'READY' ?const Color(0xffFF7700):const Color(0xff7D6600) ,
                 ),
               ),
             ),
