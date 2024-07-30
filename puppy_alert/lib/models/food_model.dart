@@ -8,7 +8,6 @@ class FoodModel {
       _addressDetail,
       _status;
   late var _locationMap;
-  late bool _isFavorite;
 
   FoodModel(
       {required int foodId,
@@ -19,8 +18,7 @@ class FoodModel {
       required String address,
       required String addressDetail,
       required String status,
-      required var locationMap,
-      required bool isFavorite})
+      required var locationMap})
       : _foodId = foodId,
         _hostId = hostId,
         _menuName = menu,
@@ -29,17 +27,18 @@ class FoodModel {
         _address = address,
         _addressDetail = addressDetail,
         _status = status,
-        _locationMap = locationMap,
-        _isFavorite = isFavorite;
+        _locationMap = locationMap;
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
-    List<String> timeSplit = json['time'].split('T');
-    String monthDay =
-        '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
-    String hourMinute =
-        '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
+    if (json['time'] != null) {
+      List<String> timeSplit = json['time'].split('T');
+      String monthDay =
+          '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
+      String hourMinute =
+          '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
+      json['time'] = '$monthDay $hourMinute';
+    }
 
-    json['time'] = '$monthDay $hourMinute';
     return FoodModel(
         foodId: json['foodId'],
         hostId: json['hostId'],
@@ -49,8 +48,7 @@ class FoodModel {
         address: json['address'],
         addressDetail: json['detailAddress'],
         status: json['status'],
-        locationMap: json['locationMap'],
-        isFavorite: json['isFavorite']);
+        locationMap: json['location']);
   }
 
   int get foodId => _foodId;
@@ -70,6 +68,4 @@ class FoodModel {
   String get status => _status;
 
   get locationMap => _locationMap;
-
-  bool get isFavorite => _isFavorite;
 }

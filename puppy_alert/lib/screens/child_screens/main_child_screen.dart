@@ -21,6 +21,7 @@ class _MainChildScreenState extends State<MainChildScreen> {
   @override
   void initState() {
     super.initState();
+
     _selectedIndex = 0;
     _widgetOptionList = <Widget>[
       HomeChildScreen(
@@ -31,7 +32,7 @@ class _MainChildScreenState extends State<MainChildScreen> {
         userDto: widget._userDto,
       ),
       FavoriteHostChildScreen(userId: widget._userDto.userId),
-      const MyPageChildScreen(),
+      MyPageChildScreen(userDto: widget._userDto,),
     ];
   }
 

@@ -25,12 +25,13 @@ class FoodRegistrationCompletionAdultScreen extends StatefulWidget {
 
 class _FoodRegistrationCompletionAdultScreenState
     extends State<FoodRegistrationCompletionAdultScreen> {
-  String _imageURL = '';
+  late String _imageURL;
 
   @override
   void initState() {
     super.initState();
     _registerFood();
+    _imageURL = '';
   }
 
   void _registerFood() async {
@@ -56,16 +57,8 @@ class _FoodRegistrationCompletionAdultScreenState
   }
 
   String _getFormattedDateTime(String inputTime) {
-    final RegExp hourRegex = RegExp(r'(\d+)시');
-    final RegExpMatch? hourMatch = hourRegex.firstMatch(inputTime);
-
-    final RegExp minuteRegex = RegExp(r'(\d+)분');
-    final RegExpMatch? minuteMatch = minuteRegex.firstMatch(inputTime);
-
-    final int hour =
-        hourMatch != null ? int.parse(hourMatch.group(1) ?? '0') : 0;
-    final int minute =
-        minuteMatch != null ? int.parse(minuteMatch.group(1) ?? '0') : 0;
+    int hour = _getTimeFromTimeInput(inputTime, '시');
+    int minute = _getTimeFromTimeInput(inputTime, '분');
 
     DateTime now = DateTime.now();
 
@@ -73,20 +66,29 @@ class _FoodRegistrationCompletionAdultScreenState
         DateTime(now.year, now.month, now.day, hour, minute);
     String formattedDateTime = customDateTime.toIso8601String();
 
-    return formattedDateTime + "Z";
+    return "${formattedDateTime}Z";
+  }
+
+  int _getTimeFromTimeInput(String inputTime, String timeType) {
+    final RegExp regex = RegExp(r'(\d+)' + timeType);
+    final RegExpMatch? match = regex.firstMatch(inputTime);
+    final int time = match != null ? int.parse(match.group(1) ?? '0') : 0;
+    return time;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: Column(
         children: [
           const SizedBox(
             height: 50,
           ),
           const Center(
-            child: Text('똥강아지\n모집완료!',
+            child: Text('집밥\n등록 완료!',
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 40,
@@ -114,7 +116,9 @@ class _FoodRegistrationCompletionAdultScreenState
           ElevatedShadowButtonAdultWidget(
               backgroundColor: Colors.red,
               textColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               text: "취소"),
         ],
       ),

@@ -5,68 +5,42 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:http/http.dart' as http;
 
-class FoodDetailChildScreen extends StatefulWidget {
-  final Widget _foodCommonWidget;
-  final bool _canRegister;
+class FoodDetailChildScreen extends StatelessWidget {
+  final Widget? _foodCommonWidget;
   final String? _userId;
-  final int? _foodId;
+  final int _foodId;
+  final String _allAddress;
+  final bool _canRegister;
+  final double _latitude, _longitude;
+    final String _recruitmentStatus;
 
-  const FoodDetailChildScreen(
-      {super.key,
-      required Widget foodCommonWidget,
-      required bool canRegister,
-      String? userId,
-      int? foodId})
-      : _foodCommonWidget = foodCommonWidget,
+  const FoodDetailChildScreen({
+    super.key,
+    required canRegister,
+    required allAddress,
+    required latitude,
+    required longitude,
+    required int foodId,
+     required String recruitmentStatus,
+    Widget? foodCommonWidget,
+    String? userId,
+  })  : _foodCommonWidget = foodCommonWidget,
+        _allAddress = allAddress,
+        _latitude = latitude,
+        _longitude = longitude,
         _canRegister = canRegister,
+        _recruitmentStatus = recruitmentStatus,
         _userId = userId,
         _foodId = foodId;
 
-  @override
-  State<FoodDetailChildScreen> createState() => _FoodDetailChildScreenState();
-}
-
-class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
-  void _showConfirmationDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: const Text(
-            '신청 완료',
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-              color: Color(0xffFF7700),
-            ),
-          ),
-          content: const Text('\n신청이 완료되었습니다.\nhost가 수락할 때까지 잠시만 기다려주세요!',
-              style: TextStyle(height: 2.0), textAlign: TextAlign.center),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('확인',
-                  style: TextStyle(
-                    color: Color(0xffFF7700),
-                  )),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _applyForFood() async {
+  void _applyForFood() {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/food');
-
-    http.Response response = await http.post(
+    http.post(
       uri,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
-        'foodId': widget._foodId,
-        'puppyId': widget._userId,
+        'foodId': _foodId,
+        'puppyId': _userId,
       }),
     );
   }
@@ -93,36 +67,37 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
             child: _greyContainer(),
           ),
           Container(
-            height: widget._canRegister ? 0 : 20,
+            height: _canRegister ? 0 : 20,
             color: Colors.white,
           ),
-          SizedBox(height: 130, child: widget._foodCommonWidget),
-          if (widget._canRegister)
-            _registrationColumn(_showConfirmationDialog, _applyForFood),
+          if (_foodCommonWidget != null)
+            SizedBox(height: 130, child: _foodCommonWidget),
+          if (_canRegister) _registrationColumn(context, _applyForFood),
+
           Container(
             height: 20,
             color: Colors.grey[100],
             child: _greyContainer(),
           ),
           Container(
-            height: widget._canRegister ? 10 : 30,
+            height: _canRegister ? 10 : 30,
             color: Colors.white,
           ),
           Container(
-            height: widget._canRegister ? 368 : 394,
+            height: _canRegister ? 368 : 394,
             color: Colors.white,
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                const Row(
+                Row(
                   children: [
-                    SizedBox(width: 40),
-                    Icon(
+                    const SizedBox(width: 40),
+                    const Icon(
                       Icons.location_on_outlined,
                       color: Color(0xffFF7700),
                     ),
-                    SizedBox(width: 10),
-                    Text('주소 입력할 부분!!')
+                    const SizedBox(width: 10),
+                    Text(_allAddress),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -132,11 +107,11 @@ class _FoodDetailChildScreenState extends State<FoodDetailChildScreen> {
                   child: FoodMapChildWidget(
                     markerSet: {
                       NMarker(
-                          id: 'test',
-                          position: const NLatLng(37.5666102, 126.9783881))
+                          id: _foodId.toString(),
+                          position: NLatLng(_latitude, _longitude))
                     },
-                    latitude: 37.5666102,
-                    longitude: 126.9783881,
+                    latitude: _latitude,
+                    longitude: _longitude,
                   ),
                 )
               ],
@@ -162,8 +137,7 @@ Widget _greyContainer() {
   );
 }
 
-Widget _registrationColumn(
-    Function() showConfirmationDialog, Function() applyFood) {
+Widget _registrationColumn(BuildContext context, Function() applyFood) {
   return Column(children: [
     Container(
       height: 5,
@@ -183,19 +157,20 @@ Widget _registrationColumn(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            width: 70,
+            width: recruitmentStatus == 'READY' ? 70: 90,
             child: TextButton(
               onPressed: () {
                 applyFood();
-                showConfirmationDialog();
+                _showConfirmationDialog(context);
+                recruitmentStatus == 'READY' ? {applyFood(), showConfirmationDialog()} :null;
               },
               style: TextButton.styleFrom(
-                backgroundColor: const Color(0xffFFF1E4),
+                backgroundColor: recruitmentStatus == 'READY' ? const Color(0xffFFF1E4) : Colors.grey[200]!,
               ),
-              child: const Text(
-                '신청',
+              child:  Text(
+                recruitmentStatus == 'READY' ? '신청' :'신청완료',
                 style: TextStyle(
-                  color: Color(0xffFF7700),
+                  color: recruitmentStatus == 'READY' ?const Color(0xffFF7700):const Color(0xff7D6600) ,
                 ),
               ),
             ),
@@ -204,4 +179,35 @@ Widget _registrationColumn(
       ),
     ),
   ]);
+}
+
+void _showConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        title: const Text(
+          '신청 완료',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+            color: Color(0xffFF7700),
+          ),
+        ),
+        content: const Text('\n신청이 완료되었습니다!',
+            style: TextStyle(height: 2.0), textAlign: TextAlign.center),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('확인',
+                style: TextStyle(
+                  color: Color(0xffFF7700),
+                )),
+          ),
+        ],
+      );
+    },
+  );
 }

@@ -20,11 +20,6 @@ class HomeChildScreen extends StatefulWidget {
 
 class _HomeChildScreenState extends State<HomeChildScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<FoodProvider>(
       create: (context) => FoodProvider(),
@@ -46,9 +41,10 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       foodName: foodList[index].menuName,
                       hostName: foodList[index].hostId,
                       time: foodList[index].time,
-                      isFavorite: foodList[index].isFavorite,
                       recruitmentStatus: foodList[index].status,
+                      userId: widget._userId,
                     );
+
                     return InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -57,6 +53,12 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                   canRegister: true,
                                   userId: widget._userId,
                                   foodId: foodList[index].foodId,
+                                  allAddress: '${foodList[index].address} ${foodList[index].addressDetail}',
+                                  latitude:
+                                      foodList[index].locationMap['latitude'],
+                                  longitude:
+                                      foodList[index].locationMap['longitude'],
+                                  recruitmentStatus: foodList[index].status,
                                 )));
                       },
                       child: foodCommonWidget,

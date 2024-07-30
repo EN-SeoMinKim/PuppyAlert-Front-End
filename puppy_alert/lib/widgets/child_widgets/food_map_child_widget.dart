@@ -39,11 +39,6 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
           controller.addOverlayAll(widget._markerSet);
         }
       },
-      // 지도에 임의의 점을 눌렀을 때 좌표 반환 코드
-      // onMapTapped: (NPoint point, NLatLng latLng) {
-      //   print('latitude = ${latLng.latitude}');
-      //   print('longitude = ${latLng.longitude}');
-      // },
     );
   }
 }
