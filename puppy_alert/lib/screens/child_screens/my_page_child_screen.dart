@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/screens/child_screens/food_detail_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/food_record_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login_screen.dart';
 import 'package:puppy_alert/screens/common_screens/personal_information_screen.dart';
 import 'package:puppy_alert/widgets/child_widgets/profile_info_button_child_widget.dart';
+import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button_common_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/my_page_header_common_widget.dart';
 
@@ -35,7 +37,27 @@ class MyPageChildScreen extends StatelessWidget {
                       )));
             }),
         ProfileInfoButtonChildWidget(
-            icon: Icons.rice_bowl, text: '   오늘의 집밥', onPressed: () {}),
+            icon: Icons.rice_bowl,
+            text: '   오늘의 집밥',
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => FoodDetailChildScreen(
+                      canRegister: false,
+                      allAddress: '군자동 150-14 엔샵빌라 16동 209호',
+                      latitude: 37.5537926552335,
+                      longitude: 127.07382983231,
+                      foodId: 1,
+                      recruitmentStatus: 'MATCHED',
+                      userId: _userDto.userId,
+                      foodCommonWidget: FoodCommonWidget(
+                        foodName: '까르보나라',
+                        userId: _userDto.userId,
+                        recruitmentStatus: 'READY',
+                        hostName: 'KwonOhSung',
+                        imagePath: 'https://blog.kakaocdn.net/dn/cDOn0y/btruVLrLi88/aXkUtkaXRvdWVqaJv89Jn0/img.jpg',
+                        time: '08/01 17:00',
+                      ))));
+            }),
         LongRectangleButtonCommonWidget(
             backgroundColor: Colors.grey[100]!,
             textColor: Colors.grey[700]!,

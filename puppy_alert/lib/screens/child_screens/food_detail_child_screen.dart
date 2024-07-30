@@ -6,13 +6,11 @@ import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:http/http.dart' as http;
 
 class FoodDetailChildScreen extends StatelessWidget {
-  final Widget? _foodCommonWidget;
-  final String? _userId;
+  final Widget _foodCommonWidget;
+  final String _userId, _allAddress, _recruitmentStatus;
   final int _foodId;
-  final String _allAddress;
   final bool _canRegister;
   final double _latitude, _longitude;
-  final String _recruitmentStatus;
 
   const FoodDetailChildScreen({
     super.key,
@@ -22,8 +20,8 @@ class FoodDetailChildScreen extends StatelessWidget {
     required longitude,
     required int foodId,
     required String recruitmentStatus,
-    Widget? foodCommonWidget,
-    String? userId,
+    required userId,
+    required foodCommonWidget,
   })  : _foodCommonWidget = foodCommonWidget,
         _allAddress = allAddress,
         _latitude = latitude,
@@ -70,9 +68,9 @@ class FoodDetailChildScreen extends StatelessWidget {
             height: _canRegister ? 0 : 20,
             color: Colors.white,
           ),
-          if (_foodCommonWidget != null)
-            SizedBox(height: 130, child: _foodCommonWidget),
-          if (_canRegister) _registrationColumn(context, _applyForFood, _recruitmentStatus),
+          SizedBox(height: 130, child: _foodCommonWidget),
+          if (_canRegister)
+            _registrationColumn(context, _applyForFood, _recruitmentStatus),
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -136,7 +134,8 @@ Widget _greyContainer() {
   );
 }
 
-Widget _registrationColumn(BuildContext context, Function() applyFood, String recruitmentStatus) {
+Widget _registrationColumn(
+    BuildContext context, Function() applyFood, String recruitmentStatus) {
   return Column(children: [
     Container(
       height: 5,
