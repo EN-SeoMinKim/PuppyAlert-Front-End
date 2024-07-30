@@ -1,42 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/widgets/child_widgets/favorite_icon_child_widget.dart';
 
-class FoodCommonWidget extends StatefulWidget {
-  final String _imagePath, _foodName, _hostName, _time, _recruitmentStatus;
-  late bool _isFavorite;
+class FoodCommonWidget extends StatelessWidget {
+  final String _userId, _imagePath, _foodName, _hostName, _time,
+      _recruitmentStatus;
 
-  FoodCommonWidget({
+  const FoodCommonWidget({
     super.key,
+    required String userId,
     required String imagePath,
     required String foodName,
     required String hostName,
     required String time,
     required String recruitmentStatus,
-    required bool isFavorite,
-  })  : _isFavorite = isFavorite,
+  })
+      : _userId = userId,
         _recruitmentStatus = recruitmentStatus,
         _time = time,
         _hostName = hostName,
         _foodName = foodName,
         _imagePath = imagePath;
 
-  @override
-  State<FoodCommonWidget> createState() => _FoodCommonWidgetState();
-}
-
-class _FoodCommonWidgetState extends State<FoodCommonWidget> {
   Color _getBackgroundColor(String recruitmentStatus) {
     if (recruitmentStatus == 'MATCHED') {
       return Colors.grey[200]!;
     }
     return const Color(0xffFFFAE1);
-  }
-
-  Icon _getFavoriteIcon(bool isFavorite) {
-    return Icon(
-      isFavorite ? Icons.favorite : Icons.favorite_border,
-      color: isFavorite ? Colors.red : Colors.grey,
-      size: 20,
-    );
   }
 
   @override
@@ -53,7 +42,7 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image.network(
-                widget._imagePath,
+                _imagePath,
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
@@ -65,41 +54,32 @@ class _FoodCommonWidgetState extends State<FoodCommonWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget._foodName,
+                _foodName,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
-              Container(
-                width:150,
+              SizedBox(
                 height: 30,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(widget._hostName),
-                      IconButton(
-                        icon: _getFavoriteIcon(widget._isFavorite),
-                        onPressed: () {
-                          setState(() {
-                            widget._isFavorite = !widget._isFavorite;
-                          });
-                        },
-                      ),
+                    Text(_hostName),
+                    FavoriteIconChildWidget(
+                        puppyId: _userId, hostId: _hostName),
                   ],
                 ),
               ),
               const SizedBox(height: 4),
-              Text(widget._time),
+              Text(_time),
               const SizedBox(height: 8),
               Container(
-                height: 23,
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
-                  color: _getBackgroundColor(widget._recruitmentStatus),
+                  color: _getBackgroundColor(_recruitmentStatus),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
-                  widget._recruitmentStatus,
+                  _recruitmentStatus,
                   style: const TextStyle(
                     color: Color(0xff7D6600),
                   ),
