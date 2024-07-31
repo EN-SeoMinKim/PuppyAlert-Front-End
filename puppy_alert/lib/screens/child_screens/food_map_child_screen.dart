@@ -82,8 +82,8 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
                           canRegister: true,
                           userId: widget._userDto.userId,
                           allAddress: '${foodInfo['address']} ${foodInfo['detailAddress']}',
-                          latitude: foodInfo['locationMap']['latitude'],
-                          longitude: foodInfo['locationMap']['longitude'],
+                          latitude: foodInfo['location']['latitude'],
+                          longitude: foodInfo['location']['longitude'],
                        recruitmentStatus: foodInfo['status'],
                           foodCommonWidget: FoodCommonWidget(
                             userId: widget._userDto.userId,
