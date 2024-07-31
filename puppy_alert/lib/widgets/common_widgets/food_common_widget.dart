@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:puppy_alert/widgets/child_widgets/favorite_icon_child_widget.dart';
 
 class FoodCommonWidget extends StatelessWidget {
-  final String _userId, _imagePath, _foodName, _hostName, _time,
+  final String _userId,
+      _imagePath,
+      _foodName,
+      _hostName,
+      _time,
       _recruitmentStatus;
 
   const FoodCommonWidget({
@@ -13,16 +17,15 @@ class FoodCommonWidget extends StatelessWidget {
     required String hostName,
     required String time,
     required String recruitmentStatus,
-  })
-      : _userId = userId,
+  })  : _userId = userId,
         _recruitmentStatus = recruitmentStatus,
         _time = time,
         _hostName = hostName,
         _foodName = foodName,
         _imagePath = imagePath;
 
-  Color _getBackgroundColor(String recruitmentStatus) {
-    if (recruitmentStatus == 'MATCHED') {
+  Color _getBackgroundColor() {
+    if (_recruitmentStatus == 'MATCHED') {
       return Colors.grey[200]!;
     }
     return const Color(0xffFFFAE1);
@@ -31,7 +34,7 @@ class FoodCommonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric( vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,7 +78,7 @@ class FoodCommonWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(
-                  color: _getBackgroundColor(_recruitmentStatus),
+                  color: _getBackgroundColor(),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(

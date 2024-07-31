@@ -6,13 +6,11 @@ import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:http/http.dart' as http;
 
 class FoodDetailChildScreen extends StatelessWidget {
-  final Widget? _foodCommonWidget;
-  final String? _userId;
+  final Widget _foodCommonWidget;
+  final String _userId, _allAddress, _recruitmentStatus;
   final int _foodId;
-  final String _allAddress;
   final bool _canRegister;
   final double _latitude, _longitude;
-    final String _recruitmentStatus;
 
   const FoodDetailChildScreen({
     super.key,
@@ -21,9 +19,9 @@ class FoodDetailChildScreen extends StatelessWidget {
     required latitude,
     required longitude,
     required int foodId,
-     required String recruitmentStatus,
-    Widget? foodCommonWidget,
-    String? userId,
+    required String recruitmentStatus,
+    required userId,
+    required foodCommonWidget,
   })  : _foodCommonWidget = foodCommonWidget,
         _allAddress = allAddress,
         _latitude = latitude,
@@ -70,10 +68,9 @@ class FoodDetailChildScreen extends StatelessWidget {
             height: _canRegister ? 0 : 20,
             color: Colors.white,
           ),
-          if (_foodCommonWidget != null)
-            SizedBox(height: 130, child: _foodCommonWidget),
-          if (_canRegister) _registrationColumn(context, _applyForFood),
-
+          SizedBox(height: 130, child: _foodCommonWidget),
+          if (_canRegister)
+            _registrationColumn(context, _applyForFood, _recruitmentStatus),
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -137,7 +134,8 @@ Widget _greyContainer() {
   );
 }
 
-Widget _registrationColumn(BuildContext context, Function() applyFood) {
+Widget _registrationColumn(
+    BuildContext context, Function() applyFood, String recruitmentStatus) {
   return Column(children: [
     Container(
       height: 5,
@@ -157,20 +155,26 @@ Widget _registrationColumn(BuildContext context, Function() applyFood) {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            width: recruitmentStatus == 'READY' ? 70: 90,
+            width: recruitmentStatus == 'READY' ? 70 : 90,
             child: TextButton(
               onPressed: () {
                 applyFood();
                 _showConfirmationDialog(context);
-                recruitmentStatus == 'READY' ? {applyFood(), showConfirmationDialog()} :null;
+                recruitmentStatus == 'READY'
+                    ? {applyFood(), _showConfirmationDialog(context)}
+                    : null;
               },
               style: TextButton.styleFrom(
-                backgroundColor: recruitmentStatus == 'READY' ? const Color(0xffFFF1E4) : Colors.grey[200]!,
+                backgroundColor: recruitmentStatus == 'READY'
+                    ? const Color(0xffFFF1E4)
+                    : Colors.grey[200]!,
               ),
-              child:  Text(
-                recruitmentStatus == 'READY' ? '신청' :'신청완료',
+              child: Text(
+                recruitmentStatus == 'READY' ? '신청' : '신청완료',
                 style: TextStyle(
-                  color: recruitmentStatus == 'READY' ?const Color(0xffFF7700):const Color(0xff7D6600) ,
+                  color: recruitmentStatus == 'READY'
+                      ? const Color(0xffFF7700)
+                      : const Color(0xff7D6600),
                 ),
               ),
             ),

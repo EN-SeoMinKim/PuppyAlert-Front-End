@@ -15,6 +15,19 @@ class FoodMapChildWidget extends StatefulWidget {
 }
 
 class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _setMarkerInfo() {
+    for (NMarker marker in widget._markerSet) {
+      NInfoWindow infoWindow = NInfoWindow.onMarker(id: marker.info.id, text: marker.info.id);
+      marker.openInfoWindow(infoWindow);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return NaverMap(
@@ -22,7 +35,7 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
         locationButtonEnable: true,
         initialCameraPosition: NCameraPosition(
           target: widget._latLng,
-          zoom: 14,
+          zoom: 15,
           bearing: 0,
           tilt: 0,
         ),
@@ -34,9 +47,16 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
       ),
       onMapReady: (NaverMapController controller) {
         if (widget._markerSet.isNotEmpty) {
-          controller.addOverlay(
-              NCircleOverlay(id: 'id', center: widget._latLng, radius: 500, outlineWidth: 0.5, color: Colors.transparent));
           controller.addOverlayAll(widget._markerSet);
+          _setMarkerInfo();
+
+          controller.addOverlay(NCircleOverlay(
+              id: 'id',
+              center: widget._latLng,
+              radius: 500,
+              outlineWidth: 3,
+              outlineColor: Colors.orange,
+              color: Colors.transparent));
         }
       },
     );

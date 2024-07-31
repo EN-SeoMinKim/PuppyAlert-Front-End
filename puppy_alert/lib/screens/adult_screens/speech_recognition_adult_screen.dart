@@ -211,7 +211,7 @@ class _SpeechRecognitionAdultScreenState
                 text: "나의 정보",
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const MyPageAdultScreen()));
+                      builder: (context) => MyPageAdultScreen(userDto: widget._userDto,)));
                 },
               ),
             ],
