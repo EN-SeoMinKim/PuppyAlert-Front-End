@@ -74,7 +74,7 @@ class FoodCommonWidget extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(_time),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                 decoration: BoxDecoration(

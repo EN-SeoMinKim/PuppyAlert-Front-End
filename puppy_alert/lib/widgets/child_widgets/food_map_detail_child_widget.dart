@@ -28,7 +28,7 @@ class FoodMapDetailChildWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -37,15 +37,15 @@ class FoodMapDetailChildWidget extends StatelessWidget {
                 child: Text(
                   "     $_foodName",
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 27,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 25,
                   ),
                 ),
               ),
               Row(
                 children: [
                   Text(_personName),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   const Icon(
                     Icons.favorite_border,
                     color: Colors.red,
@@ -57,7 +57,6 @@ class FoodMapDetailChildWidget extends StatelessWidget {
           ),
         ),
         _infoWidget(Icons.access_time, 'Time', _dateTime),
-        const SizedBox(height: 20),
         _infoWidget(Icons.location_on_outlined, 'Address', _address),
       ],
     );
@@ -67,7 +66,7 @@ class FoodMapDetailChildWidget extends StatelessWidget {
 Widget _infoWidget(IconData iconData, String topString, String bottomString) {
   return Column(
     children: [
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -75,12 +74,12 @@ Widget _infoWidget(IconData iconData, String topString, String bottomString) {
           Icon(
             iconData,
             color: const Color(0xffFF7700),
-            size: 30,
+            size: 25,
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 5),
           Text(
             topString,
-            style: const TextStyle(color: Color(0xffFF7700), fontSize: 25),
+            style: const TextStyle(color: Color(0xffFF7700), fontSize: 20),
             textAlign: TextAlign.start,
           ),
         ],
