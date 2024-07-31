@@ -28,7 +28,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
     super.initState();
     _showWidget = const CircularProgressIndicator();
 
-    _initFoodMapChildWidget().then((markerSet) {
+    _getMarkerSet().then((markerSet) {
       _foodMapChildWidget = FoodMapChildWidget(
           markerSet: markerSet,
           latitude: widget._userDto.location['latitude'] as double,
@@ -41,17 +41,19 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
     });
   }
 
-  Future<Set<NMarker>> _initFoodMapChildWidget() async {
+  Future<Set<NMarker>> _getMarkerSet() async {
     Set<NMarker> markerSet = {};
     http.Response response = await http.get(Uri.parse(
         '${dotenv.get('BASE_URL')}/puppy/food?puppyId=${widget._userDto.userId}'));
     _foodJsonData = jsonDecode(utf8.decode(response.bodyBytes));
 
     for (var data in _foodJsonData) {
-      markerSet.add(NMarker(
-          id: '${data['foodId']}',
+      NMarker marker = NMarker(
+          id: '${data['menuName']}',
           position: NLatLng(
-              data['location']['latitude'], data['location']['longitude'])));
+              data['location']['latitude'], data['location']['longitude']));
+
+      markerSet.add(marker);
     }
 
     return markerSet;
@@ -59,11 +61,9 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
   void _initFoodMapDetailChildWidget(NMarker marker) {
     var foodInfo;
-    int markerId = int.parse(marker.info.id);
 
     for (var data in _foodJsonData) {
-      int dataId = int.parse(data['foodId'].toString());
-      if (markerId == dataId) {
+      if (marker.info.id == data['menuName'].toString()) {
         foodInfo = data;
         break;
       }
@@ -81,10 +81,11 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
                           foodId: foodInfo['foodId'],
                           canRegister: true,
                           userId: widget._userDto.userId,
-                          allAddress: '${foodInfo['address']} ${foodInfo['detailAddress']}',
+                          allAddress:
+                              '${foodInfo['address']} ${foodInfo['detailAddress']}',
                           latitude: foodInfo['location']['latitude'],
                           longitude: foodInfo['location']['longitude'],
-                       recruitmentStatus: foodInfo['status'],
+                          recruitmentStatus: foodInfo['status'],
                           foodCommonWidget: FoodCommonWidget(
                             userId: widget._userDto.userId,
                             imagePath: foodInfo['imageURL'],
