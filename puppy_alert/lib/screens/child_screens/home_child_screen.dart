@@ -19,6 +19,20 @@ class HomeChildScreen extends StatefulWidget {
 }
 
 class _HomeChildScreenState extends State<HomeChildScreen> {
+  List<FoodModel> _sortFoodModel(List<FoodModel> foodList) {
+    foodList.sort((a, b) {
+      if (a.status == 'READY' && b.status != 'READY') {
+        return -1;
+      } else if (a.status != 'READY' && b.status == 'READY') {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return foodList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<FoodProvider>(
@@ -26,12 +40,11 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
       child: Column(
         children: [
           SearchBarChildWidget(
-            address: widget._userAddress,
+            dongAddress: widget._userAddress,
           ),
           Consumer<FoodProvider>(
             builder: (context, provider, child) {
-              List<FoodModel> foodList = provider.getFoodList();
-
+              List<FoodModel> foodList = _sortFoodModel(provider.getFoodList());
               return Expanded(
                 child: ListView.builder(
                   itemCount: foodList.length,
@@ -53,7 +66,8 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                   canRegister: true,
                                   userId: widget._userId,
                                   foodId: foodList[index].foodId,
-                                  allAddress: '${foodList[index].address} ${foodList[index].addressDetail}',
+                                  allAddress:
+                                      '${foodList[index].address} ${foodList[index].addressDetail}',
                                   latitude:
                                       foodList[index].locationMap['latitude'],
                                   longitude:

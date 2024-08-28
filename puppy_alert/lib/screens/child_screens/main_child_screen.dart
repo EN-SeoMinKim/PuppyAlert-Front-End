@@ -15,17 +15,16 @@ class MainChildScreen extends StatefulWidget {
 }
 
 class _MainChildScreenState extends State<MainChildScreen> {
-  late int _selectedIndex;
+  int _selectedIndex = 0;
   late final List<Widget> _widgetOptionList;
 
   @override
   void initState() {
     super.initState();
 
-    _selectedIndex = 0;
     _widgetOptionList = <Widget>[
       HomeChildScreen(
-        userAddress: getAddress(widget._userDto),
+        userAddress: widget._userDto.dongAddress,
         userId:widget._userDto.userId
       ),
       FoodMapChildScreen(
@@ -37,24 +36,9 @@ class _MainChildScreenState extends State<MainChildScreen> {
   }
 
   void _onItemTapped(int index) {
-
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  String getAddress(UserDto userDto) {
-    List<String> splitString = userDto.address.split(' ');
-    for (String s in splitString) {
-      if (s[s.length - 1] == '동') {
-        return s;
-      }
-    }
-
-    if (splitString.length > 2) {
-      return splitString[splitString.length - 2];
-    }
-    return 'NONE';
   }
 
   @override

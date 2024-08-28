@@ -45,7 +45,7 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
     }
   }
 
-  Widget getShowWidget() {
+  Widget _getShowWidget() {
     if (favoriteHostModelList == null) {
       return const Center(child: CircularProgressIndicator());
     } else if (favoriteHostModelList!.isEmpty) {
@@ -88,7 +88,7 @@ class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
             border: Border.all(color: Colors.grey[200]!, width: 2.0),
           ),
         ),
-        getShowWidget(),
+        _getShowWidget(),
       ],
     );
   }

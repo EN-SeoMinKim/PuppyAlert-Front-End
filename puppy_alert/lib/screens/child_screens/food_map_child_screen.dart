@@ -19,14 +19,13 @@ class FoodMapChildScreen extends StatefulWidget {
 }
 
 class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
-  late Widget _showWidget;
+  Widget _showWidget = const CircularProgressIndicator();
   late final FoodMapChildWidget _foodMapChildWidget;
   late final _foodJsonData;
 
   @override
   void initState() {
     super.initState();
-    _showWidget = const CircularProgressIndicator();
 
     _getMarkerSet().then((markerSet) {
       _foodMapChildWidget = FoodMapChildWidget(
@@ -104,14 +103,14 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   }
 
   void _onTappedMarker(Set<NMarker> markerSet) {
-    if (markerSet.isNotEmpty) {
-      for (var m in markerSet) {
-        m.setOnTapListener((NMarker marker) {
-          setState(() {
-            _initFoodMapDetailChildWidget(marker);
-          });
+    if (markerSet.isEmpty) return;
+
+    for (var m in markerSet) {
+      m.setOnTapListener((NMarker marker) {
+        setState(() {
+          _initFoodMapDetailChildWidget(marker);
         });
-      }
+      });
     }
   }
 

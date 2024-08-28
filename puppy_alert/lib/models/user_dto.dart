@@ -5,7 +5,8 @@ class UserDto {
       _nickName,
       _birth,
       _phoneNumber,
-      _address;
+      _address,
+      _dongAddress;
   late Map<String, dynamic> _location;
 
   UserDto(
@@ -23,13 +24,30 @@ class UserDto {
     _nickName = nickName;
     _birth = birth;
     _phoneNumber = phoneNumber;
-    _address = address;
     _location = location;
+    _address = address;
+    _dongAddress = _parsingAddress(address);
+  }
+
+  String _parsingAddress(String address) {
+    List<String> splitString = address.split(' ');
+    for (String s in splitString) {
+      if (s[s.length - 1] == '동') {
+        return s;
+      }
+    }
+
+    if (splitString.length > 2) {
+      return splitString[splitString.length - 2];
+    }
+    return 'NONE';
   }
 
   Map<String, dynamic> get location => _location;
 
   String get address => _address;
+
+  String get dongAddress => _dongAddress;
 
   String get phoneNumber => _phoneNumber;
 
