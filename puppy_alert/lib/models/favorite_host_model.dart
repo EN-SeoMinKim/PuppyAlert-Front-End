@@ -1,15 +1,15 @@
 class FavoriteHostModel {
-  late String _hostId;
+  late String _hostNickName;
   late String _recentFoodTime;
 
-  FavoriteHostModel({required String hostId, required String recentFoodTime})
-      : _hostId = hostId,
+  FavoriteHostModel({required String hostNickName, required String recentFoodTime})
+      : _hostNickName = hostNickName,
         _recentFoodTime = recentFoodTime;
 
   factory FavoriteHostModel.fromJson(Map<String, dynamic> json) {
     if (json['recentFoodTime'] == null) {
       return FavoriteHostModel(
-        hostId: json['hostId'],
+          hostNickName: json['hostNickName'],
         recentFoodTime: '함꼐 식사한 기록이 없습니다'
       );
     }
@@ -23,10 +23,10 @@ class FavoriteHostModel {
     json['recentFoodTime'] = '$monthDay $hourMinute';
 
     return FavoriteHostModel(
-        hostId: json['hostId'], recentFoodTime: json['recentFoodTime']);
+        hostNickName: json['hostNickName'], recentFoodTime: json['recentFoodTime']);
   }
 
-  String get hostId => _hostId;
+  String get hostId => _hostNickName;
 
   String get recentFoodTime => _recentFoodTime;
 }

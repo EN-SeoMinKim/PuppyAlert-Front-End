@@ -52,7 +52,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     FoodCommonWidget foodCommonWidget = FoodCommonWidget(
                       imagePath: foodList[index].imageURL,
                       foodName: foodList[index].menuName,
-                      hostName: foodList[index].hostId,
+                      hostName: foodList[index].hostNickName,
                       time: foodList[index].time,
                       recruitmentStatus: foodList[index].status,
                       userId: widget._userId,
