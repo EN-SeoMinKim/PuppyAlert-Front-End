@@ -70,9 +70,9 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
     _showWidget = Column(
       children: [
-        SizedBox(height: 400, child: _foodMapChildWidget),
+        SizedBox(height: 460, child: _foodMapChildWidget),
         SizedBox(
-            height: 250,
+            height: 210,
             child: InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(

@@ -162,7 +162,7 @@ class _SpeechRecognitionAdultScreenState
   }
 
   Future<void> _completeRegisterFood() async {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => FoodRegistrationCompletionAdultScreen(
             userId: widget._userDto.userId, food: _food, time: _time)));
   }
