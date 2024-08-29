@@ -23,17 +23,17 @@ class _MainChildScreenState extends State<MainChildScreen> {
   @override
   void initState() {
     super.initState();
-
     _widgetOptionList = <Widget>[
       HomeChildScreen(
-        userAddress: widget._userDto.dongAddress,
-        userId:widget._userDto.userId
-      ),
+          userAddress: widget._userDto.dongAddress,
+          userId: widget._userDto.userId),
       FoodMapChildScreen(
         userDto: widget._userDto,
       ),
       FavoriteHostChildScreen(userId: widget._userDto.userId),
-      MyPageChildScreen(userDto: widget._userDto,),
+      MyPageChildScreen(
+        userDto: widget._userDto,
+      ),
     ];
   }
 
@@ -50,8 +50,7 @@ class _MainChildScreenState extends State<MainChildScreen> {
       body: Center(
         child: ChangeNotifierProvider<FoodProvider>(
             create: (context) => FoodProvider(widget._userDto.userId),
-            child: _widgetOptionList.elementAt(_selectedIndex)
-        ),
+            child: _widgetOptionList.elementAt(_selectedIndex)),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

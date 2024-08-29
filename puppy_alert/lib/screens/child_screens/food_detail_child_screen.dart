@@ -17,20 +17,20 @@ class FoodDetailChildScreen extends StatelessWidget {
     super.key,
     required String userId,
     required FoodCommonWidget foodCommonWidget,
-  })
-      : _userId = userId,
+  })  : _userId = userId,
         _foodCommonWidget = foodCommonWidget,
         _foodModel = foodCommonWidget.foodModel,
         _canRegister = foodCommonWidget.foodModel.status == 'READY';
 
   void _applyForFood() {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/food');
+
     http.post(
       uri,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'foodId': _foodModel.foodId,
-        'puppyId':_userId,
+        'puppyId': _userId,
       }),
     );
   }
@@ -97,7 +97,10 @@ class FoodDetailChildScreen extends StatelessWidget {
                     markerSet: {
                       NMarker(
                           id: _foodModel.foodId.toString(),
-                          position: NLatLng(_foodModel.locationMap['latitude'], _foodModel.locationMap['longitude'],))
+                          position: NLatLng(
+                            _foodModel.locationMap['latitude'],
+                            _foodModel.locationMap['longitude'],
+                          ))
                     },
                     latitude: _foodModel.locationMap['latitude'],
                     longitude: _foodModel.locationMap['longitude'],
@@ -126,8 +129,8 @@ Widget _greyContainer() {
   );
 }
 
-Widget _registrationColumn(BuildContext context, Function() applyFood,
-    String recruitmentStatus) {
+Widget _registrationColumn(
+    BuildContext context, Function() applyFood, String recruitmentStatus) {
   return Column(children: [
     Container(
       height: 5,

@@ -43,7 +43,7 @@ class _FoodRecordScreenState extends State<FoodRecordScreen> {
                 locationMap: data['location'],
                 menu: data['menuName'],
                 status: "Matched",
-                time: data['time'],
+                time: data['localDateTime'],
               ),
             ),
           );
