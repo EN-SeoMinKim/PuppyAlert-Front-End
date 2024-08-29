@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/provider/food_provider.dart';
 import 'package:puppy_alert/screens/child_screens/favorite_host_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/home_child_screen.dart';
 import 'package:puppy_alert/screens/child_screens/my_page_child_screen.dart';
@@ -46,7 +48,10 @@ class _MainChildScreenState extends State<MainChildScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: _widgetOptionList.elementAt(_selectedIndex),
+        child: ChangeNotifierProvider<FoodProvider>(
+            create: (context) => FoodProvider(widget._userDto.userId),
+            child: _widgetOptionList.elementAt(_selectedIndex)
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

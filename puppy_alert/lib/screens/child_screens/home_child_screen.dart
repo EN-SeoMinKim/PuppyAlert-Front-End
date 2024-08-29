@@ -35,55 +35,47 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<FoodProvider>(
-      create: (context) => FoodProvider(),
-      child: Column(
-        children: [
-          SearchBarChildWidget(
-            dongAddress: widget._userAddress,
-          ),
-          Consumer<FoodProvider>(
-            builder: (context, provider, child) {
-              List<FoodModel> foodList = _sortFoodModel(provider.getFoodList());
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: foodList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    FoodCommonWidget foodCommonWidget = FoodCommonWidget(
-                      imagePath: foodList[index].imageURL,
-                      foodName: foodList[index].menuName,
-                      hostName: foodList[index].hostNickName,
-                      time: foodList[index].time,
-                      recruitmentStatus: foodList[index].status,
-                      userId: widget._userId,
-                    );
-
-                    return InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => FoodDetailChildScreen(
-                                  foodCommonWidget: foodCommonWidget,
-                                  canRegister: true,
-                                  userId: widget._userId,
-                                  foodId: foodList[index].foodId,
-                                  allAddress:
-                                      '${foodList[index].address} ${foodList[index].addressDetail}',
-                                  latitude:
-                                      foodList[index].locationMap['latitude'],
-                                  longitude:
-                                      foodList[index].locationMap['longitude'],
-                                  recruitmentStatus: foodList[index].status,
-                                )));
-                      },
-                      child: foodCommonWidget,
-                    );
-                  },
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        SearchBarChildWidget(
+          dongAddress: widget._userAddress,
+        ),
+        Consumer<FoodProvider>(
+          builder: (context, provider, child) {
+            List<FoodModel> foodList = _sortFoodModel(provider.getFoodList());
+            return Expanded(
+              child: ListView.builder(
+                itemCount: foodList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  FoodCommonWidget foodCommonWidget = FoodCommonWidget(
+                    foodModel: foodList[index],
+                    userId: widget._userId,
+                  );
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => FoodDetailChildScreen(
+                                foodCommonWidget: foodCommonWidget,
+                                canRegister: true,
+                                userId: widget._userId,
+                                foodId: foodList[index].foodId,
+                                allAddress:
+                                    '${foodList[index].address} ${foodList[index].addressDetail}',
+                                latitude:
+                                    foodList[index].locationMap['latitude'],
+                                longitude:
+                                    foodList[index].locationMap['longitude'],
+                                recruitmentStatus: foodList[index].status,
+                              )));
+                    },
+                    child: foodCommonWidget,
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

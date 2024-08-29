@@ -1,17 +1,19 @@
 class FoodModel {
-  late int _foodId;
-  late String _hostNickName,
+  final int _foodId;
+  final String _hostNickName,
+      _hostId,
       _menuName,
       _time,
       _imageURL,
       _address,
       _addressDetail,
       _status;
-  late var _locationMap;
+  var _locationMap;
 
   FoodModel(
       {required int foodId,
       required String hostNickName,
+      required String hostId,
       required String menu,
       required String time,
       required String imageURL,
@@ -20,6 +22,7 @@ class FoodModel {
       required String status,
       required var locationMap})
       : _foodId = foodId,
+        _hostId = hostId,
         _hostNickName = hostNickName,
         _menuName = menu,
         _time = time,
@@ -41,6 +44,7 @@ class FoodModel {
 
     return FoodModel(
         foodId: json['foodId'],
+        hostId: json['hostId'],
         hostNickName: json['hostNickName'],
         menu: json['menuName'],
         time: json['time'],
@@ -52,6 +56,8 @@ class FoodModel {
   }
 
   int get foodId => _foodId;
+
+  String get hostId => _hostId;
 
   String get hostNickName => _hostNickName;
 
