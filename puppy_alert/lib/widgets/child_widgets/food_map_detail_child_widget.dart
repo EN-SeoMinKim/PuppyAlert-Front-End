@@ -1,27 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/models/food_model.dart';
 
 class FoodMapDetailChildWidget extends StatelessWidget {
-  late final String _foodName, _personName, _address;
-  late final String _dateTime;
+  final FoodModel _foodModel;
 
-  FoodMapDetailChildWidget(
-      String foodName, String personName, String address, String dateTime,
-      {super.key}) {
-    _foodName = foodName;
-    _personName = personName;
-    _address = address;
-    _dateTime = parsingTime(dateTime);
-  }
-
-  String parsingTime(String dateTime) {
-    List<String> timeSplit = dateTime.split('T');
-    String monthDay =
-        '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
-    String hourMinute =
-        '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
-
-    return '$monthDay $hourMinute';
-  }
+  const FoodMapDetailChildWidget({super.key, required FoodModel foodModel})
+      : _foodModel = foodModel;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +19,7 @@ class FoodMapDetailChildWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 10.0, 0),
                 child: Text(
-                  "     $_foodName",
+                  "     $_foodModel.menuName",
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 25,
@@ -44,7 +28,7 @@ class FoodMapDetailChildWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text(_personName),
+                  Text(_foodModel.hostNickName),
                   const SizedBox(width: 10),
                   const Icon(
                     Icons.favorite_border,
@@ -56,8 +40,8 @@ class FoodMapDetailChildWidget extends StatelessWidget {
             ],
           ),
         ),
-        _infoWidget(Icons.access_time, 'Time', _dateTime),
-        _infoWidget(Icons.location_on_outlined, 'Address', _address),
+        _infoWidget(Icons.access_time, 'Time', _foodModel.time),
+        _infoWidget(Icons.location_on_outlined, 'Address', _foodModel.address),
       ],
     );
   }

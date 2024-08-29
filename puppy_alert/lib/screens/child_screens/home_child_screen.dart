@@ -56,16 +56,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => FoodDetailChildScreen(
                                 foodCommonWidget: foodCommonWidget,
-                                canRegister: true,
                                 userId: widget._userId,
-                                foodId: foodList[index].foodId,
-                                allAddress:
-                                    '${foodList[index].address} ${foodList[index].addressDetail}',
-                                latitude:
-                                    foodList[index].locationMap['latitude'],
-                                longitude:
-                                    foodList[index].locationMap['longitude'],
-                                recruitmentStatus: foodList[index].status,
                               )));
                     },
                     child: foodCommonWidget,

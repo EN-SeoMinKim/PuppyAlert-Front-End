@@ -1,9 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/provider/food_provider.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_detail_child_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
@@ -21,52 +21,44 @@ class FoodMapChildScreen extends StatefulWidget {
 class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   Widget _showWidget = const CircularProgressIndicator();
   late final FoodMapChildWidget _foodMapChildWidget;
-  late final _foodJsonData;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _getMarkerSet().then((markerSet) {
-      _foodMapChildWidget = FoodMapChildWidget(
-          markerSet: markerSet,
-          latitude: widget._userDto.location['latitude'] as double,
-          longitude: widget._userDto.location['longitude'] as double);
-      _showWidget = _foodMapChildWidget;
-
-      setState(() {
-        _onTappedMarker(markerSet);
-      });
-    });
-  }
-
-  Future<Set<NMarker>> _getMarkerSet() async {
+  Set<NMarker> _getMarkerSet(List<FoodModel> foodList) {
     Set<NMarker> markerSet = {};
-    http.Response response = await http.get(Uri.parse(
-        '${dotenv.get('BASE_URL')}/puppy/food?puppyId=${widget._userDto.userId}'));
-    _foodJsonData = jsonDecode(utf8.decode(response.bodyBytes));
 
-    for (var data in _foodJsonData) {
+    for (var data in foodList) {
       NMarker marker = NMarker(
-          id: '${data['menuName']}',
+          id: data.foodId.toString(),
           position: NLatLng(
-              data['location']['latitude'], data['location']['longitude']));
+              data.locationMap['latitude'], data.locationMap['longitude']));
 
       markerSet.add(marker);
     }
-
     return markerSet;
   }
 
-  void _initFoodMapDetailChildWidget(NMarker marker) {
-    var foodInfo;
+  void _onTappedMarker(Set<NMarker> markerSet, List<FoodModel> foodList) {
+    if (markerSet.isEmpty) return;
 
-    for (var data in _foodJsonData) {
-      if (marker.info.id == data['menuName'].toString()) {
-        foodInfo = data;
+    for (var m in markerSet) {
+      m.setOnTapListener((NMarker marker) {
+        setState(() {
+          _initFoodMapDetailChildWidget(marker, foodList);
+        });
+      });
+    }
+  }
+
+  void _initFoodMapDetailChildWidget(NMarker marker, List<FoodModel> foodList) {
+    FoodModel? foodModel;
+
+    for (var data in foodList) {
+      if (marker.info.id == data.foodId.toString()) {
+        foodModel = data;
         break;
       }
     }
+
+    if (foodModel == null) return;
 
     _showWidget = Column(
       children: [
@@ -77,45 +69,33 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => FoodDetailChildScreen(
-                          foodId: foodInfo['foodId'],
-                          canRegister: true,
-                          userId: widget._userDto.userId,
-                          allAddress:
-                              '${foodInfo['address']} ${foodInfo['detailAddress']}',
-                          latitude: foodInfo['location']['latitude'],
-                          longitude: foodInfo['location']['longitude'],
-                          recruitmentStatus: foodInfo['status'],
-                          foodCommonWidget: FoodCommonWidget(
-                            userId: widget._userDto.userId,
-                            imagePath: foodInfo['imageURL'],
-                            foodName: foodInfo['menuName'],
-                            recruitmentStatus: foodInfo['status'],
-                            hostName: foodInfo['hostId'],
-                            time: foodInfo['time'],
-                          ),
-                        )));
+                      userId: widget._userDto.userId,
+                      foodCommonWidget: FoodCommonWidget(
+                        userId: widget._userDto.userId,
+                        foodModel: foodModel!,
+                      ),
+                    )));
               },
-              child: FoodMapDetailChildWidget(foodInfo['menuName'],
-                  foodInfo['hostId'], foodInfo['address'], foodInfo['time']),
+              child: FoodMapDetailChildWidget(foodModel: foodModel,),
             )),
       ],
     );
   }
 
-  void _onTappedMarker(Set<NMarker> markerSet) {
-    if (markerSet.isEmpty) return;
-
-    for (var m in markerSet) {
-      m.setOnTapListener((NMarker marker) {
-        setState(() {
-          _initFoodMapDetailChildWidget(marker);
-        });
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Center(child: _showWidget);
+    return Consumer<FoodProvider>(builder: (context, provider, child) {
+      List<FoodModel> foodList = provider.getFoodList();
+      Set<NMarker> markerSet = _getMarkerSet(foodList);
+
+      _foodMapChildWidget = FoodMapChildWidget(
+          markerSet: markerSet,
+          latitude: widget._userDto.location['latitude'] as double,
+          longitude: widget._userDto.location['longitude'] as double);
+      _showWidget = _foodMapChildWidget;
+
+      _onTappedMarker(markerSet, foodList);
+      return Center(child: _showWidget);
+    });
   }
 }

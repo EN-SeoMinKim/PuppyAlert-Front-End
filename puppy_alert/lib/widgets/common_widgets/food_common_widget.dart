@@ -1,31 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/widgets/child_widgets/favorite_icon_child_widget.dart';
 
 class FoodCommonWidget extends StatelessWidget {
-  final String _userId,
-      _imagePath,
-      _foodName,
-      _hostName,
-      _time,
-      _recruitmentStatus;
+  final String _userId;
+  final FoodModel _foodModel;
+
+  FoodModel get foodModel => _foodModel;
 
   const FoodCommonWidget({
     super.key,
     required String userId,
-    required String imagePath,
-    required String foodName,
-    required String hostName,
-    required String time,
-    required String recruitmentStatus,
+    required FoodModel foodModel,
   })  : _userId = userId,
-        _recruitmentStatus = recruitmentStatus,
-        _time = time,
-        _hostName = hostName,
-        _foodName = foodName,
-        _imagePath = imagePath;
+        _foodModel = foodModel;
 
   Color _getBackgroundColor() {
-    if (_recruitmentStatus == 'MATCHED') {
+    if (_foodModel.status == 'MATCHED') {
       return Colors.grey[200]!;
     }
     return const Color(0xffFFFAE1);
@@ -45,7 +36,7 @@ class FoodCommonWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image.network(
-                _imagePath,
+                _foodModel.imageURL,
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
@@ -57,7 +48,7 @@ class FoodCommonWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _foodName,
+                _foodModel.menuName,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
@@ -66,14 +57,14 @@ class FoodCommonWidget extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_hostName),
+                    Text(_foodModel.hostNickName),
                     FavoriteIconChildWidget(
-                        puppyId: _userId, hostId: _hostName),
+                        puppyId: _userId, hostId: _foodModel.hostId),
                   ],
                 ),
               ),
               const SizedBox(height: 4),
-              Text(_time),
+              Text(_foodModel.time),
               const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
@@ -82,7 +73,7 @@ class FoodCommonWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
-                  _recruitmentStatus,
+                  _foodModel.status,
                   style: const TextStyle(
                     color: Color(0xff7D6600),
                   ),

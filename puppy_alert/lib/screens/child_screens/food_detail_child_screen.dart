@@ -2,34 +2,26 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
 class FoodDetailChildScreen extends StatelessWidget {
-  final Widget _foodCommonWidget;
-  final String _userId, _allAddress, _recruitmentStatus;
-  final int _foodId;
+  final FoodCommonWidget _foodCommonWidget;
+  final String _userId;
+  final FoodModel _foodModel;
   final bool _canRegister;
-  final double _latitude, _longitude;
 
-  const FoodDetailChildScreen({
+  FoodDetailChildScreen({
     super.key,
-    required canRegister,
-    required allAddress,
-    required latitude,
-    required longitude,
-    required int foodId,
-    required String recruitmentStatus,
-    required userId,
-    required foodCommonWidget,
-  })  : _foodCommonWidget = foodCommonWidget,
-        _allAddress = allAddress,
-        _latitude = latitude,
-        _longitude = longitude,
-        _canRegister = canRegister,
-        _recruitmentStatus = recruitmentStatus,
-        _userId = userId,
-        _foodId = foodId;
+    required String userId,
+    required FoodCommonWidget foodCommonWidget,
+  })
+      : _userId = userId,
+        _foodCommonWidget = foodCommonWidget,
+        _foodModel = foodCommonWidget.foodModel,
+        _canRegister = foodCommonWidget.foodModel.status == 'READY';
 
   void _applyForFood() {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/food');
@@ -37,8 +29,8 @@ class FoodDetailChildScreen extends StatelessWidget {
       uri,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
-        'foodId': _foodId,
-        'puppyId': _userId,
+        'foodId': _foodModel.foodId,
+        'puppyId':_userId,
       }),
     );
   }
@@ -70,7 +62,7 @@ class FoodDetailChildScreen extends StatelessWidget {
           ),
           SizedBox(height: 130, child: _foodCommonWidget),
           if (_canRegister)
-            _registrationColumn(context, _applyForFood, _recruitmentStatus),
+            _registrationColumn(context, _applyForFood, _foodModel.status),
           Container(
             height: 20,
             color: Colors.grey[100],
@@ -94,7 +86,7 @@ class FoodDetailChildScreen extends StatelessWidget {
                       color: Color(0xffFF7700),
                     ),
                     const SizedBox(width: 10),
-                    Text(_allAddress),
+                    Text('${_foodModel.address} ${_foodModel.addressDetail}'),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -104,11 +96,11 @@ class FoodDetailChildScreen extends StatelessWidget {
                   child: FoodMapChildWidget(
                     markerSet: {
                       NMarker(
-                          id: _foodId.toString(),
-                          position: NLatLng(_latitude, _longitude))
+                          id: _foodModel.foodId.toString(),
+                          position: NLatLng(_foodModel.locationMap['latitude'], _foodModel.locationMap['longitude'],))
                     },
-                    latitude: _latitude,
-                    longitude: _longitude,
+                    latitude: _foodModel.locationMap['latitude'],
+                    longitude: _foodModel.locationMap['longitude'],
                   ),
                 )
               ],
@@ -134,8 +126,8 @@ Widget _greyContainer() {
   );
 }
 
-Widget _registrationColumn(
-    BuildContext context, Function() applyFood, String recruitmentStatus) {
+Widget _registrationColumn(BuildContext context, Function() applyFood,
+    String recruitmentStatus) {
   return Column(children: [
     Container(
       height: 5,
