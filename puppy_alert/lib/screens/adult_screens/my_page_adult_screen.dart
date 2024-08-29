@@ -23,7 +23,7 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
       body: Center(
         child: Column(
           children: [
-            const MyPageHeaderCommonWidget( userName: '권오성'),
+            MyPageHeaderCommonWidget( userName: widget._userDto.nickName),
             const SizedBox(
               height: 20,
             ),
@@ -31,7 +31,7 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PersonalInformationScreen()));
+                      builder: (context) => PersonalInformationScreen(userDto: widget._userDto,)));
                 },
                 text: "개인 정보"),
             const SizedBox(

@@ -24,7 +24,7 @@ class MyPageChildScreen extends StatelessWidget {
             text: '   개인 정보',
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const PersonalInformationScreen()));
+                  builder: (context) => PersonalInformationScreen(userDto: _userDto,)));
             }),
         ProfileInfoButtonChildWidget(
             icon: Icons.library_books,

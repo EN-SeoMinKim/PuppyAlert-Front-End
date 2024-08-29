@@ -1,6 +1,6 @@
 class FavoriteHostModel {
-  late String _hostNickName;
-  late String _recentFoodTime;
+  final String _hostNickName;
+  final String _recentFoodTime;
 
   FavoriteHostModel({required String hostNickName, required String recentFoodTime})
       : _hostNickName = hostNickName,
