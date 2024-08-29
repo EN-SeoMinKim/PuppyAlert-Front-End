@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 import 'package:http/http.dart' as http;
@@ -19,38 +20,39 @@ class FoodRecordScreen extends StatefulWidget {
 }
 
 class _FoodRecordScreenState extends State<FoodRecordScreen> {
-  late List<FoodCommonWidget> _foodCommonWidget;
+  final List<FoodCommonWidget> _foodCommonWidgetList =
+      List.empty(growable: true);
 
   @override
   void initState() {
     super.initState();
-    _foodCommonWidget = List.empty(growable: true);
 
-    getJsonData().then((jsonData) {
+    _getJsonData().then((jsonData) {
       setState(() {
         for (var data in jsonData) {
-          _foodCommonWidget.add(FoodCommonWidget(
+          _foodCommonWidgetList.add(
+            FoodCommonWidget(
               userId: widget._userId,
-              imagePath: data['imageURL'],
-              foodName: data['menuName'],
-              hostName: data['partnerId'],
-              time: getParsingTimeData(data['localDateTime']),
-              recruitmentStatus: 'MATCHED'));
+              foodModel: FoodModel(
+                address: data['address'],
+                addressDetail: data['detailAddress'],
+                foodId: data['foodId'],
+                hostId: data['hostId'],
+                hostNickName: data['partnerNickName'],
+                imageURL: data['imageURL'],
+                locationMap: data['location'],
+                menu: data['menuName'],
+                status: "Matched",
+                time: data['time'],
+              ),
+            ),
+          );
         }
       });
     });
   }
 
-  String getParsingTimeData(String time) {
-    List<String> timeSplit = time.split('T');
-    String monthDay =
-        '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
-    String hourMinute =
-        '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
-    return '$monthDay $hourMinute';
-  }
-
-  Future<dynamic> getJsonData() async {
+  Future<dynamic> _getJsonData() async {
     Uri uri;
     if (widget._isChildScreen) {
       uri = Uri.parse(
@@ -87,23 +89,23 @@ class _FoodRecordScreenState extends State<FoodRecordScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: _foodCommonWidget.length,
+                itemCount: _foodCommonWidgetList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (_foodCommonWidget.isEmpty) {
+                  if (_foodCommonWidgetList.isEmpty) {
                     return const LinearProgressIndicator();
                   }
 
-                  return _foodCommonWidget[index];
+                  return _foodCommonWidgetList[index];
                 },
               ),
             ),
-            if (!widget._isChildScreen) goBackButton(context),
+            if (!widget._isChildScreen) _goBackButton(context),
           ],
         ));
   }
 }
 
-Widget goBackButton(BuildContext context) {
+Widget _goBackButton(BuildContext context) {
   return Container(
     height: 100.0,
     decoration: BoxDecoration(

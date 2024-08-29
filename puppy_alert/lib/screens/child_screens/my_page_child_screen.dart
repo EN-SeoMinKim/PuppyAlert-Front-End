@@ -42,12 +42,6 @@ class MyPageChildScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => FoodDetailChildScreen(
-                      canRegister: false,
-                      allAddress: '군자동 150-14 엔샵빌라 16동 209호',
-                      latitude: 37.5537926552335,
-                      longitude: 127.07382983231,
-                      foodId: 1,
-                      recruitmentStatus: 'MATCHED',
                       userId: _userDto.userId,
                       foodCommonWidget: FoodCommonWidget(
                         foodName: '까르보나라',

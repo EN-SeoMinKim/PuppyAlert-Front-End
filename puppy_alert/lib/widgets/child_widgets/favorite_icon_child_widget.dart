@@ -17,7 +17,7 @@ class FavoriteIconChildWidget extends StatefulWidget {
 }
 
 class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
-  late bool _isFavorite;
+  bool _isFavorite = false;
 
   @override
   void initState() {
@@ -26,11 +26,11 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
   }
 
   void _initIsFavorite() async {
-    _isFavorite = false;
     http.Response response = await http.get(Uri.parse(
-        '${dotenv.get('BASE_URL')}/puppy/favoriteHost?puppyId=${widget
-            ._puppyId}'));
-    List<FavoriteHostModel> hostList = jsonDecode(response.body).map<FavoriteHostModel>((json) => FavoriteHostModel.fromJson(json)).toList();
+        '${dotenv.get('BASE_URL')}/puppy/favoriteHost?puppyId=${widget._puppyId}'));
+    List<FavoriteHostModel> hostList = jsonDecode(response.body)
+        .map<FavoriteHostModel>((json) => FavoriteHostModel.fromJson(json))
+        .toList();
 
     for (var host in hostList) {
       if (host.hostId == widget._hostId) {
@@ -54,6 +54,7 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
           headers: {'Content-Type': 'application/json'}, body: bodyData);
       return;
     }
+
     http.delete(uri,
         headers: {'Content-Type': 'application/json'}, body: bodyData);
   }
