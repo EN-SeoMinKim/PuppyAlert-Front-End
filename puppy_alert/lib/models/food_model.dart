@@ -1,7 +1,7 @@
 class FoodModel {
-  final int _foodId;
-  final String _hostNickName,
-      _hostId,
+  late final int _foodId;
+  late final String _hostId,
+      _hostNickName,
       _menuName,
       _time,
       _imageURL,
@@ -20,28 +20,20 @@ class FoodModel {
       required String address,
       required String addressDetail,
       required String status,
-      required var locationMap})
-      : _foodId = foodId,
-        _hostId = hostId,
-        _hostNickName = hostNickName,
-        _menuName = menu,
-        _time = time,
-        _imageURL = imageURL,
-        _address = address,
-        _addressDetail = addressDetail,
-        _status = status,
-        _locationMap = locationMap;
+      required var locationMap}) {
+    _foodId = foodId;
+    _hostId = hostId;
+    _hostNickName = hostNickName;
+    _menuName = menu;
+    _time = _parsingTime(time);
+    _imageURL = imageURL;
+    _address = address;
+    _addressDetail = addressDetail;
+    _status = status;
+    _locationMap = locationMap;
+  }
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
-    if (json['time'] != null) {
-      List<String> timeSplit = json['time'].split('T');
-      String monthDay =
-          '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
-      String hourMinute =
-          '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
-      json['time'] = '$monthDay $hourMinute';
-    }
-
     return FoodModel(
         foodId: json['foodId'],
         hostId: json['hostId'],
@@ -53,6 +45,15 @@ class FoodModel {
         addressDetail: json['detailAddress'],
         status: json['status'],
         locationMap: json['location']);
+  }
+
+  String _parsingTime(String time) {
+    List<String> timeSplit = time.split('T');
+    String monthDay =
+        '${timeSplit[0].split('-')[1]}/${timeSplit[0].split('-')[2]}';
+    String hourMinute =
+        '${timeSplit[1].split(':')[0]}:${timeSplit[1].split(':')[1]}';
+    return '$monthDay $hourMinute';
   }
 
   int get foodId => _foodId;
