@@ -79,13 +79,13 @@ class _SignupScreenState extends State<SignupScreen> {
       String inputString = _textEditingControllerList[widget._id].text.trim();
       key = _idFormKey;
       uri =
-          Uri.parse('${dotenv.get('BASE_URL')}/common/checkId?id=$inputString');
+          Uri.parse('${dotenv.get('BASE_URL')}/user/checkId?id=$inputString');
     } else {
       String inputString =
           _textEditingControllerList[widget._nickName].text.trim();
       key = _nickNameFormKey;
       uri = Uri.parse(
-          '${dotenv.get('BASE_URL')}/common/checkNickName?nickName=$inputString');
+          '${dotenv.get('BASE_URL')}/user/checkNickName?nickName=$inputString');
     }
 
     if (!_isKeyValid(key)) return;
@@ -147,9 +147,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Uri getUri(UserType userType) {
     if (userType == UserType.adult) {
-      return Uri.parse('${dotenv.get('BASE_URL')}/host/signup');
+      return Uri.parse('${dotenv.get('BASE_URL')}/user/signup');
     }
-    return Uri.parse('${dotenv.get('BASE_URL')}/puppy/signup');
+    return Uri.parse('${dotenv.get('BASE_URL')}/user/signup');
   }
 
   String _getUserTypeString(UserType userType) {

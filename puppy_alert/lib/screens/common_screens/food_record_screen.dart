@@ -34,10 +34,10 @@ class _FoodRecordScreenState extends State<FoodRecordScreen> {
             FoodCommonWidget(
               userId: widget._userId,
               foodModel: FoodModel(
+                foodId: data['foodId'],
                 address: data['address'],
                 addressDetail: data['detailAddress'],
-                foodId: data['foodId'],
-                hostId: data['hostId'],
+                hostId: data['partnerId'],
                 hostNickName: data['partnerNickName'],
                 imageURL: data['imageURL'],
                 locationMap: data['location'],

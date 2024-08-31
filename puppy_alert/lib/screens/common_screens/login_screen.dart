@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _submitLoginForm() async {
     String id = _idController.text.trim();
     String password = _passwordController.text.trim();
-    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/common/login');
+    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/user/login');
     http.Response response = await http.post(uri,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
