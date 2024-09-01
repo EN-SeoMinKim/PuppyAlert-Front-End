@@ -20,7 +20,7 @@ class FoodMapChildScreen extends StatefulWidget {
 
 class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   Widget _showWidget = const CircularProgressIndicator();
-  late final FoodMapChildWidget _foodMapChildWidget;
+  FoodMapChildWidget? _foodMapChildWidget;
 
   Set<NMarker> _getMarkerSet(List<FoodModel> foodList) {
     Set<NMarker> markerSet = {};
@@ -85,16 +85,20 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<FoodProvider>(builder: (context, provider, child) {
-      List<FoodModel> foodList = provider.getFoodList();
-      Set<NMarker> markerSet = _getMarkerSet(foodList);
+      if (_foodMapChildWidget == null) {
+        List<FoodModel> foodList = provider.getFoodList();
+        Set<NMarker> markerSet = _getMarkerSet(foodList);
 
-      _foodMapChildWidget = FoodMapChildWidget(
-          markerSet: markerSet,
-          latitude: widget._userDto.location['latitude'] as double,
-          longitude: widget._userDto.location['longitude'] as double);
-      _showWidget = _foodMapChildWidget;
+        _foodMapChildWidget = FoodMapChildWidget(
+            markerSet: markerSet,
+            foodList: foodList,
+            latitude: widget._userDto.location['latitude'] as double,
+            longitude: widget._userDto.location['longitude'] as double);
+        _showWidget = _foodMapChildWidget!;
 
-      _onTappedMarker(markerSet, foodList);
+        _onTappedMarker(markerSet, foodList);
+      }
+
       return Center(child: _showWidget);
     });
   }

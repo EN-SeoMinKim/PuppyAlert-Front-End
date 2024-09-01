@@ -102,6 +102,7 @@ class FoodDetailChildScreen extends StatelessWidget {
                             _foodModel.locationMap['longitude'],
                           ))
                     },
+                    foodList: [_foodModel],
                     latitude: _foodModel.locationMap['latitude'],
                     longitude: _foodModel.locationMap['longitude'],
                   ),
