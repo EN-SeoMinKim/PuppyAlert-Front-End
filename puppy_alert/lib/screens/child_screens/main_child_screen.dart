@@ -25,7 +25,7 @@ class _MainChildScreenState extends State<MainChildScreen> {
     super.initState();
     _widgetOptionList = <Widget>[
       HomeChildScreen(
-          userAddress: widget._userDto.dongAddress,
+          userDongAddress: widget._userDto.dongAddress,
           userId: widget._userDto.userId),
       FoodMapChildScreen(
         userDto: widget._userDto,

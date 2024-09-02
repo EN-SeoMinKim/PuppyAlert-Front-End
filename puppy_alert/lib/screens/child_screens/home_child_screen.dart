@@ -7,11 +7,11 @@ import 'package:puppy_alert/widgets/child_widgets/search_bar_child_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
 class HomeChildScreen extends StatefulWidget {
-  final String _userAddress;
+  final String _userDongAddress;
   final String _userId;
 
-  const HomeChildScreen({super.key, required userAddress, required userId})
-      : _userAddress = userAddress,
+  const HomeChildScreen({super.key, required userDongAddress, required userId})
+      : _userDongAddress = userDongAddress,
         _userId = userId;
 
   @override
@@ -19,7 +19,23 @@ class HomeChildScreen extends StatefulWidget {
 }
 
 class _HomeChildScreenState extends State<HomeChildScreen> {
-  List<FoodModel> _sortFoodModel(List<FoodModel> foodList) {
+  late final SearchBarChildWidget _searchBarChildWidget;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchBarChildWidget = SearchBarChildWidget(
+      dongAddress: widget._userDongAddress,
+    );
+  }
+
+  void _sortFoodModel(List<FoodModel> foodList) {
+    String searchValue = '';
+
+    setState(() {
+      searchValue = _searchBarChildWidget.searchValue;
+    });
+
     foodList.sort((a, b) {
       if (a.status == 'READY' && b.status != 'READY') {
         return -1;
@@ -30,19 +46,26 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
       }
     });
 
-    return foodList;
+    if (searchValue.isNotEmpty) {
+      for(int i = 0; i <foodList.length; i++) {
+        FoodModel fm = foodList[i];
+        if (fm.menuName.contains(searchValue) || fm.hostId.contains(searchValue)) {
+          foodList.remove(fm);
+          foodList.insert(0, fm);
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SearchBarChildWidget(
-          dongAddress: widget._userAddress,
-        ),
+        _searchBarChildWidget,
         Consumer<FoodProvider>(
           builder: (context, provider, child) {
-            List<FoodModel> foodList = _sortFoodModel(provider.getFoodList());
+            List<FoodModel> foodList = provider.getFoodList();
+            _sortFoodModel(foodList);
             return Expanded(
               child: ListView.builder(
                 itemCount: foodList.length,

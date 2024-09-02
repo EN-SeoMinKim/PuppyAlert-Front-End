@@ -35,13 +35,13 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
     return NaverMap(
       options: NaverMapViewOptions(
         locationButtonEnable: true,
+        indoorEnable: false,
         initialCameraPosition: NCameraPosition(
           target: widget._latLng,
           zoom: 15,
           bearing: 0,
           tilt: 0,
         ),
-        zoomGesturesEnable: true,
         extent: const NLatLngBounds(
           southWest: NLatLng(31.43, 122.37),
           northEast: NLatLng(44.35, 132.0),
