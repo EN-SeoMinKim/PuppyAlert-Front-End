@@ -30,11 +30,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
   }
 
   void _sortFoodModel(List<FoodModel> foodList) {
-    String searchValue = '';
-
-    setState(() {
-      searchValue = _searchBarChildWidget.searchValue;
-    });
+    String searchValue = _searchBarChildWidget.searchValue;
 
     foodList.sort((a, b) {
       if (a.status == 'READY' && b.status != 'READY') {

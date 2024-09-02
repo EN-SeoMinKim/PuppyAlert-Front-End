@@ -19,7 +19,7 @@ class FoodMapDetailChildWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 10.0, 0),
                 child: Text(
-                  "     $_foodModel.menuName",
+                  "     ${_foodModel.menuName}",
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 25,

@@ -28,9 +28,10 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
   void _initIsFavorite() async {
     http.Response response = await http.get(Uri.parse(
         '${dotenv.get('BASE_URL')}/puppy/favoriteHost?puppyId=${widget._puppyId}'));
-    List<FavoriteHostModel> hostList = jsonDecode(response.body)
-        .map<FavoriteHostModel>((json) => FavoriteHostModel.fromJson(json))
-        .toList();
+    List<FavoriteHostModel> hostList =
+        jsonDecode(utf8.decode(response.bodyBytes))
+            .map<FavoriteHostModel>((json) => FavoriteHostModel.fromJson(json))
+            .toList();
 
     for (var host in hostList) {
       if (host.hostId == widget._hostId) {
@@ -42,7 +43,7 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
     }
   }
 
-  void updateFavoriteHost() {
+  void _updateFavoriteHost() {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/favoriteHost');
     var bodyData = json.encode({
       'hostId': widget._hostId,
@@ -52,11 +53,10 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
     if (_isFavorite) {
       http.post(uri,
           headers: {'Content-Type': 'application/json'}, body: bodyData);
-      return;
+    } else {
+      http.delete(uri,
+          headers: {'Content-Type': 'application/json'}, body: bodyData);
     }
-
-    http.delete(uri,
-        headers: {'Content-Type': 'application/json'}, body: bodyData);
   }
 
   @override
@@ -70,7 +70,7 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
       onPressed: () {
         setState(() {
           _isFavorite = !_isFavorite;
-          updateFavoriteHost();
+          _updateFavoriteHost();
         });
       },
     );
