@@ -89,10 +89,8 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
                       ),
                     )));
           },
-          child: Expanded(
-            child: FoodMapDetailChildWidget(
-              foodModel: foodModel,
-            ),
+          child: FoodMapDetailChildWidget(
+            foodModel: foodModel,
           ),
         ),
       ],
