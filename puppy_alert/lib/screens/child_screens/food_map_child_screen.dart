@@ -75,22 +75,26 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
     _showWidget = Column(
       children: [
-        SizedBox(height: 460, child: _foodMapChildWidget),
-        SizedBox(
-            height: 210,
-            child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => FoodDetailChildScreen(
+        Expanded(
+          child: _foodMapChildWidget!,
+        ),
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => FoodDetailChildScreen(
                       userId: widget._userDto.userId,
                       foodCommonWidget: FoodCommonWidget(
                         userId: widget._userDto.userId,
                         foodModel: foodModel!,
                       ),
                     )));
-              },
-              child: FoodMapDetailChildWidget(foodModel: foodModel,),
-            )),
+          },
+          child: Expanded(
+            child: FoodMapDetailChildWidget(
+              foodModel: foodModel,
+            ),
+          ),
+        ),
       ],
     );
   }
