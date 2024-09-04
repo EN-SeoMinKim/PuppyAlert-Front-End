@@ -5,13 +5,13 @@ import 'package:puppy_alert/models/food_model.dart';
 class FoodMapChildWidget extends StatefulWidget {
   final List<FoodModel> _foodList;
   final Set<NMarker> _markerSet;
-  final NLatLng _latLng;
+  final NLatLng _userLatLng;
 
   FoodMapChildWidget(
       {super.key, required markerSet, required foodList, required latitude, required longitude})
       : _markerSet = markerSet,
         _foodList = foodList,
-        _latLng = NLatLng(latitude, longitude);
+        _userLatLng = NLatLng(latitude, longitude);
 
   @override
   State<FoodMapChildWidget> createState() => _FoodMapChildWidgetState();
@@ -37,7 +37,7 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
         locationButtonEnable: true,
         indoorEnable: false,
         initialCameraPosition: NCameraPosition(
-          target: widget._latLng,
+          target: widget._userLatLng,
           zoom: 15,
           bearing: 0,
           tilt: 0,
@@ -54,7 +54,7 @@ class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
 
           controller.addOverlay(NCircleOverlay(
               id: 'id',
-              center: widget._latLng,
+              center: widget._userLatLng,
               radius: 500,
               outlineWidth: 3,
               outlineColor: Colors.orange,
