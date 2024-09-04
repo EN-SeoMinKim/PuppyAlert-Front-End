@@ -39,82 +39,84 @@ class FoodDetailChildScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            height: 100,
-            color: Colors.white,
-            child: const Center(
-              child: Text(
-                '집밥',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  '집밥',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 20,
-            color: Colors.grey[100],
-            child: _greyContainer(),
-          ),
-          Container(
-            height: _canRegister ? 0 : 20,
-            color: Colors.white,
-          ),
-          SizedBox(height: 130, child: _foodCommonWidget),
-          if (_canRegister)
-            _registrationColumn(context, _applyForFood, _foodModel.status),
-          Container(
-            height: 20,
-            color: Colors.grey[100],
-            child: _greyContainer(),
-          ),
-          Container(
-            height: _canRegister ? 10 : 30,
-            color: Colors.white,
-          ),
-          Container(
-            height: _canRegister ? 368 : 394,
-            color: Colors.white,
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const SizedBox(width: 40),
-                    const Icon(
-                      Icons.location_on_outlined,
-                      color: Color(0xffFF7700),
-                    ),
-                    const SizedBox(width: 10),
-                    Text('${_foodModel.address} ${_foodModel.addressDetail}'),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                SizedBox(
-                  width: 300,
-                  height: 230,
-                  child: FoodMapChildWidget(
-                    markerSet: {
-                      NMarker(
-                          id: _foodModel.foodId.toString(),
-                          position: NLatLng(
-                            _foodModel.locationMap['latitude'],
-                            _foodModel.locationMap['longitude'],
-                          ))
-                    },
-                    foodList: [_foodModel],
-                    latitude: _foodModel.locationMap['latitude'],
-                    longitude: _foodModel.locationMap['longitude'],
-                  ),
-                )
-              ],
+            Container(
+              height: 20,
+              color: Colors.grey[100],
+              child: _greyContainer(),
             ),
-          ),
-          Container(
-            height: 20,
-            color: Colors.grey[100],
-          ),
-        ],
+            Container(
+              height: _canRegister ? 0 : 20,
+              color: Colors.white,
+            ),
+            SizedBox(height: 130, child: _foodCommonWidget),
+            if (_canRegister)
+              _registrationColumn(context, _applyForFood, _foodModel.status),
+            Container(
+              height: 20,
+              color: Colors.grey[100],
+              child: _greyContainer(),
+            ),
+            Container(
+              height: _canRegister ? 10 : 30,
+              color: Colors.white,
+            ),
+            Container(
+              height: _canRegister ? 368 : 394,
+              color: Colors.white,
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const SizedBox(width: 40),
+                      const Icon(
+                        Icons.location_on_outlined,
+                        color: Color(0xffFF7700),
+                      ),
+                      const SizedBox(width: 10),
+                      Text('${_foodModel.address} ${_foodModel.addressDetail}'),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: 300,
+                    height: 230,
+                    child: FoodMapChildWidget(
+                      markerSet: {
+                        NMarker(
+                            id: _foodModel.foodId.toString(),
+                            position: NLatLng(
+                              _foodModel.locationMap['latitude'],
+                              _foodModel.locationMap['longitude'],
+                            ))
+                      },
+                      foodList: [_foodModel],
+                      latitude: _foodModel.locationMap['latitude'],
+                      longitude: _foodModel.locationMap['longitude'],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 20,
+              color: Colors.grey[100],
+            ),
+          ],
+        ),
       ),
     );
   }

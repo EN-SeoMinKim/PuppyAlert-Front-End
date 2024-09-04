@@ -73,27 +73,37 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
     if (foodModel == null) return;
 
-    _showWidget = Column(
-      children: [
-        Expanded(
-          child: _foodMapChildWidget!,
-        ),
-        InkWell(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => FoodDetailChildScreen(
-                      userId: widget._userDto.userId,
-                      foodCommonWidget: FoodCommonWidget(
-                        userId: widget._userDto.userId,
-                        foodModel: foodModel!,
-                      ),
-                    )));
-          },
-          child: FoodMapDetailChildWidget(
-            foodModel: foodModel,
+    _showWidget = SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            constraints: const BoxConstraints(
+              maxHeight: 400,
+            ),
+            child: _foodMapChildWidget!,
           ),
-        ),
-      ],
+          Container(
+            constraints: const BoxConstraints(
+              maxHeight: 250,
+            ),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => FoodDetailChildScreen(
+                          userId: widget._userDto.userId,
+                          foodCommonWidget: FoodCommonWidget(
+                            userId: widget._userDto.userId,
+                            foodModel: foodModel!,
+                          ),
+                        )));
+              },
+              child: FoodMapDetailChildWidget(
+                foodModel: foodModel,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
