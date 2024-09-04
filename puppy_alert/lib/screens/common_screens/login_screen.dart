@@ -93,32 +93,29 @@ class _LoginScreenState extends State<LoginScreen> {
     _goNextPage(jsonDecode(response.body), id, password);
   }
 
-  void _goNextPage(Map<String, dynamic> jsonData, String id, String password) {
+  void _goNextPage(
+      Map<String, dynamic> jsonData, String id, String password) async {
+    UserDto userDto = await _getUserDto(id, password);
+
     if (jsonData['userType'] == 'HOST') {
-      getUserDto('host', id, password).then((userDto) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return SpeechRecognitionAdultScreen(
-            userDto: userDto,
-          );
-        }));
-      });
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+        return SpeechRecognitionAdultScreen(
+          userDto: userDto,
+        );
+      }));
     } else {
-      getUserDto('puppy', id, password).then((userDto) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return MainChildScreen(
-            userDto: userDto,
-          );
-        }));
-      });
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+        return MainChildScreen(
+          userDto: userDto,
+        );
+      }));
     }
   }
 
-  Future<UserDto> getUserDto(
-      String userType, String userId, String userPassword) async {
-    Uri uri =
-        Uri.parse('${dotenv.get('BASE_URL')}/$userType?${userType}Id=$userId');
+  Future<UserDto> _getUserDto(String userId, String userPassword) async {
+    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/user?id=$userId');
     final value = (await http.get(uri)).bodyBytes;
     final jsonData = jsonDecode(utf8.decode(value));
     return UserDto(
