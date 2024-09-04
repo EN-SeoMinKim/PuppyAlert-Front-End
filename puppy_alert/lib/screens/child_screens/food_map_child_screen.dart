@@ -22,6 +22,19 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   Widget _showWidget = const CircularProgressIndicator();
   FoodMapChildWidget? _foodMapChildWidget;
 
+  void _initFoodMapChildWidget(List<FoodModel> foodList) {
+    Set<NMarker> markerSet = _getMarkerSet(foodList);
+
+    _foodMapChildWidget = FoodMapChildWidget(
+        markerSet: markerSet,
+        foodList: foodList,
+        latitude: widget._userDto.location['latitude'] as double,
+        longitude: widget._userDto.location['longitude'] as double);
+    _showWidget = _foodMapChildWidget!;
+
+    _onTappedMarker(markerSet, foodList);
+  }
+
   Set<NMarker> _getMarkerSet(List<FoodModel> foodList) {
     Set<NMarker> markerSet = {};
 
@@ -42,13 +55,13 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
     for (var m in markerSet) {
       m.setOnTapListener((NMarker marker) {
         setState(() {
-          _initFoodMapDetailChildWidget(marker, foodList);
+          _showFoodMapDetailChildWidget(marker, foodList);
         });
       });
     }
   }
 
-  void _initFoodMapDetailChildWidget(NMarker marker, List<FoodModel> foodList) {
+  void _showFoodMapDetailChildWidget(NMarker marker, List<FoodModel> foodList) {
     FoodModel? foodModel;
 
     for (var data in foodList) {
@@ -60,25 +73,37 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
     if (foodModel == null) return;
 
-    _showWidget = Column(
-      children: [
-        SizedBox(height: 460, child: _foodMapChildWidget),
-        SizedBox(
-            height: 210,
+    _showWidget = SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            constraints: const BoxConstraints(
+              maxHeight: 400,
+            ),
+            child: _foodMapChildWidget!,
+          ),
+          Container(
+            constraints: const BoxConstraints(
+              maxHeight: 250,
+            ),
             child: InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => FoodDetailChildScreen(
-                      userId: widget._userDto.userId,
-                      foodCommonWidget: FoodCommonWidget(
-                        userId: widget._userDto.userId,
-                        foodModel: foodModel!,
-                      ),
-                    )));
+                          userId: widget._userDto.userId,
+                          foodCommonWidget: FoodCommonWidget(
+                            userId: widget._userDto.userId,
+                            foodModel: foodModel!,
+                          ),
+                        )));
               },
-              child: FoodMapDetailChildWidget(foodModel: foodModel,),
-            )),
-      ],
+              child: FoodMapDetailChildWidget(
+                foodModel: foodModel,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -86,17 +111,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
   Widget build(BuildContext context) {
     return Consumer<FoodProvider>(builder: (context, provider, child) {
       if (_foodMapChildWidget == null) {
-        List<FoodModel> foodList = provider.getFoodList();
-        Set<NMarker> markerSet = _getMarkerSet(foodList);
-
-        _foodMapChildWidget = FoodMapChildWidget(
-            markerSet: markerSet,
-            foodList: foodList,
-            latitude: widget._userDto.location['latitude'] as double,
-            longitude: widget._userDto.location['longitude'] as double);
-        _showWidget = _foodMapChildWidget!;
-
-        _onTappedMarker(markerSet, foodList);
+        _initFoodMapChildWidget(provider.getFoodList());
       }
 
       return Center(child: _showWidget);

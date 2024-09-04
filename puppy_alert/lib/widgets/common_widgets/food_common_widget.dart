@@ -73,7 +73,7 @@ class FoodCommonWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
-                  _foodModel.status,
+                _foodModel.status == 'MATCHED' ? '모집완료' : '모집중',
                   style: const TextStyle(
                     color: Color(0xff7D6600),
                   ),
