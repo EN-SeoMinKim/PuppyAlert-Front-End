@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:puppy_alert/models/user_model.dart';
+import 'package:puppy_alert/models/user_dto.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
-import 'package:puppy_alert/screens/child_screens/favorite_host_child_screen.dart';
-import 'package:puppy_alert/screens/child_screens/home_child_screen.dart';
-import '../common_screens/my_page_common_screen.dart';
-import 'food_map_child_screen.dart';
+import 'package:puppy_alert/screens/adult_screens/traditional_market_map_screen.dart';
+import 'package:puppy_alert/screens/common_screens/my_page_common_screen.dart';
+import 'home_adult_screen.dart';
+import 'local_store_list_adult_screen.dart';
 
-class MainChildScreen extends StatefulWidget {
-  final UserModel _userModel;
+class MainAdultScreen extends StatefulWidget {
+  final UserDto _userDto;
 
-  const MainChildScreen({super.key, required userModel}) : _userModel = userModel;
+  const MainAdultScreen({super.key, required userDto}) : _userDto = userDto;
 
   @override
-  State<MainChildScreen> createState() => _MainChildScreenState();
+  State<MainAdultScreen> createState() => _MainAdultScreenState();
 }
 
-class _MainChildScreenState extends State<MainChildScreen> {
+class _MainAdultScreenState extends State<MainAdultScreen> {
   int _selectedIndex = 0;
   late final List<Widget> _widgetOptionList;
 
@@ -24,15 +24,11 @@ class _MainChildScreenState extends State<MainChildScreen> {
   void initState() {
     super.initState();
     _widgetOptionList = <Widget>[
-      HomeChildScreen(
-          userDongAddress: widget._userModel.dongAddress,
-          userId: widget._userModel.userId),
-      FoodMapChildScreen(
-        userDto: widget._userModel,
-      ),
-      FavoriteHostChildScreen(userId: widget._userModel.userId),
-      MyPageChildScreen(
-        userDto: widget._userModel,
+      HomeAdultScreen(userId: widget._userDto.userId),
+      TraditionalMarketMapScreen(),
+      LocalStoreListAdultScreen(),
+      MyPageCommonScreen(
+        userDto: widget._userDto,
       ),
     ];
   }
@@ -49,7 +45,7 @@ class _MainChildScreenState extends State<MainChildScreen> {
       appBar: AppBar(),
       body: Center(
         child: ChangeNotifierProvider<FoodProvider>(
-            create: (context) => FoodProvider(widget._userModel.userId),
+            create: (context) => FoodProvider(widget._userDto.userId),
             child: _widgetOptionList.elementAt(_selectedIndex)),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -64,11 +60,11 @@ class _MainChildScreenState extends State<MainChildScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
-            label: '집밥 지도',
+            label: '전통 시장 지도',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: '관심 Host',
+            icon: Icon(Icons.list_alt),
+            label: '지역 상점 리스트',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.info),

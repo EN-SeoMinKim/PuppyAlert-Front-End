@@ -4,11 +4,9 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/adult_screens/food_registration_completion_adult_screen.dart';
 import 'package:puppy_alert/utils/constants.dart';
-import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
 import 'package:puppy_alert/widgets/adult_widgets/speech_recognition_button_adult_widget.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
-import 'my_page_adult_screen.dart';
 
 class SpeechRecognitionAdultScreen extends StatefulWidget {
   final UserModel _userModel;
@@ -111,7 +109,6 @@ class _SpeechRecognitionAdultScreenState
     });
   }
 
-
   Future<void> _endListeningAndVerify(Future<void> Function() verify) async {
     _timer = Timer(const Duration(seconds: 5), () async {
       await _speech.stop();
@@ -206,14 +203,16 @@ class _SpeechRecognitionAdultScreenState
                   clickNoButtonRecognitionFailure:
                       _clickNoButtonRecognitionFailure,
                   completeRegisterFood: _completeRegisterFood),
-              ElevatedShadowButtonAdultWidget(
-                width: 190,
-                text: "나의 정보",
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MyPageAdultScreen(userDto: widget._userModel,)));
-                },
-              ),
+              // ElevatedShadowButtonAdultWidget(
+              //   width: 190,
+              //   text: "나의 정보",
+              //   onPressed: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //         builder: (context) => MyPageCommonScreen(
+              //               userDto: widget._userDto,
+              //             )));
+              //   },
+              // ),
             ],
           ),
         ),
