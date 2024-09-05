@@ -4,7 +4,7 @@ class MarketModel {
   final String _detailAddress;
   final double _latitude;
   final double _longitude;
-  String _imageURL;
+  final String _imageURL;
 
   MarketModel(int id, String name, String detailAddress, dynamic location,
       String imageURL)

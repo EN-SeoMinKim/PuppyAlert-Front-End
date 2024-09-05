@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/animation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -35,7 +34,7 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
             .toList();
 
     for (var host in hostList) {
-      if (host.hostNickName == widget._hostId) {
+      if (host.hostId == widget._hostId) {
         setState(() {
           _isFavorite = true;
         });
@@ -44,9 +43,9 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
     }
   }
 
-  void _updateFavoriteHost() async {
+  void _updateFavoriteHost() {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/favoriteHost');
-    var bodyData = json.encode({
+    final bodyData = json.encode({
       'hostId': widget._hostId,
       'puppyId': widget._puppyId,
     });
@@ -55,9 +54,8 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
       http.post(uri,
           headers: {'Content-Type': 'application/json'}, body: bodyData);
     } else {
-      http.Response response = await http.delete(uri,
+      http.delete(uri,
           headers: {'Content-Type': 'application/json'}, body: bodyData);
-      print(response.body);
     }
   }
 

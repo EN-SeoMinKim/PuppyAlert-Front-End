@@ -34,7 +34,7 @@ class FavoriteHostChildWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  _favoriteHostModel.hostId,
+                  _favoriteHostModel.hostNickName,
                   style: const TextStyle(fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(
