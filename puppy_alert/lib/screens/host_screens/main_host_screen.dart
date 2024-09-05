@@ -22,7 +22,7 @@ class MainHostScreen extends StatefulWidget {
 
 class _MainHostScreenState extends State<MainHostScreen> {
   int _selectedIndex = 0;
-  late final List<Widget> _widgetOptionList;
+  final List<Widget> _widgetOptionList = List.empty(growable: true);
 
   @override
   void initState() {
@@ -38,12 +38,15 @@ class _MainHostScreenState extends State<MainHostScreen> {
   }
 
   void _initWidgetOptionList(List<MarketModel> marketList) {
-    _widgetOptionList = <Widget>[
+    _widgetOptionList.clear();
+    _widgetOptionList.addAll([
       HomeHostScreen(userModel: widget._userModel),
       ShopHostScreen(marketList: marketList),
-      MarketMapHostWidget(userLatLng: widget._userModel.userLatLng, marketList: marketList),
+      MarketMapHostWidget(
+          userLatLng: widget._userModel.userLatLng,
+          marketSet: marketList.toSet()),
       MyPageCommonScreen(userModel: widget._userModel),
-    ];
+    ]);
   }
 
   void _onItemTapped(int index) {
@@ -54,7 +57,7 @@ class _MainHostScreenState extends State<MainHostScreen> {
 
   Future<List<MarketModel>> _getMarketList() async {
     http.Response response =
-    await http.get(Uri.parse('${dotenv.get('BASE_URL')}/market/all'));
+        await http.get(Uri.parse('${dotenv.get('BASE_URL')}/market/all'));
     final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
     return jsonData
         .map<MarketModel>((json) => MarketModel.fromJson(json))

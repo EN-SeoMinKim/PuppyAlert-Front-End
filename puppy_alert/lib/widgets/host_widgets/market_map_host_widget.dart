@@ -4,17 +4,17 @@ import 'package:puppy_alert/models/market_model.dart';
 
 class MarketMapHostWidget extends StatelessWidget {
   final NLatLng _userLatLng;
-  final Set<MarketModel> _marketList;
+  final Set<MarketModel> _marketSet;
 
   const MarketMapHostWidget(
-      {super.key, required userLatLng, required marketList})
+      {super.key, required userLatLng, required Set<MarketModel> marketSet})
       : _userLatLng = userLatLng,
-        _marketList = marketList;
+        _marketSet = marketSet;
 
   Set<NMarker> _getMarkerSet() {
     Set<NMarker> markerSet = {};
 
-    for (MarketModel market in _marketList) {
+    for (MarketModel market in _marketSet) {
       NMarker marker = NMarker(
           position: NLatLng(market.latitude, market.longitude),
           id: market.id.toString());
@@ -40,7 +40,7 @@ class MarketMapHostWidget extends StatelessWidget {
         ),
       ),
       onMapReady: (NaverMapController controller) {
-        if (_marketList.isNotEmpty) {
+        if (_marketSet.isNotEmpty) {
           controller.addOverlayAll(_getMarkerSet());
         }
       },
