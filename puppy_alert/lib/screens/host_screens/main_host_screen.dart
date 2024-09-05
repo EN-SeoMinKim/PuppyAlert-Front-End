@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
-import 'package:puppy_alert/screens/adult_screens/traditional_market_map_screen.dart';
 import 'package:puppy_alert/screens/common_screens/my_page_common_screen.dart';
-import 'home_adult_screen.dart';
-import 'local_store_list_adult_screen.dart';
+import 'home_host_screen.dart';
 
-class MainAdultScreen extends StatefulWidget {
-  final UserDto _userDto;
+class MainHostScreen extends StatefulWidget {
+  final UserModel _userModel;
 
-  const MainAdultScreen({super.key, required userDto}) : _userDto = userDto;
+  const MainHostScreen({super.key, required userModel}) : _userModel = userModel;
 
   @override
-  State<MainAdultScreen> createState() => _MainAdultScreenState();
+  State<MainHostScreen> createState() => _MainHostScreenState();
 }
 
-class _MainAdultScreenState extends State<MainAdultScreen> {
+class _MainHostScreenState extends State<MainHostScreen> {
   int _selectedIndex = 0;
   late final List<Widget> _widgetOptionList;
 
@@ -24,11 +22,11 @@ class _MainAdultScreenState extends State<MainAdultScreen> {
   void initState() {
     super.initState();
     _widgetOptionList = <Widget>[
-      HomeAdultScreen(userId: widget._userDto.userId),
-      TraditionalMarketMapScreen(),
-      LocalStoreListAdultScreen(),
+      HomeHostScreen(userModel: widget._userModel,),
+      // TraditionalMarketMapScreen(),
+      // LocalStoreListAdultScreen(),
       MyPageCommonScreen(
-        userDto: widget._userDto,
+        userModel: widget._userModel,
       ),
     ];
   }
@@ -45,7 +43,7 @@ class _MainAdultScreenState extends State<MainAdultScreen> {
       appBar: AppBar(),
       body: Center(
         child: ChangeNotifierProvider<FoodProvider>(
-            create: (context) => FoodProvider(widget._userDto.userId),
+            create: (context) => FoodProvider(widget._userModel.userId),
             child: _widgetOptionList.elementAt(_selectedIndex)),
       ),
       bottomNavigationBar: BottomNavigationBar(

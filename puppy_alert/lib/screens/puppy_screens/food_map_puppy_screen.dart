@@ -4,28 +4,28 @@ import 'package:provider/provider.dart';
 import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
-import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
-import 'package:puppy_alert/widgets/child_widgets/food_map_detail_child_widget.dart';
+import 'package:puppy_alert/widgets/puppy_widgets/food_map_puppy_widget.dart';
+import 'package:puppy_alert/widgets/puppy_widgets/food_map_detail_child_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
-import 'food_detail_child_screen.dart';
+import 'food_detail_puppy_screen.dart';
 
-class FoodMapChildScreen extends StatefulWidget {
+class FoodMapPuppyScreen extends StatefulWidget {
   final UserModel _userDto;
 
-  const FoodMapChildScreen({super.key, required userDto}) : _userDto = userDto;
+  const FoodMapPuppyScreen({super.key, required userDto}) : _userDto = userDto;
 
   @override
-  State<FoodMapChildScreen> createState() => _FoodMapChildScreenState();
+  State<FoodMapPuppyScreen> createState() => _FoodMapPuppyScreenState();
 }
 
-class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
+class _FoodMapPuppyScreenState extends State<FoodMapPuppyScreen> {
   Widget _showWidget = const CircularProgressIndicator();
-  FoodMapChildWidget? _foodMapChildWidget;
+  FoodMapPuppyWidget? _foodMapChildWidget;
 
   void _initFoodMapChildWidget(List<FoodModel> foodList) {
     Set<NMarker> markerSet = _getMarkerSet(foodList);
 
-    _foodMapChildWidget = FoodMapChildWidget(
+    _foodMapChildWidget = FoodMapPuppyWidget(
         markerSet: markerSet,
         latitude: widget._userDto.location['latitude'] as double,
         longitude: widget._userDto.location['longitude'] as double);
@@ -88,7 +88,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
             child: InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => FoodDetailChildScreen(
+                    builder: (context) => FoodDetailPuppyScreen(
                           userId: widget._userDto.userId,
                           foodCommonWidget: FoodCommonWidget(
                             userId: widget._userDto.userId,

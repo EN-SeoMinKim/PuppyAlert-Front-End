@@ -2,23 +2,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/models/user_model.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_adult_screen.dart';
-import 'package:puppy_alert/screens/child_screens/main_child_screen.dart';
-import 'package:puppy_alert/screens/common_screens/signup_screen.dart';
+import 'package:puppy_alert/screens/host_screens/speech_recognition_host_screen.dart';
+import 'package:puppy_alert/screens/puppy_screens/main_puppy_screen.dart';
+import 'package:puppy_alert/screens/common_screens/signup_common_screen.dart';
 import 'package:puppy_alert/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:puppy_alert/widgets/common_widgets/user_text_form_field_common_widget.dart';
 
-import '../adult_screens/main_adult_screen.dart';
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginCommonScreen extends StatefulWidget {
+  const LoginCommonScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginCommonScreen> createState() => _LoginCommonScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginCommonScreenState extends State<LoginCommonScreen> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -37,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                  return const SignupScreen(
+                  return const SignupCommonScreen(
                     userType: UserType.child,
                   );
                 }));
@@ -53,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                  return const SignupScreen(
+                  return const SignupCommonScreen(
                     userType: UserType.adult,
                   );
                 }));
@@ -102,14 +100,14 @@ class _LoginScreenState extends State<LoginScreen> {
     if (jsonData['userType'] == 'HOST') {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
-        return SpeechRecognitionAdultScreen(
+        return SpeechRecognitionHostScreen(
           userModel: userModel,
         );
       }));
     } else {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
-        return MainChildScreen(
+        return MainPuppyScreen(
           userModel: userModel,
         );
       }));

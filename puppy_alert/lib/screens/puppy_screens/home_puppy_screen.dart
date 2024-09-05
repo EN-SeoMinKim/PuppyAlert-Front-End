@@ -2,29 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
-import 'package:puppy_alert/screens/child_screens/food_detail_child_screen.dart';
-import 'package:puppy_alert/widgets/child_widgets/search_bar_child_widget.dart';
+import 'package:puppy_alert/screens/puppy_screens/food_detail_puppy_screen.dart';
+import 'package:puppy_alert/widgets/puppy_widgets/search_bar_puppy_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
-class HomeChildScreen extends StatefulWidget {
+class HomePuppyScreen extends StatefulWidget {
   final String _userDongAddress;
   final String _userId;
 
-  const HomeChildScreen({super.key, required userDongAddress, required userId})
+  const HomePuppyScreen({super.key, required userDongAddress, required userId})
       : _userDongAddress = userDongAddress,
         _userId = userId;
 
   @override
-  State<StatefulWidget> createState() => _HomeChildScreenState();
+  State<StatefulWidget> createState() => _HomePuppyScreenState();
 }
 
-class _HomeChildScreenState extends State<HomeChildScreen> {
-  late final SearchBarChildWidget _searchBarChildWidget;
+class _HomePuppyScreenState extends State<HomePuppyScreen> {
+  late final SearchBarPuppyWidget _searchBarChildWidget;
 
   @override
   void initState() {
     super.initState();
-    _searchBarChildWidget = SearchBarChildWidget(
+    _searchBarChildWidget = SearchBarPuppyWidget(
       dongAddress: widget._userDongAddress,
     );
   }
@@ -73,7 +73,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                   return InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => FoodDetailChildScreen(
+                          builder: (context) => FoodDetailPuppyScreen(
                                 foodCommonWidget: foodCommonWidget,
                                 userId: widget._userId,
                               )));

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CustomButtonAdultWidget extends StatelessWidget {
+class CustomButtonHostWidget extends StatelessWidget {
   final String _text;
   final Color _color;
   final VoidCallback _onPressed;
 
-  const CustomButtonAdultWidget({
+  const CustomButtonHostWidget({
     super.key,
     required String text,
     required Color color,

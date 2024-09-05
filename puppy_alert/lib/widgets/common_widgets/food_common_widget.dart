@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/models/food_model.dart';
-import 'package:puppy_alert/widgets/child_widgets/favorite_icon_child_widget.dart';
+import 'package:puppy_alert/widgets/puppy_widgets/favorite_icon_puppy_widget.dart';
 
 class FoodCommonWidget extends StatelessWidget {
   final String _userId;
@@ -58,7 +58,7 @@ class FoodCommonWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(_foodModel.hostNickName),
-                    FavoriteIconChildWidget(
+                    FavoriteIconPuppyWidget(
                         puppyId: _userId, hostId: _foodModel.hostId),
                   ],
                 ),

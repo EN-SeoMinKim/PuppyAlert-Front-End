@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/adult_screens/food_input_form_adult_screen.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_adult_screen.dart';
+import 'package:puppy_alert/models/user_model.dart';
+import 'package:puppy_alert/screens/host_screens/food_input_form_host_screen.dart';
+import 'package:puppy_alert/screens/host_screens/speech_recognition_host_screen.dart';
 
-class HomeAdultScreen extends StatelessWidget {
-  final String _userId;
+class HomeHostScreen extends StatelessWidget {
+  final UserModel _userModel;
 
-  const HomeAdultScreen({super.key, required userId}) : _userId = userId;
+  const HomeHostScreen({super.key, required UserModel userModel}) : _userModel = userModel;
 
   void _showChoiceDialog(BuildContext context) {
     showDialog(
@@ -38,7 +38,7 @@ class HomeAdultScreen extends StatelessWidget {
                           //   return FoodInputFormAdultScreen();
                           // }));
                           Navigator.push(
-                            context,MaterialPageRoute(builder: (context)=>FoodInputFormAdultScreen())
+                            context,MaterialPageRoute(builder: (context)=>FoodInputFormHostScreen())
                           );
 
 
@@ -70,8 +70,8 @@ class HomeAdultScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushReplacement(context, MaterialPageRoute(
                               builder: (BuildContext context) {
-                            return SpeechRecognitionAdultScreen(
-                                userId: _userId);
+                            return SpeechRecognitionHostScreen(
+                                userModel: null,);
                           }));
                         },
                         label: const Icon(

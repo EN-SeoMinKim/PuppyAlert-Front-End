@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/models/food_model.dart';
-import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
+import 'package:puppy_alert/widgets/puppy_widgets/food_map_puppy_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
-class FoodDetailChildScreen extends StatelessWidget {
+class FoodDetailPuppyScreen extends StatelessWidget {
   final FoodCommonWidget _foodCommonWidget;
   final String _userId;
   final FoodModel _foodModel;
   final bool _canRegister;
 
-  FoodDetailChildScreen({
+  FoodDetailPuppyScreen({
     super.key,
     required String userId,
     required FoodCommonWidget foodCommonWidget,
@@ -94,7 +94,7 @@ class FoodDetailChildScreen extends StatelessWidget {
                   SizedBox(
                     width: 300,
                     height: 230,
-                    child: FoodMapChildWidget(
+                    child: FoodMapPuppyWidget(
                       markerSet: {
                         NMarker(
                             id: _foodModel.foodId.toString(),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/common_screens/login_screen.dart';
+import 'package:puppy_alert/screens/common_screens/login_common_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             backgroundColor: Color(0xffFF7700),
           )),
-      home: const LoginScreen(),
+      home: const LoginCommonScreen(),
     );
   }
 }

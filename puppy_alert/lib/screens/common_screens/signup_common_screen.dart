@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/common_screens/login_screen.dart';
+import 'package:puppy_alert/screens/common_screens/login_common_screen.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:convert';
@@ -11,7 +11,7 @@ import '../../widgets/common_widgets/user_date_picker_common_widget.dart';
 import '../../widgets/common_widgets/user_text_form_field_common_widget.dart';
 import '../../widgets/common_widgets/white_background_button_common_widget.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignupCommonScreen extends StatefulWidget {
   final UserType _userType;
   final int _id = 0,
       _password = 1,
@@ -24,13 +24,13 @@ class SignupScreen extends StatefulWidget {
       _phoneNumberConfirmation = 8,
       _postcode = 9;
 
-  const SignupScreen({super.key, required userType}) : _userType = userType;
+  const SignupCommonScreen({super.key, required userType}) : _userType = userType;
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SignupCommonScreen> createState() => _SignupCommonScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupCommonScreenState extends State<SignupCommonScreen> {
   late final GlobalKey<FormState> _allFormKey, _idFormKey, _nickNameFormKey;
   late final List<TextEditingController> _textEditingControllerList;
   DateTime? _birth;
@@ -179,7 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (BuildContext context) {
-        return const LoginScreen();
+        return const LoginCommonScreen();
       }),
       (route) => false,
     );

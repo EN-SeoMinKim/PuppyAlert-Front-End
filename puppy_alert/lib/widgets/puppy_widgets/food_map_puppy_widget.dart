@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 
-class FoodMapChildWidget extends StatefulWidget {
+class FoodMapPuppyWidget extends StatefulWidget {
   final Set<NMarker> _markerSet;
   final NLatLng _userLatLng;
 
-  FoodMapChildWidget(
+  FoodMapPuppyWidget(
       {super.key, required markerSet, required latitude, required longitude})
       : _markerSet = markerSet,
         _userLatLng = NLatLng(latitude, longitude);
 
   @override
-  State<FoodMapChildWidget> createState() => _FoodMapChildWidgetState();
+  State<FoodMapPuppyWidget> createState() => _FoodMapPuppyWidgetState();
 }
 
-class _FoodMapChildWidgetState extends State<FoodMapChildWidget> {
+class _FoodMapPuppyWidgetState extends State<FoodMapPuppyWidget> {
   @override
   Widget build(BuildContext context) {
     return NaverMap(

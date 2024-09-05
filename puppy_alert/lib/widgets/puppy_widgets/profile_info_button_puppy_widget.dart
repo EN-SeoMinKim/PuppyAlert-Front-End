@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ProfileInfoButtonChildWidget extends StatelessWidget {
+class ProfileInfoButtonPuppyWidget extends StatelessWidget {
   final IconData _icon;
   final String _text;
   final VoidCallback _onPressed;
 
-  const ProfileInfoButtonChildWidget({
+  const ProfileInfoButtonPuppyWidget({
     super.key,
     required IconData icon,
     required String text,

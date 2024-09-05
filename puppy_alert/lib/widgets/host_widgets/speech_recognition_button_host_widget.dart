@@ -1,16 +1,16 @@
 import '../../utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'custom_button_adult_widget.dart';
+import 'custom_button_host_widget.dart';
 
-class SpeechRecognitionButtonAdultWidget extends StatelessWidget {
+class SpeechRecognitionButtonHostWidget extends StatelessWidget {
   final ButtonStatus _status;
   final VoidCallback _speakAndRecognizeFood;
   final VoidCallback _speakAndRecognizeTime;
   final VoidCallback _clickNoButtonRecognitionFailure;
   final VoidCallback _completeRegisterFood;
 
-  const SpeechRecognitionButtonAdultWidget({
+  const SpeechRecognitionButtonHostWidget({
     super.key,
     required ButtonStatus status,
     required void Function() speakAndRecognizeFood,
@@ -87,12 +87,12 @@ Widget _buildButtonDesign(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomButtonAdultWidget(
+            CustomButtonHostWidget(
                 text: "네",
                 color: Colors.green,
                 onPressed: speakAndRecognizeTime),
             const SizedBox(width: 20),
-            CustomButtonAdultWidget(
+            CustomButtonHostWidget(
                 text: "아니오",
                 color: Colors.red,
                 onPressed: clickNoButtonRecognitionFailure),
@@ -105,12 +105,12 @@ Widget _buildButtonDesign(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomButtonAdultWidget(
+            CustomButtonHostWidget(
                 text: "네",
                 color: Colors.green,
                 onPressed: completeRegisterFood),
             const SizedBox(width: 20),
-            CustomButtonAdultWidget(
+            CustomButtonHostWidget(
                 text: "아니오",
                 color: Colors.red,
                 onPressed: clickNoButtonRecognitionFailure)

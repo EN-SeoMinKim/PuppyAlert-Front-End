@@ -5,18 +5,18 @@ import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button_common_
 import 'package:puppy_alert/widgets/common_widgets/mutable_user_info_common_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/white_background_button_common_widget.dart';
 
-class PersonalInformationScreen extends StatefulWidget {
+class PersonalInformationCommonScreen extends StatefulWidget {
   final UserModel _userModel;
 
-  const PersonalInformationScreen({super.key, required userModel})
+  const PersonalInformationCommonScreen({super.key, required userModel})
       : _userModel = userModel;
 
   @override
-  State<PersonalInformationScreen> createState() =>
-      _PersonalInformationScreenState();
+  State<PersonalInformationCommonScreen> createState() =>
+      _PersonalInformationCommonScreenState();
 }
 
-class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
+class _PersonalInformationCommonScreenState extends State<PersonalInformationCommonScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmationController =
       TextEditingController();

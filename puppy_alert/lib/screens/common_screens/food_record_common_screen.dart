@@ -2,24 +2,24 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/models/food_model.dart';
-import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
+import 'package:puppy_alert/widgets/host_widgets/elevated_shadow_button_host_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 import 'package:http/http.dart' as http;
 
-class FoodRecordScreen extends StatefulWidget {
+class FoodRecordCommonScreen extends StatefulWidget {
   final String _userId;
   final bool _isChildScreen;
 
-  const FoodRecordScreen(
+  const FoodRecordCommonScreen(
       {super.key, required bool isChildScreen, required userId})
       : _userId = userId,
         _isChildScreen = isChildScreen;
 
   @override
-  State<FoodRecordScreen> createState() => _FoodRecordScreenState();
+  State<FoodRecordCommonScreen> createState() => _FoodRecordCommonScreenState();
 }
 
-class _FoodRecordScreenState extends State<FoodRecordScreen> {
+class _FoodRecordCommonScreenState extends State<FoodRecordCommonScreen> {
   final List<FoodCommonWidget> _foodCommonWidgetList =
       List.empty(growable: true);
 
@@ -113,7 +113,7 @@ Widget _goBackButton(BuildContext context) {
       border: Border.all(color: Colors.grey[200]!, width: 2.0),
     ),
     child: Center(
-      child: ElevatedShadowButtonAdultWidget(
+      child: ElevatedShadowButtonHostWidget(
           onPressed: () {
             Navigator.pop(context);
           },

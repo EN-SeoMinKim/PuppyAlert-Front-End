@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
+import 'package:puppy_alert/widgets/host_widgets/elevated_shadow_button_host_widget.dart';
 import 'package:http/http.dart' as http;
 
-class FoodRegistrationCompletionAdultScreen extends StatefulWidget {
+class FoodRegistrationCompletionHostScreen extends StatefulWidget {
   final String _userId;
   final String _food;
   final String _time;
 
-  const FoodRegistrationCompletionAdultScreen({
+  const FoodRegistrationCompletionHostScreen({
     super.key,
     required String userId,
     required String food,
@@ -19,12 +19,12 @@ class FoodRegistrationCompletionAdultScreen extends StatefulWidget {
         _time = time;
 
   @override
-  State<FoodRegistrationCompletionAdultScreen> createState() =>
-      _FoodRegistrationCompletionAdultScreenState();
+  State<FoodRegistrationCompletionHostScreen> createState() =>
+      _FoodRegistrationCompletionHostScreenState();
 }
 
-class _FoodRegistrationCompletionAdultScreenState
-    extends State<FoodRegistrationCompletionAdultScreen> {
+class _FoodRegistrationCompletionHostScreenState
+    extends State<FoodRegistrationCompletionHostScreen> {
   late String _imageURL;
 
   @override
@@ -113,7 +113,7 @@ class _FoodRegistrationCompletionAdultScreenState
               color: Colors.black,
             ),
           ),
-          ElevatedShadowButtonAdultWidget(
+          ElevatedShadowButtonHostWidget(
               backgroundColor: Colors.red,
               textColor: Colors.white,
               onPressed: () {

@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:puppy_alert/models/favorite_host_model.dart';
-import 'package:puppy_alert/widgets/child_widgets/favorite_host_child_widget.dart';
+import 'package:puppy_alert/widgets/puppy_widgets/favorite_host_puppy_widget.dart';
 
-class FavoriteHostChildScreen extends StatefulWidget {
+class FavoriteHostpuppyScreen extends StatefulWidget {
   final String _userId;
 
-  const FavoriteHostChildScreen(
+  const FavoriteHostpuppyScreen(
       {super.key, required String userId})
       : _userId = userId;
 
   @override
-  State<FavoriteHostChildScreen> createState() =>
-      _FavoriteHostChildScreenState();
+  State<FavoriteHostpuppyScreen> createState() =>
+      _FavoriteHostpuppyScreenState();
 }
 
-class _FavoriteHostChildScreenState extends State<FavoriteHostChildScreen> {
+class _FavoriteHostpuppyScreenState extends State<FavoriteHostpuppyScreen> {
   List<FavoriteHostModel>? _favoriteHostModelList;
 
   @override
@@ -83,7 +83,7 @@ Widget _getShowWidget(List<FavoriteHostModel>? favoriteHostList, String userId) 
       child: ListView.builder(
         itemCount: favoriteHostList.length,
         itemBuilder: (context, index) {
-          return FavoriteHostChildWidget(
+          return FavoriteHostPuppyWidget(
             puppyId: userId,
             favoriteHostModel: favoriteHostList[index],
           );

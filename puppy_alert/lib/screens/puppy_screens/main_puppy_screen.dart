@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
-import 'package:puppy_alert/screens/child_screens/favorite_host_child_screen.dart';
-import 'package:puppy_alert/screens/child_screens/home_child_screen.dart';
-import '../common_screens/my_page_common_screen.dart';
-import 'food_map_child_screen.dart';
+import 'package:puppy_alert/screens/puppy_screens/favorite_host_puppy_screen.dart';
+import 'package:puppy_alert/screens/puppy_screens/home_puppy_screen.dart';
+import 'package:puppy_alert/screens/common_screens/my_page_common_screen.dart';
+import 'food_map_puppy_screen.dart';
 
-class MainChildScreen extends StatefulWidget {
+class MainPuppyScreen extends StatefulWidget {
   final UserModel _userModel;
 
-  const MainChildScreen({super.key, required userModel}) : _userModel = userModel;
+  const MainPuppyScreen({super.key, required userModel}) : _userModel = userModel;
 
   @override
-  State<MainChildScreen> createState() => _MainChildScreenState();
+  State<MainPuppyScreen> createState() => _MainPuppyScreenState();
 }
 
-class _MainChildScreenState extends State<MainChildScreen> {
+class _MainPuppyScreenState extends State<MainPuppyScreen> {
   int _selectedIndex = 0;
   late final List<Widget> _widgetOptionList;
 
@@ -24,15 +24,15 @@ class _MainChildScreenState extends State<MainChildScreen> {
   void initState() {
     super.initState();
     _widgetOptionList = <Widget>[
-      HomeChildScreen(
+      HomePuppyScreen(
           userDongAddress: widget._userModel.dongAddress,
           userId: widget._userModel.userId),
-      FoodMapChildScreen(
+      FoodMapPuppyScreen(
         userDto: widget._userModel,
       ),
-      FavoriteHostChildScreen(userId: widget._userModel.userId),
-      MyPageChildScreen(
-        userDto: widget._userModel,
+      FavoriteHostpuppyScreen(userId: widget._userModel.userId),
+      MyPageCommonScreen(
+        userModel: widget._userModel,
       ),
     ];
   }

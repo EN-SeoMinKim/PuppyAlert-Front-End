@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/models/favorite_host_model.dart';
 
-class FavoriteIconChildWidget extends StatefulWidget {
+class FavoriteIconPuppyWidget extends StatefulWidget {
   final String _puppyId, _hostId;
 
-  const FavoriteIconChildWidget({super.key, required puppyId, required hostId})
+  const FavoriteIconPuppyWidget({super.key, required puppyId, required hostId})
       : _puppyId = puppyId,
         _hostId = hostId;
 
   @override
-  State<FavoriteIconChildWidget> createState() =>
-      _FavoriteIconChildWidgetState();
+  State<FavoriteIconPuppyWidget> createState() =>
+      _FavoriteIconPuppyWidgetState();
 }
 
-class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
+class _FavoriteIconPuppyWidgetState extends State<FavoriteIconPuppyWidget> {
   bool _isFavorite = false;
 
   @override

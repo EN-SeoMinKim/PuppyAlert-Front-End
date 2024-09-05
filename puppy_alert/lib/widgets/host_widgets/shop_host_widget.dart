@@ -5,17 +5,17 @@ import 'package:puppy_alert/models/shop_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class ShopAdultWidget extends StatefulWidget {
+class ShopHostWidget extends StatefulWidget {
   final List<MarketModel> _marketList;
 
-  const ShopAdultWidget({super.key, required List<MarketModel> marketList})
+  const ShopHostWidget({super.key, required List<MarketModel> marketList})
       : _marketList = marketList;
 
   @override
-  State<ShopAdultWidget> createState() => _ShopAdultWidgetState();
+  State<ShopHostWidget> createState() => _ShopHostWidgetState();
 }
 
-class _ShopAdultWidgetState extends State<ShopAdultWidget> {
+class _ShopHostWidgetState extends State<ShopHostWidget> {
   final List<ShopModel> _shopModelList = List.empty(growable: true);
   late String _dropdownValue;
 

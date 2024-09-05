@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/models/market_model.dart';
 
-class MarketMapAdultWidget extends StatelessWidget {
+class MarketMapHostWidget extends StatelessWidget {
   final NLatLng _userLatLng;
   final Set<MarketModel> _marketModel;
 
-  const MarketMapAdultWidget(
+  const MarketMapHostWidget(
       {super.key, required userLatLng, required marketModel})
       : _userLatLng = userLatLng,
         _marketModel = marketModel;

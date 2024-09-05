@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/models/favorite_host_model.dart';
-import 'package:puppy_alert/widgets/child_widgets/favorite_icon_child_widget.dart';
+import 'package:puppy_alert/widgets/puppy_widgets/favorite_icon_puppy_widget.dart';
 
-class FavoriteHostChildWidget extends StatelessWidget {
+class FavoriteHostPuppyWidget extends StatelessWidget {
   final String _puppyId;
   final FavoriteHostModel _favoriteHostModel;
 
-  const FavoriteHostChildWidget({
+  const FavoriteHostPuppyWidget({
     super.key,
     required String puppyId,
     required FavoriteHostModel favoriteHostModel,
@@ -52,7 +52,7 @@ class FavoriteHostChildWidget extends StatelessWidget {
       ),
       Row(
         children: [
-          FavoriteIconChildWidget(puppyId: _puppyId, hostId: _favoriteHostModel.hostId),
+          FavoriteIconPuppyWidget(puppyId: _puppyId, hostId: _favoriteHostModel.hostId),
           const SizedBox(width: 30),
         ],
       )

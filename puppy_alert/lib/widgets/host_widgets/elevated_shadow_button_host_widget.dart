@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ElevatedShadowButtonAdultWidget extends StatelessWidget {
+class ElevatedShadowButtonHostWidget extends StatelessWidget {
   final VoidCallback _onPressed;
   final String _text;
   final Color _backgroundColor;
@@ -8,7 +8,7 @@ class ElevatedShadowButtonAdultWidget extends StatelessWidget {
   final double _height;
   final double _width;
 
-  const ElevatedShadowButtonAdultWidget({
+  const ElevatedShadowButtonHostWidget({
     super.key,
     required void Function() onPressed,
     required String text,
