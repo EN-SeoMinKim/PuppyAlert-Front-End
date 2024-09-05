@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:puppy_alert/models/food_model.dart';
-import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/child_screens/food_detail_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/food_record_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login_screen.dart';
@@ -16,9 +16,9 @@ import 'package:puppy_alert/widgets/common_widgets/my_page_header_common_widget.
 import 'package:http/http.dart' as http;
 
 class MyPageChildScreen extends StatelessWidget {
-  final UserDto _userDto;
+  final UserModel _userDto;
 
-  const MyPageChildScreen({super.key, required UserDto userDto})
+  const MyPageChildScreen({super.key, required UserModel userDto})
       : _userDto = userDto;
 
   Future<FoodModel?> _getAppliedFoodModel() async {
@@ -51,7 +51,7 @@ class MyPageChildScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MyPageHeaderCommonWidget(userName: _userDto.nickName),
+        MyPageHeaderCommonWidget(userModel: _userDto,),
         ProfileInfoButtonChildWidget(
             icon: Icons.manage_accounts,
             text: '   개인 정보',

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/adult_screens/speech_recognition_adult_screen.dart';
 import 'package:puppy_alert/screens/child_screens/main_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/signup_screen.dart';
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _goNextPage(
       Map<String, dynamic> jsonData, String id, String password) async {
-    UserDto userDto = await _getUserDto(id, password);
+    UserModel userDto = await _getUserDto(id, password);
 
     if (jsonData['userType'] == 'HOST') {
       Navigator.pushReplacement(context,
@@ -114,19 +114,12 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<UserDto> _getUserDto(String userId, String userPassword) async {
+  Future<UserModel> _getUserDto(String userId, String userPassword) async {
     Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/user?id=$userId');
     final value = (await http.get(uri)).bodyBytes;
     final jsonData = jsonDecode(utf8.decode(value));
-    return UserDto(
-        userId,
-        userPassword,
-        jsonData['name'],
-        jsonData['nickName'],
-        jsonData['birth'],
-        jsonData['phoneNumber'],
-        jsonData['address'],
-        jsonData['location']);
+
+    return UserModel.fromJson(jsonData, userPassword);
   }
 
   @override

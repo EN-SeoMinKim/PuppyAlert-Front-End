@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/widgets/common_widgets/immutable_user_info_common_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button_common_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/mutable_user_info_common_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/white_background_button_common_widget.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
-  final UserDto _userDto;
+  final UserModel _userDto;
 
   const PersonalInformationScreen({super.key, required userDto})
       : _userDto = userDto;

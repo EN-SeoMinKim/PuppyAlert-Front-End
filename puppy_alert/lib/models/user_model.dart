@@ -1,4 +1,4 @@
-class UserDto {
+class UserModel {
   late String _userId,
       _password,
       _name,
@@ -6,10 +6,11 @@ class UserDto {
       _birth,
       _phoneNumber,
       _address,
-      _dongAddress;
+      _dongAddress,
+  _userProfileImageURL;
   late Map<String, dynamic> _location;
 
-  UserDto(
+  UserModel(
       String userId,
       String password,
       String name,
@@ -17,7 +18,8 @@ class UserDto {
       String birth,
       String phoneNumber,
       String address,
-      Map<String, dynamic> location) {
+      Map<String, dynamic> location,
+      String userProfileImageURL) {
     _userId = userId;
     _password = password;
     _name = name;
@@ -27,6 +29,20 @@ class UserDto {
     _location = location;
     _address = address;
     _dongAddress = _parsingAddress(address);
+    _userProfileImageURL = userProfileImageURL;
+  }
+
+  factory UserModel.fromJson(Map<String, dynamic> jsonData, String password) {
+    return UserModel(
+        jsonData['userId'],
+        jsonData['name'],
+        password,
+        jsonData['nickName'],
+        jsonData['birth'],
+        jsonData['phoneNumber'],
+        jsonData['address'],
+        jsonData['location'],
+        jsonData['userProfileImageURL']);
   }
 
   String _parsingAddress(String address) {
@@ -60,4 +76,6 @@ class UserDto {
   String get password => _password;
 
   String get userId => _userId;
+
+  String get userProfileImageURL => _userProfileImageURL;
 }

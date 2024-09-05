@@ -1,7 +1,7 @@
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/adult_screens/food_registration_completion_adult_screen.dart';
 import 'package:puppy_alert/utils/constants.dart';
 import 'package:puppy_alert/widgets/adult_widgets/elevated_shadow_button_adult_widget.dart';
@@ -11,7 +11,7 @@ import 'dart:async';
 import 'my_page_adult_screen.dart';
 
 class SpeechRecognitionAdultScreen extends StatefulWidget {
-  final UserDto _userDto;
+  final UserModel _userDto;
 
   const SpeechRecognitionAdultScreen({super.key, required userDto})
       : _userDto = userDto;

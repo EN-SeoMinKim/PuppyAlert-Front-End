@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:provider/provider.dart';
 import 'package:puppy_alert/models/food_model.dart';
-import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_child_widget.dart';
 import 'package:puppy_alert/widgets/child_widgets/food_map_detail_child_widget.dart';
@@ -10,7 +10,7 @@ import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 import 'food_detail_child_screen.dart';
 
 class FoodMapChildScreen extends StatefulWidget {
-  final UserDto _userDto;
+  final UserModel _userDto;
 
   const FoodMapChildScreen({super.key, required userDto}) : _userDto = userDto;
 
@@ -27,7 +27,6 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
 
     _foodMapChildWidget = FoodMapChildWidget(
         markerSet: markerSet,
-        foodList: foodList,
         latitude: widget._userDto.location['latitude'] as double,
         longitude: widget._userDto.location['longitude'] as double);
     _showWidget = _foodMapChildWidget!;
@@ -43,7 +42,7 @@ class _FoodMapChildScreenState extends State<FoodMapChildScreen> {
           id: data.foodId.toString(),
           position: NLatLng(
               data.locationMap['latitude'], data.locationMap['longitude']));
-
+      marker.openInfoWindow(NInfoWindow.onMarker(id: marker.info.id, text: data.menuName));
       markerSet.add(marker);
     }
     return markerSet;
