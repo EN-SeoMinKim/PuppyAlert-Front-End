@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/models/market_model.dart';
 import 'package:puppy_alert/models/shop_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart' as dotenv;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ShopAdultWidget extends StatefulWidget {
   final List<MarketModel> _marketList;
