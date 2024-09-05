@@ -5,37 +5,37 @@ import 'package:puppy_alert/models/shop_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class ShopHostWidget extends StatefulWidget {
+class ShopHostScreen extends StatefulWidget {
   final List<MarketModel> _marketList;
 
-  const ShopHostWidget({super.key, required List<MarketModel> marketList})
+  const ShopHostScreen({super.key, required List<MarketModel> marketList})
       : _marketList = marketList;
 
   @override
-  State<ShopHostWidget> createState() => _ShopHostWidgetState();
+  State<ShopHostScreen> createState() => _ShopHostScreenState();
 }
 
-class _ShopHostWidgetState extends State<ShopHostWidget> {
+class _ShopHostScreenState extends State<ShopHostScreen> {
   final List<ShopModel> _shopModelList = List.empty(growable: true);
-  late String _dropdownValue;
+  late String _selectedValue;
 
   @override
   void initState() {
     super.initState();
-    _dropdownValue = widget._marketList[0].name;
+    _selectedValue = widget._marketList[0].name;
   }
 
-  Future<List<MarketModel>> getMarketList() async {
+  void _setShopModelList() async {
     http.Response response =
-    await http.get(Uri.parse('${dotenv.get('BASE_URL')}/market/all'));
+        await http.get(Uri.parse('${dotenv.get('BASE_URL')}/market/shops?marketId=$_selectedValue'));
     final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
-    return jsonData
-        .map<MarketModel>((json) => MarketModel.fromJson(json))
-        .toList();
-  }
 
-  void _initShopModelList() {
-
+    setState(() {
+      _shopModelList.clear();
+      _shopModelList.addAll(jsonData
+          .map<ShopModel>((json) => ShopModel.fromJson(json))
+          .toList());
+    });
   }
 
   @override
@@ -46,7 +46,7 @@ class _ShopHostWidgetState extends State<ShopHostWidget> {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
             child: DropdownButton<String>(
-              value: _dropdownValue,
+              value: _selectedValue,
               icon: const Icon(Icons.arrow_downward),
               elevation: 16,
               style: const TextStyle(color: Colors.deepPurple),
@@ -56,7 +56,7 @@ class _ShopHostWidgetState extends State<ShopHostWidget> {
               ),
               onChanged: (String? value) {
                 setState(() {
-                  _dropdownValue = value!;
+                  _selectedValue = value!;
                 });
               },
               items: widget._marketList

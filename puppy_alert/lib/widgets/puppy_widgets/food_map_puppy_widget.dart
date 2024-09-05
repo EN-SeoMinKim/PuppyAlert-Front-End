@@ -5,10 +5,10 @@ class FoodMapPuppyWidget extends StatefulWidget {
   final Set<NMarker> _markerSet;
   final NLatLng _userLatLng;
 
-  FoodMapPuppyWidget(
-      {super.key, required markerSet, required latitude, required longitude})
+  const FoodMapPuppyWidget(
+      {super.key, required Set<NMarker> markerSet, required NLatLng userLatLng})
       : _markerSet = markerSet,
-        _userLatLng = NLatLng(latitude, longitude);
+        _userLatLng = userLatLng;
 
   @override
   State<FoodMapPuppyWidget> createState() => _FoodMapPuppyWidgetState();

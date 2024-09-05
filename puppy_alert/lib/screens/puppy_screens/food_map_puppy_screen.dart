@@ -10,9 +10,10 @@ import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 import 'food_detail_puppy_screen.dart';
 
 class FoodMapPuppyScreen extends StatefulWidget {
-  final UserModel _userDto;
+  final UserModel _userModel;
 
-  const FoodMapPuppyScreen({super.key, required userDto}) : _userDto = userDto;
+  const FoodMapPuppyScreen({super.key, required userModel})
+      : _userModel = userModel;
 
   @override
   State<FoodMapPuppyScreen> createState() => _FoodMapPuppyScreenState();
@@ -26,9 +27,9 @@ class _FoodMapPuppyScreenState extends State<FoodMapPuppyScreen> {
     Set<NMarker> markerSet = _getMarkerSet(foodList);
 
     _foodMapChildWidget = FoodMapPuppyWidget(
-        markerSet: markerSet,
-        latitude: widget._userDto.location['latitude'] as double,
-        longitude: widget._userDto.location['longitude'] as double);
+      markerSet: markerSet,
+      userLatLng: widget._userModel.userLatLng,
+    );
     _showWidget = _foodMapChildWidget!;
 
     _onTappedMarker(markerSet, foodList);
@@ -42,7 +43,8 @@ class _FoodMapPuppyScreenState extends State<FoodMapPuppyScreen> {
           id: data.foodId.toString(),
           position: NLatLng(
               data.locationMap['latitude'], data.locationMap['longitude']));
-      marker.openInfoWindow(NInfoWindow.onMarker(id: marker.info.id, text: data.menuName));
+      marker.openInfoWindow(
+          NInfoWindow.onMarker(id: marker.info.id, text: data.menuName));
       markerSet.add(marker);
     }
     return markerSet;
@@ -89,9 +91,9 @@ class _FoodMapPuppyScreenState extends State<FoodMapPuppyScreen> {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => FoodDetailPuppyScreen(
-                          userId: widget._userDto.userId,
+                          userId: widget._userModel.userId,
                           foodCommonWidget: FoodCommonWidget(
-                            userId: widget._userDto.userId,
+                            userId: widget._userModel.userId,
                             foodModel: foodModel!,
                           ),
                         )));

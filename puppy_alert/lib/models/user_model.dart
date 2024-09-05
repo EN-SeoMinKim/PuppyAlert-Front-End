@@ -1,3 +1,5 @@
+import 'package:flutter_naver_map/flutter_naver_map.dart';
+
 class UserModel {
   late String _userId,
       _password,
@@ -8,7 +10,7 @@ class UserModel {
       _address,
       _dongAddress,
   _userProfileImageURL;
-  late Map<String, dynamic> _location;
+  late NLatLng _userLatLng;
 
   UserModel(
       String userId,
@@ -26,7 +28,7 @@ class UserModel {
     _nickName = nickName;
     _birth = birth;
     _phoneNumber = phoneNumber;
-    _location = location;
+    _userLatLng = getLatLng(location);
     _address = address;
     _dongAddress = _parsingAddress(address);
     _userProfileImageURL = userProfileImageURL;
@@ -45,6 +47,10 @@ class UserModel {
         jsonData['userProfileImageURL']);
   }
 
+  NLatLng getLatLng(Map<String, dynamic> location) {
+    return NLatLng(location['latitude'], location['longitude']);
+  }
+
   String _parsingAddress(String address) {
     List<String> splitString = address.split(' ');
     for (String s in splitString) {
@@ -59,7 +65,7 @@ class UserModel {
     return 'NONE';
   }
 
-  Map<String, dynamic> get location => _location;
+  NLatLng get userLatLng => _userLatLng;
 
   String get address => _address;
 
