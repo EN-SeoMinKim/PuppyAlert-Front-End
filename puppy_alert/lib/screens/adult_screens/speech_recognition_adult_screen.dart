@@ -11,10 +11,10 @@ import 'dart:async';
 import 'my_page_adult_screen.dart';
 
 class SpeechRecognitionAdultScreen extends StatefulWidget {
-  final UserModel _userDto;
+  final UserModel _userModel;
 
-  const SpeechRecognitionAdultScreen({super.key, required userDto})
-      : _userDto = userDto;
+  const SpeechRecognitionAdultScreen({super.key, required userModel})
+      : _userModel = userModel;
 
   @override
   State<SpeechRecognitionAdultScreen> createState() =>
@@ -164,7 +164,7 @@ class _SpeechRecognitionAdultScreenState
   Future<void> _completeRegisterFood() async {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => FoodRegistrationCompletionAdultScreen(
-            userId: widget._userDto.userId, food: _food, time: _time)));
+            userId: widget._userModel.userId, food: _food, time: _time)));
   }
 
   Future<void> _handleFailedRecognition(
@@ -211,7 +211,7 @@ class _SpeechRecognitionAdultScreenState
                 text: "나의 정보",
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MyPageAdultScreen(userDto: widget._userDto,)));
+                      builder: (context) => MyPageAdultScreen(userDto: widget._userModel,)));
                 },
               ),
             ],

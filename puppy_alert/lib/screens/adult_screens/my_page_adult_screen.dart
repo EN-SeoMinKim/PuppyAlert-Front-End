@@ -31,7 +31,7 @@ class _MyPageAdultScreenState extends State<MyPageAdultScreen> {
               width: 200,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PersonalInformationScreen(userDto: widget._userModel,)));
+                      builder: (context) => PersonalInformationScreen(userModel: widget._userModel,)));
                 },
                 text: "개인 정보"),
             const SizedBox(

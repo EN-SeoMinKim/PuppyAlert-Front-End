@@ -35,7 +35,7 @@ class _FavoriteIconChildWidgetState extends State<FavoriteIconChildWidget> {
             .toList();
 
     for (var host in hostList) {
-      if (host.hostId == widget._hostId) {
+      if (host.hostNickName == widget._hostId) {
         setState(() {
           _isFavorite = true;
         });

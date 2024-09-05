@@ -95,20 +95,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _goNextPage(
       Map<String, dynamic> jsonData, String id, String password) async {
-    UserModel userDto = await _getUserDto(id, password);
+    UserModel userModel = await _getUserDto(id, password);
 
     if (jsonData['userType'] == 'HOST') {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
         return SpeechRecognitionAdultScreen(
-          userDto: userDto,
+          userModel: userModel,
         );
       }));
     } else {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
         return MainChildScreen(
-          userDto: userDto,
+          userModel: userModel,
         );
       }));
     }

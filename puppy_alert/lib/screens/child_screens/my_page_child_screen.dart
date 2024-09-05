@@ -58,7 +58,7 @@ class MyPageChildScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => PersonalInformationScreen(
-                        userDto: _userDto,
+                        userModel: _userDto,
                       )));
             }),
         ProfileInfoButtonChildWidget(

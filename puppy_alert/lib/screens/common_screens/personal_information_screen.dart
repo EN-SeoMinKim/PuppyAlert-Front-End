@@ -6,10 +6,10 @@ import 'package:puppy_alert/widgets/common_widgets/mutable_user_info_common_widg
 import 'package:puppy_alert/widgets/common_widgets/white_background_button_common_widget.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
-  final UserModel _userDto;
+  final UserModel _userModel;
 
-  const PersonalInformationScreen({super.key, required userDto})
-      : _userDto = userDto;
+  const PersonalInformationScreen({super.key, required userModel})
+      : _userModel = userModel;
 
   @override
   State<PersonalInformationScreen> createState() =>
@@ -61,7 +61,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   children: [
                     ImmutableUserInfoCommonWidget(
                       label: '아이디',
-                      value: widget._userDto.userId,
+                      value: widget._userModel.userId,
                     ),
                     MutableUserInfoCommonWidget(
                         controller: _passwordController, label: '비밀번호'),
@@ -70,23 +70,23 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         label: '비밀번호 재확인'),
                     ImmutableUserInfoCommonWidget(
                       label: '이름',
-                      value: widget._userDto.name,
+                      value: widget._userModel.name,
                     ),
                     ImmutableUserInfoCommonWidget(
                       label: '생년월일',
-                      value: widget._userDto.birth,
+                      value: widget._userModel.birth,
                     ),
                     ImmutableUserInfoCommonWidget(
                       label: '주소',
-                      value: widget._userDto.address,
+                      value: widget._userModel.address,
                     ),
                     ImmutableUserInfoCommonWidget(
                       label: '상세주소',
-                      value: widget._userDto.address,
+                      value: widget._userModel.address,
                     ),
                     ImmutableUserInfoCommonWidget(
                       label: '전화번호',
-                      value: widget._userDto.phoneNumber,
+                      value: widget._userModel.phoneNumber,
                     ),
                     const SizedBox(
                       height: 25,

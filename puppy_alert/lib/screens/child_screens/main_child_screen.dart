@@ -8,9 +8,9 @@ import 'package:puppy_alert/screens/child_screens/my_page_child_screen.dart';
 import 'food_map_child_screen.dart';
 
 class MainChildScreen extends StatefulWidget {
-  final UserModel _userDto;
+  final UserModel _userModel;
 
-  const MainChildScreen({super.key, required userDto}) : _userDto = userDto;
+  const MainChildScreen({super.key, required userModel}) : _userModel = userModel;
 
   @override
   State<MainChildScreen> createState() => _MainChildScreenState();
@@ -25,14 +25,14 @@ class _MainChildScreenState extends State<MainChildScreen> {
     super.initState();
     _widgetOptionList = <Widget>[
       HomeChildScreen(
-          userDongAddress: widget._userDto.dongAddress,
-          userId: widget._userDto.userId),
+          userDongAddress: widget._userModel.dongAddress,
+          userId: widget._userModel.userId),
       FoodMapChildScreen(
-        userDto: widget._userDto,
+        userDto: widget._userModel,
       ),
-      FavoriteHostChildScreen(userId: widget._userDto.userId),
+      FavoriteHostChildScreen(userId: widget._userModel.userId),
       MyPageChildScreen(
-        userDto: widget._userDto,
+        userDto: widget._userModel,
       ),
     ];
   }
@@ -49,7 +49,7 @@ class _MainChildScreenState extends State<MainChildScreen> {
       appBar: AppBar(),
       body: Center(
         child: ChangeNotifierProvider<FoodProvider>(
-            create: (context) => FoodProvider(widget._userDto.userId),
+            create: (context) => FoodProvider(widget._userModel.userId),
             child: _widgetOptionList.elementAt(_selectedIndex)),
       ),
       bottomNavigationBar: BottomNavigationBar(
