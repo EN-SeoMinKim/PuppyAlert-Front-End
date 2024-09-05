@@ -1,7 +1,7 @@
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:puppy_alert/models/user_dto.dart';
+import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/adult_screens/food_registration_completion_adult_screen.dart';
 import 'package:puppy_alert/utils/constants.dart';
 import 'package:puppy_alert/widgets/adult_widgets/speech_recognition_button_adult_widget.dart';
@@ -9,10 +9,10 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:async';
 
 class SpeechRecognitionAdultScreen extends StatefulWidget {
-  final String _userId;
+  final UserModel _userModel;
 
-  const SpeechRecognitionAdultScreen({super.key,  required userId})
-      : _userId=userId;
+  const SpeechRecognitionAdultScreen({super.key, required userModel})
+      : _userModel = userModel;
 
   @override
   State<SpeechRecognitionAdultScreen> createState() =>
@@ -161,7 +161,7 @@ class _SpeechRecognitionAdultScreenState
   Future<void> _completeRegisterFood() async {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => FoodRegistrationCompletionAdultScreen(
-            userId: widget._userId, food: _food, time: _time)));
+            userId: widget._userModel.userId, food: _food, time: _time)));
   }
 
   Future<void> _handleFailedRecognition(

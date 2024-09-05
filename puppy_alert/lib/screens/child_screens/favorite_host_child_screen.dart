@@ -84,9 +84,8 @@ Widget _getShowWidget(List<FavoriteHostModel>? favoriteHostList, String userId) 
         itemCount: favoriteHostList.length,
         itemBuilder: (context, index) {
           return FavoriteHostChildWidget(
-            hostId: favoriteHostList[index].hostId,
             puppyId: userId,
-            recentFoodTime: favoriteHostList[index].recentFoodTime,
+            favoriteHostModel: favoriteHostList[index],
           );
         },
       ));

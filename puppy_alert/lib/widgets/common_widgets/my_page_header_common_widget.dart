@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/models/user_model.dart';
 
 class MyPageHeaderCommonWidget extends StatelessWidget {
-  final String _userName;
+  final UserModel _userModel;
 
   const MyPageHeaderCommonWidget({
     super.key,
-    required String userName,
-  })  : _userName = userName;
+    required UserModel userModel,
+  })  : _userModel = userModel;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,8 @@ class MyPageHeaderCommonWidget extends StatelessWidget {
         children: [
           const SizedBox(height: 30.0),
           ClipOval(
-            child: Image.asset(
-              'assets/profile_image.png',
+            child: Image.network(
+              _userModel.userProfileImageURL,
               width: 100.0,
               height: 100.0,
               fit: BoxFit.cover,
@@ -28,7 +29,7 @@ class MyPageHeaderCommonWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16.0),
           Text(
-            _userName,
+            _userModel.nickName,
             style: const TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
