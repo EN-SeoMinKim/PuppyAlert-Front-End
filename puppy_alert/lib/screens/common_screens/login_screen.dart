@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/models/user_dto.dart';
-import 'package:puppy_alert/screens/adult_screens/speech_recognition_adult_screen.dart';
 import 'package:puppy_alert/screens/child_screens/main_child_screen.dart';
 import 'package:puppy_alert/screens/common_screens/signup_screen.dart';
 import 'package:puppy_alert/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:puppy_alert/widgets/common_widgets/user_text_form_field_common_widget.dart';
+
+import '../adult_screens/main_adult_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -98,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
       getUserDto('host', id, password).then((userDto) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) {
-          return SpeechRecognitionAdultScreen(
+          return MainAdultScreen(
             userDto: userDto,
           );
         }));
@@ -118,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<UserDto> getUserDto(
       String userType, String userId, String userPassword) async {
     Uri uri =
-        Uri.parse('${dotenv.get('BASE_URL')}/$userType?${userType}Id=$userId');
+    Uri.parse('${dotenv.get('BASE_URL')}/user?id=$userId');
     final value = (await http.get(uri)).bodyBytes;
     final jsonData = jsonDecode(utf8.decode(value));
     return UserDto(

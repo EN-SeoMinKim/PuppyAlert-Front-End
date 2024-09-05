@@ -117,7 +117,8 @@ class _FoodRegistrationCompletionAdultScreenState
               backgroundColor: Colors.red,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.popAndPushNamed(context,'speech_recognition_adult_screen');
+                Navigator.popAndPushNamed(
+                    context, 'speech_recognition_adult_screen');
               },
               text: "취소"),
         ],
