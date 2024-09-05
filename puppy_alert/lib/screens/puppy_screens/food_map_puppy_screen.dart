@@ -28,6 +28,7 @@ class _FoodMapPuppyScreenState extends State<FoodMapPuppyScreen> {
 
     _foodMapChildWidget = FoodMapPuppyWidget(
       markerSet: markerSet,
+      foodSet: foodList.toSet(),
       userLatLng: widget._userModel.userLatLng,
     );
     _showWidget = _foodMapChildWidget!;
@@ -43,8 +44,6 @@ class _FoodMapPuppyScreenState extends State<FoodMapPuppyScreen> {
           id: data.foodId.toString(),
           position: NLatLng(
               data.locationMap['latitude'], data.locationMap['longitude']));
-      marker.openInfoWindow(
-          NInfoWindow.onMarker(id: marker.info.id, text: data.menuName));
       markerSet.add(marker);
     }
     return markerSet;

@@ -6,7 +6,7 @@ import 'package:puppy_alert/models/market_model.dart';
 import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/common_screens/my_page_common_screen.dart';
 import 'package:puppy_alert/screens/host_screens/shop_host_screen.dart';
-import 'package:puppy_alert/widgets/host_widgets/market_map_host_widget.dart';
+import 'package:puppy_alert/screens/host_screens/market_map_host_screen.dart';
 import 'home_host_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -41,10 +41,10 @@ class _MainHostScreenState extends State<MainHostScreen> {
     _widgetOptionList.clear();
     _widgetOptionList.addAll([
       HomeHostScreen(userModel: widget._userModel),
-      ShopHostScreen(marketList: marketList),
-      MarketMapHostWidget(
+      MarketMapHostScreen(
           userLatLng: widget._userModel.userLatLng,
           marketSet: marketList.toSet()),
+      ShopHostScreen(marketList: marketList),
       MyPageCommonScreen(userModel: widget._userModel),
     ]);
   }

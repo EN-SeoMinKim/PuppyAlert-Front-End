@@ -101,8 +101,9 @@ class FoodDetailPuppyScreen extends StatelessWidget {
                             position: NLatLng(
                               _foodModel.locationMap['latitude'],
                               _foodModel.locationMap['longitude'],
-                            ))
+                            )),
                       },
+                      foodSet: {_foodModel},
                       userLatLng: NLatLng(
                         _foodModel.locationMap['latitude'],
                         _foodModel.locationMap['longitude'],

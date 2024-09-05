@@ -2,28 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:puppy_alert/models/market_model.dart';
 
-class MarketMapHostWidget extends StatelessWidget {
+class MarketMapHostScreen extends StatelessWidget {
   final NLatLng _userLatLng;
   final Set<MarketModel> _marketSet;
 
-  const MarketMapHostWidget(
+  const MarketMapHostScreen(
       {super.key, required userLatLng, required Set<MarketModel> marketSet})
       : _userLatLng = userLatLng,
         _marketSet = marketSet;
 
   Set<NMarker> _getMarkerSet() {
-    Set<NMarker> markerSet = {};
+    Set<NMarker> result = {};
 
     for (MarketModel market in _marketSet) {
       NMarker marker = NMarker(
           position: NLatLng(market.latitude, market.longitude),
           id: market.id.toString());
 
-      marker.openInfoWindow(
-          NInfoWindow.onMarker(id: market.id.toString(), text: market.name));
-      markerSet.add(marker);
+      result.add(marker);
     }
-    return markerSet;
+    return result;
+  }
+
+  void _addOpenInfoWindow(Set<NMarker> naverMarkerSet) {
+    for(NMarker marker in naverMarkerSet) {
+      for(MarketModel marketModel in _marketSet) {
+        if(marker.info.id == marketModel.id.toString()) {
+          marker.openInfoWindow(NInfoWindow.onMarker(id: marker.info.id, text: marketModel.name));
+        }
+      }
+    }
   }
 
   @override
@@ -34,14 +42,16 @@ class MarketMapHostWidget extends StatelessWidget {
         indoorEnable: false,
         initialCameraPosition: NCameraPosition(
           target: _userLatLng,
-          zoom: 15,
+          zoom: 13,
           bearing: 0,
           tilt: 0,
         ),
       ),
       onMapReady: (NaverMapController controller) {
         if (_marketSet.isNotEmpty) {
-          controller.addOverlayAll(_getMarkerSet());
+          Set<NMarker> naverMarkerSet = _getMarkerSet();
+          controller.addOverlayAll(naverMarkerSet);
+          _addOpenInfoWindow(naverMarkerSet);
         }
       },
     );
