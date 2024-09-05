@@ -15,10 +15,10 @@ import 'package:puppy_alert/widgets/common_widgets/long_rectangle_button_common_
 import 'package:puppy_alert/widgets/common_widgets/my_page_header_common_widget.dart';
 import 'package:http/http.dart' as http;
 
-class MyPageChildScreen extends StatelessWidget {
+class MyPageCommonScreen extends StatelessWidget {
   final UserDto _userDto;
 
-  const MyPageChildScreen({super.key, required UserDto userDto})
+  const MyPageCommonScreen({super.key, required UserDto userDto})
       : _userDto = userDto;
 
   Future<FoodModel?> _getAppliedFoodModel() async {
