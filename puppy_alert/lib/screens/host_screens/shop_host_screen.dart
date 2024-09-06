@@ -62,7 +62,7 @@ class _ShopHostScreenState extends State<ShopHostScreen> {
             DropdownButton<String>(
               value: _selectedMarketName,
               elevation: 16,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.black),
               dropdownColor: Colors.orange,
               onChanged: (String? value) {
                 if (value != null && value != _selectedMarketName) {
@@ -90,7 +90,7 @@ class _ShopHostScreenState extends State<ShopHostScreen> {
               child: Card(
                 child: ListTile(
                   leading: const Icon(Icons.store, size: 50),
-                  title: Text(_shopModelList[index].name),
+                  title: Text(_shopModelList[index].name, style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Text(_shopModelList[index].detailAddress),
                   trailing: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
