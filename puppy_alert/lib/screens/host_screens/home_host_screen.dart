@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/host_screens/food_input_form_host_screen.dart';
+import 'package:puppy_alert/screens/host_screens/menu_recommend_host_screen.dart';
 import 'package:puppy_alert/screens/host_screens/speech_recognition_host_screen.dart';
 
 class HomeHostScreen extends StatelessWidget {
   final UserModel _userModel;
 
-  const HomeHostScreen({super.key, required UserModel userModel}) : _userModel = userModel;
+  const HomeHostScreen({super.key, required UserModel userModel})
+      : _userModel = userModel;
 
   void _showChoiceDialog(BuildContext context) {
     showDialog(
@@ -33,15 +35,11 @@ class HomeHostScreen extends StatelessWidget {
                   children: [
                     ElevatedButton.icon(
                         onPressed: () {
-                          // Navigator.pushReplacement(context, MaterialPageRoute(
-                          //     builder: (BuildContext context) {
-                          //   return FoodInputFormAdultScreen();
-                          // }));
                           Navigator.push(
-                            context,MaterialPageRoute(builder: (context)=>FoodInputFormHostScreen())
-                          );
-
-
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      FoodInputFormHostScreen()));
                         },
                         label: const Icon(
                           Icons.sticky_note_2_outlined,
@@ -71,7 +69,8 @@ class HomeHostScreen extends StatelessWidget {
                           Navigator.pushReplacement(context, MaterialPageRoute(
                               builder: (BuildContext context) {
                             return SpeechRecognitionHostScreen(
-                                userModel: null,);
+                              userModel: _userModel,
+                            );
                           }));
                         },
                         label: const Icon(
@@ -108,8 +107,8 @@ class HomeHostScreen extends StatelessWidget {
       children: [
         Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                        children: [
+          child: Column(
+            children: [
               Stack(
                 children: [
                   const SizedBox(height: 350, width: 300),
@@ -212,7 +211,12 @@ class HomeHostScreen extends StatelessWidget {
               ),
               const SizedBox(height: 35),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuRecommendHostScreen()));
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 6,
                     backgroundColor: Colors.white,
@@ -256,9 +260,9 @@ class HomeHostScreen extends StatelessWidget {
                           ))
                     ],
                   ))
-                        ],
-                      ),
-            ))
+            ],
+          ),
+        ))
       ],
     );
   }
