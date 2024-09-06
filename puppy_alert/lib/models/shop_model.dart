@@ -9,7 +9,7 @@ class ShopModel {
         _productType = productType;
 
   factory ShopModel.fromJson(Map<String, dynamic> json) {
-    return ShopModel(json['name'], json['detailAddress'], json['productType']);
+    return ShopModel(json['shopName'], json['detailAddress'], json['productType']);
   }
 
   String get name => _name;

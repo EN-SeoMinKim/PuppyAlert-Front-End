@@ -28,23 +28,23 @@ class _MainHostScreenState extends State<MainHostScreen> {
   void initState() {
     super.initState();
 
-    _initWidgetOptionList([]);
+    _initWidgetOptionList({});
 
     _getMarketList().then((value) {
       setState(() {
-        _initWidgetOptionList(value);
+        _initWidgetOptionList(value.toSet());
       });
     });
   }
 
-  void _initWidgetOptionList(List<MarketModel> marketList) {
+  void _initWidgetOptionList(Set<MarketModel> marketSet) {
     _widgetOptionList.clear();
     _widgetOptionList.addAll([
       HomeHostScreen(userModel: widget._userModel),
       MarketMapHostScreen(
           userLatLng: widget._userModel.userLatLng,
-          marketSet: marketList.toSet()),
-      ShopHostScreen(marketList: marketList),
+          marketSet: marketSet),
+      ShopHostScreen(marketSet: marketSet),
       MyPageCommonScreen(userModel: widget._userModel),
     ]);
   }
