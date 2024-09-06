@@ -33,18 +33,7 @@ class _FoodRecordCommonScreenState extends State<FoodRecordCommonScreen> {
           _foodCommonWidgetList.add(
             FoodCommonWidget(
               userId: widget._userId,
-              foodModel: FoodModel(
-                foodId: data['foodId'],
-                address: data['address'],
-                addressDetail: data['detailAddress'],
-                hostId: data['partnerId'],
-                hostNickName: data['partnerNickName'],
-                imageURL: data['imageURL'],
-                locationMap: data['location'],
-                menu: data['menuName'],
-                status: "MATCHED",
-                time: data['localDateTime'],
-              ),
+              foodModel: FoodModel.fromJson(data),
             ),
           );
         }

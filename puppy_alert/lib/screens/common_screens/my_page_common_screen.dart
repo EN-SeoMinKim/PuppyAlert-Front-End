@@ -23,25 +23,15 @@ class MyPageCommonScreen extends StatelessWidget {
 
   Future<FoodModel?> _getAppliedFoodModel() async {
     Uri uri = Uri.parse(
-        '${dotenv.get('BASE_URL')}/puppy/history?puppyId=${_userModel.userId}');
+        '${dotenv.get('BASE_URL')}/user/history?puppyId=${_userModel.userId}');
     final data = jsonDecode(utf8.decode((await http.get(uri)).bodyBytes));
     final now = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now()).split('T')[0];
 
-    for (var food in data) {
+    for (var food in data) {  // 오늘의 집밥 찾기 (API 생성 전 임시로 오늘 날짜로 설정)
       String time = food['localDateTime'].toString().split('T')[0];
+
       if (time == now) {
-        return FoodModel(
-          address: food['address'],
-          addressDetail: food['detailAddress'],
-          foodId: food['foodId'],
-          hostId: food['partnerId'],
-          hostNickName: food['partnerNickName'],
-          imageURL: food['imageURL'],
-          locationMap: food['location'],
-          menu: food['menuName'],
-          status: "Matched",
-          time: food['localDateTime'],
-        );
+        return FoodModel.fromJson(food);
       }
     }
     return null;
