@@ -47,80 +47,66 @@ class _ShopHostScreenState extends State<ShopHostScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xffFF7700),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Icon(Icons.shopping_cart_outlined),
-                  ),
-                  Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _selectedMarketName,
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.white),
-                        dropdownColor: Colors.orange,
-                        onChanged: (String? value) {
-                          if (value != null && value != _selectedMarketName) {
-                            setState(() {
-                              _selectedMarketName = value;
-                              _setShopModelList();
-                            });
-                          }
-                        },
-                        isExpanded: true,
-                        items: widget._marketSet.map<DropdownMenuItem<String>>(
-                            (MarketModel marketModel) {
-                          return DropdownMenuItem<String>(
-                            value: marketModel.name,
-                            child: Text(marketModel.name),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: widget._marketSet.length > 1 ? const Icon(
+            Icons.shopping_cart_outlined,
+            size: 30,
+          ) : null,
+          title: const Text(
+            '상점 리스트',
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.left,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _shopModelList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.store, size: 50),
-                      title: Text(_shopModelList[index].name),
-                      subtitle: Text(_shopModelList[index].detailAddress),
-                      trailing: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                        child: Text(
-                          _shopModelList[index].productType,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              color: Color(0xffED6931),
-                              backgroundColor: Color(0xffFFF1E4)),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+          actions: [
+            DropdownButton<String>(
+              value: _selectedMarketName,
+              elevation: 16,
+              style: const TextStyle(color: Colors.white),
+              dropdownColor: Colors.orange,
+              onChanged: (String? value) {
+                if (value != null && value != _selectedMarketName) {
+                  setState(() {
+                    _selectedMarketName = value;
+                    _setShopModelList();
+                  });
+                }
               },
+              items: widget._marketSet
+                  .map<DropdownMenuItem<String>>((MarketModel marketModel) {
+                return DropdownMenuItem<String>(
+                  value: marketModel.name,
+                  child: Text(marketModel.name),
+                );
+              }).toList(),
             ),
-          ),
-        ],
+          ],
+        ),
+        body: ListView.builder(
+          itemCount: _shopModelList.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: ListTile(
+                  leading: const Icon(Icons.store, size: 50),
+                  title: Text(_shopModelList[index].name),
+                  subtitle: Text(_shopModelList[index].detailAddress),
+                  trailing: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    child: Text(
+                      _shopModelList[index].productType,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          color: Color(0xffED6931),
+                          backgroundColor: Color(0xffFFF1E4)),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
