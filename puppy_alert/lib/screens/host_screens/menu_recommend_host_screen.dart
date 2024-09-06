@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/host_screens/menu_detail_host_screen.dart';
-import 'package:puppy_alert/widgets/host_widgets/check_box_list_host_widget.dart';
+import 'package:puppy_alert/widgets/host_widgets/check_box_dialog_host_widget.dart';
 
 class MenuRecommendHostScreen extends StatefulWidget {
   const MenuRecommendHostScreen({super.key});
@@ -16,12 +16,24 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
     '고기': ['소고기', '돼지고기', '닭고기', '오리고기', '양고기', '기타'],
     '채소': ['마늘', '양파', '당근', '감자', '대파', '토마토', '양배추', '버섯', '기타']
   };
+  final List<CheckBoxDialogHostWidget> _checkBoxDialogHostWidgetList = [];
   int _stepperIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _checkBoxDialogHostWidgetList.addAll(_selectedOptionMap.keys
+        .map((key) => CheckBoxDialogHostWidget(
+              title: key,
+              valueList: _selectedOptionMap[key]!,
+            ))
+        .toList());
+  }
 
   Step _stepWidget(String value) {
     return Step(
-      title: Text(value,
-          style: const TextStyle(fontSize: 20)),
+      title: Text(value, style: const TextStyle(fontSize: 20)),
       content: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xffFF7700),
@@ -30,17 +42,27 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  CheckBoxListHostWidget(
-                    title: value,
-                    valueList: _selectedOptionMap[value]!,
-                  ),
+              builder: (context) => _checkBoxDialogHostWidgetList[
+                  _selectedOptionMap.keys.toList().indexOf(value)],
             ),
           );
         },
         child: Text('$value 선택',
-            style: const TextStyle(
-                fontSize: 20, color: Colors.white)),
+            style: const TextStyle(fontSize: 20, color: Colors.white)),
+      ),
+    );
+  }
+
+  void _goNextScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MenuDetailHostScreen(
+          categoryList: _checkBoxDialogHostWidgetList[0].getSelectedValueList(),
+          meatList: _checkBoxDialogHostWidgetList[1].getSelectedValueList(),
+          vegetableList:
+              _checkBoxDialogHostWidgetList[2].getSelectedValueList(),
+        ),
       ),
     );
   }
@@ -105,6 +127,8 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
                       ),
                       SingleChildScrollView(
                         child: Stepper(
+                          connectorColor: WidgetStateProperty.all<Color>(
+                              const Color(0xffFF7700)),
                           currentStep: _stepperIndex,
                           onStepCancel: () {
                             if (_stepperIndex > 0) {
@@ -114,7 +138,9 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
                             }
                           },
                           onStepContinue: () {
-                            if (_stepperIndex <= 0) {
+                            if (_stepperIndex > 2) {
+                              _goNextScreen();
+                            } else if (_stepperIndex <= 0) {
                               setState(() {
                                 _stepperIndex += 1;
                               });
@@ -142,8 +168,4 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
       ),
     );
   }
-}
-
-Widget _showDialog() {
-
 }
