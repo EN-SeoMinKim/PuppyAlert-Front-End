@@ -16,15 +16,22 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
     '고기': ['소고기', '돼지고기', '닭고기', '오리고기', '양고기', '기타'],
     '채소': ['마늘', '양파', '당근', '감자', '대파', '토마토', '양배추', '버섯', '기타']
   };
-  final List<CheckBoxDialogHostWidget> _checkBoxDialogHostWidgetList = [];
+  final List<CheckBoxDialogHostWidget> _checkBoxDialogList = [];
   int _stepperIndex = 0;
+
+  @override
+  void dispose() {
+    _checkBoxDialogList.clear();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
 
-    _checkBoxDialogHostWidgetList.addAll(_selectedOptionMap.keys
+    _checkBoxDialogList.addAll(_selectedOptionMap.keys    // 똑같은 선택 버튼을 두번 누르면 navigator 오류 발생, 수정 필요
         .map((key) => CheckBoxDialogHostWidget(
+              key: UniqueKey(),
               title: key,
               valueList: _selectedOptionMap[key]!,
             ))
@@ -42,7 +49,7 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => _checkBoxDialogHostWidgetList[
+              builder: (context) => _checkBoxDialogList[
                   _selectedOptionMap.keys.toList().indexOf(value)],
             ),
           );
@@ -58,10 +65,9 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => MenuDetailHostScreen(
-          categoryList: _checkBoxDialogHostWidgetList[0].getSelectedValueList(),
-          meatList: _checkBoxDialogHostWidgetList[1].getSelectedValueList(),
-          vegetableList:
-              _checkBoxDialogHostWidgetList[2].getSelectedValueList(),
+          categoryList: _checkBoxDialogList[0].getSelectedValueList(),
+          meatList: _checkBoxDialogList[1].getSelectedValueList(),
+          vegetableList: _checkBoxDialogList[2].getSelectedValueList(),
         ),
       ),
     );
@@ -138,9 +144,9 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
                             }
                           },
                           onStepContinue: () {
-                            if (_stepperIndex > 2) {
+                            if (_stepperIndex > 1) {
                               _goNextScreen();
-                            } else if (_stepperIndex <= 0) {
+                            } else {
                               setState(() {
                                 _stepperIndex += 1;
                               });
