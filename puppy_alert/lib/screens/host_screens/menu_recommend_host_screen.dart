@@ -71,7 +71,7 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
 
   List<String> _getCheckedStringList(String title) {
     List<String> result = [];
-    for(int i = 0; i < _isCheckedMap[title]!.length; i++) {
+    for (int i = 0; i < _isCheckedMap[title]!.length; i++) {
       if (_isCheckedMap[title]![i]) {
         result.add(_menuMap[title]![i]);
       }
@@ -89,6 +89,18 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
+              child: Container(
+                width: 300,
+                height: 150,
+                decoration: BoxDecoration(
+                    color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                child: const Center(
+                    child: Text('김지원',
+                        style: TextStyle(fontSize: 30, color: Colors.white))),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(50.0),
               child: Center(
