@@ -71,9 +71,9 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
 
   List<String> _getCheckedStringList(String title) {
     List<String> result = [];
-    for (bool isChecked in _isCheckedMap[title]!) {
-      if (isChecked) {
-        result.add(_menuMap[title]![_isCheckedMap[title]!.indexOf(isChecked)]);
+    for(int i = 0; i < _isCheckedMap[title]!.length; i++) {
+      if (_isCheckedMap[title]![i]) {
+        result.add(_menuMap[title]![i]);
       }
     }
     return result;
