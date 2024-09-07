@@ -1,15 +1,20 @@
-import 'package:flutter/material.dart';
-import 'menu_detail_host_screen.dart';
+import 'dart:convert';
 
-class MenuRecommendHostScreen extends StatefulWidget {
-  const MenuRecommendHostScreen({super.key});
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:puppy_alert/models/recommend_menu_model.dart';
+import 'recommend_menu_detail_host_screen.dart';
+import 'package:http/http.dart' as http;
+
+class RecommendMenuHostScreen extends StatefulWidget {
+  const RecommendMenuHostScreen({super.key});
 
   @override
-  State<MenuRecommendHostScreen> createState() =>
-      _MenuRecommendHostScreenState();
+  State<RecommendMenuHostScreen> createState() =>
+      _RecommendMenuHostScreenState();
 }
 
-class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
+class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
   final Map<String, List<String>> _menuMap = {
     '카테고리': ['한식', '중식', '일식', '양식'],
     '고기': ['소고기', '돼지고기', '닭고기', '오리고기', '양고기'],
@@ -56,17 +61,52 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
     );
   }
 
-  void _goNextScreen() {
+  void _goNextScreen() async {
+    List<String> categoryList = _getCheckedStringList('카테고리');
+    List<String> meatList = _getCheckedStringList('고기');
+    List<String> vegetableList = _getCheckedStringList('채소');
+    final jsonDataList =
+        await _getJsonDataList(categoryList, meatList, vegetableList);
+    List<Widget> recommendMenuWidgetList = [];
+
+    if (jsonDataList == null) return;
+
+    for (dynamic json in jsonDataList) {
+      recommendMenuWidgetList
+          .add(_recommendMenuWidget(RecommendMenuModel.fromJson(json)));
+    }
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MenuDetailHostScreen(
+        builder: (context) => RecommendMenuDetailHostScreen(
           categoryList: _getCheckedStringList('카테고리'),
           meatList: _getCheckedStringList('고기'),
           vegetableList: _getCheckedStringList('채소'),
+          recommendMenuWidgetList: recommendMenuWidgetList,
         ),
       ),
     );
+  }
+
+  Future<dynamic> _getJsonDataList(List<String> categoryList,
+      List<String> meatList, List<String> vegetableList) async {
+    String ingredients = '${meatList.join(',')},${vegetableList.join(',')}';
+    http.Response response = await http.post(
+      Uri.parse('${dotenv.env['BASE_URL']}/openai/recommend'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'categoryType': categoryList.first,
+        'ingredients': ingredients,
+      }),
+    );
+
+    if (response.statusCode == 200)
+      return json.decode(utf8.decode(response.bodyBytes));
+
+    return null;
   }
 
   List<String> _getCheckedStringList(String title) {
@@ -113,7 +153,7 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: const Offset(0, 3))
+                            offset: const Offset(0, 3)),
                       ]),
                   child: Column(
                     children: [
@@ -180,4 +220,56 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
       ),
     );
   }
+}
+
+Widget _recommendMenuWidget(RecommendMenuModel recommendMenuModel) {
+  List<Icon> starList = [];
+  for (int i = 0; i < recommendMenuModel.difficulty; i++) {
+    starList.add(const Icon(Icons.star, color: Colors.yellow));
+  }
+  for (int i = recommendMenuModel.difficulty; i < 5; i++) {
+    starList.add(const Icon(Icons.star_border, color: Colors.yellow));
+  }
+
+  return Row(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Image.network(
+            recommendMenuModel.url,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(recommendMenuModel.title,
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis)),
+            Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Text('난이도', style: TextStyle(fontSize: 15)),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: starList,
+                ),
+              ],
+            ),
+            ElevatedButton(
+                onPressed: () {},
+                child: const Text('레시피 보기', style: TextStyle(fontSize: 15))),
+          ],
+        ),
+      ),
+    ],
+  );
 }

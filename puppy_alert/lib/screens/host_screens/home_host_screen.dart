@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/host_screens/food_input_form_host_screen.dart';
-import 'package:puppy_alert/screens/host_screens/menu_recommend_host_screen.dart';
+import 'package:puppy_alert/screens/host_screens/recommend_menu_host_screen.dart';
 import 'package:puppy_alert/screens/host_screens/speech_recognition_host_screen.dart';
 
 class HomeHostScreen extends StatelessWidget {
@@ -215,7 +215,7 @@ class HomeHostScreen extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuRecommendHostScreen()));
+                            builder: (context) => const RecommendMenuHostScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 6,
