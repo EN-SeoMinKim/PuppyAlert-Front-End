@@ -14,15 +14,42 @@ class MenuDetailHostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_categoryList.isNotEmpty) {
+      for(String category in _categoryList) {
+        print(category);
+      }
+    }
+    if (_meatList.isNotEmpty) {
+      for(String meat in _meatList) {
+        print(meat);
+      }
+    }
+    if (_vegetableList.isNotEmpty) {
+      for(String vegetable in _vegetableList) {
+        print(vegetable);
+      }
+    }
     return Scaffold(
       appBar: AppBar(),
-      body: ListView.builder(itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(_categoryList[index]),
-          subtitle: Text(_meatList[index]),
-          trailing: Text(_vegetableList[index]),
-        );
-      }),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Text('메뉴 상세 정보 입력'),
+            const SizedBox(height: 20),
+            const Text('카테고리'),
+            if (_categoryList.isNotEmpty)
+              for (String category in _categoryList) Text(category),
+            const SizedBox(height: 20),
+            const Text('고기'),
+            if (_meatList.isNotEmpty)
+              for (String meat in _meatList) Text(meat),
+            const SizedBox(height: 20),
+            const Text('채소'),
+            if (_vegetableList.isNotEmpty)
+              for (String vegetable in _vegetableList) Text(vegetable),
+          ],
+        ),
+      ),
     );
   }
 }

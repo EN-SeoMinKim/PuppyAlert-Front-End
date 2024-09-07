@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/screens/host_screens/menu_detail_host_screen.dart';
-import 'package:puppy_alert/widgets/host_widgets/check_box_dialog_host_widget.dart';
+import 'package:puppy_alert/models/recommend_menu_dto.dart';
+
+import 'menu_detail_host_screen.dart';
 
 class MenuRecommendHostScreen extends StatefulWidget {
   const MenuRecommendHostScreen({super.key});
@@ -11,51 +12,36 @@ class MenuRecommendHostScreen extends StatefulWidget {
 }
 
 class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
-  final Map<String, List<String>> _selectedOptionMap = {
-    '카테고리': ['한식', '중식', '일식', '양식', '기타'],
-    '고기': ['소고기', '돼지고기', '닭고기', '오리고기', '양고기', '기타'],
-    '채소': ['마늘', '양파', '당근', '감자', '대파', '토마토', '양배추', '버섯', '기타']
-  };
-  final List<CheckBoxDialogHostWidget> _checkBoxDialogList = [];
+  final RecommendMenuDTO _categoryDTO =
+      RecommendMenuDTO('카테고리', ['한식', '중식', '일식', '양식', '기타']);
+  final RecommendMenuDTO _meatDTO =
+      RecommendMenuDTO('고기', ['소고기', '돼지고기', '닭고기', '오리고기', '양고기', '기타']);
+  final RecommendMenuDTO _vegetableDTO = RecommendMenuDTO(
+      '채소', ['마늘', '양파', '당근', '감자', '대파', '토마토', '양배추', '버섯', '기타']);
   int _stepperIndex = 0;
 
-  @override
-  void dispose() {
-    _checkBoxDialogList.clear();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _checkBoxDialogList.addAll(_selectedOptionMap.keys    // 똑같은 선택 버튼을 두번 누르면 navigator 오류 발생, 수정 필요
-        .map((key) => CheckBoxDialogHostWidget(
-              key: UniqueKey(),
-              title: key,
-              valueList: _selectedOptionMap[key]!,
-            ))
-        .toList());
-  }
-
-  Step _stepWidget(String value) {
+  Step _stepWidget(RecommendMenuDTO model) {
     return Step(
-      title: Text(value, style: const TextStyle(fontSize: 20)),
-      content: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xffFF7700),
+      title: Text(model.title, style: const TextStyle(fontSize: 20)),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: model.valueList.map((value) {
+            int index = model.valueList.indexOf(value);
+
+            return CheckboxListTile(
+              title: Text(value),
+              activeColor: const Color(0xffFF7700),
+              controlAffinity: ListTileControlAffinity.leading,
+              value: model.isCheckedList[index],
+              onChanged: (bool? newValue) {
+                setState(() {
+                  model.isCheckedList[index] = newValue!;
+                });
+              },
+            );
+          }).toList(),
         ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => _checkBoxDialogList[
-                  _selectedOptionMap.keys.toList().indexOf(value)],
-            ),
-          );
-        },
-        child: Text('$value 선택',
-            style: const TextStyle(fontSize: 20, color: Colors.white)),
       ),
     );
   }
@@ -65,9 +51,9 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => MenuDetailHostScreen(
-          categoryList: _checkBoxDialogList[0].getSelectedValueList(),
-          meatList: _checkBoxDialogList[1].getSelectedValueList(),
-          vegetableList: _checkBoxDialogList[2].getSelectedValueList(),
+          categoryList: _categoryDTO.getCheckedStringList(),
+          meatList: _meatDTO.getCheckedStringList(),
+          vegetableList: _vegetableDTO.getCheckedStringList(),
         ),
       ),
     );
@@ -83,18 +69,6 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(100.0),
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 150,
-                  color: Colors.blue,
-                  child: const Center(
-                      child: Text('김지원', style: TextStyle(fontSize: 20))),
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.all(50.0),
               child: Center(
@@ -158,9 +132,9 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
                             });
                           },
                           steps: <Step>[
-                            _stepWidget('카테고리'),
-                            _stepWidget('고기'),
-                            _stepWidget('채소'),
+                            _stepWidget(_categoryDTO),
+                            _stepWidget(_meatDTO),
+                            _stepWidget(_vegetableDTO),
                           ],
                         ),
                       ),
