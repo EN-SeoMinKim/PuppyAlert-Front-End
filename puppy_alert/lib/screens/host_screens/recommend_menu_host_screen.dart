@@ -61,14 +61,28 @@ class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
     );
   }
 
-  void _goNextScreen() async {
+  void _goNextScreen(BuildContext context) async {
     List<String> categoryList = _getCheckedStringList('카테고리');
     List<String> meatList = _getCheckedStringList('고기');
     List<String> vegetableList = _getCheckedStringList('채소');
-    final jsonDataList =
-        await _getJsonDataList(categoryList, meatList, vegetableList);
     List<Widget> recommendMenuWidgetList = [];
 
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: const Text('추천 메뉴를 가져오는 중입니다.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          content: const LinearProgressIndicator(),
+        );
+      },
+    );
+
+    final jsonDataList =
+        await _getJsonDataList(categoryList, meatList, vegetableList);
     if (jsonDataList == null) return;
 
     for (dynamic json in jsonDataList) {
@@ -76,6 +90,7 @@ class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
           .add(_recommendMenuWidget(RecommendMenuModel.fromJson(json)));
     }
 
+    Navigator.of(context).pop();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -103,8 +118,9 @@ class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
       }),
     );
 
-    if (response.statusCode == 200)
+    if (response.statusCode == 200) {
       return json.decode(utf8.decode(response.bodyBytes));
+    }
 
     return null;
   }
@@ -191,7 +207,7 @@ class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
                           },
                           onStepContinue: () {
                             if (_stepperIndex > 1) {
-                              _goNextScreen();
+                              _goNextScreen(context);
                             } else {
                               setState(() {
                                 _stepperIndex += 1;
@@ -231,45 +247,55 @@ Widget _recommendMenuWidget(RecommendMenuModel recommendMenuModel) {
     starList.add(const Icon(Icons.star_border, color: Colors.yellow));
   }
 
-  return Row(
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: Image.network(
-            recommendMenuModel.url,
-            fit: BoxFit.cover,
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.network(
+              recommendMenuModel.url,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(recommendMenuModel.title,
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis)),
-            Row(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Text('난이도', style: TextStyle(fontSize: 15)),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(recommendMenuModel.title,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis)),
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text('난이도',
+                        style: TextStyle(fontSize: 15, color: Colors.orange)),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: starList,
+                  ),
+                ],
+              ),
+              SingleChildScrollView(
+                child: SizedBox(
+                  height: 40,
+                  child: Text(recommendMenuModel.description,
+                      style: const TextStyle(
+                        fontSize: 13,
+                      )),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: starList,
-                ),
-              ],
-            ),
-            ElevatedButton(
-                onPressed: () {},
-                child: const Text('레시피 보기', style: TextStyle(fontSize: 15))),
-          ],
+              ),
+            ],
+          ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
