@@ -14,21 +14,6 @@ class MenuDetailHostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_categoryList.isNotEmpty) {
-      for(String category in _categoryList) {
-        print(category);
-      }
-    }
-    if (_meatList.isNotEmpty) {
-      for(String meat in _meatList) {
-        print(meat);
-      }
-    }
-    if (_vegetableList.isNotEmpty) {
-      for(String vegetable in _vegetableList) {
-        print(vegetable);
-      }
-    }
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(

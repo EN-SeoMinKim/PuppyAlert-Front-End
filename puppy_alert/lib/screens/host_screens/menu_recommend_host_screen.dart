@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/models/recommend_menu_dto.dart';
-
 import 'menu_detail_host_screen.dart';
 
 class MenuRecommendHostScreen extends StatefulWidget {
@@ -12,35 +10,47 @@ class MenuRecommendHostScreen extends StatefulWidget {
 }
 
 class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
-  final RecommendMenuDTO _categoryDTO =
-      RecommendMenuDTO('카테고리', ['한식', '중식', '일식', '양식', '기타']);
-  final RecommendMenuDTO _meatDTO =
-      RecommendMenuDTO('고기', ['소고기', '돼지고기', '닭고기', '오리고기', '양고기', '기타']);
-  final RecommendMenuDTO _vegetableDTO = RecommendMenuDTO(
-      '채소', ['마늘', '양파', '당근', '감자', '대파', '토마토', '양배추', '버섯', '기타']);
+  final Map<String, List<String>> _menuMap = {
+    '카테고리': ['한식', '중식', '일식', '양식'],
+    '고기': ['소고기', '돼지고기', '닭고기', '오리고기', '양고기'],
+    '채소': ['마늘', '양파', '당근', '감자', '대파', '토마토', '양배추', '버섯'],
+  };
+  final Map<String, List<bool>> _isCheckedMap = {
+    '카테고리': [],
+    '고기': [],
+    '채소': [],
+  };
   int _stepperIndex = 0;
 
-  Step _stepWidget(RecommendMenuDTO model) {
+  @override
+  void initState() {
+    super.initState();
+    _menuMap.forEach((key, value) {
+      _isCheckedMap[key] = List<bool>.filled(value.length, false);
+    });
+  }
+
+  Step _stepWidget(String title) {
     return Step(
-      title: Text(model.title, style: const TextStyle(fontSize: 20)),
+      title: Text(title, style: const TextStyle(fontSize: 20)),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: model.valueList.map((value) {
-            int index = model.valueList.indexOf(value);
-
-            return CheckboxListTile(
-              title: Text(value),
-              activeColor: const Color(0xffFF7700),
-              controlAffinity: ListTileControlAffinity.leading,
-              value: model.isCheckedList[index],
-              onChanged: (bool? newValue) {
-                setState(() {
-                  model.isCheckedList[index] = newValue!;
-                });
-              },
-            );
-          }).toList(),
+          children: [
+            for (String value in _menuMap[title]!)
+              CheckboxListTile(
+                title: Text(value),
+                activeColor: const Color(0xffFF7700),
+                controlAffinity: ListTileControlAffinity.leading,
+                value: _isCheckedMap[title]![_menuMap[title]!.indexOf(value)],
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    _isCheckedMap[title]![_menuMap[title]!.indexOf(value)] =
+                        newValue!;
+                  });
+                },
+              ),
+          ],
         ),
       ),
     );
@@ -51,12 +61,22 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => MenuDetailHostScreen(
-          categoryList: _categoryDTO.getCheckedStringList(),
-          meatList: _meatDTO.getCheckedStringList(),
-          vegetableList: _vegetableDTO.getCheckedStringList(),
+          categoryList: _getCheckedStringList('카테고리'),
+          meatList: _getCheckedStringList('고기'),
+          vegetableList: _getCheckedStringList('채소'),
         ),
       ),
     );
+  }
+
+  List<String> _getCheckedStringList(String title) {
+    List<String> result = [];
+    for (bool isChecked in _isCheckedMap[title]!) {
+      if (isChecked) {
+        result.add(_menuMap[title]![_isCheckedMap[title]!.indexOf(isChecked)]);
+      }
+    }
+    return result;
   }
 
   @override
@@ -132,9 +152,9 @@ class _MenuRecommendHostScreenState extends State<MenuRecommendHostScreen> {
                             });
                           },
                           steps: <Step>[
-                            _stepWidget(_categoryDTO),
-                            _stepWidget(_meatDTO),
-                            _stepWidget(_vegetableDTO),
+                            _stepWidget('카테고리'),
+                            _stepWidget('고기'),
+                            _stepWidget('채소'),
                           ],
                         ),
                       ),
