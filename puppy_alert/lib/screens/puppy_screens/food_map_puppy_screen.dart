@@ -42,7 +42,8 @@ class _FoodMapPuppyScreenState extends State<FoodMapPuppyScreen> {
           id: data.foodId.toString(),
           position: NLatLng(
               data.locationMap['latitude'], data.locationMap['longitude']));
-      marker.openInfoWindow(NInfoWindow.onMarker(id: marker.info.id, text: data.menuName));
+      marker.openInfoWindow(
+          NInfoWindow.onMarker(id: marker.info.id, text: data.menuName));
       markerSet.add(marker);
     }
     return markerSet;

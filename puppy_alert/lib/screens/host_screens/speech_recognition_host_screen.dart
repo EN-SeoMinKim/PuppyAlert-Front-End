@@ -1,33 +1,32 @@
-import 'package:permission_handler/permission_handler.dart';
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:puppy_alert/models/user_model.dart';
-import 'package:puppy_alert/screens/host_screens/food_registration_completion_host_screen.dart';
-import 'package:puppy_alert/utils/constants.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:puppy_alert/widgets/host_widgets/speech_recognition_button_host_widget.dart';
+import 'package:puppy_alert/widgets/host_widgets/top_white_container_host_widget.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'dart:async';
+import '../../utils/constants.dart';
+import 'food_registration_completion_host_screen.dart';
 
 class SpeechRecognitionHostScreen extends StatefulWidget {
-  final UserModel _userModel;
+  final String _userId;
 
-  const SpeechRecognitionHostScreen({super.key, required userModel})
-      : _userModel = userModel;
+  const SpeechRecognitionHostScreen({super.key, required userId})
+      : _userId = userId;
 
   @override
   State<SpeechRecognitionHostScreen> createState() =>
-      _SpeechRecognitionHostScreenState();
+      _NewSpeechRecognitionHostScreen();
 }
 
-class _SpeechRecognitionHostScreenState
+class _NewSpeechRecognitionHostScreen
     extends State<SpeechRecognitionHostScreen> {
   late ButtonStatus _status;
   late final FlutterTts _flutterTts;
   late final stt.SpeechToText _speech;
-  late String _food;
-  late String _time;
-  late String _topText;
-  late Timer? _timer;
+  late String _food, _time, _topText;
+  late Timer? _timer = null;
 
   @override
   void initState() {
@@ -35,7 +34,7 @@ class _SpeechRecognitionHostScreenState
     _status = ButtonStatus.idle;
     _flutterTts = FlutterTts();
     _speech = stt.SpeechToText();
-    _topText = '똥강아지를\n모집하세요';
+    _topText = '식사 등록 버튼을\n     눌러주세요';
   }
 
   @override
@@ -50,69 +49,18 @@ class _SpeechRecognitionHostScreenState
     setState(() {
       _food = '';
       _time = '';
-      _topText = '등록하실 메뉴를 \n말씀해 주세요';
+      _topText = '등록하실 메뉴를 \n  말씀해 주세요';
     });
 
     await _requestPermission();
     await _initializeTts();
-    await _flutterSpeakRequest('등록하실 메뉴를 \n말씀해 주세요');
+    await _flutterSpeakRequest('등록하실 메뉴를 \n  말씀해 주세요');
     await _delayedInitializeAndStartListening(() async {
       _startListening(_food);
     });
 
     await _endListeningAndVerify(() async {
       await _verify(_food, '말씀하신 메뉴가 \n$_food 인가요?');
-    });
-  }
-
-  Future<void> _flutterSpeakRequest(String text) async {
-    setState(() {
-      _status = ButtonStatus.awaitingInput;
-      _topText = text;
-    });
-    await _flutterTts.speak(text);
-  }
-
-  Future<void> _delayedInitializeAndStartListening(
-      Future<void> Function() startListening) async {
-    return Future.delayed(const Duration(seconds: 3), () async {
-      await _speech.initialize();
-      await startListening();
-    });
-  }
-
-  void _startListeningState() {
-    setState(() {
-      _status = ButtonStatus.listening;
-      _topText = '';
-    });
-  }
-
-  Future<void> _startListening(String recognizedText) async {
-    _startListeningState();
-    await _speech.listen(
-      onResult: (result) {
-        setState(() {
-          if (recognizedText == _food) {
-            _food = result.recognizedWords;
-          } else if (recognizedText == _time) {
-            _time = result.recognizedWords;
-          }
-        });
-      },
-    );
-  }
-
-  Future<void> _endListening() async {
-    _timer = Timer(const Duration(seconds: 5), () async {
-      await _speech.stop();
-    });
-  }
-
-  Future<void> _endListeningAndVerify(Future<void> Function() verify) async {
-    _timer = Timer(const Duration(seconds: 5), () async {
-      await _speech.stop();
-      await verify();
     });
   }
 
@@ -131,7 +79,54 @@ class _SpeechRecognitionHostScreenState
     await _flutterTts.setVolume(1.0);
   }
 
+  Future<void> _flutterSpeakRequest(String text) async {
+    setState(() {
+      _status = ButtonStatus.awaitingInput;
+      _topText = text;
+    });
+    await _flutterTts.speak(text);
+  }
+
+  Future<void> _delayedInitializeAndStartListening(
+      Future<void> Function() startListening) async {
+    return Future.delayed(const Duration(seconds: 3), () async {
+      await _speech.initialize();
+      await startListening();
+    });
+  }
+
+  Future<void> _startListening(String recognizedText) async {
+    _startListeningState();
+    await _speech.listen(
+      onResult: (result) {
+        setState(() {
+          if (recognizedText == _food) {
+            _food = result.recognizedWords;
+          } else if (recognizedText == _time) {
+            _time = result.recognizedWords;
+          }
+        });
+      },
+    );
+  }
+
+  void _startListeningState() {
+    setState(() {
+      _status = ButtonStatus.listening;
+      _topText = '';
+    });
+  }
+
+  Future<void> _endListeningAndVerify(Future<void> Function() verify) async {
+    _timer = Timer(const Duration(seconds: 5), () async {
+      await _speech.stop();
+      await verify();
+    });
+  }
+
   Future<void> _verify(String recognizedText, String confirmationText) async {
+    //if문을 통해 음식이 맞는지 확인을 먼저하자
+
     if (recognizedText.isNotEmpty) {
       await _flutterTts.speak(confirmationText);
       setState(() {
@@ -148,6 +143,15 @@ class _SpeechRecognitionHostScreenState
         '인식된 음성이 없습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.', '인식된 음성이 없습니다');
   }
 
+  Future<void> _handleFailedRecognition(
+      String speakText, String topText) async {
+    await _flutterTts.speak(speakText);
+    setState(() {
+      _status = ButtonStatus.idle;
+      _topText = topText;
+    });
+  }
+
   Future<void> _speakAndRecognizeTime() async {
     await _flutterSpeakRequest('식사를 같이 하실\n시간을 말씀해 주세요');
     await _delayedInitializeAndStartListening(() async {
@@ -158,24 +162,15 @@ class _SpeechRecognitionHostScreenState
     });
   }
 
-  Future<void> _completeRegisterFood() async {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => FoodRegistrationCompletionHostScreen(
-            userId: widget._userModel.userId, food: _food, time: _time)));
-  }
-
-  Future<void> _handleFailedRecognition(
-      String speakText, String topText) async {
-    await _flutterTts.speak(speakText);
-    setState(() {
-      _status = ButtonStatus.idle;
-      _topText = topText;
-    });
-  }
-
   Future<void> _clickNoButtonRecognitionFailure() async {
     await _handleFailedRecognition(
         '  식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요', '식사등록 버튼을 누르고\n처음부터 다시 말씀해 주세요');
+  }
+
+  Future<void> _completeRegisterFood() async {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => FoodRegistrationCompletionHostScreen(
+            userId: widget._userId, food: _food, time: _time)));
   }
 
   @override
@@ -185,34 +180,16 @@ class _SpeechRecognitionHostScreenState
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 80),
-              if (_topText.isNotEmpty)
-                Center(
-                  child: Text(
-                    _topText,
-                    style: const TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.w900),
-                  ),
-                ),
+              TopWhiteContainerHostWidget(text: _topText),
               SpeechRecognitionButtonHostWidget(
                   status: _status,
                   speakAndRecognizeFood: _speakAndRecognizeFood,
                   speakAndRecognizeTime: _speakAndRecognizeTime,
                   clickNoButtonRecognitionFailure:
                       _clickNoButtonRecognitionFailure,
-                  completeRegisterFood: _completeRegisterFood),
-              // ElevatedShadowButtonAdultWidget(
-              //   width: 190,
-              //   text: "나의 정보",
-              //   onPressed: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (context) => MyPageCommonScreen(
-              //               userDto: widget._userDto,
-              //             )));
-              //   },
-              // ),
+                  completeRegisterFood: _completeRegisterFood)
             ],
           ),
         ),

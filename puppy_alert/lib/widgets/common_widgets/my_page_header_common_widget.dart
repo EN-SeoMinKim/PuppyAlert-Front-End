@@ -7,7 +7,7 @@ class MyPageHeaderCommonWidget extends StatelessWidget {
   const MyPageHeaderCommonWidget({
     super.key,
     required UserModel userModel,
-  })  : _userModel = userModel;
+  }) : _userModel = userModel;
 
   @override
   Widget build(BuildContext context) {

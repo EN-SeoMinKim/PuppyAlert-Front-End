@@ -27,16 +27,14 @@ class _ShopHostWidgetState extends State<ShopHostWidget> {
 
   Future<List<MarketModel>> getMarketList() async {
     http.Response response =
-    await http.get(Uri.parse('${dotenv.get('BASE_URL')}/market/all'));
+        await http.get(Uri.parse('${dotenv.get('BASE_URL')}/market/all'));
     final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
     return jsonData
         .map<MarketModel>((json) => MarketModel.fromJson(json))
         .toList();
   }
 
-  void _initShopModelList() {
-
-  }
+  void _initShopModelList() {}
 
   @override
   Widget build(BuildContext context) {

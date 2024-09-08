@@ -25,7 +25,7 @@ class ImmutableUserInfoCommonWidget extends StatelessWidget {
         children: [
           Text(
             _label,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 16.0,
               fontWeight: FontWeight.w600,

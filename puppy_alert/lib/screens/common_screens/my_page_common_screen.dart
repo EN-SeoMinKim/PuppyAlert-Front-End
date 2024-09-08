@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +24,8 @@ class MyPageCommonScreen extends StatelessWidget {
     Uri uri = Uri.parse(
         '${dotenv.get('BASE_URL')}/puppy/history?puppyId=${_userModel.userId}');
     final data = jsonDecode(utf8.decode((await http.get(uri)).bodyBytes));
-    final now = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now()).split('T')[0];
+    final now =
+        DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now()).split('T')[0];
 
     for (var food in data) {
       String time = food['localDateTime'].toString().split('T')[0];
@@ -51,7 +51,9 @@ class MyPageCommonScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MyPageHeaderCommonWidget(userModel: _userModel,),
+        MyPageHeaderCommonWidget(
+          userModel: _userModel,
+        ),
         ProfileInfoButtonPuppyWidget(
             icon: Icons.manage_accounts,
             text: '   개인 정보',
@@ -94,7 +96,8 @@ class MyPageCommonScreen extends StatelessWidget {
             textColor: Colors.grey[700]!,
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const LoginCommonScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const LoginCommonScreen()),
                   (Route<dynamic> route) => false);
             },
             text: "Logout"),
