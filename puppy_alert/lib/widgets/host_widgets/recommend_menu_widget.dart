@@ -4,10 +4,11 @@ import 'package:puppy_alert/screens/host_screens/recipe_host_screen.dart';
 
 class RecommendMenuWidget extends StatelessWidget {
   final RecommendMenuModel _recommendMenuModel;
+  final bool _isRecommend;
 
   const RecommendMenuWidget(
-      {super.key, required RecommendMenuModel recommendMenuModel})
-      : _recommendMenuModel = recommendMenuModel;
+      {super.key, required RecommendMenuModel recommendMenuModel, bool isRecommend = true})
+      : _recommendMenuModel = recommendMenuModel, _isRecommend = isRecommend;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,10 @@ class RecommendMenuWidget extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () {
+                  if (!_isRecommend) {
+                    return;
+                  }
+
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return RecipeHostScreen(
                         recommendMenuModel: _recommendMenuModel);

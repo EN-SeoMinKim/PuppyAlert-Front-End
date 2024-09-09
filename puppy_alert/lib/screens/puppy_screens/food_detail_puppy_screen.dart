@@ -173,8 +173,6 @@ Widget _registrationColumn(
                 } else if (foodModel.status == 'READY') {
                   foodModel.status = 'MATCHED';
                 }
-
-                Navigator.popUntil(context, ModalRoute.withName('/'));
               },
               style: TextButton.styleFrom(
                 backgroundColor: foodModel.status == 'READY'

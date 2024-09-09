@@ -42,7 +42,7 @@ class RecipeHostScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          RecommendMenuWidget(recommendMenuModel: _recommendMenuModel),
+          RecommendMenuWidget(recommendMenuModel: _recommendMenuModel, isRecommend: false,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -59,27 +59,47 @@ class RecipeHostScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return Card(
                             margin: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 12.0),
-                            elevation: 4,
+                                vertical: 10.0, horizontal: 16.0),
+                            elevation: 6,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(16),
                             ),
+                            shadowColor: Colors.blueAccent.withOpacity(0.5),
                             child: ListTile(
-                              leading: CircleAvatar(
-                                radius: 20,
-                                backgroundColor: Colors.blueAccent,
-                                child: Text(
-                                  '${index + 1}',
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                              contentPadding: const EdgeInsets.all(16.0),
+                              leading: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: const LinearGradient(
+                                    colors: [Colors.blue, Colors.purpleAccent],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${index + 1}',
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
                                 ),
                               ),
                               title: Text(
                                 snapshot.data![index],
                                 style: const TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                     color: Colors.black87),
                               ),
                             ),
