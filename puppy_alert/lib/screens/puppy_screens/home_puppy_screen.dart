@@ -29,10 +29,22 @@ class _HomePuppyScreenState extends State<HomePuppyScreen> {
     );
   }
 
-  void _sortFoodModel(List<FoodModel> foodList) {
-    String searchValue = _searchBarChildWidget.searchValue;
+  List<FoodModel> _getSortFoodModel(List<FoodModel> foodList) {
+    List<FoodModel> result = [];
+    String? searchValue = _searchBarChildWidget.searchValue;
 
-    foodList.sort((a, b) {
+    if (searchValue.isEmpty || searchValue == null) {
+      result = foodList;
+    } else if (searchValue.isNotEmpty) {
+      for (int i = 0; i < foodList.length; i++) {
+        if (foodList[i].menuName.contains(searchValue) ||
+            foodList[i].hostId.contains(searchValue)) {
+          result.add(foodList[i]);
+        }
+      }
+    }
+
+    result.sort((a, b) {
       if (a.status == 'READY' && b.status != 'READY') {
         return -1;
       } else if (a.status != 'READY' && b.status == 'READY') {
@@ -42,15 +54,7 @@ class _HomePuppyScreenState extends State<HomePuppyScreen> {
       }
     });
 
-    if (searchValue.isNotEmpty) {
-      for(int i = 0; i <foodList.length; i++) {
-        FoodModel fm = foodList[i];
-        if (fm.menuName.contains(searchValue) || fm.hostId.contains(searchValue)) {
-          foodList.remove(fm);
-          foodList.insert(0, fm);
-        }
-      }
-    }
+    return result;
   }
 
   @override
@@ -60,8 +64,9 @@ class _HomePuppyScreenState extends State<HomePuppyScreen> {
         _searchBarChildWidget,
         Consumer<FoodProvider>(
           builder: (context, provider, child) {
-            List<FoodModel> foodList = provider.getFoodList();
-            _sortFoodModel(foodList);
+            List<FoodModel> foodList =
+                _getSortFoodModel(provider.getFoodList());
+
             return Expanded(
               child: ListView.builder(
                 itemCount: foodList.length,
