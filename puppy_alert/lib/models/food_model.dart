@@ -7,7 +7,7 @@ class FoodModel {
       _imageURL,
       _address,
       _addressDetail,
-      _status;
+      status;
   var _locationMap;
 
   FoodModel(
@@ -19,7 +19,7 @@ class FoodModel {
       required String imageURL,
       required String address,
       required String addressDetail,
-      required String status,
+      required this.status,
       required var locationMap}) {
     _foodId = foodId;
     _hostId = hostId;
@@ -29,12 +29,11 @@ class FoodModel {
     _imageURL = imageURL;
     _address = address;
     _addressDetail = addressDetail;
-    _status = status;
     _locationMap = locationMap;
   }
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
-    String status = json['status'] == null ? 'MATCHED' : 'READY';
+    String status = json['status'] ?? 'MATCHED';
     String partnerId = json['partnerId'] ?? json['hostId'];
     String partnerNickName = json['partnerNickName'] ?? json['hostNickName'];
     String time = json['localDateTime'] ?? json['time'];
@@ -76,8 +75,6 @@ class FoodModel {
   String get address => _address;
 
   String get addressDetail => _addressDetail;
-
-  String get status => _status;
 
   get locationMap => _locationMap;
 }

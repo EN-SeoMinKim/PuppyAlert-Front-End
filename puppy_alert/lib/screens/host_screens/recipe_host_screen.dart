@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/models/recommend_menu_model.dart';
@@ -44,33 +43,52 @@ class RecipeHostScreen extends StatelessWidget {
       body: Column(
         children: [
           RecommendMenuWidget(recommendMenuModel: _recommendMenuModel),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-                child: FutureBuilder(
-                    future: _fetchRecipe(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else {
-                        return Column(
-                          children: [
-                            for (int i = 0; i < snapshot.data!.length; i++)
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FutureBuilder(
+                  future: _fetchRecipe(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 12.0),
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.blueAccent,
                                 child: Text(
-                                  '${i+1}. ${snapshot.data![i]}',
+                                  '${index + 1}',
                                   style: const TextStyle(
-                                      fontSize: 20,
+                                      color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                          ],
-                        );
-                      }
-                    })),
+                              title: Text(
+                                snapshot.data![index],
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black87),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }),
+            ),
           ),
         ],
       ),

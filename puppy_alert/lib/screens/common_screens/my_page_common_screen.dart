@@ -22,7 +22,7 @@ class MyPageCommonScreen extends StatelessWidget {
 
   Future<FoodModel?> _fetchTodayFood() async {
     http.Response response = await http.get(Uri.parse(
-        '${dotenv.get('BASE_URL')}/user/today?userId=${_userModel.userId}'));
+        '${dotenv.get('BASE_URL')}/user/day?userId=${_userModel.userId}'));
 
     if (response.statusCode != 200) {
       return null;
@@ -35,7 +35,7 @@ class MyPageCommonScreen extends StatelessWidget {
   void _onPressTodayFood(BuildContext context) async {
     FoodModel? foodModel = await _fetchTodayFood();
 
-    if (foodModel == null) {
+    if (foodModel == null || foodModel.status == 'COMPLETE') {
       showDialog(
           context: context,
           builder: (context) {

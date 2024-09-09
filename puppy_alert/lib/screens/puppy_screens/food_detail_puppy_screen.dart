@@ -11,7 +11,6 @@ class FoodDetailPuppyScreen extends StatelessWidget {
   final FoodCommonWidget _foodCommonWidget;
   final String _userId;
   final FoodModel _foodModel;
-  final bool _canRegister;
 
   FoodDetailPuppyScreen({
     super.key,
@@ -19,18 +18,26 @@ class FoodDetailPuppyScreen extends StatelessWidget {
     required FoodCommonWidget foodCommonWidget,
   })  : _userId = userId,
         _foodCommonWidget = foodCommonWidget,
-        _foodModel = foodCommonWidget.foodModel,
-        _canRegister = foodCommonWidget.foodModel.status == 'READY';
+        _foodModel = foodCommonWidget.foodModel;
 
   void _applyForFood() {
-    Uri uri = Uri.parse('${dotenv.get('BASE_URL')}/puppy/food');
-
     http.post(
-      uri,
+      Uri.parse('${dotenv.get('BASE_URL')}/puppy/food'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'foodId': _foodModel.foodId,
         'puppyId': _userId,
+      }),
+    );
+  }
+
+  void _completeFood() {
+    http.post(
+      Uri.parse('${dotenv.get('BASE_URL')}/puppy/end'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'puppyId': _userId,
+        'foodId': _foodModel.foodId,
       }),
     );
   }
@@ -58,23 +65,24 @@ class FoodDetailPuppyScreen extends StatelessWidget {
               child: _greyContainer(),
             ),
             Container(
-              height: _canRegister ? 0 : 20,
+              height: _foodModel.status == 'READY' ? 0 : 20,
               color: Colors.white,
             ),
             SizedBox(height: 130, child: _foodCommonWidget),
-            if (_canRegister)
-              _registrationColumn(context, _applyForFood, _foodModel.status),
+            _foodModel.status == 'READY'
+                ? _registrationColumn(context, _applyForFood, _foodModel)
+                : _foodModel.status == 'MATCHED' ? _registrationColumn(context, _completeFood, _foodModel) : Container(),
             Container(
               height: 20,
               color: Colors.grey[100],
               child: _greyContainer(),
             ),
             Container(
-              height: _canRegister ? 10 : 30,
+              height: _foodModel.status == 'READY' ? 10 : 30,
               color: Colors.white,
             ),
             Container(
-              height: _canRegister ? 368 : 394,
+              height: _foodModel.status == 'READY' ? 368 : 394,
               color: Colors.white,
               child: Column(
                 children: [
@@ -135,7 +143,7 @@ Widget _greyContainer() {
 }
 
 Widget _registrationColumn(
-    BuildContext context, Function() applyFood, String recruitmentStatus) {
+    BuildContext context, Function() func, FoodModel foodModel) {
   return Column(children: [
     Container(
       height: 5,
@@ -155,26 +163,27 @@ Widget _registrationColumn(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            width: recruitmentStatus == 'READY' ? 70 : 90,
+            width: foodModel.status == 'READY' ? 70 : 90,
             child: TextButton(
               onPressed: () {
-                applyFood();
-                _showConfirmationDialog(context);
-                recruitmentStatus == 'READY'
-                    ? {applyFood(), _showConfirmationDialog(context)}
-                    : null;
+                func();
+                _showConfirmationDialog(context, foodModel.status == 'READY');
+                if (foodModel.status == 'MATCHED') {
+                  foodModel.status = 'COMPLETE';
+                  Navigator.of(context).pop();
+                }
               },
               style: TextButton.styleFrom(
-                backgroundColor: recruitmentStatus == 'READY'
+                backgroundColor: foodModel.status == 'READY'
                     ? const Color(0xffFFF1E4)
-                    : Colors.grey[200]!,
+                    : Colors.green,
               ),
               child: Text(
-                recruitmentStatus == 'READY' ? '신청' : '신청완료',
+                foodModel.status == 'READY' ? '신청' : '신청완료',
                 style: TextStyle(
-                  color: recruitmentStatus == 'READY'
+                  color: foodModel.status == 'READY'
                       ? const Color(0xffFF7700)
-                      : const Color(0xff7D6600),
+                      : const Color.fromRGBO(0, 213, 112, 1),
                 ),
               ),
             ),
@@ -185,21 +194,21 @@ Widget _registrationColumn(
   ]);
 }
 
-void _showConfirmationDialog(BuildContext context) {
+void _showConfirmationDialog(BuildContext context, bool isRegistered) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: Colors.white,
-        title: const Text(
-          '신청 완료',
-          style: TextStyle(
+        title: Text(
+          isRegistered ? '신청 완료' : '식사 완료',
+          style: const TextStyle(
             fontWeight: FontWeight.w800,
             color: Color(0xffFF7700),
           ),
         ),
-        content: const Text('\n신청이 완료되었습니다!',
-            style: TextStyle(height: 2.0), textAlign: TextAlign.center),
+        content: Text(isRegistered ? '\n신청이 완료되었습니다!' : '\n식사가 완료되었습니다!',
+            style: const TextStyle(height: 2.0), textAlign: TextAlign.center),
         actions: <Widget>[
           TextButton(
             onPressed: () {

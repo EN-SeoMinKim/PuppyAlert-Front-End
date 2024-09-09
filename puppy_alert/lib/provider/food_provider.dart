@@ -24,6 +24,7 @@ class FoodProvider with ChangeNotifier {
 
   void _fetchFood() async {
     http.Response response = await http.get(Uri.parse('${dotenv.get('BASE_URL')}/puppy/food?puppyId=$_userId'));
+
     if (response.statusCode != 200) return;
 
     final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
