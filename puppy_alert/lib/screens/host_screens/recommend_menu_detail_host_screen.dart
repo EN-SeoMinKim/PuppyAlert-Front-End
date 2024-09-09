@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:puppy_alert/models/recommend_menu_model.dart';
 
 class RecommendMenuDetailHostScreen extends StatelessWidget {
   final List<String> _categoryList, _meatList, _vegetableList;
-  final List<Widget>? _recommendMenuWidgetList;
+  final List<RecommendMenuModel> _recommendMenuList;
 
   const RecommendMenuDetailHostScreen(
       {super.key,
       required List<String> categoryList,
       required List<String> meatList,
       required List<String> vegetableList,
-      required List<Widget> recommendMenuWidgetList})
+      required List<RecommendMenuModel> recommendMenuList})
       : _categoryList = categoryList,
         _meatList = meatList,
         _vegetableList = vegetableList,
-        _recommendMenuWidgetList = recommendMenuWidgetList;
+        _recommendMenuList = recommendMenuList;
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +60,73 @@ class RecommendMenuDetailHostScreen extends StatelessWidget {
                 ),
               ),
             ),
-            _recommendMenuWidgetList == null
-                ? const Text('그런 메뉴는 존재하지 않습니다.',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold))
-                : Column(
-                    children: _recommendMenuWidgetList,
-                  ),
+            for (RecommendMenuModel recommendMenuModel in _recommendMenuList)
+              _recommendMenuWidget(recommendMenuModel),
           ],
         ),
       ),
     );
   }
+}
+
+Widget _recommendMenuWidget(RecommendMenuModel recommendMenuModel) {
+  List<Icon> starList = [];
+  for (int i = 0; i < recommendMenuModel.difficulty; i++) {
+    starList.add(const Icon(Icons.star, color: Colors.yellow));
+  }
+  for (int i = recommendMenuModel.difficulty; i < 5; i++) {
+    starList.add(const Icon(Icons.star_border, color: Colors.yellow));
+  }
+
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.network(
+              recommendMenuModel.url,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(recommendMenuModel.title,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis)),
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text('난이도',
+                        style: TextStyle(fontSize: 15, color: Colors.orange)),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: starList,
+                  ),
+                ],
+              ),
+              SingleChildScrollView(
+                child: SizedBox(
+                  height: 40,
+                  child: Text(recommendMenuModel.description,
+                      style: const TextStyle(
+                        fontSize: 13,
+                      )),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }

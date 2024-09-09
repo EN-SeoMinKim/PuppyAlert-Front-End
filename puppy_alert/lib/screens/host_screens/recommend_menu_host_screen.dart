@@ -65,8 +65,36 @@ class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
     List<String> categoryList = _getCheckedStringList('카테고리');
     List<String> meatList = _getCheckedStringList('고기');
     List<String> vegetableList = _getCheckedStringList('채소');
-    List<Widget> recommendMenuWidgetList = [];
 
+    _showLoadingDialog(context);
+
+    final jsonDataList =
+        await _getJsonDataList(categoryList, meatList, vegetableList);
+
+    Navigator.of(context).pop();
+
+    if (jsonDataList == null) {
+      _showFailDialog(context);
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RecommendMenuDetailHostScreen(
+          categoryList: _getCheckedStringList('카테고리'),
+          meatList: _getCheckedStringList('고기'),
+          vegetableList: _getCheckedStringList('채소'),
+          recommendMenuList: jsonDataList
+              .map<RecommendMenuModel>(
+                  (json) => RecommendMenuModel.fromJson(json))
+              .toList(),
+        ),
+      ),
+    );
+  }
+
+  void _showLoadingDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -80,27 +108,28 @@ class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
         );
       },
     );
+  }
 
-    final jsonDataList =
-        await _getJsonDataList(categoryList, meatList, vegetableList);
-    if (jsonDataList == null) return;
-
-    for (dynamic json in jsonDataList) {
-      recommendMenuWidgetList
-          .add(_recommendMenuWidget(RecommendMenuModel.fromJson(json)));
-    }
-
-    Navigator.of(context).pop();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RecommendMenuDetailHostScreen(
-          categoryList: _getCheckedStringList('카테고리'),
-          meatList: _getCheckedStringList('고기'),
-          vegetableList: _getCheckedStringList('채소'),
-          recommendMenuWidgetList: recommendMenuWidgetList,
-        ),
-      ),
+  void _showFailDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: const Text('그런 메뉴는 존재하지 않습니다..',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -236,66 +265,4 @@ class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
       ),
     );
   }
-}
-
-Widget _recommendMenuWidget(RecommendMenuModel recommendMenuModel) {
-  List<Icon> starList = [];
-  for (int i = 0; i < recommendMenuModel.difficulty; i++) {
-    starList.add(const Icon(Icons.star, color: Colors.yellow));
-  }
-  for (int i = recommendMenuModel.difficulty; i < 5; i++) {
-    starList.add(const Icon(Icons.star_border, color: Colors.yellow));
-  }
-
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image.network(
-              recommendMenuModel.url,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(recommendMenuModel.title,
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis)),
-              Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: Text('난이도',
-                        style: TextStyle(fontSize: 15, color: Colors.orange)),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: starList,
-                  ),
-                ],
-              ),
-              SingleChildScrollView(
-                child: SizedBox(
-                  height: 40,
-                  child: Text(recommendMenuModel.description,
-                      style: const TextStyle(
-                        fontSize: 13,
-                      )),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
 }
