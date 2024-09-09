@@ -21,62 +21,68 @@ class RecommendMenuWidget extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Image.network(
-                _recommendMenuModel.url,
-                fit: BoxFit.cover,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.network(
+                  _recommendMenuModel.url,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return RecipeHostScreen(
-                      recommendMenuWidget: RecommendMenuWidget(
-                          recommendMenuModel: _recommendMenuModel));
-                }));
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(_recommendMenuModel.title,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.ellipsis)),
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: Text('난이도',
-                            style: TextStyle(fontSize: 15, color: Colors.orange)),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: starList,
-                      ),
-                    ],
-                  ),
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      height: 40,
-                      child: Text(_recommendMenuModel.description,
-                          style: const TextStyle(
-                            fontSize: 13,
-                          )),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return RecipeHostScreen(
+                        recommendMenuModel: _recommendMenuModel);
+                  }));
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(_recommendMenuModel.title,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis)),
+                    Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Text('난이도',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.orange)),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: starList,
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        height: 40,
+                        child: Text(_recommendMenuModel.description,
+                            style: const TextStyle(
+                              fontSize: 13,
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
