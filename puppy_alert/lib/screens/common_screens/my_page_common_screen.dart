@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:intl/intl.dart';
 import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/puppy_screens/food_detail_puppy_screen.dart';
@@ -21,27 +20,55 @@ class MyPageCommonScreen extends StatelessWidget {
   const MyPageCommonScreen({super.key, required UserModel userModel})
       : _userModel = userModel;
 
-  Future<FoodModel?> _getAppliedFoodModel() async {
-    Uri uri = Uri.parse(
-        '${dotenv.get('BASE_URL')}/user/history?puppyId=${_userModel.userId}');
-    final data = jsonDecode(utf8.decode((await http.get(uri)).bodyBytes));
-    final now = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now()).split('T')[0];
+  Future<FoodModel?> _fetchTodayFood() async {
+    http.Response response = await http.get(Uri.parse(
+        '${dotenv.get('BASE_URL')}/user/today?userId=${_userModel.userId}'));
 
-    for (var food in data) {  // 오늘의 집밥 찾기 (API 생성 전 임시로 오늘 날짜로 설정)
-      String time = food['localDateTime'].toString().split('T')[0];
-
-      if (time == now) {
-        return FoodModel.fromJson(food);
-      }
+    if (response.statusCode != 200) {
+      return null;
     }
-    return null;
+
+    final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
+    return FoodModel.fromJson(jsonData);
+  }
+
+  void _onPressTodayFood(BuildContext context) async {
+    FoodModel? foodModel = await _fetchTodayFood();
+
+    if (foodModel == null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('오늘의 집밥이 존재하지 않습니다.'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('확인'))
+              ],
+            );
+          });
+      return;
+    }
+
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => FoodDetailPuppyScreen(
+            userId: _userModel.userId,
+            foodCommonWidget: FoodCommonWidget(
+              userId: _userModel.userId,
+              foodModel: foodModel,
+            ))));
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MyPageHeaderCommonWidget(userModel: _userModel,),
+        MyPageHeaderCommonWidget(
+          userModel: _userModel,
+        ),
         ProfileInfoButtonPuppyWidget(
             icon: Icons.manage_accounts,
             text: '   개인 정보',
@@ -64,27 +91,16 @@ class MyPageCommonScreen extends StatelessWidget {
         ProfileInfoButtonPuppyWidget(
             icon: Icons.rice_bowl,
             text: '   오늘의 집밥',
-            onPressed: () async {
-              FoodModel? foodModel = await _getAppliedFoodModel();
-              if (foodModel == null) {
-                print("아직 오늘의 집밥이 없습니다.");
-                return;
-              }
-
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => FoodDetailPuppyScreen(
-                      userId: _userModel.userId,
-                      foodCommonWidget: FoodCommonWidget(
-                        userId: _userModel.userId,
-                        foodModel: foodModel,
-                      ))));
+            onPressed: () {
+              _onPressTodayFood(context);
             }),
         LongRectangleButtonCommonWidget(
             backgroundColor: Colors.grey[100]!,
             textColor: Colors.grey[700]!,
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const LoginCommonScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const LoginCommonScreen()),
                   (Route<dynamic> route) => false);
             },
             text: "Logout"),

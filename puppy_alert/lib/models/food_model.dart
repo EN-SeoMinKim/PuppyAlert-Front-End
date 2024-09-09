@@ -34,16 +34,21 @@ class FoodModel {
   }
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
+    String status = json['status'] == null ? 'MATCHED' : 'READY';
+    String partnerId = json['partnerId'] ?? json['hostId'];
+    String partnerNickName = json['partnerNickName'] ?? json['hostNickName'];
+    String time = json['localDateTime'] ?? json['time'];
+
     return FoodModel(
         foodId: json['foodId'],
-        hostId: json['hostId'],
-        hostNickName: json['hostNickName'],
+        hostId: partnerId,
+        hostNickName: partnerNickName,
         menu: json['menuName'],
-        time: json['time'],
+        time: time,
         imageURL: json['imageURL'],
         address: json['address'],
         addressDetail: json['detailAddress'],
-        status: json['status'],
+        status: status,
         locationMap: json['location']);
   }
 
