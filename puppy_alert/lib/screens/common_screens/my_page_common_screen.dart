@@ -34,7 +34,6 @@ class MyPageCommonScreen extends StatelessWidget {
 
   void _onPressTodayFood(BuildContext context) async {
     FoodModel? foodModel = await _fetchTodayFood();
-
     if (foodModel == null || foodModel.status == 'COMPLETE') {
       showDialog(
           context: context,

@@ -6,8 +6,8 @@ class FoodModel {
       _time,
       _imageURL,
       _address,
-      _addressDetail,
-      status;
+      _addressDetail;
+  late String status;
   var _locationMap;
 
   FoodModel(

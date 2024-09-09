@@ -170,8 +170,11 @@ Widget _registrationColumn(
                 _showConfirmationDialog(context, foodModel.status == 'READY');
                 if (foodModel.status == 'MATCHED') {
                   foodModel.status = 'COMPLETE';
-                  Navigator.of(context).pop();
+                } else if (foodModel.status == 'READY') {
+                  foodModel.status = 'MATCHED';
                 }
+
+                Navigator.popUntil(context, ModalRoute.withName('/'));
               },
               style: TextButton.styleFrom(
                 backgroundColor: foodModel.status == 'READY'
