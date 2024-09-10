@@ -89,7 +89,7 @@ class _ShopHostScreenState extends State<ShopHostScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Card(
                 child: ListTile(
-                  leading: const Icon(Icons.store, size: 50),
+                  leading: Image.network(_shopModelList[index].imageURL),
                   title: Text(_shopModelList[index].name, style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Text(_shopModelList[index].detailAddress),
                   trailing: Padding(
