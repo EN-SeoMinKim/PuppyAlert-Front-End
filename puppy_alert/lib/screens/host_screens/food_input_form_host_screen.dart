@@ -22,7 +22,9 @@ class _FoodInputFormHostScreen extends State<FoodInputFormHostScreen> {
   late DateTime? _time = null;
 
   bool _isTimeAndMenuNotNull() {
-    return (_time != null && _menuInputController.text.trim().isNotEmpty);
+    return (_time != null && _menuInputController.text
+        .trim()
+        .isNotEmpty);
   }
 
   void _clickRegisterButton() {
@@ -35,7 +37,9 @@ class _FoodInputFormHostScreen extends State<FoodInputFormHostScreen> {
 
   void _checkMenuName() async {
     Uri uri = Uri.parse(
-        '${dotenv.get('BASE_URL')}/openai/checkMenu?menuName=${_menuInputController.text.trim()}');
+        '${dotenv.get(
+            'BASE_URL')}/openai/checkMenu?menuName=${_menuInputController.text
+            .trim()}');
     http.Response response = await http.get(uri);
     final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -193,10 +197,10 @@ class _FoodInputFormHostScreen extends State<FoodInputFormHostScreen> {
                                     labelText: "  ",
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.grey)),
+                                        BorderSide(color: Colors.grey)),
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.grey)))),
+                                        BorderSide(color: Colors.grey)))),
                           )),
                       Positioned(
                         top: 200,
@@ -219,3 +223,5 @@ class _FoodInputFormHostScreen extends State<FoodInputFormHostScreen> {
         ));
   }
 }
+
+

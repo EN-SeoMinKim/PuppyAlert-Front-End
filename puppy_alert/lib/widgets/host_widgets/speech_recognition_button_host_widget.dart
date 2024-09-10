@@ -14,9 +14,9 @@ class SpeechRecognitionButtonHostWidget extends StatelessWidget {
     super.key,
     required ButtonStatus status,
     required VoidCallback speakAndRecognizeFood,
-    required VoidCallback speakAndRecognizeTime,
-    required VoidCallback clickNoButtonRecognitionFailure,
-    required VoidCallback completeRegisterFood,
+    clickNoButtonRecognitionFailure,
+    speakAndRecognizeTime,
+    completeRegisterFood,
   })  : _completeRegisterFood = completeRegisterFood,
         _clickNoButtonRecognitionFailure = clickNoButtonRecognitionFailure,
         _speakAndRecognizeTime = speakAndRecognizeTime,
@@ -29,7 +29,7 @@ class SpeechRecognitionButtonHostWidget extends StatelessWidget {
       case ButtonStatus.listening:
         return AvatarGlow(
           animate: true,
-          glowColor: Color(0xffFF7700),
+          glowColor: const Color(0xffFF7700),
           endRadius: 180.0,
           duration: const Duration(milliseconds: 2000),
           repeatPauseDuration: const Duration(milliseconds: 100),

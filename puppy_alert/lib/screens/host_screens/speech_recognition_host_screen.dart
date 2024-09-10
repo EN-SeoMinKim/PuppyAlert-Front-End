@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -8,6 +8,8 @@ import 'package:puppy_alert/widgets/host_widgets/top_white_container_host_widget
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../utils/constants.dart';
 import 'food_registration_completion_host_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 class SpeechRecognitionHostScreen extends StatefulWidget {
   final String _userId;
@@ -125,9 +127,13 @@ class _NewSpeechRecognitionHostScreen
   }
 
   Future<void> _verify(String recognizedText, String confirmationText) async {
-    //if문을 통해 음식이 맞는지 확인을 먼저하자
 
-    if (recognizedText.isNotEmpty) {
+    if(_food.isEmpty) {
+      await _handleFailedRecognition(
+          '인식된 음성이 없습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.', '인식된 음성이 없습니다');
+    }
+
+    if (await _isFoodName()) {
       await _flutterTts.speak(confirmationText);
       setState(() {
         if (recognizedText == _food) {
@@ -139,8 +145,22 @@ class _NewSpeechRecognitionHostScreen
       });
       return;
     }
+
     await _handleFailedRecognition(
-        '인식된 음성이 없습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.', '인식된 음성이 없습니다');
+        '말씀하신 메뉴를 찾지 못하였습니다. 식사등록 버튼을 누르고 처음부터 다시 말씀해 주세요.', '음식을 다시 말씀해주세요');
+
+  }
+
+  Future<bool> _isFoodName() async {
+    Uri uri = Uri.parse(
+        '${dotenv.get('BASE_URL')}/openai/checkMenu?menuName=$_food');
+    http.Response response = await http.get(uri);
+    final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
+
+    if (jsonData.toString() == 'true') {
+      return true;
+    }
+    return false;
   }
 
   Future<void> _handleFailedRecognition(
@@ -175,6 +195,9 @@ class _NewSpeechRecognitionHostScreen
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _speakAndRecognizeFood();
+    });
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
