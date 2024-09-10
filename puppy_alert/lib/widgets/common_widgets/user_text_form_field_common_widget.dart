@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 class UserTextFormFieldCommonWidget extends StatefulWidget {
   final TextEditingController _controller;
   final TextInputType _textInputType;
-  final String _hintText;
+  final String _hintText, _labelText;
   final Widget? _prefixIcon;
-  final String _labelText;
   final bool _obscureText;
   final TextInputAction _actionKeyboard;
-  final double _width;
+  final double _width, _margin;
   final String? Function(String?)? _validator;
-  final double _margin;
 
   const UserTextFormFieldCommonWidget({
     super.key,

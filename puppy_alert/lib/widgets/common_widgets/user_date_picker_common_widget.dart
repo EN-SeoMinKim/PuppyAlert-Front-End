@@ -25,7 +25,7 @@ class _UserDatePickerCommonWidgetState
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
                 side: BorderSide(color: Colors.grey[300]!),
@@ -52,7 +52,7 @@ class _UserDatePickerCommonWidgetState
               _selectedDate == null
                   ? "날짜선택"
                   : "${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFF303030),
                 fontWeight: FontWeight.bold,
               ),

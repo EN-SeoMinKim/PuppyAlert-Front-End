@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/models/user_model.dart';
-import 'package:puppy_alert/screens/host_screens/speech_recognition_host_screen.dart';
+import 'package:puppy_alert/screens/host_screens/main_host_screen.dart';
 import 'package:puppy_alert/screens/puppy_screens/main_puppy_screen.dart';
 import 'package:puppy_alert/screens/common_screens/signup_common_screen.dart';
 import 'package:puppy_alert/utils/constants.dart';
@@ -100,7 +100,7 @@ class _LoginCommonScreenState extends State<LoginCommonScreen> {
     if (jsonData['userType'] == 'HOST') {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
-        return SpeechRecognitionHostScreen(
+        return MainHostScreen(
           userModel: userModel,
         );
       }));

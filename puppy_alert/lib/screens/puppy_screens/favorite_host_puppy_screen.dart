@@ -8,8 +8,7 @@ import 'package:puppy_alert/widgets/puppy_widgets/favorite_host_puppy_widget.dar
 class FavoriteHostpuppyScreen extends StatefulWidget {
   final String _userId;
 
-  const FavoriteHostpuppyScreen(
-      {super.key, required String userId})
+  const FavoriteHostpuppyScreen({super.key, required String userId})
       : _userId = userId;
 
   @override
@@ -36,7 +35,8 @@ class _FavoriteHostpuppyScreenState extends State<FavoriteHostpuppyScreen> {
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(utf8.decode(response.bodyBytes)) as List;
       setState(() {
-        _favoriteHostModelList = jsonData.map((json) => FavoriteHostModel.fromJson(json)).toList();
+        _favoriteHostModelList =
+            jsonData.map((json) => FavoriteHostModel.fromJson(json)).toList();
       });
     } else {
       throw Exception('Failed to load items');
@@ -69,24 +69,25 @@ class _FavoriteHostpuppyScreenState extends State<FavoriteHostpuppyScreen> {
   }
 }
 
-Widget _getShowWidget(List<FavoriteHostModel>? favoriteHostList, String userId) {
+Widget _getShowWidget(
+    List<FavoriteHostModel>? favoriteHostList, String userId) {
   if (favoriteHostList == null) {
     return const Center(child: CircularProgressIndicator());
   } else if (favoriteHostList.isEmpty) {
     return const Center(
         child: Text(
-          '설정한 관심 HOST가 없습니다',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-        ));
+      '설정한 관심 HOST가 없습니다',
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+    ));
   }
   return Expanded(
       child: ListView.builder(
-        itemCount: favoriteHostList.length,
-        itemBuilder: (context, index) {
-          return FavoriteHostPuppyWidget(
-            puppyId: userId,
-            favoriteHostModel: favoriteHostList[index],
-          );
-        },
-      ));
+    itemCount: favoriteHostList.length,
+    itemBuilder: (context, index) {
+      return FavoriteHostPuppyWidget(
+        puppyId: userId,
+        favoriteHostModel: favoriteHostList[index],
+      );
+    },
+  ));
 }

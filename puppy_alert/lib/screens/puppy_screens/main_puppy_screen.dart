@@ -10,7 +10,8 @@ import 'food_map_puppy_screen.dart';
 class MainPuppyScreen extends StatefulWidget {
   final UserModel _userModel;
 
-  const MainPuppyScreen({super.key, required userModel}) : _userModel = userModel;
+  const MainPuppyScreen({super.key, required userModel})
+      : _userModel = userModel;
 
   @override
   State<MainPuppyScreen> createState() => _MainPuppyScreenState();

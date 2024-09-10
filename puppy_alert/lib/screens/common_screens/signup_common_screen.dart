@@ -24,7 +24,8 @@ class SignupCommonScreen extends StatefulWidget {
       _phoneNumberConfirmation = 8,
       _postcode = 9;
 
-  const SignupCommonScreen({super.key, required userType}) : _userType = userType;
+  const SignupCommonScreen({super.key, required userType})
+      : _userType = userType;
 
   @override
   State<SignupCommonScreen> createState() => _SignupCommonScreenState();
@@ -78,8 +79,7 @@ class _SignupCommonScreenState extends State<SignupCommonScreen> {
     if (isId) {
       String inputString = _textEditingControllerList[widget._id].text.trim();
       key = _idFormKey;
-      uri =
-          Uri.parse('${dotenv.get('BASE_URL')}/user/checkId?id=$inputString');
+      uri = Uri.parse('${dotenv.get('BASE_URL')}/user/checkId?id=$inputString');
     } else {
       String inputString =
           _textEditingControllerList[widget._nickName].text.trim();

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:puppy_alert/models/user_model.dart';
-import 'package:puppy_alert/provider/food_provider.dart';
 import 'package:puppy_alert/screens/common_screens/my_page_common_screen.dart';
 import 'home_host_screen.dart';
 
 class MainHostScreen extends StatefulWidget {
   final UserModel _userModel;
 
-  const MainHostScreen({super.key, required userModel}) : _userModel = userModel;
+  const MainHostScreen({super.key, required userModel})
+      : _userModel = userModel;
 
   @override
   State<MainHostScreen> createState() => _MainHostScreenState();
@@ -22,7 +21,9 @@ class _MainHostScreenState extends State<MainHostScreen> {
   void initState() {
     super.initState();
     _widgetOptionList = <Widget>[
-      HomeHostScreen(userModel: widget._userModel,),
+      HomeHostScreen(
+        userId: widget._userModel.userId,
+      ),
       // TraditionalMarketMapScreen(),
       // LocalStoreListAdultScreen(),
       MyPageCommonScreen(
@@ -41,11 +42,7 @@ class _MainHostScreenState extends State<MainHostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: ChangeNotifierProvider<FoodProvider>(
-            create: (context) => FoodProvider(widget._userModel.userId),
-            child: _widgetOptionList.elementAt(_selectedIndex)),
-      ),
+      body: Center(child: _widgetOptionList.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xffFF7700),

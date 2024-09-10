@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/host_screens/food_input_form_host_screen.dart';
-import 'package:puppy_alert/screens/host_screens/speech_recognition_host_screen.dart';
+import 'speech_recognition_host_screen.dart';
 
 class HomeHostScreen extends StatelessWidget {
-  final UserModel _userModel;
+  final String _userId;
 
-  const HomeHostScreen({super.key, required UserModel userModel}) : _userModel = userModel;
+  const HomeHostScreen({super.key, required String userId}) : _userId = userId;
 
   void _showChoiceDialog(BuildContext context) {
     showDialog(
@@ -33,15 +32,11 @@ class HomeHostScreen extends StatelessWidget {
                   children: [
                     ElevatedButton.icon(
                         onPressed: () {
-                          // Navigator.pushReplacement(context, MaterialPageRoute(
-                          //     builder: (BuildContext context) {
-                          //   return FoodInputFormAdultScreen();
-                          // }));
                           Navigator.push(
-                            context,MaterialPageRoute(builder: (context)=>FoodInputFormHostScreen())
-                          );
-
-
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FoodInputFormHostScreen(
+                                      userId: _userId)));
                         },
                         label: const Icon(
                           Icons.sticky_note_2_outlined,
@@ -71,7 +66,8 @@ class HomeHostScreen extends StatelessWidget {
                           Navigator.pushReplacement(context, MaterialPageRoute(
                               builder: (BuildContext context) {
                             return SpeechRecognitionHostScreen(
-                                userModel: null,);
+                              userId: _userId,
+                            );
                           }));
                         },
                         label: const Icon(
@@ -107,155 +103,157 @@ class HomeHostScreen extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-            child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(height: 350, width: 300),
-                Positioned(
-                  top: 50,
-                  child: Container(
-                    width: 300,
-                    height: 250,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 4,
-                            blurRadius: 4,
-                            offset: const Offset(0, 3),
-                          )
-                        ]),
-                    child: const Stack(
-                      children: [
-                        Positioned(
-                          top: 50,
-                          left: 60,
-                          child: CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Color(0xffCDE9FF),
-                          ),
-                        ),
-                        Positioned(
-                          top: 20,
-                          right: 40,
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Color(0xffFFF1CE),
-                          ),
-                        ),
-                        Positioned(
-                          top: 200,
-                          left: 30,
-                          child: CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Color(0xffFFCDCD),
-                          ),
-                        ),
-                        Positioned(
-                          top: 150,
-                          right: 50,
-                          child: CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Color(0xffFFE0BE),
-                          ),
-                        ),
-                        Positioned(
-                            top: 80,
-                            left: 90,
-                            child: Text(
-                              "   같이\n식사해요!",
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.black),
-                            )),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 270,
-                  left: 50,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        _showChoiceDialog(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(200, 50),
-                        elevation: 5,
-                        backgroundColor: const Color(0xffFFFAEA),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(height: 350, width: 300),
+                  Positioned(
+                    top: 50,
+                    child: Container(
+                      width: 300,
+                      height: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 4,
+                              blurRadius: 4,
+                              offset: const Offset(0, 3),
+                            )
+                          ]),
+                      child: const Stack(
                         children: [
-                          Text(
-                            "메뉴 등록",
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w800,
-                                color: Color(0xff474747)),
+                          Positioned(
+                            top: 50,
+                            left: 60,
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Color(0xffCDE9FF),
+                            ),
                           ),
-                          SizedBox(width: 15),
-                          Icon(Icons.arrow_forward, color: Color(0xff474747)),
+                          Positioned(
+                            top: 20,
+                            right: 40,
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Color(0xffFFF1CE),
+                            ),
+                          ),
+                          Positioned(
+                            top: 200,
+                            left: 30,
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Color(0xffFFCDCD),
+                            ),
+                          ),
+                          Positioned(
+                            top: 150,
+                            right: 50,
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Color(0xffFFE0BE),
+                            ),
+                          ),
+                          Positioned(
+                              top: 80,
+                              left: 90,
+                              child: Text(
+                                "   같이\n식사해요!",
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.black),
+                              )),
                         ],
-                      )),
-                )
-              ],
-            ),
-            const SizedBox(height: 35),
-            ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  elevation: 6,
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
-                ),
-                child: const Stack(
-                  children: [
-                    SizedBox(height: 150, width: 150),
-                    Positioned(
-                      top: 20,
-                      right: 10,
-                      child: CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Color(0xffCEFFF8),
-                      ),
+                  Positioned(
+                    top: 270,
+                    left: 50,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          _showChoiceDialog(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(200, 50),
+                          elevation: 5,
+                          backgroundColor: const Color(0xffFFFAEA),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "메뉴 등록",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
+                                  color: Color(0xff474747)),
+                            ),
+                            SizedBox(width: 15),
+                            Icon(Icons.arrow_forward, color: Color(0xff474747)),
+                          ],
+                        )),
+                  )
+                ],
+              ),
+              const SizedBox(height: 35),
+              ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    elevation: 6,
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    Positioned(
-                      top: 100,
-                      left: 10,
-                      child: CircleAvatar(
-                        radius: 7,
-                        backgroundColor: Color(0xffEACDFF),
+                  ),
+                  child: const Stack(
+                    children: [
+                      SizedBox(height: 150, width: 150),
+                      Positioned(
+                        top: 20,
+                        right: 10,
+                        child: CircleAvatar(
+                          radius: 12,
+                          backgroundColor: Color(0xffCEFFF8),
+                        ),
                       ),
-                    ),
-                    Positioned(
-                        top: 30,
-                        left: 50,
-                        child: Icon(Icons.menu_book_outlined,
-                            size: 60, color: Color(0xff474747))),
-                    Positioned(
+                      Positioned(
                         top: 100,
-                        left: 37,
-                        child: Text(
-                          "메뉴 추천",
-                          style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xff474747)),
-                        ))
-                  ],
-                ))
-          ],
+                        left: 10,
+                        child: CircleAvatar(
+                          radius: 7,
+                          backgroundColor: Color(0xffEACDFF),
+                        ),
+                      ),
+                      Positioned(
+                          top: 30,
+                          left: 50,
+                          child: Icon(Icons.menu_book_outlined,
+                              size: 60, color: Color(0xff474747))),
+                      Positioned(
+                          top: 100,
+                          left: 37,
+                          child: Text(
+                            "메뉴 추천",
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xff474747)),
+                          ))
+                    ],
+                  ))
+            ],
+          ),
         ))
       ],
     );

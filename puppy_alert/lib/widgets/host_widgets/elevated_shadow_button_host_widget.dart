@@ -16,7 +16,12 @@ class ElevatedShadowButtonHostWidget extends StatelessWidget {
     Color textColor = Colors.black,
     double height = 100.0,
     double width = 180.0,
-  }) : _width = width, _height = height, _textColor = textColor, _text = text, _onPressed = onPressed, _backgroundColor = backgroundColor;
+  })  : _width = width,
+        _height = height,
+        _textColor = textColor,
+        _text = text,
+        _onPressed = onPressed,
+        _backgroundColor = backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class ElevatedShadowButtonHostWidget extends StatelessWidget {
           style: TextStyle(
             color: _textColor,
             fontWeight: FontWeight.w900,
-            fontSize: 35,
+            fontSize: 25,
           ),
         ),
       ),

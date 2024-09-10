@@ -16,7 +16,8 @@ class PersonalInformationCommonScreen extends StatefulWidget {
       _PersonalInformationCommonScreenState();
 }
 
-class _PersonalInformationCommonScreenState extends State<PersonalInformationCommonScreen> {
+class _PersonalInformationCommonScreenState
+    extends State<PersonalInformationCommonScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmationController =
       TextEditingController();

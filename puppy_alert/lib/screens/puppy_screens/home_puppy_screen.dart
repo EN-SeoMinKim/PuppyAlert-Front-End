@@ -43,9 +43,10 @@ class _HomePuppyScreenState extends State<HomePuppyScreen> {
     });
 
     if (searchValue.isNotEmpty) {
-      for(int i = 0; i <foodList.length; i++) {
+      for (int i = 0; i < foodList.length; i++) {
         FoodModel fm = foodList[i];
-        if (fm.menuName.contains(searchValue) || fm.hostId.contains(searchValue)) {
+        if (fm.menuName.contains(searchValue) ||
+            fm.hostId.contains(searchValue)) {
           foodList.remove(fm);
           foodList.insert(0, fm);
         }

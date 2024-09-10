@@ -5,18 +5,18 @@ import 'custom_button_host_widget.dart';
 
 class SpeechRecognitionButtonHostWidget extends StatelessWidget {
   final ButtonStatus _status;
-  final VoidCallback _speakAndRecognizeFood;
-  final VoidCallback _speakAndRecognizeTime;
-  final VoidCallback _clickNoButtonRecognitionFailure;
-  final VoidCallback _completeRegisterFood;
+  final VoidCallback _speakAndRecognizeFood,
+      _speakAndRecognizeTime,
+      _clickNoButtonRecognitionFailure,
+      _completeRegisterFood;
 
   const SpeechRecognitionButtonHostWidget({
     super.key,
     required ButtonStatus status,
-    required void Function() speakAndRecognizeFood,
-    required void Function() speakAndRecognizeTime,
-    required void Function() clickNoButtonRecognitionFailure,
-    required void Function() completeRegisterFood,
+    required VoidCallback speakAndRecognizeFood,
+    clickNoButtonRecognitionFailure,
+    speakAndRecognizeTime,
+    completeRegisterFood,
   })  : _completeRegisterFood = completeRegisterFood,
         _clickNoButtonRecognitionFailure = clickNoButtonRecognitionFailure,
         _speakAndRecognizeTime = speakAndRecognizeTime,
@@ -29,7 +29,7 @@ class SpeechRecognitionButtonHostWidget extends StatelessWidget {
       case ButtonStatus.listening:
         return AvatarGlow(
           animate: true,
-          glowColor: Colors.yellow,
+          glowColor: const Color(0xffFF7700),
           endRadius: 180.0,
           duration: const Duration(milliseconds: 2000),
           repeatPauseDuration: const Duration(milliseconds: 100),
@@ -67,16 +67,16 @@ Widget _buildButtonDesign(
     case ButtonStatus.awaitingInput:
     case ButtonStatus.listening:
       return Container(
-        width: 150.0,
-        height: 150.0,
+        width: 140.0,
+        height: 140.0,
         decoration: BoxDecoration(
-          color: Colors.yellow,
+          color: const Color(0xffFF7700),
           borderRadius: BorderRadius.circular(80.0),
         ),
         child: const Center(
           child: Icon(
             Icons.mic,
-            size: 50,
+            size: 65,
             color: Colors.white,
           ),
         ),
@@ -89,12 +89,12 @@ Widget _buildButtonDesign(
           children: [
             CustomButtonHostWidget(
                 text: "네",
-                color: Colors.green,
+                color: const Color(0xffE6F8E4),
                 onPressed: speakAndRecognizeTime),
             const SizedBox(width: 20),
             CustomButtonHostWidget(
                 text: "아니오",
-                color: Colors.red,
+                color: const Color(0xffffc2c2),
                 onPressed: clickNoButtonRecognitionFailure),
           ],
         ),
@@ -107,12 +107,12 @@ Widget _buildButtonDesign(
           children: [
             CustomButtonHostWidget(
                 text: "네",
-                color: Colors.green,
+                color: const Color(0xffE6F8E4),
                 onPressed: completeRegisterFood),
             const SizedBox(width: 20),
             CustomButtonHostWidget(
                 text: "아니오",
-                color: Colors.red,
+                color: const Color(0xffffc2c2),
                 onPressed: clickNoButtonRecognitionFailure)
           ],
         ),
@@ -123,7 +123,7 @@ Widget _buildButtonDesign(
         width: 200.0,
         height: 200.0,
         decoration: BoxDecoration(
-          color: const Color(0xffFF7700),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
@@ -133,18 +133,36 @@ Widget _buildButtonDesign(
             ),
           ],
         ),
-        child: const Center(
-          child: Text(
-            "식사\n등록",
-            style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 36,
-              color: Colors.white,
-              letterSpacing: 3.0,
-              height: 1.2,
+        child: const Stack(
+          children: [
+            Positioned(
+              top: 20,
+              right: 24,
+              child:
+                  CircleAvatar(radius: 13, backgroundColor: Color(0xffCDE9FF)),
             ),
-            textAlign: TextAlign.center,
-          ),
+            Positioned(
+                bottom: 20,
+                left: 20,
+                child: CircleAvatar(
+                    radius: 10, backgroundColor: Color(0xffFFF1CE))),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.pending_actions, size: 70),
+                  SizedBox(height: 20),
+                  Text(
+                    "식사 등록",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       );
   }
