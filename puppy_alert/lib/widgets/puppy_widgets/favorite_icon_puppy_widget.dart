@@ -28,6 +28,12 @@ class _FavoriteIconPuppyWidgetState extends State<FavoriteIconPuppyWidget> {
   void _initIsFavorite() async {
     http.Response response = await http.get(Uri.parse(
         '${dotenv.get('BASE_URL')}/puppy/favoriteHost?puppyId=${widget._puppyId}'));
+
+    if (response.statusCode != 200) {
+      print('Error: ${response.body}');
+      return;
+    }
+
     List<FavoriteHostModel> hostList =
         jsonDecode(utf8.decode(response.bodyBytes))
             .map<FavoriteHostModel>((json) => FavoriteHostModel.fromJson(json))

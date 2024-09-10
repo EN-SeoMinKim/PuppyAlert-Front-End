@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:puppy_alert/models/market_model.dart';
 import 'package:puppy_alert/models/user_model.dart';
 import 'package:puppy_alert/screens/common_screens/my_page_common_screen.dart';
+import 'package:puppy_alert/screens/host_screens/shop_host_screen.dart';
+import 'package:puppy_alert/screens/host_screens/market_map_host_screen.dart';
 import 'home_host_screen.dart';
+import 'package:http/http.dart' as http;
 
 class MainHostScreen extends StatefulWidget {
   final UserModel _userModel;
@@ -15,27 +22,46 @@ class MainHostScreen extends StatefulWidget {
 
 class _MainHostScreenState extends State<MainHostScreen> {
   int _selectedIndex = 0;
-  late final List<Widget> _widgetOptionList;
+  final List<Widget> _widgetOptionList = List.empty(growable: true);
 
   @override
   void initState() {
     super.initState();
-    _widgetOptionList = <Widget>[
-      HomeHostScreen(
-        userId: widget._userModel.userId,
-      ),
-      // TraditionalMarketMapScreen(),
-      // LocalStoreListAdultScreen(),
-      MyPageCommonScreen(
-        userModel: widget._userModel,
-      ),
-    ];
+
+    _initWidgetOptionList({});
+
+    _getMarketList().then((value) {
+      setState(() {
+        _initWidgetOptionList(value.toSet());
+      });
+    });
+  }
+
+  void _initWidgetOptionList(Set<MarketModel> marketSet) {
+    _widgetOptionList.clear();
+    _widgetOptionList.addAll([
+      HomeHostScreen(userId: widget._userModel.userId,),
+      MarketMapHostScreen(
+          userLatLng: widget._userModel.userLatLng,
+          marketSet: marketSet),
+      ShopHostScreen(marketSet: marketSet),
+      MyPageCommonScreen(userModel: widget._userModel),
+    ]);
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<List<MarketModel>> _getMarketList() async {
+    http.Response response =
+        await http.get(Uri.parse('${dotenv.get('BASE_URL')}/market/all'));
+    final jsonData = jsonDecode(utf8.decode(response.bodyBytes));
+    return jsonData
+        .map<MarketModel>((json) => MarketModel.fromJson(json))
+        .toList();
   }
 
   @override

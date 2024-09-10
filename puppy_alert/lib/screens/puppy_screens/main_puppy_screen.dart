@@ -29,9 +29,9 @@ class _MainPuppyScreenState extends State<MainPuppyScreen> {
           userDongAddress: widget._userModel.dongAddress,
           userId: widget._userModel.userId),
       FoodMapPuppyScreen(
-        userDto: widget._userModel,
+        userModel: widget._userModel,
       ),
-      FavoriteHostpuppyScreen(userId: widget._userModel.userId),
+      FavoriteHostPuppyScreen(userId: widget._userModel.userId),
       MyPageCommonScreen(
         userModel: widget._userModel,
       ),

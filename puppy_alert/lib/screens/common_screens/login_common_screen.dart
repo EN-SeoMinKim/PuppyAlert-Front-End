@@ -97,20 +97,21 @@ class _LoginCommonScreenState extends State<LoginCommonScreen> {
       Map<String, dynamic> jsonData, String id, String password) async {
     UserModel userModel = await _getUserDto(id, password);
 
-    if (jsonData['userType'] == 'HOST') {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) {
-        return MainHostScreen(
-          userModel: userModel,
-        );
-      }));
-    } else {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) {
-        return MainPuppyScreen(
-          userModel: userModel,
-        );
-      }));
+    switch (jsonData['userType']) {
+      case 'HOST':
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+          return MainHostScreen(userModel: userModel);
+        }));
+        break;
+      case 'PUPPY':
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+          return MainPuppyScreen(
+            userModel: userModel,
+          );
+        }));
+        break;
     }
   }
 

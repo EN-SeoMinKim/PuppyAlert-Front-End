@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:puppy_alert/screens/host_screens/food_input_form_host_screen.dart';
-import 'speech_recognition_host_screen.dart';
+import 'package:puppy_alert/screens/host_screens/recommend_menu_host_screen.dart';
+import 'package:puppy_alert/screens/host_screens/speech_recognition_host_screen.dart';
 
 class HomeHostScreen extends StatelessWidget {
   final String _userId;
@@ -108,7 +109,7 @@ class HomeHostScreen extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Container(height: 350, width: 300),
+                  const SizedBox(height: 350, width: 300),
                   Positioned(
                     top: 50,
                     child: Container(
@@ -208,7 +209,12 @@ class HomeHostScreen extends StatelessWidget {
               ),
               const SizedBox(height: 35),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RecommendMenuHostScreen()));
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 6,
                     backgroundColor: Colors.white,

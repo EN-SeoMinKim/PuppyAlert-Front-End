@@ -5,18 +5,19 @@ import 'package:http/http.dart' as http;
 import 'package:puppy_alert/models/favorite_host_model.dart';
 import 'package:puppy_alert/widgets/puppy_widgets/favorite_host_puppy_widget.dart';
 
-class FavoriteHostpuppyScreen extends StatefulWidget {
+class FavoriteHostPuppyScreen extends StatefulWidget {
   final String _userId;
 
-  const FavoriteHostpuppyScreen({super.key, required String userId})
+  const FavoriteHostPuppyScreen(
+      {super.key, required String userId})
       : _userId = userId;
 
   @override
-  State<FavoriteHostpuppyScreen> createState() =>
-      _FavoriteHostpuppyScreenState();
+  State<FavoriteHostPuppyScreen> createState() =>
+      _FavoriteHostPuppyScreenState();
 }
 
-class _FavoriteHostpuppyScreenState extends State<FavoriteHostpuppyScreen> {
+class _FavoriteHostPuppyScreenState extends State<FavoriteHostPuppyScreen> {
   List<FavoriteHostModel>? _favoriteHostModelList;
 
   @override

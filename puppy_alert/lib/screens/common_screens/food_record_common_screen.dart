@@ -33,18 +33,7 @@ class _FoodRecordCommonScreenState extends State<FoodRecordCommonScreen> {
           _foodCommonWidgetList.add(
             FoodCommonWidget(
               userId: widget._userId,
-              foodModel: FoodModel(
-                foodId: data['foodId'],
-                address: data['address'],
-                addressDetail: data['detailAddress'],
-                hostId: data['partnerId'],
-                hostNickName: data['partnerNickName'],
-                imageURL: data['imageURL'],
-                locationMap: data['location'],
-                menu: data['menuName'],
-                status: "MATCHED",
-                time: data['localDateTime'],
-              ),
+              foodModel: FoodModel.fromJson(data),
             ),
           );
         }
@@ -53,14 +42,8 @@ class _FoodRecordCommonScreenState extends State<FoodRecordCommonScreen> {
   }
 
   Future<dynamic> _getJsonData() async {
-    Uri uri;
-    if (widget._isChildScreen) {
-      uri = Uri.parse(
-          '${dotenv.get('BASE_URL')}/puppy/history?puppyId=${widget._userId}');
-    } else {
-      uri = Uri.parse(
-          '${dotenv.get('BASE_URL')}/host/history?hostId=${widget._userId}');
-    }
+    Uri uri = Uri.parse(
+        '${dotenv.get('BASE_URL')}/user/history?userId=${widget._userId}');
 
     return jsonDecode(utf8.decode((await http.get(uri)).bodyBytes));
   }
