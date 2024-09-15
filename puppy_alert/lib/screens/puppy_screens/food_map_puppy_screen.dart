@@ -7,7 +7,7 @@ import 'package:puppy_alert/provider/food_provider.dart';
 import 'package:puppy_alert/widgets/puppy_widgets/food_map_puppy_widget.dart';
 import 'package:puppy_alert/widgets/puppy_widgets/food_map_detail_child_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
-import 'food_detail_puppy_screen.dart';
+import '../common_screens/food_detail_common_screen.dart';
 
 class FoodMapPuppyScreen extends StatefulWidget {
   final UserModel _userModel;
@@ -89,12 +89,13 @@ class _FoodMapPuppyScreenState extends State<FoodMapPuppyScreen> {
             child: InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => FoodDetailPuppyScreen(
+                    builder: (context) => FoodDetailCommonScreen(
                           userId: widget._userModel.userId,
                           foodCommonWidget: FoodCommonWidget(
                             userId: widget._userModel.userId,
                             foodModel: foodModel!,
                           ),
+                      isPuppyScreen: true,
                         )));
               },
               child: FoodMapDetailChildWidget(

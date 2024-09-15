@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/models/recommend_menu_model.dart';
+import '../../widgets/host_widgets/top_white_container_host_widget.dart';
 import 'recommend_menu_detail_host_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -174,17 +174,9 @@ class _RecommendMenuHostScreenState extends State<RecommendMenuHostScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
-              child: Container(
-                width: 300,
-                height: 150,
-                decoration: BoxDecoration(
-                    color: Colors.red, borderRadius: BorderRadius.circular(10)),
-                child: const Center(
-                    child: Text('김지원',
-                        style: TextStyle(fontSize: 30, color: Colors.white))),
-              ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(50, 50, 50, 0),
+              child: TopWhiteContainerHostWidget(text: "가지고 계신\n 재료를 선택해주세요!"),
             ),
             Padding(
               padding: const EdgeInsets.all(50.0),

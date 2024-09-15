@@ -58,13 +58,13 @@ class RecipeHostScreen extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           return Card(
+                            color: Colors.white,
                             margin: const EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 16.0),
                             elevation: 6,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            shadowColor: Colors.blueAccent.withOpacity(0.5),
                             child: ListTile(
                               contentPadding: const EdgeInsets.all(16.0),
                               leading: Container(
@@ -73,7 +73,7 @@ class RecipeHostScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   gradient: const LinearGradient(
-                                    colors: [Colors.blue, Colors.purpleAccent],
+                                    colors: [Colors.yellow, Colors.purpleAccent],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),

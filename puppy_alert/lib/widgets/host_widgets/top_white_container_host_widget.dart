@@ -33,10 +33,17 @@ class TopWhiteContainerHostWidget extends StatelessWidget {
               bottom: 20,
               right: 20,
               child:
-                  CircleAvatar(radius: 7, backgroundColor: Color(0xffFFE0BE))),
+              CircleAvatar(radius: 7, backgroundColor: Color(0xffFFE0BE))),
           Center(
-            child: Text(
-              _text,
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: _text.split('\n')[0]),
+                  TextSpan(text: '\n'),
+                  TextSpan(text: _text.split('\n')[1]),
+                ],
+              ),
+              textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,
