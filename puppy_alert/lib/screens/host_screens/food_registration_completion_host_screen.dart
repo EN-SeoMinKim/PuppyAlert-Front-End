@@ -6,7 +6,6 @@ import 'package:puppy_alert/provider/partner_and_status_provider.dart';
 import 'package:puppy_alert/widgets/host_widgets/elevated_shadow_button_host_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:puppy_alert/widgets/host_widgets/top_white_container_host_widget.dart';
-
 import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
 
 class FoodRegistrationCompletionHostScreen extends StatefulWidget {
@@ -152,26 +151,28 @@ class _FoodRegistrationCompletionHostScreenState
                   height: 50,
                 ),
                 Consumer<PartnerAndStatusProvider>(
-                  builder: (context, partnerNickNameProvider, child) {
-                    String? partnerNickName =
-                        partnerNickNameProvider.getPartnerNickName();
-                    String status = partnerNickNameProvider.getStatus();
+                    builder: (context, partnerAndStatusProvider, child) {
+                  Map<String, String> partnerAndStatus =
+                      partnerAndStatusProvider.getPartnerAndStatus();
+                  String? partnerNickName = partnerAndStatus['partnerNickName'];
+                  String? status = partnerAndStatus['status'];
 
-                    if (status == 'COMPLETE') {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        _showDialog(Icons.check_circle_outline, "식사 완료!");
-                      });
-                    }
+                  if (status == 'COMPLETE') {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _showDialog(Icons.check_circle_outline, "식사 완료!");
+                    });
+                  }
 
-                    return partnerNickName == ''
-                        ? TopWhiteContainerHostWidget(
-                            text: "같이 식사할 사람을\n  모집 중입니다!",
-                          )
-                        : TopWhiteContainerHostWidget(
-                            text: "'${partnerNickName}'과\n좋은 식사시간 보내세요!",
-                          );
-                  },
-                ),
+                  return partnerNickName == ''
+                      ? const TopWhiteContainerHostWidget(
+                          text: "같이 식사할 사람을\n  모집 중입니다!",
+                        )
+                      : TopWhiteContainerHostWidget(
+                          text: "'${partnerNickName}'과\n좋은 식사시간 보내세요!",
+                          coloNumber1: 0xffCEFFF8,
+                          colorNumber2: 0xffEACDFF,
+                        );
+                }),
                 const SizedBox(
                   height: 30,
                 ),

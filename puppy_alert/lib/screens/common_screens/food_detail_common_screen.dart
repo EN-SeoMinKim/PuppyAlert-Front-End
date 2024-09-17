@@ -22,11 +22,11 @@ class FoodDetailCommonScreen extends StatefulWidget {
         _isPuppyScreen = isPuppyScreen;
 
   @override
-  _FoodDetailCommonScreenState createState() => _FoodDetailCommonScreenState();
+  State<FoodDetailCommonScreen> createState() => _FoodDetailCommonScreenState();
 }
 
 class _FoodDetailCommonScreenState extends State<FoodDetailCommonScreen> {
-  late FoodModel _foodModel;
+  late final FoodModel _foodModel;
 
   @override
   void initState() {
@@ -43,12 +43,7 @@ class _FoodDetailCommonScreenState extends State<FoodDetailCommonScreen> {
         'foodId': _foodModel.foodId,
         'puppyId': widget._userId,
       }),
-    )
-        .then((_) {
-      setState(() {
-        _foodModel.status = 'MATCHED';
-      });
-    });
+    );
   }
 
   void _completeFood() {
@@ -60,12 +55,96 @@ class _FoodDetailCommonScreenState extends State<FoodDetailCommonScreen> {
         'puppyId': widget._userId,
         'foodId': _foodModel.foodId,
       }),
-    )
-        .then((_) {
-      setState(() {
-        _foodModel.status = 'COMPLETE';
-      });
-    });
+    );
+  }
+  
+  void _cancleFood(){
+    http.patch(Uri.parse('${dotenv.get('BASE_URL')}/puppy/food'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'foodId': _foodModel.foodId,
+        'userId': widget._userId,
+      }),
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context, bool isRegistered) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text(
+            isRegistered ? '신청 완료' : '식사 완료',
+            style: const TextStyle(
+              fontWeight: FontWeight.w800,
+              color: Color(0xffFF7700),
+            ),
+          ),
+          content: Text(isRegistered ? '\n신청이 완료되었습니다!' : '\n식사가 완료되었습니다!',
+              style: const TextStyle(height: 2.0), textAlign: TextAlign.center),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('확인',
+                  style: TextStyle(
+                    color: Color(0xffFF7700),
+                  )),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCancellationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: const Text(
+            '취소하시겠습니까?',
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              color: Color(0xffFF7700),
+            ),
+          ),
+          content: const Text(
+            '\n정말로 취소하시겠습니까?',
+            style: TextStyle(height: 2.0),
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                _cancleFood();
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                '예',
+                style: TextStyle(
+                  color: Color(0xff9fff80),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                '아니요',
+                style: TextStyle(
+                  color: Color(0xffff7999),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -190,6 +269,24 @@ class _FoodDetailCommonScreenState extends State<FoodDetailCommonScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            if (foodModel.status != 'READY' && widget._isPuppyScreen)
+              SizedBox(
+                width: 90,
+                child: TextButton(
+                  onPressed: () {
+                    _showCancellationDialog(context);
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color(0xffffe4e6),
+                  ),
+                  child: const Text(
+                    '취소',
+                    style: TextStyle(
+                      color: const Color(0xffcc0000)
+                    ),
+                  ),
+                ),
+              ),
             SizedBox(
               width: foodModel.status == 'READY' ? 70 : 90,
               child: TextButton(
@@ -200,7 +297,7 @@ class _FoodDetailCommonScreenState extends State<FoodDetailCommonScreen> {
                 style: TextButton.styleFrom(
                   backgroundColor: foodModel.status == 'READY'
                       ? const Color(0xffFFF1E4)
-                      : Colors.green,
+                      : const Color(0xffeaffe4),
                 ),
                 child: Text(
                   foodModel.status == 'READY' ? '신청' : '식사완료',
@@ -218,34 +315,6 @@ class _FoodDetailCommonScreenState extends State<FoodDetailCommonScreen> {
     ]);
   }
 
-  void _showConfirmationDialog(BuildContext context, bool isRegistered) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text(
-            isRegistered ? '신청 완료' : '식사 완료',
-            style: const TextStyle(
-              fontWeight: FontWeight.w800,
-              color: Color(0xffFF7700),
-            ),
-          ),
-          content: Text(isRegistered ? '\n신청이 완료되었습니다!' : '\n식사가 완료되었습니다!',
-              style: const TextStyle(height: 2.0), textAlign: TextAlign.center),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('확인',
-                  style: TextStyle(
-                    color: Color(0xffFF7700),
-                  )),
-            ),
-          ],
-        );
-      },
-    );
-  }
+
+
 }

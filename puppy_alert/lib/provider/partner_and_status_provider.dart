@@ -32,13 +32,10 @@ class PartnerAndStatusProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String getPartnerNickName() {
+  Map<String,String> getPartnerAndStatus(){
     _fetchPartnerAndStatus();
-    return _partnerNickName;
+    return {'partnerNickName':_partnerNickName, 'status':_status};
   }
 
-  String getStatus() {
-    _fetchPartnerAndStatus();
-    return _status;
-  }
+
 }
