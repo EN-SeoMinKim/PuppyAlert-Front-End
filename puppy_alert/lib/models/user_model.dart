@@ -37,8 +37,8 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> jsonData, String password) {
     return UserModel(
         jsonData['userId'],
-        jsonData['name'],
         password,
+        jsonData['name'],
         jsonData['nickName'],
         jsonData['birth'],
         jsonData['phoneNumber'],

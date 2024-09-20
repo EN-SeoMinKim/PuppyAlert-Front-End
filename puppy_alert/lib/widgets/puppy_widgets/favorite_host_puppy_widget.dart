@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:puppy_alert/models/favorite_host_model.dart';
 import 'package:puppy_alert/widgets/puppy_widgets/favorite_icon_puppy_widget.dart';
 
@@ -13,6 +14,14 @@ class FavoriteHostPuppyWidget extends StatelessWidget {
   })  : _puppyId = puppyId,
         _favoriteHostModel = favoriteHostModel;
 
+  Future<void> _loadImage(String url) async {
+    try {
+      await NetworkAssetBundle(Uri.parse(url)).load(url);
+    } catch (e) {
+      throw Exception('Failed to load image');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -21,11 +30,24 @@ class FavoriteHostPuppyWidget extends StatelessWidget {
         child: Row(
           children: [
             ClipOval(
-              child: Image.network(
-                _favoriteHostModel.hostProfileImageURL,
-                width: 70,
-                height: 70,
-                fit: BoxFit.cover,
+              child: FutureBuilder(
+                future: _loadImage(_favoriteHostModel.hostProfileImageURL),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return const Icon(Icons.error, size: 70);
+                    } else {
+                      return Image.network(
+                        _favoriteHostModel.hostProfileImageURL,
+                        width: 70,
+                        height: 70,
+                        fit: BoxFit.cover,
+                      );
+                    }
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
               ),
             ),
             const SizedBox(width: 20),
@@ -58,4 +80,6 @@ class FavoriteHostPuppyWidget extends StatelessWidget {
       )
     ]);
   }
+
+
 }

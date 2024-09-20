@@ -8,12 +8,12 @@ import 'package:http/http.dart' as http;
 
 class FoodRecordCommonScreen extends StatefulWidget {
   final String _userId;
-  final bool _isChildScreen;
+  final bool _isPuppyScreen;
 
   const FoodRecordCommonScreen(
-      {super.key, required bool isChildScreen, required userId})
+      {super.key, required bool isPuppyScreen, required userId})
       : _userId = userId,
-        _isChildScreen = isChildScreen;
+        _isPuppyScreen = isPuppyScreen;
 
   @override
   State<FoodRecordCommonScreen> createState() => _FoodRecordCommonScreenState();
@@ -82,7 +82,7 @@ class _FoodRecordCommonScreenState extends State<FoodRecordCommonScreen> {
                 },
               ),
             ),
-            if (!widget._isChildScreen) _goBackButton(context),
+            if (!widget._isPuppyScreen) _goBackButton(context),
           ],
         ));
   }

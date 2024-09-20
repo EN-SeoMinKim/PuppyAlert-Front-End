@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:puppy_alert/provider/partner_nick_name_provider.dart';
+import 'package:puppy_alert/provider/partner_and_status_provider.dart';
 import 'package:puppy_alert/widgets/host_widgets/elevated_shadow_button_host_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:puppy_alert/widgets/host_widgets/top_white_container_host_widget.dart';
+import '../../widgets/common_widgets/long_rectangle_button_common_widget.dart';
 
 class FoodRegistrationCompletionHostScreen extends StatefulWidget {
   final String _userId, _food, _time;
@@ -94,6 +95,46 @@ class _FoodRegistrationCompletionHostScreenState
     return time;
   }
 
+  void _showDialog(IconData icon, String mention) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 180,
+            width: 100,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Icon(
+                    icon,
+                    color: Colors.orange,
+                    size: 50,
+                  ),
+                ),
+                Text(
+                  mention,
+                  style: const TextStyle(
+                      color: Color(0xff3b3b3b), fontWeight: FontWeight.w800),
+                ),
+                LongRectangleButtonCommonWidget(
+                  onPressed: () {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  },
+                  text: "확인",
+                  width: 100,
+                  height: 30,
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,25 +143,36 @@ class _FoodRegistrationCompletionHostScreenState
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: ChangeNotifierProvider<PartnerNickNameProvider>(
-            create: (context) => PartnerNickNameProvider(widget._userId),
+          child: ChangeNotifierProvider<PartnerAndStatusProvider>(
+            create: (context) => PartnerAndStatusProvider(widget._userId),
             child: Column(
               children: [
                 const SizedBox(
                   height: 50,
                 ),
-                Consumer<PartnerNickNameProvider>(
-                  builder: (context, partnerNickNameProvider, child) {
-                    String? partnerNickName = partnerNickNameProvider.getPartnerNickName();
-                    return partnerNickName == ''
-                        ? TopWhiteContainerHostWidget(
-                      text: "같이 식사할 사람을\n  모집 중입니다!",
-                    )
-                        : TopWhiteContainerHostWidget(
-                      text: "'${partnerNickName}'과\n  좋은 식사시간 보내세요!",
-                    );
-                  },
-                ),
+                Consumer<PartnerAndStatusProvider>(
+                    builder: (context, partnerAndStatusProvider, child) {
+                  Map<String, String> partnerAndStatus =
+                      partnerAndStatusProvider.getPartnerAndStatus();
+                  String? partnerNickName = partnerAndStatus['partnerNickName'];
+                  String? status = partnerAndStatus['status'];
+
+                  if (status == 'COMPLETE') {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _showDialog(Icons.check_circle_outline, "식사 완료!");
+                    });
+                  }
+
+                  return partnerNickName == ''
+                      ? const TopWhiteContainerHostWidget(
+                          text: "같이 식사할 사람을\n  모집 중입니다!",
+                        )
+                      : TopWhiteContainerHostWidget(
+                          text: "'${partnerNickName}'과\n좋은 식사시간 보내세요!",
+                          coloNumber1: 0xffCEFFF8,
+                          colorNumber2: 0xffEACDFF,
+                        );
+                }),
                 const SizedBox(
                   height: 30,
                 ),

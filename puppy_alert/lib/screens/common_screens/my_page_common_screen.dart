@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/models/user_model.dart';
-import 'package:puppy_alert/screens/puppy_screens/food_detail_puppy_screen.dart';
+import 'package:puppy_alert/screens/common_screens/food_detail_common_screen.dart';
 import 'package:puppy_alert/screens/common_screens/food_record_common_screen.dart';
 import 'package:puppy_alert/screens/common_screens/login_common_screen.dart';
 import 'package:puppy_alert/screens/common_screens/personal_information_common_screen.dart';
@@ -52,8 +52,9 @@ class MyPageCommonScreen extends StatelessWidget {
     }
 
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => FoodDetailPuppyScreen(
+        builder: (context) => FoodDetailCommonScreen(
             userId: _userModel.userId,
+            isPuppyScreen:  _userModel.userId != foodModel.hostId,
             foodCommonWidget: FoodCommonWidget(
               userId: _userModel.userId,
               foodModel: foodModel,
@@ -82,7 +83,7 @@ class MyPageCommonScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => FoodRecordCommonScreen(
-                        isChildScreen: true,
+                        isPuppyScreen: true,
                         userId: _userModel.userId,
                       )));
             }),

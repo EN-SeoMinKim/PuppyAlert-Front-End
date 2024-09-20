@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 
 class TopWhiteContainerHostWidget extends StatelessWidget {
   final String _text;
+  final int _colorNumber1, _colorNumber2;
 
-  const TopWhiteContainerHostWidget({super.key, required String text})
-      : _text = text;
+  const TopWhiteContainerHostWidget(
+      {super.key,
+      required String text,
+      int coloNumber1 = 0xffFFCDCD,
+      colorNumber2 = 0xffFFE0BE})
+      : _text = text,
+        _colorNumber1 = coloNumber1,
+        _colorNumber2 = colorNumber2;
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +31,26 @@ class TopWhiteContainerHostWidget extends StatelessWidget {
           ]),
       child: Stack(
         children: [
-          const Positioned(
+          Positioned(
             top: 20,
             left: 24,
-            child: CircleAvatar(radius: 10, backgroundColor: Color(0xffFFCDCD)),
+            child: CircleAvatar(radius: 10, backgroundColor: Color(_colorNumber1)),
           ),
-          const Positioned(
+          Positioned(
               bottom: 20,
               right: 20,
               child:
-                  CircleAvatar(radius: 7, backgroundColor: Color(0xffFFE0BE))),
+                  CircleAvatar(radius: 7, backgroundColor: Color(_colorNumber2))),
           Center(
-            child: Text(
-              _text,
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: _text.split('\n')[0]),
+                  TextSpan(text: '\n'),
+                  TextSpan(text: _text.split('\n')[1]),
+                ],
+              ),
+              textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,

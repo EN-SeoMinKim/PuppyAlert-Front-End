@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:puppy_alert/models/food_model.dart';
 import 'package:puppy_alert/provider/food_provider.dart';
-import 'package:puppy_alert/screens/puppy_screens/food_detail_puppy_screen.dart';
+import 'package:puppy_alert/screens/common_screens/food_detail_common_screen.dart';
 import 'package:puppy_alert/widgets/puppy_widgets/search_bar_puppy_widget.dart';
 import 'package:puppy_alert/widgets/common_widgets/food_common_widget.dart';
 
@@ -78,9 +78,10 @@ class _HomePuppyScreenState extends State<HomePuppyScreen> {
                   return InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => FoodDetailPuppyScreen(
+                          builder: (context) => FoodDetailCommonScreen(
                                 foodCommonWidget: foodCommonWidget,
                                 userId: widget._userId,
+                                isPuppyScreen: true,
                               )));
                     },
                     child: foodCommonWidget,

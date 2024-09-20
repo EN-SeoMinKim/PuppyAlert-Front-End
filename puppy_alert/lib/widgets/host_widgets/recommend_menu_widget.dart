@@ -7,8 +7,11 @@ class RecommendMenuWidget extends StatelessWidget {
   final bool _isRecommend;
 
   const RecommendMenuWidget(
-      {super.key, required RecommendMenuModel recommendMenuModel, bool isRecommend = true})
-      : _recommendMenuModel = recommendMenuModel, _isRecommend = isRecommend;
+      {super.key,
+        required RecommendMenuModel recommendMenuModel,
+        bool isRecommend = true})
+      : _recommendMenuModel = recommendMenuModel,
+        _isRecommend = isRecommend;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +26,17 @@ class RecommendMenuWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        height: 150,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(20.0),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.25),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(0, 3), // changes position of shadow to bottom
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -33,9 +44,12 @@ class RecommendMenuWidget extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image.network(
-                  _recommendMenuModel.url,
-                  fit: BoxFit.cover,
+                child: SizedBox(
+                  height: 110,
+                  child: Image.network(
+                    _recommendMenuModel.url,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -52,6 +66,7 @@ class RecommendMenuWidget extends StatelessWidget {
                   }));
                 },
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(_recommendMenuModel.title,
@@ -64,8 +79,8 @@ class RecommendMenuWidget extends StatelessWidget {
                         const Padding(
                           padding: EdgeInsets.all(4.0),
                           child: Text('난이도',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.orange)),
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.orange)),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
