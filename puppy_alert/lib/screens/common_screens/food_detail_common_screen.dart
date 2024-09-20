@@ -43,7 +43,14 @@ class _FoodDetailCommonScreenState extends State<FoodDetailCommonScreen> {
         'foodId': _foodModel.foodId,
         'puppyId': widget._userId,
       }),
-    );
+    ).then((response) {
+      if (response.statusCode == 200) {
+        setState(() {
+          _foodModel.status = 'MATCHED';
+        });
+        _showConfirmationDialog(context, true);
+      }
+    });
   }
 
   void _completeFood() {
@@ -55,7 +62,14 @@ class _FoodDetailCommonScreenState extends State<FoodDetailCommonScreen> {
         'puppyId': widget._userId,
         'foodId': _foodModel.foodId,
       }),
-    );
+    ).then((response) {
+      if (response.statusCode == 200) {
+        setState(() {
+          _foodModel.status = 'COMPLETE';
+        });
+        _showConfirmationDialog(context, false);
+      }
+    });
   }
   
   void _cancleFood(){
