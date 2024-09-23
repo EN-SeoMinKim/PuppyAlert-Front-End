@@ -34,26 +34,17 @@ class _HomePuppyScreenState extends State<HomePuppyScreen> {
     String? searchValue = _searchBarChildWidget.searchValue;
 
     if (searchValue.isEmpty || searchValue == null) {
-      result = foodList;
+      result = foodList.where((food) => food.status == 'READY').toList();
     } else if (searchValue.isNotEmpty) {
       for (int i = 0; i < foodList.length; i++) {
         if (foodList[i].menuName.contains(searchValue) ||
             foodList[i].hostId.contains(searchValue)) {
-          result.add(foodList[i]);
+          if (foodList[i].status == 'READY') {
+            result.add(foodList[i]);
+          }
         }
       }
     }
-
-    result.sort((a, b) {
-      if (a.status == 'READY' && b.status != 'READY') {
-        return -1;
-      } else if (a.status != 'READY' && b.status == 'READY') {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-
     return result;
   }
 
